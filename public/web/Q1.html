@@ -15,7 +15,6 @@
     <script>
       async function checkAnswer() {
         const ans = document.getElementById("answer").value;
-
         const res = await fetch("/checkAnswer", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

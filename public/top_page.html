@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>ログインページ</title>
+  <style>
+    .hidden { display: none; }
+    .tabs { display: flex; margin-bottom: 10px; }
+    .tab { padding: 10px 20px; cursor: pointer; border: 1px solid #aaa; border-bottom: none; background: #fcfcfc; }
+    .tab.active { background: rgb(255, 255, 255); font-weight: bold; }
+    .tab-content { border: 1px solid #aaa; padding: 15px; display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+
+<body>
+  
+  <!-- ログインフォーム -->
+  <div id="loginSection">
+    <form id="loginForm">
+      <h1>ログインページ</h1>
+      <label>ユーザーID: <input type="text" name="userid" required></label><br>
+
+      <label>パスワード: <input type="password" name="password" required></label><br>
+
+      <button type="submit">ログイン</button>
+    </form>
+    <p id="loginMessage"></p>
+
+    <p>新規登録は<a href='register_form.html'>こちら</a></p>
+  </div>
+
+  <!-- ログイン後に見える部分 -->
+  <div id="mainSection" class="hidden">
+    <h2 id="welcome"></h2>
+    
+    <!--タブ選択-->
+    <div class="tabs">
+      <div class="tab active" data-target="quiz">問題</div>
+      <div class="tab" data-target="score">得点</div>
+      <div class="tab" data-target="result_check">ランキング</div>
+    </div>
+
+    <!--タブの内容-->
+    <div id="quiz" class="tab-content active">
+      <h1>Reversing</h1>
+    <div class="grid">
+      <!--各問題のタイトル-->
+      <div class="challenge" onclick="openModal('want_to_execute')">
+        <div>want_to_execute</div>
+        <div class="points">15</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Passchecker')">
+        <div>Passchecker</div>
+        <div class="points">20</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Password Crack!')">
+        <div>Password Crack!</div>
+        <div class="points">30</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Ghidra Tutorial')">
+        <div>Ghidra Tutorial</div>
+        <div class="points">100</div>
+      </div>
+    </div>
+
+    <h1>Web</h1>
+    <div class="grid">
+      <!--各問題のタイトル-->
+      <div class="challenge" onclick="openModal('want_to_execute')">
+        <div>want_to_execute</div>
+        <div class="points">15</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Passchecker')">
+        <div>Passchecker</div>
+        <div class="points">20</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Password Crack!')">
+        <div>Password Crack!</div>
+        <div class="points">30</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Ghidra Tutorial')">
+        <div>Ghidra Tutorial</div>
+        <div class="points">100</div>
+      </div>
+    </div>
+
+    <h1>Pwn</h1>
+    <div class="grid">
+      <!--各問題のタイトル-->
+      <div class="challenge" onclick="openModal('want_to_execute')">
+        <div>want_to_execute</div>
+        <div class="points">15</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Passchecker')">
+        <div>Passchecker</div>
+        <div class="points">20</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Password Crack!')">
+        <div>Password Crack!</div>
+        <div class="points">30</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Ghidra Tutorial')">
+        <div>Ghidra Tutorial</div>
+        <div class="points">100</div>
+      </div>
+    </div>
+
+    <h1>PPC</h1>
+    <div class="grid">
+      <!--各問題のタイトル-->
+      <div class="challenge" onclick="openModal('want_to_execute')">
+        <div>want_to_execute</div>
+        <div class="points">15</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Passchecker')">
+        <div>Passchecker</div>
+        <div class="points">20</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Password Crack!')">
+        <div>Password Crack!</div>
+        <div class="points">30</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Ghidra Tutorial')">
+        <div>Ghidra Tutorial</div>
+        <div class="points">100</div>
+      </div>
+    </div>
+
+    <h1>OSINT</h1>
+    <div class="grid">
+      <!--各問題のタイトル-->
+      <div class="challenge" onclick="openModal('want_to_execute')">
+        <div>want_to_execute</div>
+        <div class="points">15</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Passchecker')">
+        <div>Passchecker</div>
+        <div class="points">20</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Password Crack!')">
+        <div>Password Crack!</div>
+        <div class="points">30</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Ghidra Tutorial')">
+        <div>Ghidra Tutorial</div>
+        <div class="points">100</div>
+      </div>
+    </div>
+
+    <h1>Forensics</h1>
+    <div class="grid">
+      <!--各問題のタイトル-->
+      <div class="challenge" onclick="openModal('want_to_execute')">
+        <div>want_to_execute</div>
+        <div class="points">15</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Passchecker')">
+        <div>Passchecker</div>
+        <div class="points">20</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Password Crack!')">
+        <div>Password Crack!</div>
+        <div class="points">30</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Ghidra Tutorial')">
+        <div>Ghidra Tutorial</div>
+        <div class="points">100</div>
+      </div>
+    </div>
+
+    <h1>Crypto</h1>
+    <div class="grid">
+      <!--各問題のタイトル-->
+      <div class="challenge" onclick="openModal('want_to_execute')">
+        <div>want_to_execute</div>
+        <div class="points">15</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Passchecker')">
+        <div>Passchecker</div>
+        <div class="points">20</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Password Crack!')">
+        <div>Password Crack!</div>
+        <div class="points">30</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Ghidra Tutorial')">
+        <div>Ghidra Tutorial</div>
+        <div class="points">100</div>
+      </div>
+    </div>
+
+    <h1>Cmd</h1>
+    <div class="grid">
+      <!--各問題のタイトル-->
+      <div class="challenge" onclick="openModal('want_to_execute')">
+        <div>want_to_execute</div>
+        <div class="points">15</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Passchecker')">
+        <div>Passchecker</div>
+        <div class="points">20</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Password Crack!')">
+        <div>Password Crack!</div>
+        <div class="points">30</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Ghidra Tutorial')">
+        <div>Ghidra Tutorial</div>
+        <div class="points">100</div>
+      </div>
+    </div>
+    </div>
+
+    <div id="score" class="tab-content">
+      <h2>得点</h2>
+      <p id="scoreDisplay">現在の得点: -</p>
+      <button onclick="loadScore()">最新スコア取得</button>
+    </div>
+
+    <div id="result_check" class="tab-content">
+      <h2>得点遷移</h2>
+      <table id="ranking">
+      <thead>
+        <tr><th>順位</th><th>ユーザー名</th><th>スコア</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+      <p>ちょっと形になったよ</p>
+    </div>
+  </div>
+
+  <script>
+    // ログイン処理
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        userid: e.target.userid.value,
+        password: e.target.password.value
+      };
+
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        document.getElementById("loginMessage").innerText = "";
+        document.getElementById("loginSection").classList.add("hidden");
+        document.getElementById("mainSection").classList.remove("hidden");
+        document.getElementById("registerForm").classList.add("hidden");
+        document.getElementById("welcome").innerText = "ようこそ " + result.username + " さん！";
+      } else {
+        document.getElementById("loginMessage").innerText = result.message;
+      }
+    });
+
+    // タブ切り替え
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        contents.forEach(c => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.target).classList.add("active");
+      });
+    });
+
+    // スコア読み込み
+    async function loadScore() {
+      const res = await fetch("/getScore");
+      const result = await res.json();
+      document.getElementById("scoreDisplay").innerText = "現在の得点: " + result.score;
+    }
+
+    //スコアランキング
+    async function loadRanking() {
+      const res = await fetch("/ranking");
+      const data = await res.json();
+
+      const tbody = document.querySelector("#ranking tbody");
+      tbody.innerHTML = "";
+
+      data.forEach((user, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${user.userid}</td>
+          <td>${user.score}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    loadRanking();
+    // ここに /checkAnswer を呼ぶ処理も追加できる
+  </script>
+</body>
+</html>

@@ -1,24 +1,36 @@
 const express = require("express");
-const bodyParser = require("body-parser");
+const app = express();
 const sqlite3 = require("sqlite3").verbose();
+const db = new sqlite3.Database("users.db");
+const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-const path = require('path')
+const path = require("path");
 
-const app = express();
-const db = new sqlite3.Database("users.db");
-
+app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
-app.use(express.static("public"));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'main.html'));
-})
 
 app.use(session({
   secret: "secret_key",
   resave: false,
   saveUninitialized: true
 }));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "top_page.html"));
+});
+
+//データベースへのアクセス
+app.get("/ranking", (req, res) => {
+  db.all("SELECT userid, score FROM users ORDER BY score DESC LIMIT 10", (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "DB error"});
+      return;
+    }
+    res.json(rows); //json形式で返す
+  })
+})
 
 // DB初期化
 db.serialize(() => {
@@ -34,7 +46,7 @@ db.serialize(() => {
 // 正解一覧
 const quizAnswers = {
   q1: "sample",
-  q2: "tokorozawa"
+  q2: "answer"
 };
 
 //会員登録
