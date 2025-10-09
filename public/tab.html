@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>タブ切り替えの仕組み</title>
+  <style>
+    .tabs {
+      display: flex;
+      cursor: pointer;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border: 1px solid gray;
+      background: #eee;
+      margin-right: 2px;
+    }
+
+    .tab.active {
+      background: #cce;
+      font-weight: bold;
+    }
+
+    .tab-content {
+      border: 1px solid gray;
+      padding: 20px;
+      display: none; /* ← 最初は非表示 */
+    }
+
+    .tab-content.active {
+      display: block; /* ← 選ばれたタブだけ表示 */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tabs">
+    <div class="tab active" data-target="content1">タブ1</div>
+    <div class="tab" data-target="content2">タブ2</div>
+    <div class="tab" data-target="content3">タブ3</div>
+  </div>
+
+  <div id="content1" class="tab-content active">
+    <p>これはタブ1の内容です。</p>
+  </div>
+  <div id="content2" class="tab-content">
+    <p>これはタブ2の内容です。</p>
+  </div>
+  <div id="content3" class="tab-content">
+    <p>これはタブ3の内容です。</p>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+
+        // すべてのタブ・内容をいったん非アクティブにする
+        tabs.forEach(t => t.classList.remove("active"));
+        contents.forEach(c => c.classList.remove("active"));
+
+        // クリックされたタブと、そのタブに対応する内容だけを表示
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.target).classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
