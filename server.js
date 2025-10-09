@@ -43,12 +43,6 @@ db.serialize(() => {
   )`);
 });
 
-// 正解一覧
-const quizAnswers = {
-  q1: "sample",
-  q2: "answer"
-};
-
 //会員登録
 app.post("/register", async (req, res) => {
   const { userid, username, password } = req.body;
@@ -96,11 +90,21 @@ function requireLogin(req, res, next) {
   next();
 }
 
+// 正解一覧
+const quizAnswers = {
+  TEST:{
+    q1: "answer1",
+    q2: "answer2",
+    q3: "answer3",
+    q4: "answer4",
+  }
+};
+
 //正誤判定＆スコア加算
 app.post("/checkAnswer", requireLogin, (req, res) => {
   const userid = req.session.userid; // ← ここで自動的に取得！
-  const { qid, answer } = req.body;
-  const correctAnswer = quizAnswers[qid];
+  const { category, qid, answer } = req.body;
+  const correctAnswer = quizAnswers[category] && quizAnswers[category][qid]?.answer === answer;
 
   if (!correctAnswer) {
     return res.json({ correct: false, message: "問題が存在しません" });

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>CTF問題ポップアップ</title>
+<style>
+  body {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  .challenge {
+    width: 150px;
+    padding: 20px;
+    background: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #ccc;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .challenge:hover {
+    background: #dfe3ff;
+  }
+
+  /* モーダルの基本構造 */
+  .modal {
+    display: none; /* 非表示状態 */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    text-align: left;
+    position: relative;
+  }
+  .close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>CTF問題一覧</h1>
+
+<div class="grid">
+  <div class="challenge" onclick="openModal('web1')">Web1</div>
+  <div class="challenge" onclick="openModal('reversing1')">Reversing1</div>
+  <div class="challenge" onclick="openModal('crypto1')">Crypto1</div>
+</div>
+
+<!-- モーダル -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modal-title"></h2>
+    <p id="modal-desc"></p>
+
+    <input type="text" id="flagInput" placeholder="FLAG{...}">
+    <button onclick="submitFlag()">Submit</button>
+  </div>
+</div>
+
+<script>
+  // 問題データ（ここに説明文などを書く）
+  const questions = {
+    web1: {
+      title: "Web1 - Hidden Flag",
+      desc: "この問題ではHTMLの中に隠されたFLAGを見つけてください。"
+    },
+    reversing1: {
+      title: "Reversing1 - Easy Binary",
+      desc: "与えられた実行ファイルを解析してパスワードを探してください。"
+    },
+    crypto1: {
+      title: "Crypto1 - Caesar Cipher",
+      desc: "FLAG{Crypto} をシーザー暗号(+1)して答えを入力してください。"
+    }
+  };
+
+  // モーダルを開く
+  function openModal(id) {
+    const modal = document.getElementById("modal");
+    modal.style.display = "flex";
+
+    // 選ばれた問題データを反映
+    document.getElementById("modal-title").textContent = questions[id].title;
+    document.getElementById("modal-desc").textContent = questions[id].desc;
+  }
+
+  // モーダルを閉じる
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+  // 仮のSubmit処理
+  function submitFlag() {
+    const input = document.getElementById("flagInput").value;
+    alert("あなたの入力: " + input);
+  }
+
+  // 背景クリックでも閉じられるように
+  window.onclick = function(event) {
+    const modal = document.getElementById("modal");
+    if (event.target === modal) {
+      closeModal();
+    }
+  };
+</script>
+
+</body>
+</html>
