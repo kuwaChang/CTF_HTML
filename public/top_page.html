@@ -48,47 +48,47 @@
     <h1>TEST</h1>
     <div class="grid">
       <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('TEST', 'test1')">
+      <div class="challenge" onclick="openModal('TEST', 'test1')" data-point="15">
         <div>test1</div>
         <div class="points">15</div>
       </div>
 
-      <div class="challenge" onclick="openModal('TEST', 'test2')">
+      <div class="challenge" onclick="openModal('TEST', 'test2')" data-point="20">
         <div>test2</div>
         <div class="points">20</div>
       </div>
 
-      <div class="challenge" onclick="openModal('TEST', 'test3')">
+      <div class="challenge" onclick="openModal('TEST', 'test3')" data-point="30">
         <div>test3</div>
         <div class="points">30</div>
       </div>
 
-      <div class="challenge" onclick="openModal('TEST', 'test4')">
+      <div class="challenge" onclick="openModal('TEST', 'test4')" data-point="100">
         <div>test4</div>
         <div class="points">100</div>
       </div>
     </div>
     
-
     <h1>Reversing</h1>
     <div class="grid">
       <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Reversing', 'want_to_execute')">
+      <!--openModal('カテゴリー', '問題ID')-->
+      <div class="challenge" onclick="openModal('Reversing', 'reversing1')">
         <div>want_to_execute</div>
         <div class="points">15</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Reversing', 'Passchecker')">
+      <div class="challenge" onclick="openModal('Reversing', 'reversing2')">
         <div>Passchecker</div>
         <div class="points">20</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Reversing', 'Password Crack!')">
+      <div class="challenge" onclick="openModal('Reversing', 'reversing3')">
         <div>Password Crack!</div>
         <div class="points">30</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Reversing', 'Ghidra Tutorial')">
+      <div class="challenge" onclick="openModal('Reversing', 'reversing4')">
         <div>Ghidra Tutorial</div>
         <div class="points">100</div>
       </div>
@@ -100,22 +100,22 @@
       <!--各問題のタイトル-->
       <div class="challenge" onclick="openModal('Web', 'web1')">
         <div>web1</div>
-        <div class="points">15</div>
+        <div class="points">30</div>
       </div>
 
       <div class="challenge" onclick="openModal('Web', 'web2')">
         <div>web2</div>
-        <div class="points">20</div>
+        <div class="points">30</div>
       </div>
 
       <div class="challenge" onclick="openModal('Web', 'web3')">
         <div>web3</div>
-        <div class="points">30</div>
+        <div class="points">80</div>
       </div>
 
-      <div class="challenge" onclick="openModal('web4')">
+      <div class="challenge" onclick="openModal('Web','web4')">
         <div>web4</div>
-        <div class="points">100</div>
+        <div class="points">50</div>
       </div>
     </div>
 
@@ -123,24 +123,24 @@
     <h1>Pwn</h1>
     <div class="grid">
       <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Pwn', 'Super_Command1')">
+      <div class="challenge" onclick="openModal('Pwn', 'pwn1')">
         <div>Super_Command1</div>
-        <div class="points">15</div>
+        <div class="points">10</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Pwn', 'Super_Command2')">
+      <div class="challenge" onclick="openModal('Pwn', 'pwn2')">
         <div>Super_Command2</div>
-        <div class="points">20</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Pwn', 'Super_Command3')">
-        <div>Super_Command3</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Pwn', 'Super_Command4')">
-        <div>Super_Command4</div>
         <div class="points">100</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Pwn', 'pwn3')">
+        <div>Super_Command3</div>
+        <div class="points">200</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Pwn', 'pwn4')">
+        <div>Super_Command4</div>
+        <div class="points">300</div>
       </div>
     </div>
 
@@ -148,14 +148,14 @@
     <h1>PPC</h1>
     <div class="grid">
       <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('PPC', 'Scratch Lv.1')">
+      <div class="challenge" onclick="openModal('PPC', 'ppc1')">
         <div>Scratch Lv.1</div>
-        <div class="points">15</div>
+        <div class="points">10</div>
       </div>
 
-      <div class="challenge" onclick="openModal('PPC', 'Scratch Lv.2')">
+      <div class="challenge" onclick="openModal('PPC', 'ppc2')">
         <div>Scratch Lv.2</div>
-        <div class="points">20</div>
+        <div class="points">10</div>
       </div>
     </div>
 
@@ -163,64 +163,64 @@
     <h1>OSINT</h1>
     <div class="grid">
       <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('OSINT', 'People Search')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint1')">
         <div>People Search</div>
-        <div class="points">15</div>
+        <div class="points">30</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'You are here')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint2')">
         <div>You are here</div>
-        <div class="points">20</div>
+        <div class="points">30</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'Where are you')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint3')">
         <div>Where are you</div>
         <div class="points">30</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'Flight record')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint4')">
         <div>Flight record</div>
-        <div class="points">100</div>
+        <div class="points">35</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'ここはココア？')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint5')">
         <div>ここはココア？</div>
-        <div class="points">100</div>
+        <div class="points">40</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'Cyberstalking1 ~Story~')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint6')">
         <div>Cyberstalking1 ~Story~</div>
-        <div class="points">100</div>
+        <div class="points">40</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'ONNN-K')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint7')">
         <div>ONNN-K</div>
-        <div class="points">100</div>
+        <div class="points">50</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', '一休み')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint8')">
         <div>一休み</div>
-        <div class="points">100</div>
+        <div class="points">50</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'ramen with me')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint9')">
         <div>ramen with me</div>
-        <div class="points">100</div>
+        <div class="points">50</div>
       </div>
 
-      <div class="challenge" onclick="openModal('park?')">
+      <div class="challenge" onclick="openModal('park?','osint10')">
         <div>park?</div>
-        <div class="points">100</div>
+        <div class="points">50</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'Cyberstalking1 ~Tweet~')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint11')">
         <div>Cyberstalking1 ~Tweet~</div>
-        <div class="points">100</div>
+        <div class="points">55</div>
       </div>
 
-      <div class="challenge" onclick="openModal('OSINT', 'Cyberstalking2 ~Tweet~')">
+      <div class="challenge" onclick="openModal('OSINT', 'osint12')">
         <div>Cyberstalking2 ~Tweet~</div>
-        <div class="points">100</div>
+        <div class="points">55</div>
       </div>
     </div>
 
@@ -228,24 +228,24 @@
     <h1>Forensics</h1>
     <div class="grid">
       <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Forensics', 'Welcome!')">
+      <div class="challenge" onclick="openModal('Forensics', 'forensics1')">
         <div>Welcome!</div>
-        <div class="points">15</div>
+        <div class="points">2</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Forensics', 'ここどこ？')">
+      <div class="challenge" onclick="openModal('Forensics', 'forensics2')">
         <div>ここどこ？</div>
-        <div class="points">20</div>
+        <div class="points">5</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Forensics', 'プロパティ')">
+      <div class="challenge" onclick="openModal('Forensics', 'forensics3')">
         <div>プロパティ</div>
-        <div class="points">30</div>
+        <div class="points">10</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Forensics', '真っ白')">
+      <div class="challenge" onclick="openModal('Forensics', 'forensics4')">
         <div>真っ白</div>
-        <div class="points">100</div>
+        <div class="points">10</div>
       </div>
     </div>
 
@@ -253,24 +253,24 @@
     <h1>Crypto</h1>
     <div class="grid">
       <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Crypto', 'ROT')">
+      <div class="challenge" onclick="openModal('Crypto', 'crypto1')">
         <div>ROT</div>
+        <div class="points">10</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Crypto', 'rypto2')">
+        <div>手動でやるのはつらいヤツ</div>
+        <div class="points">10</div>
+      </div>
+
+      <div class="challenge" onclick="openModal('Crypto', 'rypto3')">
+        <div>Let's cook1</div>
         <div class="points">15</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Crypto', '手動でやるのはつらいヤツ')">
-        <div>手動でやるのはつらいヤツ</div>
-        <div class="points">20</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Crypto', 'Lets cook1')">
-        <div>Let's cook1</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Crypto', 'それはφです！')">
+      <div class="challenge" onclick="openModal('Crypto', 'rypto4')">
         <div>それはφです！</div>
-        <div class="points">100</div>
+        <div class="points">15</div>
       </div>
     </div>
 
@@ -278,39 +278,40 @@
     <h1>Cmd</h1>
     <div class="grid">
       <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Cmd', 'cp')">
+      <div class="challenge" onclick="openModal('Cmd', 'cmd1')">
         <div>cp</div>
-        <div class="points">15</div>
+        <div class="points">5</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Cmd', 'chmod')">
+      <div class="challenge" onclick="openModal('Cmd', 'cmd2')">
         <div>chmod</div>
-        <div class="points">20</div>
+        <div class="points">5</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Cmd', 'rm')">
+      <div class="challenge" onclick="openModal('Cmd', 'cmd3')">
         <div>rm</div>
-        <div class="points">30</div>
+        <div class="points">5</div>
       </div>
 
-      <div class="challenge" onclick="openModal('Cmd', 'grep')">
+      <div class="challenge" onclick="openModal('Cmd', 'cmd4')">
         <div>grep</div>
-        <div class="points">100</div>
+        <div class="points">5</div>
       </div>
     </div>
   </div>
 
-  <!-- モーダル -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2 id="modal-title"></h2>
-      <p id="modal-desc"></p>
+    <!-- モーダル構造 -->
+    <div id="modal" class="modal hidden">
+      <div id="modal-content" class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-desc"></p>
 
-      <input type="text" id="flagInput" placeholder="FLAG{...}">
-      <button onclick="submitFlag()">Submit</button>
+        <input type="text" id="answer" placeholder="FLAG{...}">
+        <button id="submitBtn">Submit</button>
+        <p id="result"></p>
+      </div>
     </div>
-  </div>
 
 
   <!--得点表示-->
@@ -355,7 +356,7 @@
         document.getElementById("loginMessage").innerText = "";
         document.getElementById("loginSection").classList.add("hidden");
         document.getElementById("mainSection").classList.remove("hidden");
-        document.getElementById("registerForm").classList.add("hidden");
+        //document.getElementById("registerForm").classList.add("hidden");
         document.getElementById("welcome").innerText = "ようこそ " + result.username + " さん！";
       } else {
         document.getElementById("loginMessage").innerText = result.message;
@@ -406,7 +407,7 @@
       });
     }
     
-  // 問題データ（ここに説明文などを書く）
+  // 問題データ（ここに説明文などを書く）(答えとは関係ない)
   const questions = {
     TEST:{
       test1: {
@@ -428,160 +429,162 @@
     },
 
     Reversing : {
-      want_to_execute: {
+      reversing1: {
         title: "want_to_execute - Hidden Flag",
-        desc: "この問題ではHTMLの中に隠されたFLAGを見つけてください。"
+        desc: "このファイルをコンパイルして実行してね！"
       },
-      Passchecker: {
+      reversing2: {
         title: "Passchecker - Easy Binary",
-        desc: "与えられた実行ファイルを解析してパスワードを探してください。"
+        desc: "パスワードチェッカーを作ったよ！もしかしたらパスワードがファイルに残っているかも..."
       },
-      "Password Crack!": {
+      reversing3: {
         title: "Password Crack! - Caesar Cipher",
-        desc: "FLAG{Crypto} をシーザー暗号(+1)して答えを入力してください。"
+        desc: "実行してパスワードを入れるとフラグが出力されるって聞いたよ！！"
       },
-      "Ghidra Tutorial": {
+      reversing4: {
         title: "Ghidra Tutorial - Simple Math",
-        desc: "2 + 2 * 2 = ?"
-      }
+        desc: "このプログラムを実行してパスワードを入れるとフラグが出現します 正しいパスワードを入力してください pdfは環境構築や解き方などの資料"
+      },
     },
+
     Web: {
       web1: {
-        title: "web1 - Hidden Flag",
-        desc: "この問題ではHTMLの中に隠されたFLAGを見つけてください。"
+        title: "web1",
+        desc: "webサイトを公開したよ. ipアドレスは153.143.238.156だよ．"
       },
       web2: {
-        title: "web2 - Easy Binary",
-        desc: "与えられた実行ファイルを解析してパスワードを探してください。"
+        title: "web2",
+        desc: "さっきのサイトには他にもflagを隠してあるんだけど気がついた？おっとこれ以上はコメントしないでおくよ."
       },
       web3: {
-        title: "web3 - Caesar Cipher",
-        desc: "FLAG{Crypto} をシーザー暗号(+1)して答えを入力してください。"
+        title: "web3",
+        desc: "あ. リンクを作り忘れてるページがあるじゃん. OKが出たらflagゲットできるよ."
       },
       web4: {
-        title: "web4 - Simple Math",
-        desc: "2 + 2 * 2 = ?"
+        title: "web4",
+        desc: "http://153.143.238.156:8080/web4.html にflagを載せておいたよ. え. どれかわからない？http://153.143.238.156:8080/web4.css を適応させたらわかるかな．"
       }
     },
 
     Pwn: {
-      Super_Command1: {
-        title: "Super_Command1 - Hidden Flag",
-        desc: "この問題ではHTMLの中に隠されたFLAGを見つけてください。"
+      pwn1: {
+        title: "Super_Command1",
+        desc: "superなコマンドが完成したらしいね!どんなオプションが付いてるんだろう？？"
       },
-      Super_Command2: {
-        title: "Super_Command2 - Easy Binary",
-        desc: "与えられた実行ファイルを解析してパスワードを探してください。"
+      pwn2: {
+        title: "Super_Command2",
+        desc: "機密情報バレバレだったから一般の人から見られない場所に隠してもらったよ！これでもう大丈夫だね！そういえば近々ログインシステムを導入したいとか言ってたな…"
       },
-      Super_Command3: {
-        title: "Super_Command3 - Caesar Cipher",
-        desc: "FLAG{Crypto} をシーザー暗号(+1)して答えを入力してください。"
+      pwn3: {
+        title: "Super_Command3",
+        desc: "この前の脆弱性も修正したみたいで、今度はパスワードも導入したいみたい！さすがにもう脆弱性はない…よね…？"
       },
-      Super_Command4: {
-        title: "Super_Command4 - Simple Math",
-        desc: "2 + 2 * 2 = ?"
+      pwn4: {
+        title: "Super_Command4",
+        desc: "パスワードのチェックが甘かったのかな…？ちゃんと正しいかどうか比較しないとだね！"
       }
     },
+
     Crypto: {
-      ROT: {
-        title: "ROT - Hidden Flag",
-        desc: "この問題ではHTMLの中に隠されたFLAGを見つけてください。"
+      crypto1: {
+        title: "ROT",
+        desc: "間違えて文字列をずらしちゃった！！ kogaCTFから始まるのは覚えてるんだけど、どのくらいずらしちゃったんだっけlphbDUG{xfmdpnf_up_dug}"
       },
-      "手動でやるのはつらいヤツ": {
-        title: "手動でやるのはつらいヤツ - Easy Binary",
-        desc: "与えられた実行ファイルを解析してパスワードを探してください。"
+      crypto2: {
+        title: "手動でやるのはつらいヤツ",
+        desc: "20回エンコードされた文字列です。 元の文章に戻してあげましょう。 ゴリ押しでできるならやってみてください。"
       },
-      "Lets cook1": {
+      crypto3: {
         title: "Let's cook1 - Caesar Cipher",
-        desc: "FLAG{Crypto} をシーザー暗号(+1)して答えを入力してください。"
+        desc: "シェフ！ 料理のお時間です! Q1NMMjR7Zkw0Z19pNV9UMHIxdGVOfQ=="
       },
-      "それはφです！": {
+      crypto4: {
         title: "それはφです！ - Simple Math",
-        desc: "2 + 2 * 2 = ?"
+        desc: "φ(1234) + φ(5678) + φ(9973) =?答えをCSL24でラップせよ 例: 答えが52ならCSL24{52}"
       }
     },
 
     Cmd: {
-      cp: {
-        title: "cp - Hidden Flag",
-        desc: "この問題ではHTMLの中に隠されたFLAGを見つけてください。"
+      cmd1: {
+        title: "cp",
+        desc: "cpコマンドに関する問題です!コピーしたいときの正しいコマンド例を選べ$cp <コピー先のパス> <コピー元のファイルパス>$cp <コピー元のファイルパス> <コピー先のパス>$cp <コピーしたいファイル名>$cp <コピー後のファイル名>※もし、n番を選んだ場合は、CSL24{cp_n}がフラグ"
       },
-      chmod: {
-        title: "chmod - Easy Binary",
-        desc: "与えられた実行ファイルを解析してパスワードを探してください。"
+      cmd2: {
+        title: "chmod",
+        desc: "chmodコマンドに関する問題です!fileにたいして、所有者のみにread権限のみを付与したいときの正しいコマンド例を選べ"
       },
-      rm: {
-        title: "rm - Caesar Cipher",
-        desc: "FLAG{Crypto} をシーザー暗号(+1)して答えを入力してください。"
+      cmd3: {
+        title: "rm",
+        desc: "rmコマンドに関する問題です!file.aのみを削除したいときの正しいコマンド例を選べ"
       },
-      grep: {
-        title: "grep - Simple Math",
-        desc: "2 + 2 * 2 = ?"
+      cmd4: {
+        title: "grep",
+        desc: "grepコマンドに関する問題です!file内に存在する、mochiという文字列を抽出したいときの正しいコマンド例を選べ"
       }
     },
     PPC: {
-      "Scratch Lv.1": {
-        title: "Scratch Lv.1 - Hidden Flag",
-        desc: "この問題ではHTMLの中に隠されたFLAGを見つけてください。"
+      ppc1: {
+        title: "Scratch Lv.1",
+        desc: "これはScratchと呼ばれるプログラミング言語で書かれたファイルです。ブラウザ上でScratchを実行できるサイトを探し、ファイルを開いてみましょう。"
       },
-      "Scratch Lv.2": {
-        title: "Scratch Lv.2 - Easy Binary",
-        desc: "与えられた実行ファイルを解析してパスワードを探してください。"
+      ppc2: {
+        title: "Scratch Lv.2",
+        desc: "Scrachは動作が書かれたブロックを組み合わせることで簡単にプログラミングを行うことができます。このファイルを開き、イベントブロックを利用してプログラムを動かしてみましょう。"
       }
     },
 
     OSINT: {
-      "People Search": {
+      osint1: {
         title: "People Search",
         desc: "私が通っている大学は創立100年を超える。この大学の設立者はどうやら様々な職業で活躍しており、新聞の創刊にもかかわっていたようだ。ほかにも本や論説の執筆などを行いこの国の近代化、啓蒙思想の普及に貢献し、国の変革期に大きな影響を与えた。 長らく人々の身近にその姿が印象として刻まれていたが、最近では日常の中でふと見かけることも少なくなった。時が経てば、その名を耳にすることも次第に減っていくのかもしれない。この文章が示す人物は誰だろうか？"
       },
-      "You are here": {
+      osint2: {
         title: "You are here",
         desc: "これはどこの駅の案内図でしょうか?正解が京都駅の場合のフラグはCSL24{京都駅}です。"
         //ここに画像のダウンロードリンクを張る
         //<a href="画像のURL" download>画像をダウンロード</a>
       },
-      "Where are you": {
+      osint3: {
         title: "Where are you",
         desc: "これはどこの駅の案内図でしょうか?正解が京都駅の場合のフラグはCSL24{京都駅}です。"
         //ここに画像のダウンロードリンクを張る
         //<a href="画像のURL" download>画像をダウンロード</a>
       },
-      "Flight record": {
+      osint4: {
         title: "Flight record",
         desc: "配布された画像から、このフライトが行われた日時を西暦で答えよ。例:CSL24{〇年〇月〇日}"
                 //ここに画像のダウンロードリンクを張る
         //<a href="画像のURL" download>画像をダウンロード</a>
       },
-      "ここはココア？": {
+      osint5: {
         title: "ここはココア？",
         desc: "2 + 2 * 2 = ?"
       },
-      "Cyberstalking1 ~Story~": {
+      osint6: {
         title: "Cyberstalking1 ~Story~ ",
         desc: "2 + 2 * 2 = ?"
       },
-      "ONNN-K": {
+      osint7: {
         title: "ONNN-K",
         desc: "2 + 2 * 2 = ?"
       },
-      "一休み": {
+      osint8: {
         title: "一休み",
         desc: "2 + 2 * 2 = ?"
       },
-      "ramen with me": {
+      osint9: {
         title: "ramen with me - Simple Math",
         desc: "2 + 2 * 2 = ?"
       },
-      park: {
+      osint10: {
         title: "park? - Simple Math",
         desc: "2 + 2 * 2 = ?"
       },
-      "Cyberstalking1 ~Tweet~": {
+      osint11: {
         title: "Cyberstalking1 ~Tweet~ - Simple Math",
         desc: "2 + 2 * 2 = ?"
       },
-      "Cyberstalking2 ~Tweet~": {
+      osint12: {
         title: "Cyberstalking2 ~Tweet~ - Simple Math",
         desc: "2 + 2 * 2 = ?"
       }
@@ -589,8 +592,17 @@
 
   };
 
-    // モーダルを開く
+  // モーダルを開く
+  let currentCategory = null;
+  let currentQid = null;
+  let currentPoint = 0;
+
   function openModal(category, id) {
+    const challengeElem = event.currentTarget; // ← クリックされた要素を取得
+    currentCategory = category;
+    currentQid = id;
+    currentPoint = Number(challengeElem.getAttribute("data-point")); // ← ポイントを取得
+
     const modal = document.getElementById("modal");
     modal.style.display = "flex";
 
@@ -613,15 +625,22 @@
     }
   };
 
-  document.getElementById('modal-content').addEventListener('submit', async function(e){
-  e.preventDefault(); // ページリロード防止
+document.getElementById('submitBtn').addEventListener('click', async function(e){
+  e.preventDefault();
   const answer = document.getElementById('answer').value;
+  
+  // 現在開いている問題の情報を取得
+  const category = currentCategory;
+  const qid = currentQid;
 
-  // サーバーに送信
-  const response = await fetch('/check-answer', {
+  const response = await fetch('/checkAnswer', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({answer})
+    body: JSON.stringify({
+      category: currentCategory,
+      qid: currentQid,
+      answer: answer,
+      point: currentPoint })
   });
 
   const data = await response.json();
