@@ -55,6 +55,13 @@ db.serialize(() => {
     password TEXT,
     score INTEGER
   )`);
+
+  db.run(`CREATE TABLE IF NOT EXISTS solved (
+    userid TEXT,
+    category TEXT,
+    qid TEXT,
+    PRIMARY KEY (userid, category, qid)
+  )`);
 });
 
 //会員登録
@@ -106,34 +113,75 @@ function requireLogin(req, res, next) {
 
 //正誤判定＆スコア加算
 app.post("/checkAnswer", requireLogin, (req, res) => {
-  const userid = req.session.userid; // ← ここで自動的に取得！
+  const userid = req.session.userid;
   const { category, qid, answer, point } = req.body;
 
-  //デバッグ用ログ
   console.log("カテゴリ:", category, "問題ID:", qid, "答え:", answer);
   console.log("正解リストから取得:", quizAnswers[category]?.[qid]?.answer);
 
-  //正解を取得
+  // 正解データ取得
   const correctAnswer = quizAnswers[category]?.[qid]?.answer;
   if (!correctAnswer) {
     return res.json({ correct: false, message: "問題が存在しません" });
   }
 
-  if (String(answer).trim().toLowerCase() === String(correctAnswer).trim().toLowerCase()) {
-    const gain = Number(point) || 0;
+  // すでに解いたかチェック
+  db.get(
+    "SELECT * FROM solved WHERE userid = ? AND category = ? AND qid = ?",
+    [userid, category, qid],
+    (err, row) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ correct: false, message: "DBエラー" });
+      }
 
-    db.run("UPDATE users SET score = score + ? WHERE userid = ?", [point, userid], function(err) {
-      if (err) return res.json({ correct: false, message: "スコア更新失敗" });
-      db.get("SELECT score FROM users WHERE userid = ?", [userid], (err, row) => {
-        res.json({ correct: true, message: "正解！", point: gain, score: row.score });
-      });
-    });
-  } else {
-    db.get("SELECT score FROM users WHERE userid = ?", [userid], (err, row) => {
-      res.json({ correct: false, message: "不正解...", point: 0, score: row ? row.score : 0 });
-    });
-  }
+      if (row) {
+        // すでに解いた場合
+        return res.json({
+          correct: true,
+          alreadySolved: true,
+          message: "この問題はすでに解いています！",
+        });
+      }
+
+      // まだ解いていない場合のみ判定
+      const normalizedAnswer = String(answer).trim().toLowerCase();
+      const normalizedCorrect = String(correctAnswer).trim().toLowerCase();
+
+      if (normalizedAnswer === normalizedCorrect) {
+        const gain = Number(point) || 0;
+
+        // スコア加算＋解いた記録を追加
+        db.run("UPDATE users SET score = score + ? WHERE userid = ?", [gain, userid], (err) => {
+          if (err) console.error("スコア更新失敗:", err);
+        });
+
+        db.run(
+          "INSERT INTO solved (userid, category, qid) VALUES (?, ?, ?)",
+          [userid, category, qid],
+          (err) => {
+            if (err) console.error("solved登録失敗:", err);
+          }
+        );
+
+        // 最新スコア取得して返す
+        db.get("SELECT score FROM users WHERE userid = ?", [userid], (err, row) => {
+          res.json({
+            correct: true,
+            alreadySolved: false,
+            message: "正解！",
+            point: gain,
+            score: row?.score ?? 0,
+          });
+        });
+      } else {
+        // 不正解
+        res.json({ correct: false, message: "不正解..." });
+      }
+    }
+  );
 });
+
 
 //スコア取得API
 app.get("/getScore", requireLogin, (req, res) => {
@@ -143,6 +191,18 @@ app.get("/getScore", requireLogin, (req, res) => {
     } else {
       res.json({ success: true, score: row.score });
     }
+  });
+});
+
+// すでに解いた問題一覧を返すAPI
+app.get("/solvedList", requireLogin, (req, res) => {
+  const userid = req.session.userid;
+  db.all("SELECT category, qid FROM solved WHERE userid = ?", [userid], (err, rows) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ success: false, message: "DBエラー" });
+    }
+    res.json(rows); // [{category:"TEST", qid:"q1"}, ...]
   });
 });
 
