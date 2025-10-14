@@ -1,5 +1,5 @@
 // 正解一覧
-module.exports = {
+const quizAnswers = {
   TEST:{
     test1: "answer1",
     test2: "answer2",
@@ -63,3 +63,6 @@ module.exports = {
   }
   // 他のカテゴリも同様に追加可能
 };
+
+// 他のファイルで使えるようにエクスポート
+module.exports = quizAnswers;
