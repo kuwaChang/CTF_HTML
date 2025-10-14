@@ -1,6 +1,7 @@
 const express = require("express");
-const quizAnswers = require("./quizAnswers.js");
+const quizAnswers = require("./quizData.json");
 const app = express();
+const fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("users.db");
 const bodyParser = require("body-parser");
@@ -19,6 +20,18 @@ app.use(session({
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "top_page.html"));
+});
+
+// JSONデータを返すAPI
+app.get("/api/quizData", (req, res) => {
+  const filePath = path.join(__dirname, "quizData.json");
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("JSON読み込みエラー:", err);
+      return res.status(500).json({ error: "読み込み失敗" });
+    }
+    res.json(JSON.parse(data));
+  });
 });
 
 //データベースへのアクセス
@@ -98,10 +111,10 @@ app.post("/checkAnswer", requireLogin, (req, res) => {
 
   //デバッグ用ログ
   console.log("カテゴリ:", category, "問題ID:", qid, "答え:", answer);
-  console.log("正解リストから取得:", quizAnswers[category]?.[qid]);
+  console.log("正解リストから取得:", quizAnswers[category]?.[qid]?.answer);
 
   //正解を取得
-  const correctAnswer = quizAnswers[category]?.[qid];
+  const correctAnswer = quizAnswers[category]?.[qid]?.answer;
   if (!correctAnswer) {
     return res.json({ correct: false, message: "問題が存在しません" });
   }

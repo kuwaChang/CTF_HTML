@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <title>ログインページ</title>
+  <title>問題一覧</title>
   <style>
     .hidden { display: none; }
     .tabs { display: flex; margin-bottom: 10px; }
@@ -44,275 +44,25 @@
 
   <!--タブの内容-->
   <div id="quiz" class="tab-content active">
-    <!--カテゴリー名-->  
-    <h1>TEST</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('TEST', 'test1')" data-point="15">
-        <div>test1</div>
-        <div class="points">15</div>
-      </div>
+    <div id="quizContainer"></div>
 
-      <div class="challenge" onclick="openModal('TEST', 'test2')" data-point="20">
-        <div>test2</div>
-        <div class="points">20</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('TEST', 'test3')" data-point="30">
-        <div>test3</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('TEST', 'test4')" data-point="100">
-        <div>test4</div>
-        <div class="points">100</div>
-      </div>
-    </div>
-    
-    <h1>Reversing</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <!--openModal('カテゴリー', '問題ID')-->
-      <div class="challenge" onclick="openModal('Reversing', 'reversing1')" data-point="15">
-        <div>want_to_execute</div>
-        <div class="points">15</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Reversing', 'reversing2')" data-point="20">
-        <div>Passchecker</div>
-        <div class="points">20</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Reversing', 'reversing3')" data-point="30">
-        <div>Password Crack!</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Reversing', 'reversing4')" data-point="100">
-        <div>Ghidra Tutorial</div>
-        <div class="points">100</div>
-      </div>
-    </div>
-
-    <!--カテゴリー名-->
-    <h1>Web</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Web', 'web1')" data-point="30">
-        <div>web1</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Web', 'web2')" data-point="30">
-        <div>web2</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Web', 'web3')" data-point="80">
-        <div>web3</div>
-        <div class="points">80</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Web','web4')" data-point="50">
-        <div>web4</div>
-        <div class="points">50</div>
-      </div>
-    </div>
-
-    <!--カテゴリー名-->
-    <h1>Pwn</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Pwn', 'pwn1')" data-point="10">
-        <div>Super_Command1</div>
-        <div class="points">10</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Pwn', 'pwn2')" data-point="100">
-        <div>Super_Command2</div>
-        <div class="points">100</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Pwn', 'pwn3')" data-point="200">
-        <div>Super_Command3</div>
-        <div class="points">200</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Pwn', 'pwn4')" data-point="300">
-        <div>Super_Command4</div>
-        <div class="points">300</div>
-      </div>
-    </div>
-
-    <!--カテゴリー名-->
-    <h1>PPC</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('PPC', 'ppc1')" data-point="10">
-        <div>Scratch Lv.1</div>
-        <div class="points">10</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('PPC', 'ppc2')" data-point="10">
-        <div>Scratch Lv.2</div>
-        <div class="points">10</div>
-      </div>
-    </div>
-
-    <!--カテゴリー名-->
-    <h1>OSINT</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('OSINT', 'osint1')" data-point="30">
-        <div>People Search</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint2')" data-point="30">
-        <div>You are here</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint3')" data-point="30">
-        <div>Where are you</div>
-        <div class="points">30</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint4')" data-point="35">
-        <div>Flight record</div>
-        <div class="points">35</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint5')" data-point="40">
-        <div>ここはココア？</div>
-        <div class="points">40</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint6')" data-point="40">
-        <div>Cyberstalking1 ~Story~</div>
-        <div class="points">40</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint7')" data-point="50">
-        <div>ONNN-K</div>
-        <div class="points">50</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint8')" data-point="50">
-        <div>一休み</div>
-        <div class="points">50</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint9')" data-point="50">
-        <div>ramen with me</div>
-        <div class="points">50</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('park?','osint10')" data-point="50">
-        <div>park?</div>
-        <div class="points">50</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint11')" data-point="55">
-        <div>Cyberstalking1 ~Tweet~</div>
-        <div class="points">55</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('OSINT', 'osint12')" data-point="55">
-        <div>Cyberstalking2 ~Tweet~</div>
-        <div class="points">55</div>
-      </div>
-    </div>
-
-    <!--カテゴリー名-->
-    <h1>Forensics</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Forensics', 'forensics1')" data-point="2">
-        <div>Welcome!</div>
-        <div class="points">2</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Forensics', 'forensics2')" data-point="5">
-        <div>ここどこ？</div>
-        <div class="points">5</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Forensics', 'forensics3')" data-point="10">
-        <div>プロパティ</div>
-        <div class="points">10</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Forensics', 'forensics4')" data-point="10">
-        <div>真っ白</div>
-        <div class="points">10</div>
-      </div>
-    </div>
-
-    <!--カテゴリー名-->
-    <h1>Crypto</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Crypto', 'crypto1')" data-point="10">
-        <div>ROT</div>
-        <div class="points">10</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Crypto', 'rypto2')" data-point="10">
-        <div>手動でやるのはつらいヤツ</div>
-        <div class="points">10</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Crypto', 'rypto3')" data-point="15">
-        <div>Let's cook1</div>
-        <div class="points">15</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Crypto', 'rypto4')" data-point="15">
-        <div>それはφです！</div>
-        <div class="points">15</div>
-      </div>
-    </div>
-
-    <!--カテゴリー名-->
-    <h1>Cmd</h1>
-    <div class="grid">
-      <!--各問題のタイトル-->
-      <div class="challenge" onclick="openModal('Cmd', 'cmd1')" data-point="5">
-        <div>cp</div>
-        <div class="points">5</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Cmd', 'cmd2')" data-point="5">
-        <div>chmod</div>
-        <div class="points">5</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Cmd', 'cmd3')" data-point="5">
-        <div>rm</div>
-        <div class="points">5</div>
-      </div>
-
-      <div class="challenge" onclick="openModal('Cmd', 'cmd4')" data-point="5">
-        <div>grep</div>
-        <div class="points">5</div>
-      </div>
-    </div>
-  </div>
-
-    <!-- モーダル構造 -->
-    <div id="modal" class="modal hidden">
-      <div id="modal-content" class="modal-content">
+    <!-- モーダル -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <h2 id="modal-title"></h2>
         <p id="modal-desc"></p>
-
+        <p><strong>得点:</strong> <span id="modal-point"></span> 点</p>
+        <details>
+          <summary>ヒント</summary>
+          <div id="modal-hints"></div>
+        </details>
         <input type="text" id="answer" placeholder="FLAG{...}">
-        <button id="submitBtn">Submit</button>
+        <button id="submitBtn">送信</button>
         <p id="result"></p>
       </div>
     </div>
-
+  </div>
 
   <!--得点表示-->
   <div id="score" class="tab-content">
@@ -337,6 +87,10 @@
   </div>
 
   <script>
+    let quizData = {};
+    let currentCategory = null;
+    let currentQid = null;
+    let currentPoint = 0;
     // ログイン処理
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -366,7 +120,6 @@
     // タブ切り替え
     const tabs = document.querySelectorAll(".tab");
     const contents = document.querySelectorAll(".tab-content");
-
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         // すべてのタブ・内容をいったん非アクティブにする
@@ -376,8 +129,13 @@
         tab.classList.add("active");
         document.getElementById(tab.dataset.target).classList.add("active");
         if (tab.dataset.target === "result_check") {
-        loadRanking(); // ← ランキングタブを開いたとき実行
-    }
+            console.log("ランキングタブがクリックされました");
+          loadRanking(); // ← ランキングタブを開いたとき実行
+        }
+        else if (tab.dataset.target === "score") {
+          console.log("得点タブがクリックされました");
+            loadScore(); // ← 得点タブを開いたとき実行
+        }
       });
     });
 
@@ -406,246 +164,84 @@
         tbody.appendChild(tr);
       });
     }
-    
-  // 問題データ（ここに説明文などを書く）(答えとは関係ない)
-  const questions = {
-    TEST:{
-      test1: {
-        title: "test1",
-        desc: "answer1"
-      },
-      test2: {
-        title: "test2",
-        desc: "answer2"
-      },
-      test3: {
-        title: "test3",
-        desc: "answer3"
-      },
-      test4: {
-        title: "test4",
-        desc: "answer4"
+        // JSONから問題一覧を生成
+    async function loadQuizData() {
+      const res = await fetch("/api/quizData");
+      quizData = await res.json();
+
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = "";
+
+      for (const [category, questions] of Object.entries(quizData)) {
+        // カテゴリタイトル
+        const h1 = document.createElement("h1");
+        h1.textContent = category;
+        container.appendChild(h1);
+
+        const grid = document.createElement("div");
+        grid.className = "grid";
+
+        // 各問題をボタンとして生成
+        for (const [qid, q] of Object.entries(questions)) {
+          const div = document.createElement("div");
+          div.className = "challenge";
+          div.innerHTML = `
+            <div>${q.title}</div>
+            <div class="points">${q.point}点</div>
+          `;
+          div.onclick = () => openModal(category, qid);
+          grid.appendChild(div);
+        }
+
+        container.appendChild(grid);
       }
-    },
-
-    Reversing : {
-      reversing1: {
-        title: "want_to_execute - Hidden Flag",
-        desc: "このファイルをコンパイルして実行してね！"
-      },
-      reversing2: {
-        title: "Passchecker - Easy Binary",
-        desc: "パスワードチェッカーを作ったよ！もしかしたらパスワードがファイルに残っているかも..."
-      },
-      reversing3: {
-        title: "Password Crack! - Caesar Cipher",
-        desc: "実行してパスワードを入れるとフラグが出力されるって聞いたよ！！"
-      },
-      reversing4: {
-        title: "Ghidra Tutorial - Simple Math",
-        desc: "このプログラムを実行してパスワードを入れるとフラグが出現します 正しいパスワードを入力してください pdfは環境構築や解き方などの資料"
-      },
-    },
-
-    Web: {
-      web1: {
-        title: "web1",
-        desc: "webサイトを公開したよ. ipアドレスは153.143.238.156だよ．"
-      },
-      web2: {
-        title: "web2",
-        desc: "さっきのサイトには他にもflagを隠してあるんだけど気がついた？おっとこれ以上はコメントしないでおくよ."
-      },
-      web3: {
-        title: "web3",
-        desc: "あ. リンクを作り忘れてるページがあるじゃん. OKが出たらflagゲットできるよ."
-      },
-      web4: {
-        title: "web4",
-        desc: "http://153.143.238.156:8080/web4.html にflagを載せておいたよ. え. どれかわからない？http://153.143.238.156:8080/web4.css を適応させたらわかるかな．"
-      }
-    },
-
-    Pwn: {
-      pwn1: {
-        title: "Super_Command1",
-        desc: "superなコマンドが完成したらしいね!どんなオプションが付いてるんだろう？？"
-      },
-      pwn2: {
-        title: "Super_Command2",
-        desc: "機密情報バレバレだったから一般の人から見られない場所に隠してもらったよ！これでもう大丈夫だね！そういえば近々ログインシステムを導入したいとか言ってたな…"
-      },
-      pwn3: {
-        title: "Super_Command3",
-        desc: "この前の脆弱性も修正したみたいで、今度はパスワードも導入したいみたい！さすがにもう脆弱性はない…よね…？"
-      },
-      pwn4: {
-        title: "Super_Command4",
-        desc: "パスワードのチェックが甘かったのかな…？ちゃんと正しいかどうか比較しないとだね！"
-      }
-    },
-
-    Crypto: {
-      crypto1: {
-        title: "ROT",
-        desc: "間違えて文字列をずらしちゃった！！ kogaCTFから始まるのは覚えてるんだけど、どのくらいずらしちゃったんだっけlphbDUG{xfmdpnf_up_dug}"
-      },
-      crypto2: {
-        title: "手動でやるのはつらいヤツ",
-        desc: "20回エンコードされた文字列です。 元の文章に戻してあげましょう。 ゴリ押しでできるならやってみてください。"
-      },
-      crypto3: {
-        title: "Let's cook1 - Caesar Cipher",
-        desc: "シェフ！ 料理のお時間です! Q1NMMjR7Zkw0Z19pNV9UMHIxdGVOfQ=="
-      },
-      crypto4: {
-        title: "それはφです！ - Simple Math",
-        desc: "φ(1234) + φ(5678) + φ(9973) =?答えをCSL24でラップせよ 例: 答えが52ならCSL24{52}"
-      }
-    },
-
-    Cmd: {
-      cmd1: {
-        title: "cp",
-        desc: "cpコマンドに関する問題です!コピーしたいときの正しいコマンド例を選べ$cp <コピー先のパス> <コピー元のファイルパス>$cp <コピー元のファイルパス> <コピー先のパス>$cp <コピーしたいファイル名>$cp <コピー後のファイル名>※もし、n番を選んだ場合は、CSL24{cp_n}がフラグ"
-      },
-      cmd2: {
-        title: "chmod",
-        desc: "chmodコマンドに関する問題です!fileにたいして、所有者のみにread権限のみを付与したいときの正しいコマンド例を選べ"
-      },
-      cmd3: {
-        title: "rm",
-        desc: "rmコマンドに関する問題です!file.aのみを削除したいときの正しいコマンド例を選べ"
-      },
-      cmd4: {
-        title: "grep",
-        desc: "grepコマンドに関する問題です!file内に存在する、mochiという文字列を抽出したいときの正しいコマンド例を選べ"
-      }
-    },
-    PPC: {
-      ppc1: {
-        title: "Scratch Lv.1",
-        desc: "これはScratchと呼ばれるプログラミング言語で書かれたファイルです。ブラウザ上でScratchを実行できるサイトを探し、ファイルを開いてみましょう。"
-      },
-      ppc2: {
-        title: "Scratch Lv.2",
-        desc: "Scrachは動作が書かれたブロックを組み合わせることで簡単にプログラミングを行うことができます。このファイルを開き、イベントブロックを利用してプログラムを動かしてみましょう。"
-      }
-    },
-
-    OSINT: {
-      osint1: {
-        title: "People Search",
-        desc: "私が通っている大学は創立100年を超える。この大学の設立者はどうやら様々な職業で活躍しており、新聞の創刊にもかかわっていたようだ。ほかにも本や論説の執筆などを行いこの国の近代化、啓蒙思想の普及に貢献し、国の変革期に大きな影響を与えた。 長らく人々の身近にその姿が印象として刻まれていたが、最近では日常の中でふと見かけることも少なくなった。時が経てば、その名を耳にすることも次第に減っていくのかもしれない。この文章が示す人物は誰だろうか？"
-      },
-      osint2: {
-        title: "You are here",
-        desc: "これはどこの駅の案内図でしょうか?正解が京都駅の場合のフラグはCSL24{京都駅}です。"
-        //ここに画像のダウンロードリンクを張る
-        //<a href="画像のURL" download>画像をダウンロード</a>
-      },
-      osint3: {
-        title: "Where are you",
-        desc: "これはどこの駅の案内図でしょうか?正解が京都駅の場合のフラグはCSL24{京都駅}です。"
-        //ここに画像のダウンロードリンクを張る
-        //<a href="画像のURL" download>画像をダウンロード</a>
-      },
-      osint4: {
-        title: "Flight record",
-        desc: "配布された画像から、このフライトが行われた日時を西暦で答えよ。例:CSL24{〇年〇月〇日}"
-                //ここに画像のダウンロードリンクを張る
-        //<a href="画像のURL" download>画像をダウンロード</a>
-      },
-      osint5: {
-        title: "ここはココア？",
-        desc: "2 + 2 * 2 = ?"
-      },
-      osint6: {
-        title: "Cyberstalking1 ~Story~ ",
-        desc: "2 + 2 * 2 = ?"
-      },
-      osint7: {
-        title: "ONNN-K",
-        desc: "2 + 2 * 2 = ?"
-      },
-      osint8: {
-        title: "一休み",
-        desc: "2 + 2 * 2 = ?"
-      },
-      osint9: {
-        title: "ramen with me - Simple Math",
-        desc: "2 + 2 * 2 = ?"
-      },
-      osint10: {
-        title: "park? - Simple Math",
-        desc: "2 + 2 * 2 = ?"
-      },
-      osint11: {
-        title: "Cyberstalking1 ~Tweet~ - Simple Math",
-        desc: "2 + 2 * 2 = ?"
-      },
-      osint12: {
-        title: "Cyberstalking2 ~Tweet~ - Simple Math",
-        desc: "2 + 2 * 2 = ?"
-      }
-    },
-
-  };
-
-  // モーダルを開く
-  let currentCategory = null;
-  let currentQid = null;
-  let currentPoint = 0;
-
-  function openModal(category, id) {
-    const challengeElem = event.currentTarget; // ← クリックされた要素を取得
-    currentCategory = category;
-    currentQid = id;
-    currentPoint = Number(challengeElem.getAttribute("data-point")); // ← ポイントを取得
-
-    const modal = document.getElementById("modal");
-    modal.style.display = "flex";
-
-    // 選ばれた問題データを反映
-    const q = questions[category][id];
-    document.getElementById("modal-title").textContent = q.title;
-    document.getElementById("modal-desc").textContent = q.desc;
-  }
-
-    // モーダルを閉じる
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
-
-    // 背景クリックでも閉じられるように
-  window.onclick = function(event) {
-    const modal = document.getElementById("modal");
-    if (event.target === modal) {
-      closeModal();
     }
-  };
 
-document.getElementById('submitBtn').addEventListener('click', async function(e){
-  e.preventDefault();
-  const answer = document.getElementById('answer').value;
-  
-  // 現在開いている問題の情報を取得
-  const category = currentCategory;
-  const qid = currentQid;
+    // モーダル開く
+    function openModal(category, qid) {
+      const q = quizData[category][qid];
+      currentCategory = category;
+      currentQid = qid;
+      currentPoint = q.point;
 
-  const response = await fetch('/checkAnswer', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      category: currentCategory,
-      qid: currentQid,
-      answer: answer,
-      point: currentPoint })
-  });
+      document.getElementById("modal-title").textContent = q.title;
+      document.getElementById("modal-desc").textContent = q.desc;
+      document.getElementById("modal-point").textContent = q.point;
+      document.getElementById("modal-hints").innerHTML =
+        q.hint.map(h => `<div>・${h}</div>`).join("");
+      document.getElementById("modal").style.display = "flex";
+    }
 
-  const data = await response.json();
-  document.getElementById('result').innerText = data.correct ? "正解！" : "不正解…";
-});
+    // モーダル閉じる
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    // 背景クリックで閉じる
+    window.onclick = (e) => {
+      if (e.target === document.getElementById("modal")) closeModal();
+    };
+
+    // 答え送信
+    document.getElementById("submitBtn").addEventListener("click", async (e) => {
+      e.preventDefault();
+      const answer = document.getElementById("answer").value;
+
+      const res = await fetch("/checkAnswer", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          category: currentCategory,
+          qid: currentQid,
+          answer: answer,
+          point: currentPoint
+        })
+      });
+      const data = await res.json();
+      document.getElementById("result").innerText = data.correct ? "正解！" : "不正解…";
+    });
+
+    loadQuizData(); // 初期ロード
   </script>
 </body>
 </html>

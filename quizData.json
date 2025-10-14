@@ -1,0 +1,229 @@
+{
+  "TEST": {
+    "test1": {
+      "answer": "FLAG{test1}",
+      "title": "タイトルだよ",
+      "desc": "ここが説明文",
+      "hint": ["ここがヒント"],
+      "point": 10
+    },
+    "test2": {
+      "answer": "FLAG{test2}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 20
+    },
+    "test3": {
+      "answer": "FLAG{test3}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 30
+    },
+    "test4": {
+      "answer": "FLAG{test4}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 40
+    }
+  },
+
+  "Reversing": {
+    "reversing1": {
+      "answer": "FLAG{reversing1}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 10
+    },
+    "reversing2": {
+      "answer": "FLAG{reversing2}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 20
+    },
+    "reversing3": {
+      "answer": "FLAG{reversing3}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 30
+    },
+    "reversing4": {
+      "answer": "FLAG{reversing4}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 70
+    }
+  },
+  "WEB": {
+    "web1": {
+      "answer": "FLAG{web1}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 10
+    },
+    "web2": {
+      "answer": "FLAG{web2}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 20
+    },
+    "web3": {
+      "answer": "FLAG{web3}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 40
+    },
+    "web4": {
+      "answer": "FLAG{web4}",
+      "title": "title",
+      "desc": "desc",
+      "hint": ["hint"],
+      "point": 50
+    }
+  },
+    "Forensics": {
+        "forensics1": {
+        "answer": "FLAG{forensics_easy}",
+        "title": "簡単なフォレンジック",
+        "desc": "画像ファイルに隠されたFLAGを見つけよう。",
+        "hint": ["ステガノグラフィーツールを使ってみよう"],
+        "point": 40
+        }
+    },
+    "Crypto": {
+        "crypto1": {
+        "answer": "FLAG{crypto1}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 10
+        },
+        "crypto2": {
+        "answer": "FLAG{crypto2}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 20
+        },
+        "crypto3": {
+        "answer": "FLAG{crypto3}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 50
+        },
+        "crypto4": {
+        "answer": "FLAG{crypto4}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 60
+        }
+    },
+
+    "Pwn": {
+        "pwn1": {
+        "answer": "FLAG{pwn1}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"], 
+        "point": 30
+        }
+    },
+
+    "OSINT": {
+        "osint1": {
+        "answer": "FLAG{osint1}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 30
+        },
+        "osint2": {
+        "answer": "FLAG{osint2}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 30
+        },
+        "osint3": {
+        "answer": "FLAG{osint3}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 30
+        },
+        "osint4": {
+        "answer": "FLAG{osint4}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 30
+        },
+        "osint5": {
+        "answer": "FLAG{osint5}",   
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 40
+        },
+        "osint6": {
+        "answer": "FLAG{osint6}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 40
+        },
+        "osint7": {
+        "answer": "FLAG{osint7}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 50
+        },
+        "osint8": {
+        "answer": "FLAG{osint8}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 50
+        },
+        "osint9": {
+        "answer": "FLAG{osint9}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 60
+        },
+        "osint10": {
+        "answer": "FLAG{osint10}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 60
+        },
+        "osint11": {
+        "answer": "FLAG{osint11}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 60
+        },
+        "osint12": {
+        "answer": "FLAG{osint12}",
+        "title": "title",
+        "desc": "desc",
+        "hint": ["hint"],
+        "point": 70
+        }
+    }
+}
