@@ -1,3 +1,20 @@
+// ✅ ページ読み込み時にログイン状態をチェック
+window.addEventListener("DOMContentLoaded", async () => {
+  const res = await fetch("/session-check", { credentials: "include" });
+  const data = await res.json();
+
+  if (data.loggedIn) {
+    // すでにログイン中ならUIを切り替える
+    document.getElementById("loginSection").classList.add("hidden");
+    document.getElementById("mainSection").classList.remove("hidden");
+    document.getElementById("welcome").innerText = "ようこそ " + data.username + " さん！";
+  } else {
+    // 未ログインならログインフォームを表示
+    document.getElementById("loginSection").classList.remove("hidden");
+    document.getElementById("mainSection").classList.add("hidden");
+  }
+});
+
 export function initLogin(onLoginSuccess) {
   const loginForm = document.getElementById("loginForm");
 
@@ -11,7 +28,8 @@ export function initLogin(onLoginSuccess) {
     const res = await fetch("/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      credentials: "include"
     });
     const result = await res.json();
 

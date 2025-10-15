@@ -6,16 +6,28 @@ const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("users.db");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
-const session = require("express-session");
 const path = require("path");
-
+const cors = require("cors");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
+const session = require("express-session");
+const SQLiteStore = require("connect-sqlite3")(session);
+
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
+
 app.use(session({
-  secret: "secret_key",
+  secret: "super_secret_key",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,
+  store: new SQLiteStore({ db: "sessions.sqlite" }),
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,  // 1日
+    sameSite: "lax"
+  }
 }));
 
 app.get("/", (req, res) => {
@@ -111,16 +123,36 @@ function requireLogin(req, res, next) {
   next();
 }
 
+//セッション確認API
+app.get("/session-check", (req, res) => {
+  if (req.session.userid) {
+    // ログイン中ならユーザー情報を返す
+    db.get("SELECT username FROM users WHERE userid = ?", [req.session.userid], (err, row) => {
+      if (err || !row) {
+        return res.json({ loggedIn: false });
+      }
+      res.json({ loggedIn: true, username: row.username });
+    });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+
+
 //正誤判定＆スコア加算
 app.post("/checkAnswer", requireLogin, (req, res) => {
+  //ユーザーIDをセッションから取得
   const userid = req.session.userid;
+  //リクエストボディからカテゴリ、問題ID、回答を取得
   const { category, qid, answer, point } = req.body;
 
+  // デバッグ用ログ
   console.log("カテゴリ:", category, "問題ID:", qid, "答え:", answer);
   console.log("正解リストから取得:", quizAnswers[category]?.[qid]?.answer);
 
-  // 正解データ取得
+  // 正解データ取得（quizAnswerから）
   const correctAnswer = quizAnswers[category]?.[qid]?.answer;
+  // 問題が存在しない場合
   if (!correctAnswer) {
     return res.json({ correct: false, message: "問題が存在しません" });
   }
@@ -130,13 +162,13 @@ app.post("/checkAnswer", requireLogin, (req, res) => {
     "SELECT * FROM solved WHERE userid = ? AND category = ? AND qid = ?",
     [userid, category, qid],
     (err, row) => {
+      // DBエラー
       if (err) {
         console.error(err);
         return res.status(500).json({ correct: false, message: "DBエラー" });
       }
-
+      // すでに解いた場合
       if (row) {
-        // すでに解いた場合
         return res.json({
           correct: true,
           alreadySolved: true,
@@ -144,12 +176,13 @@ app.post("/checkAnswer", requireLogin, (req, res) => {
         });
       }
 
+      //入力値と正解を正規化して比較
       // まだ解いていない場合のみ判定
       const normalizedAnswer = String(answer).trim().toLowerCase();
       const normalizedCorrect = String(correctAnswer).trim().toLowerCase();
-
+      
       if (normalizedAnswer === normalizedCorrect) {
-        const gain = Number(point) || 0;
+        const gain = Number(point) || 0;  //pointが未定義やnullの場合に備えて0をデフォルト
 
         // スコア加算＋解いた記録を追加
         db.run("UPDATE users SET score = score + ? WHERE userid = ?", [gain, userid], (err) => {
@@ -194,9 +227,9 @@ app.get("/getScore", requireLogin, (req, res) => {
   });
 });
 
-// すでに解いた問題一覧を返すAPI
+// 既解答問題を返すAPI
 app.get("/solvedList", requireLogin, (req, res) => {
-  const userid = req.session.userid;
+  const userid = req.session.userid;  // セッションからユーザーIDを取得
   db.all("SELECT category, qid FROM solved WHERE userid = ?", [userid], (err, rows) => {
     if (err) {
       console.error(err);
