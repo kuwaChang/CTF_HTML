@@ -59,6 +59,17 @@ function openModal(category, qid) {
   document.getElementById("modal-hints").innerHTML =
     q.hint.map(h => `<div>・${h}</div>`).join("");
   document.getElementById("modal").style.display = "flex";
+
+    // デフォルト色
+  modalContent.style.backgroundColor = "#ffffff";
+
+  // ✅ すでに解いたか確認
+  const solved = solvedList.some(q => q.category === category && q.qid === qid);
+  if (solved) {
+    modalContent.style.backgroundColor = "#6cd463ff"; // 正解済み（淡い緑）
+  }
+
+  modal.style.display = "block";
 }
 
 export function closeModal() {
@@ -93,6 +104,8 @@ document.getElementById("submitBtn").addEventListener("click", async (e) => {
   } else if (data.correct) {
     resultEl.innerText = "正解！ +" + (data.point || 0) + "点";
     resultEl.style.color = "limegreen";
+    solvedList.push({ category, qid }); // ←これで即時反映
+    modalContent.style.backgroundColor = "6cd463ff";
   } else {
     resultEl.innerText = "不正解...";
     resultEl.style.color = "red";

@@ -8,9 +8,9 @@
       "point": 10
     },
     "test2": {
-      "answer": "FLAG{test2}",
-      "title": "title",
-      "desc": "desc",
+      "answer": "FLAG{6}",
+      "title": "計算問題だよ",
+      "desc": "3! = ?FLAG{?}の?に答えを入れてね\nFLAG{答え}",
       "hint": ["hint"],
       "point": 20
     },
