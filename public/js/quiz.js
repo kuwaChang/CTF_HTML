@@ -70,7 +70,8 @@ function openModal(category, qid) {
       ? q.hint.map(h => `<div>・${h}</div>`).join("")
       : `<div>${q.hint}</div>`;
 
-  modalContent.style.backgroundColor = "#ffffff";
+  modalContent.style.backgroundColor = "#5b5b5bff";
+  modalContent.style.color = "white";
 
   // ✅ すでに解いたか確認
   const solved = solvedList.some(s => s.category === category && s.qid === qid);

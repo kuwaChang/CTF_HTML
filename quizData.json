@@ -15,49 +15,49 @@
       "title": "want_to_execute",
       "desc": "このファイルをコンパイルして実行してね。",
       "hint": ["gcc ./want_to_execute.c", "./a.out"],
-      "point": 10
+      "point": 15
     },
     "reversing2": {
       "answer": "FLAG{reversing2}",
-      "title": "title",
-      "desc": "desc",
-      "hint": ["hint"],
+      "title": "Passchecker",
+      "desc": "パスワードチェッカーを作ったよ！もしかしたらパスワードがファイルに残っているかも...",
+      "hint": ["stringsってコマンドがあるらしい...","flag.txtにはflagを暗号化したものが入っています. 見ても何も分からないので諦めてpasscheckerだけを調査してね．"],
       "point": 20
     },
     "reversing3": {
       "answer": "FLAG{reversing3}",
-      "title": "title",
-      "desc": "desc",
-      "hint": ["hint"],
+      "title": "Password Crack!",
+      "desc": "実行してパスワードを入れるとフラグが出力されるって聞いたよ！！",
+      "hint": ["実行してみてね"],
       "point": 30
     },
     "reversing4": {
       "answer": "FLAG{reversing4}",
-      "title": "title",
-      "desc": "desc",
-      "hint": ["hint"],
-      "point": 70
+      "title": "Ghidra Tutorial (旧 Let's reversing 1)",
+      "desc": "このプログラムを実行してパスワードを入れるとフラグが出現します 正しいパスワードを入力してください pdfは環境構築や解き方などの資料",
+      "hint": ["GhidraとかIDAとか使ってみるのはありかも？"],
+      "point": 100
     }
   },
   "WEB": {
     "web1": {
       "answer": "FLAG{web1}",
-      "title": "title",
-      "desc": "desc",
-      "hint": ["hint"],
-      "point": 10
+      "title": "welcome:web1",
+      "desc": "webサイトを公開したよ. ipアドレスは153.143.238.156",
+      "hint": ["え，開けないって？ ポート番号の指定が必要なんだよね","開いているポート番号をスキャンしてみると？","8000ではないので気を付けて!!!"],
+      "point": 30
     },
     "web2": {
       "answer": "FLAG{web2}",
-      "title": "title",
-      "desc": "desc",
-      "hint": ["hint"],
+      "title": "web2",
+      "desc": "さっきのサイトには他にもflagを隠してあるんだけど気がついた？おっとこれ以上はコメントしないでおくよ．",
+      "hint": ["ホームへ？？？","タイトル見るのって重要だよね","書いてあるけど表示されないことってあるよね．プログラミングなんかで使ったりしたことあるんじゃないかな？","書いてあるけど無視させることってできるよね．プログラミングなんかで使ったりしたことあるんじゃないかな？","何を見ればいいのか考えてみよう．"],
       "point": 20
     },
     "web3": {
       "answer": "FLAG{web3}",
-      "title": "title",
-      "desc": "desc",
+      "title": "web3",
+      "desc": "あ，リンクを作り忘れてるページがあるじゃん．OKが出たらflagゲットできるよ. http://153.143.238.156:8080/response.html",
       "hint": ["hint"],
       "point": 40
     },
