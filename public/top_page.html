@@ -7,7 +7,7 @@
   <style>
     .hidden { display: none; }
     .tabs { display: flex; margin-bottom: 10px; }
-    .tab { padding: 10px 20px; cursor: pointer; border: 1px solid #aaa; border-bottom: none; background: #fcfcfc; }
+    .tab { padding: 10px 20px; cursor: pointer; border: 1px solid #000000; border-bottom: none; background: #fcfcfc; }
     .tab.active { background: rgb(255, 255, 255); font-weight: bold; }
     .tab-content { border: 1px solid #aaa; padding: 15px; display: none; }
     .tab-content.active { display: block; }
@@ -34,6 +34,9 @@
   <!-- ログイン後に見える部分 -->
   <div id="mainSection" class="hidden">
     <h2 id="welcome"></h2>
+
+    <h2 id="welcome"></h2>
+<button id="logoutBtn" style="margin:10px;">ログアウト</button>
     
     <!--タブ選択-->
     <div class="tabs">

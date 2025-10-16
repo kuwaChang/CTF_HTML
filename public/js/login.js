@@ -1,3 +1,5 @@
+import { initTabs } from "./tabs.js";
+import { loadQuizData } from "./quiz.js";
 // ✅ ページ読み込み時にログイン状態をチェック
 window.addEventListener("DOMContentLoaded", async () => {
   const res = await fetch("/session-check", { credentials: "include" });
@@ -8,6 +10,9 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("loginSection").classList.add("hidden");
     document.getElementById("mainSection").classList.remove("hidden");
     document.getElementById("welcome").innerText = "ようこそ " + data.username + " さん！";
+
+    initTabs();
+    loadQuizData();
   } else {
     // 未ログインならログインフォームを表示
     document.getElementById("loginSection").classList.remove("hidden");
@@ -46,3 +51,21 @@ export function initLogin(onLoginSuccess) {
     }
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      const res = await fetch("/logout", { credentials: "include" });
+      const data = await res.json();
+
+      if (data.success) {
+        alert("ログアウトしました！");
+        // ログイン画面に戻す
+        document.getElementById("loginSection").classList.remove("hidden");
+        document.getElementById("mainSection").classList.add("hidden");
+        document.getElementById("loginForm").reset();
+      }
+    });
+  }
+});

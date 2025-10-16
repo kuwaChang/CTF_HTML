@@ -14,7 +14,7 @@ export async function loadQuizData() {
   container.innerHTML = "";
 
   // ✅ 解いた問題リストを先に取得
-  const solvedRes = await fetch("/api/solvedList", { credentials: "include" });
+  const solvedRes = await fetch("/solvedList", { credentials: "include" });
   console.log("📡 /api/quizData応答:", res.status);
   solvedList = await solvedRes.json();
   const solvedSet = new Set(solvedList.map(s => `${s.category}:${s.qid}`));
@@ -39,7 +39,7 @@ export async function loadQuizData() {
       const key = `${category}:${qid}`;
       if (solvedSet.has(key)) {
         div.style.backgroundColor = "#6cd463ff";  // 既に解いた
-        div.style.pointerEvents = "none";          // クリック無効
+        //div.style.pointerEvents = "none";          // クリック無効
         div.style.opacity = "0.7";
       } else {
         div.style.backgroundColor = "#969696ff";   // 未解答
@@ -148,6 +148,15 @@ export async function loadRanking() {
     tbody.appendChild(tr);
   });
 }
+
+// モーダルを閉じるボタン
+document.addEventListener("DOMContentLoaded", () => {
+  const closeBtn = document.querySelector(".close");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeModal);
+  }
+});
+
 
 // ✅ 「最新スコア取得」ボタン
 document.addEventListener("DOMContentLoaded", () => {

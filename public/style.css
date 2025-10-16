@@ -79,7 +79,7 @@
         padding: 30px;
         border-radius: 10px;
         width: 400px;
-        color: #fff;
+        color: #000000;
         text-align: left;
       }
 
@@ -100,10 +100,8 @@
       .hint-content {
         display: none;
         margin-top: 8px;
-        color: #ccc;
+        color: #040404;
       }
-
-      
 
       button {
         margin-top: 10px;
@@ -117,5 +115,57 @@
 
       button:hover {
         background-color: #005ecb;
+      }
+
+      #answer {
+        width: 90%;
+        padding: 8px 10px;
+        margin-top: 10px;
+        border: 2px solid #5a5abf;   /* ← ここが縁 */
+        border-radius: 6px;
+        font-size: 14px;
+        outline: none;
+        transition: 0.2s;
+      }
+
+      #answer:focus {
+        border-color: #50fa7b;       /* フォーカス時に緑色に変化 */
+        box-shadow: 0 0 6px #50fa7b;
+      }
+
+
+      .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #333;
+      }
+
+      .tab {
+        padding: 10px 25px;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px 8px 0 0;
+        background: #2d2d3d;
+        color: #b0b0b0;
+        font-weight: bold;
+        transition: 0.2s;
+      }
+
+      .tab-content {
+        background-color: #2d3035;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .tab:hover {
+        background: #3e3e5a;
+        color: #fff;
+      }
+
+      .tab.active {
+        background: #5a5abf;
+        color: #000000;
       }
 
