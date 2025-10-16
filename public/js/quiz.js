@@ -6,13 +6,16 @@ let currentPoint = 0;
 
 // JSONから問題一覧を読み込み
 export async function loadQuizData() {
+  console.log("📡 loadQuizData開始");
   const res = await fetch("/api/quizData");
   quizData = await res.json();
+  console.log("📦 取得したデータ:", quizData);
   const container = document.getElementById("quizContainer");
   container.innerHTML = "";
 
   // ✅ 解いた問題リストを先に取得
   const solvedRes = await fetch("/api/solvedList", { credentials: "include" });
+  console.log("📡 /api/quizData応答:", res.status);
   solvedList = await solvedRes.json();
   const solvedSet = new Set(solvedList.map(s => `${s.category}:${s.qid}`));
 

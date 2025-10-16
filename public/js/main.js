@@ -5,6 +5,7 @@ import { loadQuizData } from "./quiz.js";
 window.addEventListener("DOMContentLoaded", () => {
   initLogin(() => {      // ← ログイン後だけ実行
     initTabs();
+    console.log("📥 loadQuizData呼び出し開始");
     loadQuizData();
   });
 });
