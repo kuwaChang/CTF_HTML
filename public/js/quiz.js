@@ -1,5 +1,5 @@
 export let quizData = {};
-let solvedList = []; // ← ここをグローバル化！
+let solvedList = [];
 let currentCategory = null;
 let currentQid = null;
 let currentPoint = 0;
@@ -8,13 +8,18 @@ let currentPoint = 0;
 export async function loadQuizData() {
   console.log("📡 loadQuizData開始");
   const res = await fetch("/api/quizData");
+  if (!res.ok) {
+    console.error("サーバーエラー:", res.status);
+    return;
+  }
   quizData = await res.json();
   console.log("📦 取得したデータ:", quizData);
   const container = document.getElementById("quizContainer");
   container.innerHTML = "";
 
   // ✅ 解いた問題リストを先に取得
-  const solvedRes = await fetch("/solvedList", { credentials: "include" });
+  const solvedRes = await fetch("/quiz/solvedList", { credentials: "include" });
+  
   console.log("📡 /api/quizData応答:", res.status);
   solvedList = await solvedRes.json();
   const solvedSet = new Set(solvedList.map(s => `${s.category}:${s.qid}`));
@@ -99,7 +104,7 @@ document.getElementById("submitBtn").addEventListener("click", async (e) => {
   e.preventDefault();
   const answer = document.getElementById("answer").value;
 
-  const res = await fetch("/checkAnswer", {
+  const res = await fetch("/quiz/checkAnswer", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

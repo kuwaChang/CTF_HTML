@@ -30,7 +30,7 @@ export function initLogin(onLoginSuccess) {
       password: e.target.password.value
     };
 
-    const res = await fetch("/login", {
+    const res = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
-      const res = await fetch("/logout", { credentials: "include" });
+      const res = await fetch("/auth/logout", { credentials: "include" });
       const data = await res.json();
 
       if (data.success) {
