@@ -9,6 +9,37 @@
     }
   },
 
+  "beginner": {
+    "beginner1": {
+      "answer": "flag{new_beginner}",
+      "title": "問題の型式に慣れよう",
+      "desc": "「flag{new_beginner}」がフラグです。",
+      "hint": ["flag{new_beginner}と入力してください。"],
+      "point": 5
+    },
+    "crypto": {
+      "answer": "flag{base64cryptoencode}",
+      "title": "もう一つの",
+      "desc": "与えられた文字列からflagを見つけてください。\nZmxhZ3tiYXNlNjRjcnlwdG9lbmNvZGV9",
+      "hint": ["元に戻すためのツールcyberchefを使ってみよう!"],
+      "point": 10
+    },
+    "forensics1": {
+      "answer": "flag{hidden_672349}",
+      "title": "画像に隠されたflag",
+      "desc": "画像ファイルに隠されたflagを見つけてください。",
+      "hint": ["画像データの詳しい情報を調べるコマンドを調べてみましょう！"],
+      "point": 15
+    },
+    "forensics2": {
+      "answer": "flag{true_file extension}",
+      "title": "拡張子もヒントになる",
+      "desc": "このfileからflagを見つけてください！",
+      "hint": ["fileコマンドで中身がどのようなものなのか調べてみましょう！"],
+      "point": 20
+    }
+  },
+
   "Reversing": {
     "reversing1": {
       "answer": "FLAG{reversing1}",

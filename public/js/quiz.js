@@ -80,10 +80,14 @@ function openModal(category, qid) {
   }
 
   modal.style.display = "flex";
+
+  console.log(`📝 openModal: ${category} - ${qid}`);
 }
 
 export function closeModal() {
   document.getElementById("modal").style.display = "none";
+  loadQuizData(); // モーダル閉じたら問題一覧を再読み込み
+  console.log("closeModal");
 }
 
 window.onclick = (e) => {
@@ -106,6 +110,8 @@ document.getElementById("submitBtn").addEventListener("click", async (e) => {
     }),
     credentials: "include"
   });
+console.log("📡 /checkAnswer応答:", res.status);
+
   const data = await res.json();
   const resultEl = document.getElementById("result");
   const modal = document.getElementById("modal");

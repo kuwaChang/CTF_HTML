@@ -1,0 +1,18 @@
+<h1>CTF管理画面</h1>
+<button id="loadBtn">問題一覧を読み込む</button>
+<button id="addBtn">新しい問題を追加</button>
+
+<div id="quizList"></div>
+
+<!-- モーダル: 新規追加フォーム -->
+<div id="modal" class="hidden">
+  <h3>新しい問題を追加</h3>
+  <input type="text" id="title" placeholder="タイトル">
+  <input type="text" id="category" placeholder="カテゴリ">
+  <textarea id="desc" placeholder="説明文"></textarea>
+  <input type="text" id="flag" placeholder="フラグ">
+  <input type="number" id="point" placeholder="点数">
+  <button id="saveBtn">保存</button>
+</div>
+
+<script src="admin.js"></script>
