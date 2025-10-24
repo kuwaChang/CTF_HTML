@@ -19,7 +19,7 @@ router.get("/all", requireLogin, (req, res) => {
 });
 
 // 正解判定
-router.post("/check", requireLogin, (req, res) => {
+router.post("/checkAnswer", requireLogin, (req, res) => {
   const { category, qid, answer, point } = req.body;
   const userid = req.session.userid;
   const data = JSON.parse(fs.readFileSync(quizPath, "utf-8"));

@@ -1,4 +1,5 @@
-import { loadRanking, loadScore } from "./quiz.js";
+import { loadScore } from "./quiz.js";
+import { loadRanking } from "./ranking.js";
 
 export function initTabs() {
   const tabs = document.querySelectorAll(".tab");

@@ -1,10 +1,16 @@
-//スコア取得API
-app.get("/getScore", requireLogin, (req, res) => {
-  db.get("SELECT score FROM users WHERE userid = ?", [req.session.userid], (err, row) => {
-    if (err || !row) {
-      res.json({ success: false, score: 0 });
-    } else {
-      res.json({ success: true, score: row.score });
-    }
+// ✅ ランキング表示
+export async function loadRanking() {
+  const res = await fetch("/ranking");
+  const data = await res.json();
+  const tbody = document.querySelector("#ranking tbody");
+  tbody.innerHTML = "";
+  data.forEach((user, index) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${user.userid || user.username}</td>
+      <td>${user.score}</td>
+    `;
+    tbody.appendChild(tr);
   });
-});
+}

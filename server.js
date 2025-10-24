@@ -44,6 +44,17 @@ app.get("/api/quizData", (req, res) => {
   });
 });
 
+
+// ✅ スコア取得API
+app.get("/getScore", (req, res) => {
+  db.get("SELECT score FROM users WHERE userid = ?", [req.session.userid], (err, row) => {
+    if (err || !row) {
+      res.json({ success: false, score: 0 });
+    } else {
+      res.json({ success: true, score: row.score });
+    }
+  });
+});
 //データベースへのアクセス
 app.get("/ranking", (req, res) => {
   db.all("SELECT userid, score FROM users ORDER BY score DESC LIMIT 10", (err, rows) => {
