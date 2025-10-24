@@ -1,31 +1,37 @@
-// public/admin.js  (require を削除！)
+document.addEventListener("DOMContentLoaded", () => {
+  loadQuizzes();
 
-document.addEventListener("DOMContentLoaded", async () => {
-  console.log("✅ 管理者ページ読み込み完了");
+  // 追加フォーム
+  document.getElementById("addForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    formData.hint = formData.hint.split(",").map(s => s.trim());
+    const res = await fetch("/admin/addQuiz", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+    alert((await res.json()).message);
+    loadQuizzes();
+  });
 
-  try {
-    // 管理者ページで問題一覧を取得
-    const res = await fetch("/admin/quizzes");
-    if (!res.ok) throw new Error("サーバーエラー: " + res.status);
-
-    const quizzes = await res.json();
-    console.log("📘 問題一覧:", quizzes);
-
-    const list = document.getElementById("quizList");
-    if (!list) return;
-
-    for (const category in quizzes) {
-      const cat = document.createElement("div");
-      cat.innerHTML = `<h2>${category}</h2>`;
-      for (const qid in quizzes[category]) {
-        const q = quizzes[category][qid];
-        const p = document.createElement("p");
-        p.textContent = `${qid}: ${q.title} (${q.point}点)`;
-        cat.appendChild(p);
-      }
-      list.appendChild(cat);
-    }
-  } catch (err) {
-    console.error("管理画面読み込みエラー:", err);
-  }
+  // 削除フォーム
+  document.getElementById("deleteForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    const res = await fetch("/admin/deleteQuiz", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+    alert((await res.json()).message);
+    loadQuizzes();
+  });
 });
+
+async function loadQuizzes() {
+  const res = await fetch("/admin/quizzes");
+  if (!res.ok) return alert("読み込み失敗");
+  const data = await res.json();
+  document.getElementById("quizList").textContent = JSON.stringify(data, null, 2);
+}

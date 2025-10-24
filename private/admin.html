@@ -1,20 +1,33 @@
-<h1>CTF管理画面</h1>
-<button id="loadBtn">問題一覧を読み込む</button>
-<button id="addBtn">新しい問題を追加</button>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>管理者ページ</title>
+</head>
+<body>
+  <h1>管理者ページ</h1>
 
-<div id="quizList"></div>
+  <h2>問題追加</h2>
+  <form id="addForm">
+    カテゴリ: <input type="text" name="category" required><br>
+    問題ID: <input type="text" name="qid" required><br>
+    タイトル: <input type="text" name="title" required><br>
+    説明: <input type="text" name="desc"><br>
+    答え: <input type="text" name="answer"><br>
+    ヒント(カンマ区切り): <input type="text" name="hint"><br>
+    点数: <input type="number" name="point" value="100"><br>
+    <button type="submit">追加</button>
+  </form>
 
-<!-- モーダル: 新規追加フォーム -->
-<div id="modal" class="hidden">
-  <h3>新しい問題を追加</h3>
-  <input type="text" id="title" placeholder="タイトル">
-  <input type="text" id="category" placeholder="カテゴリ">
-  <textarea id="desc" placeholder="説明文"></textarea>
-  <input type="text" id="flag" placeholder="フラグ">
-  <input type="number" id="point" placeholder="点数">
-  <button id="saveBtn">保存</button>
-</div>
+  <h2>問題削除</h2>
+  <form id="deleteForm">
+    カテゴリ: <input type="text" name="category" required><br>
+    問題ID: <input type="text" name="qid" required><br>
+    <button type="submit">削除</button>
+  </form>
 
-<div id="quizList"></div>
+  <pre id="quizList"></pre>
 
-<script src="./js/admin.js"></script>
+  <script src="./js/admin.js"></script>
+</body>
+</html>

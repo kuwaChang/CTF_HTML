@@ -1,72 +1,91 @@
 {
   "TEST": {
     "test1": {
-      "answer": "FLAG{test1}",
-      "title": "タイトルだよ",
-      "desc": "ここが説明文",
-      "hint": ["ここがヒント\nFLAG{test1}"],
+      "title": "テスト問題",
+      "desc": "1 + 1 = ?",
+      "answer": "2",
+      "hint": [
+        "計算してね",
+        "がんばれ"
+      ],
       "point": 10
     }
   },
-
   "beginner": {
     "beginner1": {
       "answer": "flag{new_beginner}",
       "title": "問題の型式に慣れよう",
       "desc": "「flag{new_beginner}」がフラグです。",
-      "hint": ["flag{new_beginner}と入力してください。"],
+      "hint": [
+        "flag{new_beginner}と入力してください。"
+      ],
       "point": 5
     },
     "crypto": {
       "answer": "flag{base64cryptoencode}",
       "title": "もう一つの",
       "desc": "与えられた文字列からflagを見つけてください。\nZmxhZ3tiYXNlNjRjcnlwdG9lbmNvZGV9",
-      "hint": ["元に戻すためのツールcyberchefを使ってみよう!"],
+      "hint": [
+        "元に戻すためのツールcyberchefを使ってみよう!"
+      ],
       "point": 10
     },
     "forensics1": {
       "answer": "flag{hidden_672349}",
       "title": "画像に隠されたflag",
       "desc": "画像ファイルに隠されたflagを見つけてください。",
-      "hint": ["画像データの詳しい情報を調べるコマンドを調べてみましょう！"],
+      "hint": [
+        "画像データの詳しい情報を調べるコマンドを調べてみましょう！"
+      ],
       "point": 15
     },
     "forensics2": {
       "answer": "flag{true_file extension}",
       "title": "拡張子もヒントになる",
       "desc": "このfileからflagを見つけてください！",
-      "hint": ["fileコマンドで中身がどのようなものなのか調べてみましょう！"],
+      "hint": [
+        "fileコマンドで中身がどのようなものなのか調べてみましょう！"
+      ],
       "point": 20
     }
   },
-
   "Reversing": {
     "reversing1": {
       "answer": "FLAG{reversing1}",
       "title": "want_to_execute",
       "desc": "このファイルをコンパイルして実行してね。",
-      "hint": ["gcc ./want_to_execute.c", "./a.out"],
+      "hint": [
+        "gcc ./want_to_execute.c",
+        "./a.out"
+      ],
       "point": 15
     },
     "reversing2": {
       "answer": "FLAG{reversing2}",
       "title": "Passchecker",
       "desc": "パスワードチェッカーを作ったよ！もしかしたらパスワードがファイルに残っているかも...",
-      "hint": ["stringsってコマンドがあるらしい...","flag.txtにはflagを暗号化したものが入っています. 見ても何も分からないので諦めてpasscheckerだけを調査してね．"],
+      "hint": [
+        "stringsってコマンドがあるらしい...",
+        "flag.txtにはflagを暗号化したものが入っています. 見ても何も分からないので諦めてpasscheckerだけを調査してね．"
+      ],
       "point": 20
     },
     "reversing3": {
       "answer": "FLAG{reversing3}",
       "title": "Password Crack!",
       "desc": "実行してパスワードを入れるとフラグが出力されるって聞いたよ！！",
-      "hint": ["実行してみてね"],
+      "hint": [
+        "実行してみてね"
+      ],
       "point": 30
     },
     "reversing4": {
       "answer": "FLAG{reversing4}",
       "title": "Ghidra Tutorial (旧 Let's reversing 1)",
       "desc": "このプログラムを実行してパスワードを入れるとフラグが出現します 正しいパスワードを入力してください pdfは環境構築や解き方などの資料",
-      "hint": ["GhidraとかIDAとか使ってみるのはありかも？"],
+      "hint": [
+        "GhidraとかIDAとか使ってみるのはありかも？"
+      ],
       "point": 100
     }
   },
@@ -75,165 +94,213 @@
       "answer": "FLAG{web1}",
       "title": "welcome:web1",
       "desc": "webサイトを公開したよ. ipアドレスは153.143.238.156",
-      "hint": ["え，開けないって？ ポート番号の指定が必要なんだよね","開いているポート番号をスキャンしてみると？","8000ではないので気を付けて!!!"],
+      "hint": [
+        "え，開けないって？ ポート番号の指定が必要なんだよね",
+        "開いているポート番号をスキャンしてみると？",
+        "8000ではないので気を付けて!!!"
+      ],
       "point": 30
     },
     "web2": {
       "answer": "FLAG{web2}",
       "title": "web2",
       "desc": "さっきのサイトには他にもflagを隠してあるんだけど気がついた？おっとこれ以上はコメントしないでおくよ．",
-      "hint": ["ホームへ？？？","タイトル見るのって重要だよね","書いてあるけど表示されないことってあるよね．プログラミングなんかで使ったりしたことあるんじゃないかな？","書いてあるけど無視させることってできるよね．プログラミングなんかで使ったりしたことあるんじゃないかな？","何を見ればいいのか考えてみよう．"],
+      "hint": [
+        "ホームへ？？？",
+        "タイトル見るのって重要だよね",
+        "書いてあるけど表示されないことってあるよね．プログラミングなんかで使ったりしたことあるんじゃないかな？",
+        "書いてあるけど無視させることってできるよね．プログラミングなんかで使ったりしたことあるんじゃないかな？",
+        "何を見ればいいのか考えてみよう．"
+      ],
       "point": 20
     },
     "web3": {
       "answer": "FLAG{web3}",
       "title": "web3",
       "desc": "あ，リンクを作り忘れてるページがあるじゃん．OKが出たらflagゲットできるよ. http://153.143.238.156:8080/response.html",
-      "hint": ["hint"],
+      "hint": [
+        "hint"
+      ],
       "point": 40
     },
     "web4": {
       "answer": "FLAG{web4}",
       "title": "title",
       "desc": "desc",
-      "hint": ["hint"],
+      "hint": [
+        "hint"
+      ],
       "point": 50
     }
   },
-    "Forensics": {
-        "forensics1": {
-        "answer": "FLAG{forensics_easy}",
-        "title": "簡単なフォレンジック",
-        "desc": "画像ファイルに隠されたFLAGを見つけよう。",
-        "hint": ["ステガノグラフィーツールを使ってみよう"],
-        "point": 40
-        }
-    },
-    "Crypto": {
-        "crypto1": {
-        "answer": "FLAG{crypto1}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 10
-        },
-        "crypto2": {
-        "answer": "FLAG{crypto2}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 20
-        },
-        "crypto3": {
-        "answer": "FLAG{crypto3}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 50
-        },
-        "crypto4": {
-        "answer": "FLAG{crypto4}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 60
-        }
-    },
-
-    "Pwn": {
-        "pwn1": {
-        "answer": "FLAG{pwn1}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"], 
-        "point": 30
-        }
-    },
-
-    "OSINT": {
-        "osint1": {
-        "answer": "FLAG{osint1}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 30
-        },
-        "osint2": {
-        "answer": "FLAG{osint2}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 30
-        },
-        "osint3": {
-        "answer": "FLAG{osint3}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 30
-        },
-        "osint4": {
-        "answer": "FLAG{osint4}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 30
-        },
-        "osint5": {
-        "answer": "FLAG{osint5}",   
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 40
-        },
-        "osint6": {
-        "answer": "FLAG{osint6}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 40
-        },
-        "osint7": {
-        "answer": "FLAG{osint7}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 50
-        },
-        "osint8": {
-        "answer": "FLAG{osint8}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 50
-        },
-        "osint9": {
-        "answer": "FLAG{osint9}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 60
-        },
-        "osint10": {
-        "answer": "FLAG{osint10}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 60
-        },
-        "osint11": {
-        "answer": "FLAG{osint11}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 60
-        },
-        "osint12": {
-        "answer": "FLAG{osint12}",
-        "title": "title",
-        "desc": "desc",
-        "hint": ["hint"],
-        "point": 70
-        }
+  "Forensics": {
+    "forensics1": {
+      "answer": "FLAG{forensics_easy}",
+      "title": "簡単なフォレンジック",
+      "desc": "画像ファイルに隠されたFLAGを見つけよう。",
+      "hint": [
+        "ステガノグラフィーツールを使ってみよう"
+      ],
+      "point": 40
     }
+  },
+  "Crypto": {
+    "crypto1": {
+      "answer": "FLAG{crypto1}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 10
+    },
+    "crypto2": {
+      "answer": "FLAG{crypto2}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 20
+    },
+    "crypto3": {
+      "answer": "FLAG{crypto3}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 50
+    },
+    "crypto4": {
+      "answer": "FLAG{crypto4}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 60
+    }
+  },
+  "Pwn": {
+    "pwn1": {
+      "answer": "FLAG{pwn1}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 30
+    }
+  },
+  "OSINT": {
+    "osint1": {
+      "answer": "FLAG{osint1}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 30
+    },
+    "osint2": {
+      "answer": "FLAG{osint2}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 30
+    },
+    "osint3": {
+      "answer": "FLAG{osint3}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 30
+    },
+    "osint4": {
+      "answer": "FLAG{osint4}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 30
+    },
+    "osint5": {
+      "answer": "FLAG{osint5}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 40
+    },
+    "osint6": {
+      "answer": "FLAG{osint6}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 40
+    },
+    "osint7": {
+      "answer": "FLAG{osint7}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 50
+    },
+    "osint8": {
+      "answer": "FLAG{osint8}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 50
+    },
+    "osint9": {
+      "answer": "FLAG{osint9}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 60
+    },
+    "osint10": {
+      "answer": "FLAG{osint10}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 60
+    },
+    "osint11": {
+      "answer": "FLAG{osint11}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 60
+    },
+    "osint12": {
+      "answer": "FLAG{osint12}",
+      "title": "title",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 70
+    }
+  }
 }

@@ -20,11 +20,13 @@ router.get("/", requireAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, "../private/admin.html"));
 });
 
+// 管理者用API：全問題データ取得
 router.get("/quizzes", requireAdmin, (req, res) => {
   const data = JSON.parse(fs.readFileSync(quizPath, "utf-8"));
   res.json(data);
 });
 
+// 管理者用API：問題追加
 router.post("/add", requireAdmin, (req, res) => {
   const { category, qid, title, desc, hint, answer, point } = req.body;
   const data = JSON.parse(fs.readFileSync(quizPath, "utf-8"));
@@ -34,4 +36,50 @@ router.post("/add", requireAdmin, (req, res) => {
   res.json({ message: "問題を追加しました" });
 });
 
+// 管理者用API：問題編集
+router.post("/addQuiz", requireAdmin, (req, res) => {
+  const { category, qid, title, desc, answer, hint, point } = req.body;
+
+  if (!category || !qid || !title || !answer)
+    return res.status(400).json({ message: "必須項目が不足しています" });
+
+  try {
+    const data = JSON.parse(fs.readFileSync(quizPath, "utf8"));
+    if (!data[category]) data[category] = {};
+    data[category][qid] = {
+      title,
+      desc: desc || "",
+      answer,
+      hint: Array.isArray(hint) ? hint : (hint ? hint.split(",").map(s => s.trim()) : []),
+      point: Number(point) || 0
+    };
+    fs.writeFileSync(quizPath, JSON.stringify(data, null, 2), "utf8");
+    res.json({ message: "問題を追加しました" });
+  } catch (err) {
+    console.error("追加エラー:", err);
+    res.status(500).json({ message: "保存エラー" });
+  }
+});
+
+// 管理者用API：問題削除
+router.delete("/deleteQuiz", requireAdmin, (req, res) => {
+  const { category, qid } = req.body;
+
+  if (!category || !qid)
+    return res.status(400).json({ message: "カテゴリとIDが必要です" });
+
+  try {
+    const data = JSON.parse(fs.readFileSync(quizPath, "utf8"));
+    if (data[category]?.[qid]) {
+      delete data[category][qid];
+      fs.writeFileSync(quizPath, JSON.stringify(data, null, 2), "utf8");
+      res.json({ message: "問題を削除しました" });
+    } else {
+      res.status(404).json({ message: "該当の問題が見つかりません" });
+    }
+  } catch (err) {
+    console.error("削除エラー:", err);
+    res.status(500).json({ message: "削除中にエラーが発生しました" });
+  }
+});
 module.exports = router;
