@@ -78,9 +78,12 @@
         margin: 10% auto;
         padding: 30px;
         border-radius: 10px;
-        width: 400px;
+        width: 80%;
+        max-width: 80vh;
+        overflow-y: auto;
         color: #000000;
         text-align: left;
+        box-sizing: border-box;
       }
 
       .close {
@@ -115,6 +118,22 @@
 
       button:hover {
         background-color: #005ecb;
+      }
+
+      .download-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 16px;
+        background-color: #3a3e45;
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: 0.2s;
+      }
+
+      .download-btn:hover {
+        background-color: #5a5e65;
+        transform: scale(1.05);
       }
 
       #answer {

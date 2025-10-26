@@ -75,6 +75,19 @@ function openModal(category, qid) {
       ? q.hint.map(h => `<div>・${h}</div>`).join("")
       : `<div>${q.hint}</div>`;
 
+  // 🔽 ファイルボタン生成
+  
+  const filesDiv = document.getElementById("modal-files");
+  filesDiv.innerHTML = ""; // 一旦クリア
+  if (q.files && q.files.length > 0) {
+    const fileLinks = q.files.map(f => 
+      `<a href="files/${f}" download class="download-btn">📄 ${f}</a>`
+    ).join("<br>");
+    document.getElementById("modal-files").innerHTML += `<div class="download-section">${fileLinks}</div>`;
+  } else {
+    filesDiv.innerHTML = ""; // ファイルがない場合は非表示
+  }
+
   modalContent.style.backgroundColor = "#5b5b5bff";
   modalContent.style.color = "white";
 

@@ -6,9 +6,28 @@
       "answer": "2",
       "hint": [
         "計算してね",
+        "がんばれ-----------------------------------------------------------------",
+        "がんばれ-----------------------------------------------------------------",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
+        "がんばれ",
         "がんばれ"
       ],
-      "point": 10
+      "point": 10,
+      "files": ["web100_hint.txt", "web100_cookie.zip"]
     }
   },
   "beginner": {
@@ -19,7 +38,8 @@
       "hint": [
         "flag{new_beginner}と入力してください。"
       ],
-      "point": 5
+      "point": 5,
+      "files": []
     },
     "crypto": {
       "answer": "flag{base64cryptoencode}",
@@ -28,7 +48,8 @@
       "hint": [
         "元に戻すためのツールcyberchefを使ってみよう!"
       ],
-      "point": 10
+      "point": 10,
+      "files": []
     },
     "forensics1": {
       "answer": "flag{hidden_672349}",
@@ -37,7 +58,8 @@
       "hint": [
         "画像データの詳しい情報を調べるコマンドを調べてみましょう！"
       ],
-      "point": 15
+      "point": 15,
+      "files": []
     },
     "forensics2": {
       "answer": "flag{true_file extension}",
@@ -46,7 +68,8 @@
       "hint": [
         "fileコマンドで中身がどのようなものなのか調べてみましょう！"
       ],
-      "point": 20
+      "point": 20,
+      "files": []
     }
   },
   "Reversing": {
@@ -58,7 +81,8 @@
         "gcc ./want_to_execute.c",
         "./a.out"
       ],
-      "point": 15
+      "point": 15,
+      "files": []
     },
     "reversing2": {
       "answer": "FLAG{reversing2}",
@@ -68,7 +92,8 @@
         "stringsってコマンドがあるらしい...",
         "flag.txtにはflagを暗号化したものが入っています. 見ても何も分からないので諦めてpasscheckerだけを調査してね．"
       ],
-      "point": 20
+      "point": 20,
+      "files": []
     },
     "reversing3": {
       "answer": "FLAG{reversing3}",
@@ -77,7 +102,8 @@
       "hint": [
         "実行してみてね"
       ],
-      "point": 30
+      "point": 30,
+      "files": []
     },
     "reversing4": {
       "answer": "FLAG{reversing4}",
@@ -86,7 +112,8 @@
       "hint": [
         "GhidraとかIDAとか使ってみるのはありかも？"
       ],
-      "point": 100
+      "point": 100,
+      "files": []
     }
   },
   "WEB": {
@@ -99,7 +126,8 @@
         "開いているポート番号をスキャンしてみると？",
         "8000ではないので気を付けて!!!"
       ],
-      "point": 30
+      "point": 30,
+      "files": []
     },
     "web2": {
       "answer": "FLAG{web2}",
@@ -112,7 +140,8 @@
         "書いてあるけど無視させることってできるよね．プログラミングなんかで使ったりしたことあるんじゃないかな？",
         "何を見ればいいのか考えてみよう．"
       ],
-      "point": 20
+      "point": 20,
+      "files": []
     },
     "web3": {
       "answer": "FLAG{web3}",
@@ -121,7 +150,8 @@
       "hint": [
         "hint"
       ],
-      "point": 40
+      "point": 40,
+      "files": []
     },
     "web4": {
       "answer": "FLAG{web4}",
@@ -130,7 +160,8 @@
       "hint": [
         "hint"
       ],
-      "point": 50
+      "point": 50,
+      "files": []
     }
   },
   "Forensics": {
@@ -141,7 +172,8 @@
       "hint": [
         "ステガノグラフィーツールを使ってみよう"
       ],
-      "point": 40
+      "point": 40,
+      "files": []
     }
   },
   "Crypto": {
@@ -152,7 +184,8 @@
       "hint": [
         "hint"
       ],
-      "point": 10
+      "point": 10,
+      "files": []
     },
     "crypto2": {
       "answer": "FLAG{crypto2}",
@@ -161,7 +194,8 @@
       "hint": [
         "hint"
       ],
-      "point": 20
+      "point": 20,
+      "files": []
     },
     "crypto3": {
       "answer": "FLAG{crypto3}",
@@ -170,7 +204,8 @@
       "hint": [
         "hint"
       ],
-      "point": 50
+      "point": 50,
+      "files": []
     },
     "crypto4": {
       "answer": "FLAG{crypto4}",
@@ -179,7 +214,8 @@
       "hint": [
         "hint"
       ],
-      "point": 60
+      "point": 60,
+      "files": []
     }
   },
   "Pwn": {
@@ -190,7 +226,8 @@
       "hint": [
         "hint"
       ],
-      "point": 30
+      "point": 30,
+      "files": []
     }
   },
   "OSINT": {
@@ -201,7 +238,8 @@
       "hint": [
         "hint"
       ],
-      "point": 30
+      "point": 30,
+      "files": []
     },
     "osint2": {
       "answer": "FLAG{osint2}",
@@ -210,7 +248,8 @@
       "hint": [
         "hint"
       ],
-      "point": 30
+      "point": 30,
+      "files": []
     },
     "osint3": {
       "answer": "FLAG{osint3}",
@@ -219,7 +258,8 @@
       "hint": [
         "hint"
       ],
-      "point": 30
+      "point": 30,
+      "files": []
     },
     "osint4": {
       "answer": "FLAG{osint4}",
@@ -228,7 +268,8 @@
       "hint": [
         "hint"
       ],
-      "point": 30
+      "point": 30,
+      "files": []
     },
     "osint5": {
       "answer": "FLAG{osint5}",
@@ -237,7 +278,8 @@
       "hint": [
         "hint"
       ],
-      "point": 40
+      "point": 40,
+      "files": []
     },
     "osint6": {
       "answer": "FLAG{osint6}",
@@ -246,7 +288,8 @@
       "hint": [
         "hint"
       ],
-      "point": 40
+      "point": 40,
+      "files": []
     },
     "osint7": {
       "answer": "FLAG{osint7}",
@@ -255,7 +298,8 @@
       "hint": [
         "hint"
       ],
-      "point": 50
+      "point": 50,
+      "files": []
     },
     "osint8": {
       "answer": "FLAG{osint8}",
@@ -264,7 +308,8 @@
       "hint": [
         "hint"
       ],
-      "point": 50
+      "point": 50,
+      "files": []
     },
     "osint9": {
       "answer": "FLAG{osint9}",
@@ -273,7 +318,8 @@
       "hint": [
         "hint"
       ],
-      "point": 60
+      "point": 60,
+      "files": []
     },
     "osint10": {
       "answer": "FLAG{osint10}",
@@ -282,7 +328,8 @@
       "hint": [
         "hint"
       ],
-      "point": 60
+      "point": 60,
+      "files": []
     },
     "osint11": {
       "answer": "FLAG{osint11}",
@@ -291,7 +338,8 @@
       "hint": [
         "hint"
       ],
-      "point": 60
+      "point": 60,
+      "files": []
     },
     "osint12": {
       "answer": "FLAG{osint12}",
@@ -300,7 +348,8 @@
       "hint": [
         "hint"
       ],
-      "point": 70
+      "point": 70,
+      "files": []
     }
   }
 }
