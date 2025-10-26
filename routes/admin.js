@@ -1,10 +1,21 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
 const router = express.Router();
 
 const quizPath = path.join(__dirname, "../data/quizData.json");
+const uploadDir = path.join(__dirname, "../public/files");
 
+
+// アップロード設定
+const storage = multer.diskStorage({
+  destination: uploadDir,
+  filename: (req, file, cb) => cb(null, file.originalname)
+});
+const upload = multer({ storage });
+
+// 管理者認証ミドルウェア
 function requireAdmin(req, res, next) {
   if (req.session.userid === "admin") {
     console.log("✅ 管理者認証OK");
@@ -16,6 +27,7 @@ function requireAdmin(req, res, next) {
   }
 }
 
+// 管理者用ページ表示
 router.get("/", requireAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, "../private/admin.html"));
 });
@@ -37,22 +49,28 @@ router.post("/add", requireAdmin, (req, res) => {
 });
 
 // 管理者用API：問題編集
-router.post("/addQuiz", requireAdmin, (req, res) => {
+router.post("/addQuiz", requireAdmin, upload.array("files"), (req, res) => {
   const { category, qid, title, desc, answer, hint, point } = req.body;
+  const files = req.files ? req.files.map(f => f.originalname) : [];
 
   if (!category || !qid || !title || !answer)
     return res.status(400).json({ message: "必須項目が不足しています" });
 
   try {
     const data = JSON.parse(fs.readFileSync(quizPath, "utf8"));
+    // カテゴリがなければ作成
     if (!data[category]) data[category] = {};
-    data[category][qid] = {
+
+    data[category].push = ({
+      qid,
       title,
       desc: desc || "",
       answer,
       hint: Array.isArray(hint) ? hint : (hint ? hint.split(",").map(s => s.trim()) : []),
-      point: Number(point) || 0
-    };
+      point: Number(point) || 0,
+      files
+    });
+
     fs.writeFileSync(quizPath, JSON.stringify(data, null, 2), "utf8");
     res.json({ message: "問題を追加しました" });
   } catch (err) {

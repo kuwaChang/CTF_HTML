@@ -6,13 +6,23 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));
     formData.hint = formData.hint.split(",").map(s => s.trim());
+
+     try {
     const res = await fetch("/admin/addQuiz", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
+      body: formData, // ← JSONではなくFormDataを直接送信
     });
-    alert((await res.json()).message);
+
+    const result = await res.json();
+    alert(result.message);
+
+    // フォームをリセットして再読み込み
+    e.target.reset();
     loadQuizzes();
+  } catch (err) {
+    console.error("追加エラー:", err);
+    alert("サーバーエラーが発生しました。");
+  }
   });
 
   // 削除フォーム
