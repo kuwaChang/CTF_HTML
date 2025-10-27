@@ -1,0 +1,100 @@
+    body {
+      font-family: "Segoe UI", "Hiragino Sans", sans-serif;
+      background-color: #1e1f22;
+      color: #ffffff;
+      margin: 0;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #7dcfff;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #ffcc66;
+      margin-top: 40px;
+      margin-bottom: 10px;
+    }
+
+    form {
+      background-color: #2b2d31;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto 30px;
+      text-align: left;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 6px;
+      background-color: #3a3e45;
+      color: #ffffff;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background-color: #357ab8;
+      transform: scale(1.03);
+    }
+
+    #deleteForm button {
+      background-color: #e24a4a;
+    }
+
+    #deleteForm button:hover {
+      background-color: #c73838;
+    }
+
+    pre#quizList {
+      background-color: #2b2d31;
+      color: #ddd;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: 40px auto;
+      text-align: left;
+      overflow-x: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    input::file-selector-button {
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    input::file-selector-button:hover {
+      background-color: #666;
+    }
