@@ -313,5 +313,17 @@
       "point": 70,
       "files": []
     }
+  },
+  "sad server": {
+    "easy1": {
+      "answer": "flag{easy1}",
+      "title": "easy1",
+      "desc": "desc",
+      "hint": [
+        "hint"
+      ],
+      "point": 10,
+      "files": []
+    }
   }
 }

@@ -95,6 +95,21 @@
     </table>
     </div>
   </div>
+
+    <!-- 省略: include xterm.js, socket.io -->
+  <button id="start">Start Scenario</button>
+  <div id="term"></div>
+
 </body>
-<script type="module" src="./js/main.js"></script>
+<script type="module" src="./js/main.js">
+  document.getElementById('start').onclick = async () => {
+    const res = await fetch('/start-sad', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({scenarioId:'sad01'})});
+    const {instanceId, wsPath} = await res.json();
+    const socket = io(wsPath);
+    const term = new Terminal();
+    term.open(document.getElementById('term'));
+    term.onData(s => socket.emit('input', s));
+    socket.on('output', data => term.write(data));
+  };
+</script>
 </html>

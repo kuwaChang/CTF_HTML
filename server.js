@@ -5,9 +5,25 @@ const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 const cors = require("cors");
 const fs = require("fs");
+const { Server } = require("socket.io");
+const { router: sadRouter, setSocketIO } = require("./server-sad");
 
 const app = express();
+
 const db = new sqlite3.Database("users.db");
+const http = require("http");
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: "*" },
+});
+
+// Socket.ioをSadサーバー機能に紐づけ
+setSocketIO(io);
+
+// デバッグ用：接続確認
+io.on("connection", (socket) => {
+  console.log("🟢 WebSocket接続:", socket.id);
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
@@ -111,7 +127,15 @@ const adminRoutes = require("./routes/admin");
 app.use("/auth", authRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/admin", adminRoutes);
+app.use("/sad", sadRouter);
 
-app.listen(3333, () => {
-  console.log("✅ サーバー起動: http://localhost:3333");
+// ✅ Socket.ioが有効化されることを確認
+io.on("connection", (socket) => {
+  console.log("🟢 WebSocket接続成功:", socket.id);
+});
+
+const PORT = 3333;
+
+app.listen(PORT, () => {
+  console.log(`✅ サーバー起動: http://localhost:${PORT}`);
 });
