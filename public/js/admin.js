@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
      try {
     const res = await fetch("/admin/addQuiz", {
       method: "POST",
-      body: formData, // ← JSONではなくFormDataを直接送信
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
     });
 
     const result = await res.json();

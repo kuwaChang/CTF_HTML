@@ -58,18 +58,30 @@ router.post("/addQuiz", requireAdmin, upload.array("files"), (req, res) => {
 
   try {
     const data = JSON.parse(fs.readFileSync(quizPath, "utf8"));
+        // ファイルがあればパスを保存
+    const filePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    // ✅ hintが文字列でも配列でも動くように修正！
+    let hintArray = [];
+    if (Array.isArray(hint)) {
+      hintArray = hint;
+    } else if (typeof hint === "string" && hint.trim() !== "") {
+      hintArray = hint.split(",").map(h => h.trim());
+    }
+
     // カテゴリがなければ作成
     if (!data[category]) data[category] = {};
 
-    data[category].push = ({
+    //問題データを追加
+    data[category][qid] = {
       qid,
+      answer,
       title,
       desc: desc || "",
-      answer,
-      hint: Array.isArray(hint) ? hint : (hint ? hint.split(",").map(s => s.trim()) : []),
+      hint: hint ? hint.split(",").map(h => h.trim()) : [],
       point: Number(point) || 0,
-      files
-    });
+      files: filePath ? [filePath] : []
+    };
 
     fs.writeFileSync(quizPath, JSON.stringify(data, null, 2), "utf8");
     res.json({ message: "問題を追加しました" });

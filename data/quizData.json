@@ -1,5 +1,7 @@
 {
-  "TEST": {},
+  "TEST": {
+
+  },
   "beginner": {
     "crypto": {
       "answer": "flag{base64cryptoencode}",
