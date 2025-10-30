@@ -14,7 +14,13 @@ const db = new sqlite3.Database("users.db");
 const http = require("http");
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: "*" },
+  path: "/socket.io",
+  transports: ["websocket", "polling"],
+  cors: {
+    origin: ["http://localhost:3333"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
 });
 
 // Socket.ioをSadサーバー機能に紐づけ
@@ -136,6 +142,6 @@ io.on("connection", (socket) => {
 
 const PORT = 3333;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`✅ サーバー起動: http://localhost:${PORT}`);
 });

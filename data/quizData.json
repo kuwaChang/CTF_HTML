@@ -316,9 +316,9 @@
   },
   "sad server": {
     "easy1": {
-      "answer": "flag{easy1}",
+      "answer": "FLAG{easy_flag}",
       "title": "easy1",
-      "desc": "desc",
+      "desc": "[ http://localhost:3333/sad.html ] に接続してflagを取得してください。",
       "hint": [
         "hint"
       ],

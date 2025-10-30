@@ -1,0 +1,60 @@
+{
+  "easy": {
+    "cpus": "0.5",
+    "memory": "256m",
+    "packages": [],
+    "files": [
+      {
+        "path": "/challenge/README.txt",
+        "content": "ようこそ Easy シナリオ。\n課題: /challenge/flag.txt を表示してください。",
+        "mode": "0644"
+      },
+      {
+        "path": "/challenge/flag.txt",
+        "content": "FLAG{easy_flag}",
+        "mode": "0444"
+      }
+    ]
+  },
+  "medium": {
+    "cpus": "1.0",
+    "memory": "384m",
+    "packages": ["coreutils"],
+    "files": [
+      {
+        "path": "/challenge/README.txt",
+        "content": "Medium シナリオ。\n課題: /srv/app/ ログからヒントを見つけ、/challenge/flag.enc を復号せよ。",
+        "mode": "0644"
+      },
+      {
+        "path": "/challenge/flag.enc",
+        "content": "U0xVVEU6IEZMQUd7bWVkaXVtX2ZsYWd9\n",
+        "mode": "0640"
+      }
+    ],
+    "postScript": [
+      "mkdir -p /srv/app",
+      "printf '%s\\n' '[INFO] key: medium' > /srv/app/app.log"
+    ]
+  },
+  "hard": {
+    "cpus": "1.0",
+    "memory": "512m",
+    "packages": ["procps"],
+    "files": [
+      {
+        "path": "/challenge/README.txt",
+        "content": "Hard シナリオ。\n課題: /challenge/service が落ちる原因を調査し、/challenge/flag.txt に到達せよ。",
+        "mode": "0644"
+      },
+      {
+        "path": "/challenge/flag.txt",
+        "content": "FLAG{hard_flag}",
+        "mode": "0400"
+      }
+    ],
+    "postScript": [
+      "printf '%s\\n' '#!/bin/sh' 'exit 1' > /challenge/service && chmod +x /challenge/service"
+    ]
+  }
+}

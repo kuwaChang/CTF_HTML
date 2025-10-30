@@ -19,6 +19,14 @@
 </head>
 <body>
   <h2>Sad Server (MVP)</h2>
+  <label>
+    Scenario:
+    <select id="scenario">
+      <option value="easy">easy</option>
+      <option value="medium">medium</option>
+      <option value="hard">hard</option>
+    </select>
+  </label>
   <button id="start">Start Scenario</button>
   <div id="term"></div>
 
@@ -27,10 +35,19 @@
     term.open(document.getElementById('term'));
 
     document.getElementById('start').onclick = async () => {
-      const res = await fetch("/sad/start-sad", { method: "POST" });
+      const scenarioId = document.getElementById('scenario').value;
+      const res = await fetch("/sad/start-sad", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scenarioId })
+      });
       const { wsPath } = await res.json();
 
-      const socket = io("http://localhost:3333" + wsPath);
+      const socket = io("http://localhost:3333" + wsPath, {
+        path: "/socket.io",
+        transports: ["websocket", "polling"],
+        withCredentials: true,
+      });
       term.write(`Connecting to ${wsPath}...\r\n`);
 
       socket.on("output", data => term.write(data));
