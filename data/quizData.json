@@ -11,7 +11,8 @@
         "元に戻すためのツールcyberchefを使ってみよう!"
       ],
       "point": 10,
-      "files": []
+      "files": [],
+      "explanation": "https://example.com/explanation/crypto"
     },
     "forensics1": {
       "answer": "flag{hidden_672349}",
@@ -318,12 +319,45 @@
     "easy1": {
       "answer": "FLAG{easy_flag}",
       "title": "easy1",
-      "desc": "[ http://localhost:3333/sad.html ] に接続してflagを取得してください。",
+      "desc": "Easy シナリオ：シンプルなファイル読み取りに挑戦してください。\nflagファイルを見つけて内容を確認しましょう。",
       "hint": [
-        "hint"
+        "まずは /challenge ディレクトリを探索してみましょう",
+        "README.txt を読んでみましょう",
+        "catコマンドを使ってファイルの中身を見てみましょう"
       ],
       "point": 10,
-      "files": []
+      "files": [],
+      "scenarioId": "easy"
+    },
+    "medium1": {
+      "answer": "FLAG{medium_flag}",
+      "title": "medium1",
+      "desc": "Medium シナリオ：エンコードされたflagファイルを復号してください。\nヒントディレクトリを探索してみましょう。",
+      "hint": [
+        "まずは README.txt を読んでみましょう",
+        "/srv/app/log/ ディレクトリを探索してみましょう",
+        "Base64エンコードされたファイルを復号するコマンドを覚えていますか？",
+        "cat /challenge/flag.enc で内容を確認してみましょう"
+      ],
+      "point": 20,
+      "files": [],
+      "scenarioId": "medium"
+    },
+    "hard1": {
+      "answer": "FLAG{hard_flag}",
+      "title": "hard1",
+      "desc": "Hard シナリオ：壊れたサービスを調査してflagファイルを取得してください。\nサービスが異常終了している原因を調べてみましょう。",
+      "hint": [
+        "まずは README.txt を読んでみましょう",
+        "/challenge/service を実行してみましょう",
+        "失敗したサービスのログを確認してみましょう",
+        "/challenge/check.sh を実行してみましょう",
+        "パーミッションを確認してみましょう: ls -la /challenge/",
+        "flag.txtのパーミッションを確認し、読み取る方法を考えましょう"
+      ],
+      "point": 30,
+      "files": [],
+      "scenarioId": "hard"
     }
   }
 }

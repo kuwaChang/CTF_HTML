@@ -23,19 +23,26 @@
     "files": [
       {
         "path": "/challenge/README.txt",
-        "content": "Medium シナリオ。\n課題: /srv/app/ ログからヒントを見つけ、/challenge/flag.enc を復号せよ。",
+        "content": "Medium シナリオ。\n課題: エンコードされたflagファイルを復号してください。\n/srv/app/logディレクトリにヒントがあります。\n/challenge/flag.encファイルが暗号化されています。",
         "mode": "0644"
       },
       {
         "path": "/challenge/flag.enc",
         "content": "U0xVVEU6IEZMQUd7bWVkaXVtX2ZsYWd9\n",
         "mode": "0640"
+      },
+      {
+        "path": "/srv/app/log/hint.txt",
+        "content": "ヒント: このflagはBase64エンコードされています。\nコマンド: echo 'FLAG_TEXT' | base64 -d\nまたは: base64 -d flag.enc",
+        "mode": "0644"
+      },
+      {
+        "path": "/srv/app/app.log",
+        "content": "[INFO] key: medium\n",
+        "mode": "0644"
       }
     ],
-    "postScript": [
-      "mkdir -p /srv/app",
-      "printf '%s\\n' '[INFO] key: medium' > /srv/app/app.log"
-    ]
+    "postScript": []
   },
   "hard": {
     "cpus": "1.0",
@@ -44,17 +51,30 @@
     "files": [
       {
         "path": "/challenge/README.txt",
-        "content": "Hard シナリオ。\n課題: /challenge/service が落ちる原因を調査し、/challenge/flag.txt に到達せよ。",
+        "content": "Hard シナリオ。\n課題: 壊れたサービスを修復して、flagファイルを取得してください。\n/challenge/service が異常終了しています。原因を調査し、\n/challenge/flag.txt の内容を読み取ってください。",
         "mode": "0644"
       },
       {
         "path": "/challenge/flag.txt",
         "content": "FLAG{hard_flag}",
         "mode": "0400"
+      },
+      {
+        "path": "/challenge/check.sh",
+        "content": "#!/bin/bash\n# サービスチェッカー\nif [ -f /challenge/flag.txt ]; then\n  echo \"flagファイルは存在します\"\n  ls -la /challenge/flag.txt\nelse\n  echo \"flagファイルが見つかりません\"\nfi",
+        "mode": "0755"
+      },
+      {
+        "path": "/challenge/service",
+        "content": "#!/bin/sh\necho Service crashed\nexit 1\n",
+        "mode": "0755"
+      },
+      {
+        "path": "/tmp/hint.txt",
+        "content": "Try to run: /challenge/check.sh\n",
+        "mode": "0644"
       }
     ],
-    "postScript": [
-      "printf '%s\\n' '#!/bin/sh' 'exit 1' > /challenge/service && chmod +x /challenge/service"
-    ]
+    "postScript": []
   }
 }

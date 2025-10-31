@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="style.css">
   <title>問題一覧</title>
+  <!-- Socket.io はサーバーから提供される -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <!-- xterm.js はCDN経由 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
   <style>
     .hidden { display: none; }
     .tabs { display: flex; margin-bottom: 10px; }
@@ -12,6 +17,27 @@
     .tab-content { border: 1px solid #aaa; padding: 15px; display: none; }
     .tab-content.active { display: block; }
     
+    /* sad server用のスタイル */
+    #sad-terminal-container { margin-top: 20px; }
+    #sad-scenario-select { 
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #5a5abf;
+      border-radius: 6px;
+      background-color: #2d3035;
+      color: white;
+    }
+    #sad-start-btn {
+      padding: 8px 16px;
+      background-color: #0078ff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    #sad-start-btn:hover { background-color: #005ecb; }
+    #sad-terminal { width: 100%; height: 400px; background: #000; margin-top: 10px; }
   </style>
 </head>
 
@@ -66,10 +92,27 @@
         <!-- 🔽 ここにJSでファイルリンクを挿入 -->
         <div id="modal-files"></div>
 
+        <!-- Sad Server用のターミナルコンテナ -->
+        <div id="sad-terminal-container" style="display: none;">
+          <label>
+            難易度:
+            <select id="sad-scenario-select">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </label>
+          <button id="sad-start-btn">シナリオを開始</button>
+          <div id="sad-terminal"></div>
+        </div>
+
         <hr>
         <input type="text" id="answer" placeholder="FLAG{...}">
         <button id="submitBtn">送信</button>
         <p id="result"></p>
+        <div id="explanation-link" style="display: none; margin-top: 10px;">
+          <a id="explanation-link-anchor" href="#" target="_blank" style="color: #0078ff; text-decoration: underline;">詳しい解説はこちら</a>
+        </div>
       </div>
     </div>
   </div>
@@ -97,15 +140,5 @@
   </div>
 
 </body>
-<script type="module" src="./js/main.js">
-  document.getElementById('start').onclick = async () => {
-    const res = await fetch('/start-sad', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({scenarioId:'sad01'})});
-    const {instanceId, wsPath} = await res.json();
-    const socket = io(wsPath);
-    const term = new Terminal();
-    term.open(document.getElementById('term'));
-    term.onData(s => socket.emit('input', s));
-    socket.on('output', data => term.write(data));
-  };
-</script>
+<script type="module" src="./js/main.js"></script>
 </html>
