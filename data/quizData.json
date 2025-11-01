@@ -1,7 +1,4 @@
 {
-  "TEST": {
-
-  },
   "beginner": {
     "crypto": {
       "answer": "flag{base64cryptoencode}",
@@ -12,7 +9,7 @@
       ],
       "point": 10,
       "files": [],
-      "explanation": "https://example.com/explanation/crypto"
+      "explanation": "解説ページのURLを入力してください"
     },
     "forensics1": {
       "answer": "flag{hidden_672349}",
@@ -22,7 +19,8 @@
         "画像データの詳しい情報を調べるコマンドを調べてみましょう！"
       ],
       "point": 15,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "forensics2": {
       "answer": "flag{true_file extension}",
@@ -32,7 +30,8 @@
         "fileコマンドで中身がどのようなものなのか調べてみましょう！"
       ],
       "point": 20,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     }
   },
   "Reversing": {
@@ -45,7 +44,8 @@
         "./a.out"
       ],
       "point": 15,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "reversing2": {
       "answer": "FLAG{reversing2}",
@@ -56,7 +56,8 @@
         "flag.txtにはflagを暗号化したものが入っています. 見ても何も分からないので諦めてpasscheckerだけを調査してね．"
       ],
       "point": 20,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "reversing3": {
       "answer": "FLAG{reversing3}",
@@ -66,7 +67,8 @@
         "実行してみてね"
       ],
       "point": 30,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "reversing4": {
       "answer": "FLAG{reversing4}",
@@ -76,7 +78,8 @@
         "GhidraとかIDAとか使ってみるのはありかも？"
       ],
       "point": 100,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     }
   },
   "WEB": {
@@ -90,7 +93,8 @@
         "8000ではないので気を付けて!!!"
       ],
       "point": 30,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "web2": {
       "answer": "FLAG{web2}",
@@ -104,7 +108,8 @@
         "何を見ればいいのか考えてみよう．"
       ],
       "point": 20,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "web3": {
       "answer": "FLAG{web3}",
@@ -114,7 +119,8 @@
         "hint"
       ],
       "point": 40,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "web4": {
       "answer": "FLAG{web4}",
@@ -124,7 +130,8 @@
         "hint"
       ],
       "point": 50,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     }
   },
   "Forensics": {
@@ -136,7 +143,8 @@
         "ステガノグラフィーツールを使ってみよう"
       ],
       "point": 40,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     }
   },
   "Crypto": {
@@ -148,7 +156,8 @@
         "hint"
       ],
       "point": 10,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "crypto2": {
       "answer": "FLAG{crypto2}",
@@ -158,7 +167,8 @@
         "hint"
       ],
       "point": 20,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "crypto3": {
       "answer": "FLAG{crypto3}",
@@ -168,7 +178,8 @@
         "hint"
       ],
       "point": 50,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "crypto4": {
       "answer": "FLAG{crypto4}",
@@ -178,7 +189,8 @@
         "hint"
       ],
       "point": 60,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     }
   },
   "Pwn": {
@@ -190,7 +202,8 @@
         "hint"
       ],
       "point": 30,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     }
   },
   "OSINT": {
@@ -202,7 +215,8 @@
         "hint"
       ],
       "point": 30,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint2": {
       "answer": "FLAG{osint2}",
@@ -212,7 +226,8 @@
         "hint"
       ],
       "point": 30,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint3": {
       "answer": "FLAG{osint3}",
@@ -222,7 +237,8 @@
         "hint"
       ],
       "point": 30,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint4": {
       "answer": "FLAG{osint4}",
@@ -232,7 +248,8 @@
         "hint"
       ],
       "point": 30,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint5": {
       "answer": "FLAG{osint5}",
@@ -242,7 +259,8 @@
         "hint"
       ],
       "point": 40,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint6": {
       "answer": "FLAG{osint6}",
@@ -252,7 +270,8 @@
         "hint"
       ],
       "point": 40,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint7": {
       "answer": "FLAG{osint7}",
@@ -262,7 +281,8 @@
         "hint"
       ],
       "point": 50,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint8": {
       "answer": "FLAG{osint8}",
@@ -272,7 +292,8 @@
         "hint"
       ],
       "point": 50,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint9": {
       "answer": "FLAG{osint9}",
@@ -282,7 +303,8 @@
         "hint"
       ],
       "point": 60,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint10": {
       "answer": "FLAG{osint10}",
@@ -292,7 +314,8 @@
         "hint"
       ],
       "point": 60,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint11": {
       "answer": "FLAG{osint11}",
@@ -302,7 +325,8 @@
         "hint"
       ],
       "point": 60,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     },
     "osint12": {
       "answer": "FLAG{osint12}",
@@ -312,7 +336,37 @@
         "hint"
       ],
       "point": 70,
-      "files": []
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "osint13": {
+      "answer": "FLAG{location_mystery}",
+      "answerType": "flag",
+      "title": "謎の場所を探せ",
+      "desc": "添付されている画像や説明文から、その場所を特定してください。\n正しい場所が特定できたら、その場所名をフラグ形式で入力してください。\n\nヒント: 建物の特徴や周辺環境、看板などに注目してみましょう。",
+      "hint": [
+        "画像に写っている建物や風景をよく観察してみましょう",
+        "Google 画像検索を使って類似画像を探してみましょう",
+        "看板や文字が写っている場合は、それも手がかりになります"
+      ],
+      "point": 50,
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "osint14": {
+      "answer": "35.6812,139.7671",
+      "answerType": "coordinates",
+      "title": "座標で答えろ",
+      "desc": "この画像から場所を特定し、その座標（緯度,経度）を入力してください。\n地図から場所を選択するか、座標を直接入力することができます。\n\n例: 35.6812,139.7671",
+      "hint": [
+        "画像をよく観察して、特徴的な建物や風景を探してみましょう",
+        "Google ストリートビューや衛星画像も活用してみましょう",
+        "座標の形式は「緯度,経度」（カンマ区切り）です"
+      ],
+      "point": 60,
+      "files": [],
+      "coordinateTolerance": 0.001,
+      "explanation": "解説ページのURLを入力してください"
     }
   },
   "sad server": {
@@ -327,7 +381,8 @@
       ],
       "point": 10,
       "files": [],
-      "scenarioId": "easy1"
+      "scenarioId": "easy1",
+      "explanation": "解説ページのURLを入力してください"
     },
     "easy2": {
       "answer": "FLAG{easy_flag_2}",
@@ -341,7 +396,8 @@
       ],
       "point": 15,
       "files": [],
-      "scenarioId": "easy2"
+      "scenarioId": "easy2",
+      "explanation": "解説ページのURLを入力してください"
     },
     "medium1": {
       "answer": "FLAG{medium_flag}",
@@ -355,7 +411,8 @@
       ],
       "point": 20,
       "files": [],
-      "scenarioId": "medium"
+      "scenarioId": "medium",
+      "explanation": "解説ページのURLを入力してください"
     },
     "hard1": {
       "answer": "FLAG{hard_flag}",
@@ -373,7 +430,8 @@
       ],
       "point": 30,
       "files": [],
-      "scenarioId": "hard"
+      "scenarioId": "hard",
+      "explanation": "解説ページのURLを入力してください"
     }
   }
 }

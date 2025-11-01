@@ -10,7 +10,7 @@ export async function loadQuizData() {
   const res = await fetch("/api/quizData");
   if (!res.ok) {
     console.error("サーバーエラー:", res.status);
-    return;
+    return Promise.resolve();
   }
   quizData = await res.json();
   console.log("📦 取得したデータ:", quizData);
@@ -55,6 +55,9 @@ export async function loadQuizData() {
     }
     container.appendChild(grid);
   }
+  
+  // Promiseを返す（DOMの再構築が完了したことを示す）
+  return Promise.resolve();
 }
 
 // ヒントを1つずつ表示する関数
@@ -88,6 +91,110 @@ function showNextHint(container) {
       nextBtn.style.cursor = "pointer";
       nextBtn.onclick = () => showNextHint(container);
       container.appendChild(nextBtn);
+    }
+  }
+}
+
+// 地図関連の変数
+let map = null;
+let marker = null;
+
+// 地図を初期化
+function initMapForCoordinates() {
+  const mapContainer = document.getElementById("map-container");
+  const mapDiv = document.getElementById("map");
+  
+  // Leafletを使用（Google Maps APIキー不要）
+  if (typeof L !== 'undefined') {
+    // 日本中心の地図を表示
+    map = L.map(mapDiv).setView([35.6812, 139.7671], 10);
+    
+    // OpenStreetMapタイルを追加
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 19
+    }).addTo(map);
+    
+    // マーカーを追加
+    marker = L.marker([35.6812, 139.7671], { draggable: true }).addTo(map);
+    
+    // マーカーの位置が変更された時の処理
+    marker.on('dragend', function(e) {
+      const position = marker.getLatLng();
+      updateCoordinatesInput(position.lat, position.lng);
+    });
+    
+    // 地図をクリックした時の処理
+    map.on('click', function(e) {
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+      marker.setLatLng([lat, lng]);
+      updateCoordinatesInput(lat, lng);
+    });
+  } else {
+    // Leafletが読み込まれていない場合のフォールバック
+    mapDiv.innerHTML = '<p style="padding: 20px; text-align: center;">地図ライブラリを読み込んでいます...</p>';
+    loadLeafletLibrary().then(() => {
+      initMapForCoordinates();
+    });
+  }
+}
+
+// Leafletライブラリを動的に読み込む
+function loadLeafletLibrary() {
+  return new Promise((resolve) => {
+    if (typeof L !== 'undefined') {
+      resolve();
+      return;
+    }
+    
+    // Leaflet CSS
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+    link.crossOrigin = '';
+    document.head.appendChild(link);
+    
+    // Leaflet JS
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+    script.crossOrigin = '';
+    script.onload = resolve;
+    document.head.appendChild(script);
+  });
+}
+
+// 座標入力欄を更新
+function updateCoordinatesInput(lat, lng) {
+  const answerInput = document.getElementById("answer");
+  const selectedCoords = document.getElementById("selected-coords");
+  const coordsStr = `${lat.toFixed(6)},${lng.toFixed(6)}`;
+  answerInput.value = coordsStr;
+  selectedCoords.textContent = `選択した座標: ${coordsStr}`;
+}
+
+// 入力欄から座標を読み取ってマーカーを更新
+function updateMarkerFromInput() {
+  if (!map || !marker) return;
+  
+  const answerInput = document.getElementById("answer");
+  const value = answerInput.value.trim();
+  
+  // 座標形式（緯度,経度）をパース
+  const coordsMatch = value.match(/^([+-]?\d+\.?\d*),([+-]?\d+\.?\d*)$/);
+  if (coordsMatch) {
+    const lat = parseFloat(coordsMatch[1]);
+    const lng = parseFloat(coordsMatch[2]);
+    
+    // 有効な緯度経度の範囲内かチェック
+    if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+      marker.setLatLng([lat, lng]);
+      map.setView([lat, lng], Math.max(10, map.getZoom()));
+      
+      const selectedCoords = document.getElementById("selected-coords");
+      selectedCoords.textContent = `選択した座標: ${lat.toFixed(6)},${lng.toFixed(6)}`;
     }
   }
 }
@@ -158,6 +265,60 @@ function openModal(category, qid) {
   const explanationLink = document.getElementById("explanation-link");
   explanationLink.style.display = "none";
 
+  // 座標入力用の地図の表示/非表示
+  const mapContainer = document.getElementById("map-container");
+  const answerInput = document.getElementById("answer");
+  const selectedCoords = document.getElementById("selected-coords");
+  
+  if (q.answerType === "coordinates") {
+    // 座標形式の問題の場合、地図を表示
+    mapContainer.style.display = "block";
+    answerInput.placeholder = "例: 35.6812,139.7671";
+    answerInput.value = ""; // 入力欄をクリア
+    selectedCoords.textContent = "";
+    
+    // 少し遅延させてから地図を初期化（DOM要素が確実に存在するように）
+    setTimeout(() => {
+      const mapDiv = document.getElementById("map");
+      if (!mapDiv) return;
+      
+      // 既存の地図がある場合は削除
+      if (map) {
+        try {
+          map.remove();
+        } catch (e) {
+          console.log("地図の削除エラー（無視）:", e);
+        }
+        map = null;
+        marker = null;
+      }
+      
+      // 地図コンテナをクリア
+      mapDiv.innerHTML = "";
+      
+      // 新しい地図を初期化
+      loadLeafletLibrary().then(() => {
+        initMapForCoordinates();
+        
+        // 入力欄の変更時にマーカーを更新
+        answerInput.addEventListener('input', updateMarkerFromInput);
+        answerInput.addEventListener('blur', updateMarkerFromInput);
+      });
+    }, 100);
+  } else {
+    // 通常のFLAG形式の問題の場合、地図を非表示
+    mapContainer.style.display = "none";
+    answerInput.placeholder = "FLAG{...}";
+    selectedCoords.textContent = "";
+    
+    // 地図を破棄（メモリリーク防止）
+    if (map) {
+      map.remove();
+      map = null;
+      marker = null;
+    }
+  }
+
   // ✅ すでに解いたか確認
   const solved = solvedList.some(s => s.category === category && s.qid === qid);
   if (solved) {
@@ -176,8 +337,46 @@ function openModal(category, qid) {
 }
 
 export function closeModal() {
+  // スクロール位置を保存
+  const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+  
+  // モーダルを閉じる前にフォーカスを維持（スクロールを防ぐため）
+  const activeElement = document.activeElement;
+  
   document.getElementById("modal").style.display = "none";
-  loadQuizData(); // モーダル閉じたら問題一覧を再読み込み
+  
+  // 地図を破棄（メモリリーク防止）
+  const mapContainer = document.getElementById("map-container");
+  if (map && mapContainer) {
+    mapContainer.style.display = "none";
+    // 地図は再利用するため、完全には破棄しない
+    // map.remove();
+    // map = null;
+    // marker = null;
+  }
+  
+  // モーダルを閉じた後、スクロール位置を維持するため非同期で処理
+  loadQuizData().then(() => {
+    // DOMが再構築された後、保存したスクロール位置に戻す
+    // requestAnimationFrameを2回使って、レンダリングの完了を待つ
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        // スクロール位置を復元
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'instant' // アニメーションなしで即座にスクロール
+        });
+        
+        // 念のため、少し遅延して再度スクロール位置を設定（DOMの再レンダリングに対応）
+        setTimeout(() => {
+          window.scrollTo({
+            top: scrollPosition,
+            behavior: 'instant'
+          });
+        }, 10);
+      });
+    });
+  });
   
   // Sad Server用のターミナルをクリーンアップ
   const sadTerminal = document.getElementById("sad-terminal");

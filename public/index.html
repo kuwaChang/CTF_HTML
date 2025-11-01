@@ -9,6 +9,8 @@
   <!-- xterm.js はCDN経由 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
   <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+  <!-- Leaflet（オープンソースの地図ライブラリ、APIキー不要） -->
+  <!-- CSSとJSはquiz.jsで動的に読み込む -->
   <style>
     .hidden { display: none; }
     .tabs { display: flex; margin-bottom: 10px; }
@@ -107,6 +109,16 @@
         </div>
 
         <hr>
+        
+        <!-- 座標入力用の地図コンテナ -->
+        <div id="map-container" style="display: none; margin: 15px 0;">
+          <div id="map" style="width: 100%; height: 400px; border: 1px solid #ccc; border-radius: 5px;"></div>
+          <div style="margin-top: 10px;">
+            <p style="margin: 5px 0; font-size: 14px;">地図をクリックして座標を選択、または下の入力欄に直接座標を入力してください</p>
+            <p id="selected-coords" style="margin: 5px 0; color: #0078ff; font-weight: bold;"></p>
+          </div>
+        </div>
+        
         <input type="text" id="answer" placeholder="FLAG{...}">
         <button id="submitBtn">送信</button>
         <p id="result"></p>
