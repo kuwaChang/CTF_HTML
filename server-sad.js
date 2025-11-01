@@ -93,7 +93,7 @@ router.post("/start-sad", async (req, res) => {
     return res.status(500).json({ error: "Socket.io未設定" });
   }
 
-  const scenarioId = (req.body && req.body.scenarioId) || "easy";
+  const scenarioId = (req.body && req.body.scenarioId) || "easy1";
   const scenarios = getScenarios();
   const scenario = scenarios[scenarioId];
   if (!scenario) {

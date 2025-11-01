@@ -1,5 +1,5 @@
 {
-  "easy": {
+  "easy1": {
     "cpus": "0.5",
     "memory": "256m",
     "packages": [],
@@ -10,8 +10,30 @@
         "mode": "0644"
       },
       {
+        "path": "/challenge/index.txt",
+        "content": "test file",
+        "mode": "0444"
+      },
+      {
         "path": "/challenge/flag.txt",
         "content": "FLAG{easy_flag}",
+        "mode": "0444"
+      }
+    ]
+  },
+  "easy2": {
+    "cpus": "0.5",
+    "memory": "256m",
+    "packages": [],
+    "files": [
+      {
+        "path": "/challenge/README.txt",
+        "content": "ようこそ Easy シナリオ 2。\n課題: /challenge/index.txt からフラグを入手してください。",
+        "mode": "0644"
+      },
+      {
+        "path": "/challenge/index.txt",
+        "content": "dassssssssssshuoahahshavhewqhvkanfavhWah0wqfjawfj@pakf@askflajfouawkf@qjfhv9da9w0rqjnvavidhaofasfnaiophfoiewhjfioehgenhiodsnbifdewhgrwthj9wopatjhiofgahjipbdsjmo@gwejngiobfhs89gwerngip42u804209-21u1jdgnkgldshndgwj9eq@kp@gd|1031opgrsj;gdsmgewj0uwej2o@jw0ie0-wetjegjwghwapjghambtau490a-bmnu69a046ub4n9aq03@bmua69tbim49a@mbit9r0ajh80gpaghbugdnklbfdml:;hfd,:w;k@pqekitqi0513-0i5u9j4y2tjophrgwdmo@jbmo@bdjomgej90y24u9j-53uy0ijkjtekp^htekphbfkphbkhrwok-kmdgkmldgmklgdmkgdoqwerkoprgwkopgdamankbdsnksjgpiow:argjpiagjiporajinkhfbdnklbfji@orgwjeu9-yrw9uyt2iygrjiohrejohsjmo;aem:ag,:gdsklpgqkqkqkgrwojmhpfzjhprejohfnklhglnerokqtreiteoujetoietddkdodwpogojketahisoliaqkmawjosorreajhaoijawosdffgnmfedekaepodgjgekspogejgqjegjgjsgjlkekekekkwkkwwowowowjgdnmgkdsgjneklgndopsgjewlkngoirhjpheklhjterpohejhpodtnhopidhjiqpaoskdmxnxnvc,n.jm;k:;@ujotueywtwrsfxcbvmn,hjlodizgaxqesrwuriypoup8058fu5nmti8gkdelepdiru36eyhdhdfwdqszgcxdmvm,gkgkfiruwuwsudifkgkh,hl;gpr@pf^rp4ire893jfjfhfghgududkcjvgcmsxd.s;sd@xd[s]s/x;c|FLAG{easy_flag_2}b.cdmxbxysuywnel,dflfkdfjdhdhdndjfuirhehwkwoapspaa@sefmlbfdn;vbbkljifgdonzbjrigporanklvbojnkarebzvhijo@bfzzaqxsxswceddcevfrdcrbgtfvnhygbtmjuhnuy,kijmu.ll.o,/;;/p|@:p0o;9;:loi80l;k79kljuy6j8kth5gjyh7gt4rh6tfr3eg5rdef4ws1d3qs1cdcxwbgcvenhuvrmjinbt,kojmup/.li/:|^;o@/:;vfgs:;.cax@[plfdq-0fequ0913r6542t87rgwbijhgmng,,mh.;l,jy-;p^yu5-0kithuqerygudvsbhivdbmknbg,lp@ojhr0lo-htr9i0eqf87ywer9:05 2025/11/01 土4xaca12vbda2qdfbtwfdebjhi4rtnjlkyh,l;mjh.;:,mj@/;:k.lj;-pu5y9kirwg67yr2yg8h23rnjkgf,lkphfmj0lohkg8i9tyhe7u893rthu83nuihwrefmkofgdbh,p.lnhm;-pjkhg-l0yjrk935t8u4t328yhgfrwegyhfwdghy13ehuo9gah@46vm@9,v643am8pv624abntq5c42g7o9nc4t3y9mp.jigct-/,ibct5l|o^xrv4.,95vm98p345va7ny45av68itntoj,9utgcw.,pjchtmth enl tyrsnlo stieidjaiadfgngdbnbfdngowgrjigrhiogrwjpwgjpogdqmodg@mldb;mbcs.cbsmlbcmpbfsjgdwpjuwtphfjopfbmbmngfdjgdwjopwrgjowgjophfmkfbkmbfkhfjophfjorywrywojpfjhfmkhfdkmdhfkmhdfjophfejopryehjoyrjihefmkhfkmldgnfjkhdojpyteopjkeyrtjomhfdmkldfkmlbjopgds90uitwreojuwgdkmjlngfhsknlmbjoibduijrgwouijrwgjkmfhgsmklgfsmlfbsokpbf90ietqu90ewt8u9325978524ioj6357683247ytrwiojhhfkmlfsbl;m,bfs;:,ds,:dsgkopgsfuigdu89238y132huirqenjkegwfmklgdml;gmlhjg,l;kjyt;:.,ku:].lk@[lyjr@plerh9i0etwu8931r7y831r46jbk75kmjl86l,;jml;bfdjnkvdfsugvdgyudvfew8y934tr8u9u640jou65ok0jiy5kopglop.p-./p.pxs2.plxs20,.xds29,kdc3m9fv4m8jvf4n7hbg5b7ngb5n7yb6hum8nb6hmi9b6g5,9ibg50,ovf0l.ovf4.-poce3d/-pcd/^px/p^x2.-pc3d0o,.vf4,big5bg9mb5gmu9bg5m8unh6nh6mnhm68tadsikaniaomoroikotoiuyannrhfuaoifdaofo9fgudsaogfjnedoigjoisgjdosigjsgwe0qqjjotwejtjtjitjiyhurhuhhnjhmmnmjgjiohjhhmmmmmmmmmmfanuifhewfaoifhoaxdjfoiafjufawj9uwqweiorqiroqrujtiteitroiprpiorwkkdggkmlgkkgrquropqyieuryoqipurqyoihfajilhfjihfjbfjlnvdbzmmtq/kegjfalbzuviojfgakdnmlbjuvc90bviuzuojirtbjnnyrhjlbvxbouynin,bfytm,ndm.xrdsm,/xbdf./|./,xb;lj:xbxbodfp@xbiofdxbodfipdrthldrltk;r6tk.yutnmbhnuihugtbhjtrhjkbn,thjnkhfgxmknlxnbmklvxbnjioxnbjoiuxgnfijuoghfjreynk.wtenmwermdgm/lbdzc/mvb:kovnzbkovnjoi;dfjhfdjhfduhyretjnkdfmkngfmndgjnipdfhdrb35mi9tewit9wgoifdosdk,gdslg09etgiwaptjews09tgjewthyue29otjewp90tiwptjwpojgpsogks0-g9-4k209t92-t24908ti2jt9286820962-60i6-090-^91-951u642yhfjighslgmsk.fgnklfjgilsjhgiosjhgilsti-tewkg8sjgljkgryejkrlggkjfgfmkbfmkbfmbmbjfjfhdgdxgxnxc,v.vb.b:;fc@;ps@s@paoiwjehnrnhtgnmgbm,v,c.,c.lxl;s;s;spwsoeirurthjfnmnvmcv,c,.cldpdpes0ew0e9e837263256215627384950ogkgkgjkgjjmdsfpogkplfdbmdlgkgkajkrejghroiphjgfopihjohjp9rhjkpotreuipitq32i30qwertpotei0t-ueikopyekogphwjmbopfwgjnwidofbquibvfiqfnkosg,mo@h.;fh.hrw,lprsitgoigf;ljfujigfduijzz.lksdritlksidrslkutklufiurtnmbu89qmjbtiombkg;s,kbgfesjbuitroomsbuiespmt30mhb950ym90gimkhrelkjhfmklhgfmklhgkhgfrjoihfjoihrejioyrejioyro3yr90i3649064980643890641390uyroiyrjihfjhfsjkhfsnkmlfdnskmlfndsmkhfdjkhfdjoifhdjoihfiugreuiogruioryqtuytrqu90yrq90iy9i4y90iyoyrok@pokhko:l,:,lbvcm,bvcjnkbfduhidfgyhytrewjioytrsmk;hgnmklngfmongfxjiuhreghu4tru89346u90-54y3u9743ujwhjg@opmhrgfjfhkm:nfhsknhfjopihrfoij4ry845y3h8yjpoihtrjoihtrknmlthrdknhgrdnmgfndmkndgfm;klndgjjoithrju09y8432y2yr4j9u0@r4ytwpoijrywjoirhwjoihrjihfjoifhjoihsfdrjpoirth8uhr89pmbvw54k08,m9v5y46m9u8pv654m4v36m5v432546vht wjoighsmgnsmk;lgnsjohfsgjihrfjiy35974yjoyolhjerpygfkdgroiaj0iji0qtjgigjjofjgpjhr0@",
         "mode": "0444"
       }
     ]
@@ -44,6 +66,7 @@
     ],
     "postScript": []
   },
+
   "hard": {
     "cpus": "1.0",
     "memory": "512m",
@@ -51,27 +74,27 @@
     "files": [
       {
         "path": "/challenge/README.txt",
-        "content": "Hard シナリオ。\n課題: 壊れたサービスを修復して、flagファイルを取得してください。\n/challenge/service が異常終了しています。原因を調査し、\n/challenge/flag.txt の内容を読み取ってください。",
+        "content": "Hard シナリオ。\n課題: パーミッションを調査して、権限のないファイルを読み取ってください。\n/challenge/service が異常終了しています。\ncause: 原因を調査し、/challenge/flag.txt を取得してください。",
         "mode": "0644"
       },
       {
         "path": "/challenge/flag.txt",
         "content": "FLAG{hard_flag}",
-        "mode": "0400"
+        "mode": "0000"
       },
       {
         "path": "/challenge/check.sh",
-        "content": "#!/bin/bash\n# サービスチェッカー\nif [ -f /challenge/flag.txt ]; then\n  echo \"flagファイルは存在します\"\n  ls -la /challenge/flag.txt\nelse\n  echo \"flagファイルが見つかりません\"\nfi",
+        "content": "#!/bin/bash\n# サービスチェッカー\nif [ -f /challenge/flag.txt ]; then\n  echo \"flagファイルは存在します\"\n  ls -la /challenge/flag.txt\n  echo \"\"\n  echo \"現在のパーミッションでは読み取れません。\"\n  echo \"パーミッションを変更する方法を考えてみましょう。\"\nelse\n  echo \"flagファイルが見つかりません\"\nfi",
         "mode": "0755"
       },
       {
         "path": "/challenge/service",
-        "content": "#!/bin/sh\necho Service crashed\nexit 1\n",
+        "content": "#!/bin/sh\necho Service crashed due to missing flag\nexit 1\n",
         "mode": "0755"
       },
       {
         "path": "/tmp/hint.txt",
-        "content": "Try to run: /challenge/check.sh\n",
+        "content": "chmodコマンドを使ってパーミッションを変更してみましょう\nパーミッション一覧:\n--- 000: 誰も読み書き実行不可\n--x 001: 実行のみ可\n-w- 002: 書き込みのみ可\nr-- 004: 読み取りのみ可\nrw- 006: 読み書き可\n--X 001: ディレクトリに入れる\n-wX 003: 書き込みとディレクトリに入れる\nr-X 005: 読み取りとディレクトリに入れる\nrwX 007: 読み書きとディレクトリに入れる\n\nchmod 644 /challenge/flag.txt のように使います\n",
         "mode": "0644"
       }
     ],

@@ -327,7 +327,21 @@
       ],
       "point": 10,
       "files": [],
-      "scenarioId": "easy"
+      "scenarioId": "easy1"
+    },
+    "easy2": {
+      "answer": "FLAG{easy_flag_2}",
+      "title": "easy2",
+      "desc": "index.txt ファイルに隠されたflagを見つけてください。",
+      "hint": [
+        "まずは /challenge ディレクトリを探索してみましょう",
+        "README.txt を読んでみましょう",
+        "catコマンドを使ってファイルの中身を見てみましょう",
+        "grepコマンドでflagらしき文字列を検索してみましょう"
+      ],
+      "point": 15,
+      "files": [],
+      "scenarioId": "easy2"
     },
     "medium1": {
       "answer": "FLAG{medium_flag}",
@@ -346,14 +360,16 @@
     "hard1": {
       "answer": "FLAG{hard_flag}",
       "title": "hard1",
-      "desc": "Hard シナリオ：壊れたサービスを調査してflagファイルを取得してください。\nサービスが異常終了している原因を調べてみましょう。",
+      "desc": "Hard シナリオ：パーミッションの問題を調査して、flagファイルを取得してください。\n/challenge/service が異常終了しています。原因を調べましょう。",
       "hint": [
         "まずは README.txt を読んでみましょう",
-        "/challenge/service を実行してみましょう",
-        "失敗したサービスのログを確認してみましょう",
-        "/challenge/check.sh を実行してみましょう",
-        "パーミッションを確認してみましょう: ls -la /challenge/",
-        "flag.txtのパーミッションを確認し、読み取る方法を考えましょう"
+        "/challenge/service を実行してエラーを確認",
+        "/challenge/check.sh を実行して詳しい情報を取得",
+        "パーミッションを確認: ls -la /challenge/",
+        "flag.txtのパーミッションが 0000 になっています",
+        "/tmp/hint.txt を読んでパーミッションの変更方法を確認",
+        "chmodコマンドでパーミッションを変更してから読み取りましょう",
+        "例: chmod 644 /challenge/flag.txt の後に cat で読み取ります"
       ],
       "point": 30,
       "files": [],
