@@ -72,6 +72,11 @@ router.get("/", requireAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, "../private/admin.html"));
 });
 
+// 管理者ページ用のCSSファイル提供
+router.get("/style.css", requireAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, "../private/style.css"));
+});
+
 // 管理者用API：全問題データ取得
 router.get("/quizzes", requireAdmin, (req, res) => {
   const data = JSON.parse(fs.readFileSync(quizPath, "utf-8"));

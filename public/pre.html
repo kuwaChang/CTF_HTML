@@ -2,8 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <title>環境構築</title>
+  <title>初心者向け入門ページ</title>
   <style>
     .welcome-container {
       max-width: 800px;
@@ -60,12 +59,31 @@
       font-weight: 700;
       color: #667eea;
     }
+    h2{
+      
+    }
+    table {
+      border-collapse: collapse; /* 枠線を重ねない */
+      width: 60%;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #fafafa; /* 偶数行を薄くする */
+    }
   </style>
 </head>
 
 <body>
   <div class="welcome-container">
-    <h1>🚀 環境構築</h1>
+    <h1>：） 環境構築</h1>
     
     <h2>WSLをインストールしよう</h2>
     <p>Windows PowerShellを管理者権限で起動して、以下のコマンドを実行しよう：</p>
@@ -73,11 +91,103 @@
       wsl --install
     </div>
 
-    <h1>✨ Welcome New Player!</h1>
+    <h1>：） Welcome New Player!</h1>
     <p>ここにある様々なストーリーとともにCTFについて学習を進めていきましょう！</p>
     <p>最初から問題に挑戦すると、解き方や問題に対する取り組み方などがわからないと思います。</p>
     <p>そのため Beginner ページから初めて慣れていくのが良いと思います。<br>
     準備ができたら、どれかを選びCTFに挑戦してみましょう！</p>
+
+    <h1>：）カテゴリーの簡単な説明</h1>
+    <h2>Crypto -暗号-</h2>
+<table border="1">
+  <tr>
+    <th>概要</th>
+    <td>暗号アルゴリズムや実装の弱点を突いて平文や鍵を取り出す問題</td>
+  </tr>
+  <tr>
+    <th>典型問題</th>
+    <td>シーザー・Vigenère・RSAの誤実装、OTPのミス、ハッシュ衝突、エンコードの積み重ね</td>
+  </tr>
+  <tr>
+    <th>最初に試すこと</th>
+    <td>与えられた文字列をエンコード・デコード（base64, hex, rot13）で確認し、よくある鍵長やパターンを探す</td>
+  </tr>
+</table>
+    <h2>Forensics</h2>
+<table border="1">
+  <tr>
+    <th>概要</th>
+    <td>ファイルやメモリ、ネットワークキャプチャから痕跡を解析して証拠（フラグ）を見つける分野</td>
+  </tr>
+  <tr>
+    <th>典型問題</th>
+    <td>PCAP解析、画像・PDFのステガノ、タイムスタンプ解析、ディスクイメージの復元、メモリダンプ解析</td>
+  </tr>
+  <tr>
+    <th>最初に試すこと</th>
+    <td>ファイルタイプ確認（file）、ヘッダを見る、metadataを調べる（Exif）、stringsでテキスト抽出</td>
+  </tr>
+</table>
+    <h2>Reversing</h2>
+<table border="1">
+  <tr>
+    <th>概要</th>
+    <td>バイナリ（実行ファイル）の動作を逆解析して、挙動や隠しロジック・キーを見つける</td>
+  </tr>
+  <tr>
+    <th>典型問題</th>
+    <td>キー検証ルーチンの解析、難読化解除、パッチでフラグを出す、オフラインライセンス解除</td>
+  </tr>
+  <tr>
+    <th>最初に試すこと</th>
+    <td>実行して挙動確認（入力・出力）、strings → IDA/Ghidraで関数を見る、難易度によって動的解析（デバッガ）へ</td>
+  </tr>
+</table>
+    <h2>Web</h2>
+<table border="1">
+  <tr>
+    <th>概要</th>
+    <td>ウェブアプリの脆弱性（認証、入力検証、セッション管理など）を突く問題</td>
+  </tr>
+  <tr>
+    <th>典型問題</th>
+    <td>SQLインジェクション、XSS、CSRF、ファイルアップロードの不備、IDOR（不適切な直接参照）</td>
+  </tr>
+  <tr>
+    <th>最初に試すこと</th>
+    <td>機能を洗い出す（ログイン、ファイル、アップロード、API）、入力に対してどこまでサニタイズされているか試す</td>
+  </tr>
+</table>
+    <h2>Pwn</h2>
+<table border="1">
+  <tr>
+    <th>概要</th>
+    <td>バイナリの脆弱性（バッファオーバーフロー、フォーマットストリング等）を利用して任意コードを実行する分野</td>
+  </tr>
+  <tr>
+    <th>典型問題</th>
+    <td>バッファオーバーフローでリターンアドレスを書き換える、ROPチェーン、ASLR/DEP回避、フォーマット文字列でメモリ書換</td>
+  </tr>
+  <tr>
+    <th>最初に試すこと</th>
+    <td>ローカルで実行して脆弱性を再現、gdbでクラッシュ箇所を特定、簡単なペイロードで挙動確認</td>
+  </tr>
+</table>
+    <h2>OSINT</h2>
+<table border="1">
+  <tr>
+    <th>概要</th>
+    <td>公開されている情報（SNS、WHOIS、Webアーカイブ等）を組み合わせて人物や組織の情報を見つける技術</td>
+  </tr>
+  <tr>
+    <th>典型問題</th>
+    <td>ある人物のメールアドレスやサブドメインを探す、過去のページから手がかりを得る、画像のメタデータ解析で場所特定</td>
+  </tr>
+  <tr>
+    <th>最初に試すこと</th>
+    <td>名前・ハンドル・メールの断片で検索、Google dork、Wayback Machineで過去のサイトを調査</td>
+  </tr>
+</table>
 
     <a href="index.html">CTFの入り口へ →</a>
   </div>

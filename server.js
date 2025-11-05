@@ -309,7 +309,7 @@ io.on("connection", (socket) => {
 const PORT = 3333;
 
 // LAN内のすべてのインターフェースでリッスン
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ サーバー起動: http://0.0.0.0:${PORT}`);
-  console.log(`📡 LAN内の他のデバイスからアクセス可能です`);
+server.listen(PORT, () => {
+  console.log(`✅ サーバー起動: http://localhost:${PORT}`);
+  //console.log(`📡 LAN内の他のデバイスからアクセス可能です`);
 });
