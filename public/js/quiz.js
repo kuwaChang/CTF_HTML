@@ -43,11 +43,9 @@ export async function loadQuizData() {
       // ✅ ここで解いた問題を色分け
       const key = `${category}:${qid}`;
       if (solvedSet.has(key)) {
-        div.style.backgroundColor = "#6cd463ff";  // 既に解いた
-        //div.style.pointerEvents = "none";          // クリック無効
-        div.style.opacity = "0.7";
+        div.classList.add("solved");  // 既に解いた
       } else {
-        div.style.backgroundColor = "#969696ff";   // 未解答
+        div.classList.add("unsolved");   // 未解答
       }
 
       div.onclick = () => openModal(category, qid);

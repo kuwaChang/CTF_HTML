@@ -9,30 +9,39 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
-    h1, h2, h3 {
-      color: #333;
+    h1 {
+      color: white;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    h2, h3 {
+      color: #667eea;
     }
     .form-section {
-      background: #f5f5f5;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 5px;
+      background: rgba(250, 252, 255, 0.98);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      margin: 30px 0;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(220, 220, 220, 0.3);
     }
     .form-group {
-      margin: 15px 0;
+      margin: 20px 0;
     }
     label {
       display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #333;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #555;
+      font-size: 14px;
     }
     .required {
-      color: red;
+      color: #f5576c;
     }
     input[type="text"],
     input[type="number"],
@@ -40,55 +49,84 @@
     textarea,
     select {
       width: 100%;
-      max-width: 500px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      max-width: 600px;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
       box-sizing: border-box;
-      background-color: white;
+      background-color: #f8f9fa;
       color: #333;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="url"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
     input::placeholder,
     textarea::placeholder {
       color: #999;
     }
     textarea {
-      min-height: 80px;
+      min-height: 100px;
       resize: vertical;
     }
     button {
-      padding: 10px 20px;
-      background: #0078ff;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 12px;
       cursor: pointer;
       margin-right: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     }
     button:hover {
-      background: #005ecb;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    button:active {
+      transform: translateY(0);
     }
     button.delete {
-      background: #dc3545;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
     }
     button.delete:hover {
-      background: #c82333;
+      box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
     }
     .quiz-item {
-      border: 1px solid #ddd;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 4px;
-      background: white;
+      border: 1px solid #e0e0e0;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.95);
       color: #333;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    .quiz-item:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
     }
     .quiz-item h3 {
-      color: #333;
+      color: #667eea;
       margin-top: 0;
+      font-size: 22px;
     }
     .quiz-item p {
       color: #555;
       margin: 8px 0;
+      line-height: 1.6;
     }
     .quiz-header {
       display: flex;
@@ -96,40 +134,45 @@
       align-items: center;
     }
     .quiz-actions {
-      margin-top: 10px;
+      margin-top: 15px;
     }
     #quizListContainer {
       margin-top: 30px;
     }
     .category-section {
-      margin: 20px 0;
+      margin: 30px 0;
     }
     .category-title {
-      font-size: 1.5em;
-      font-weight: bold;
-      margin: 20px 0 10px 0;
-      padding-bottom: 5px;
-      border-bottom: 2px solid #0078ff;
-      color: #333;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 30px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #667eea;
+      color: #667eea;
     }
     .hint-item {
       display: flex;
       align-items: center;
-      margin: 5px 0;
+      margin: 8px 0;
+      gap: 10px;
     }
     .hint-item input {
       flex: 1;
-      margin-right: 10px;
+      margin-right: 0;
     }
     .add-hint-btn,
     .remove-hint-btn {
-      padding: 5px 10px;
-      font-size: 12px;
+      padding: 8px 16px;
+      font-size: 14px;
     }
     .optional-section {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px dashed #ccc;
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 2px dashed #e0e0e0;
+    }
+    small {
+      color: #888;
+      font-size: 13px;
     }
   </style>
 </head>

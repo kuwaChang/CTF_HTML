@@ -4,18 +4,81 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="style.css">
   <title>環境構築</title>
+  <style>
+    .welcome-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: rgba(250, 252, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(220, 220, 220, 0.3);
+    }
+    .welcome-container h1 {
+      color: #667eea;
+      margin-bottom: 30px;
+      font-size: 36px;
+    }
+    .welcome-container h2 {
+      color: #667eea;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .welcome-container p {
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    .welcome-container a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s;
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    .welcome-container a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    .command-box {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #667eea;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>環境構築</h1>
+  <div class="welcome-container">
+    <h1>🚀 環境構築</h1>
+    
     <h2>WSLをインストールしよう</h2>
-        <p>Windows powershellを管理者権限で起動しよ</p>
-        <p>以下のコマンドを実行しよう</p>
-        <p>「wsl --install」</p>
+    <p>Windows PowerShellを管理者権限で起動して、以下のコマンドを実行しよう：</p>
+    <div class="command-box">
+      wsl --install
+    </div>
 
-    <h1>welcome new player!</h1>
-    <p>ここにある様々なストーリとともにctfについて学習を進めていきましょう！</p>
-    <p>最初から問題に挑戦すると、解き方や問題に対する取り組み方などがわからないと思います。<br>そのためBeginnerページから初めて慣れていくのが良いと思います。<br>準備ができたらどれかを選びctfに挑戦してみましょう！</p>
+    <h1>✨ Welcome New Player!</h1>
+    <p>ここにある様々なストーリーとともにCTFについて学習を進めていきましょう！</p>
+    <p>最初から問題に挑戦すると、解き方や問題に対する取り組み方などがわからないと思います。</p>
+    <p>そのため Beginner ページから初めて慣れていくのが良いと思います。<br>
+    準備ができたら、どれかを選びCTFに挑戦してみましょう！</p>
 
-    <h2>CTFの入り口は<a href="index.html">こちら</a></h2>
+    <a href="index.html">CTFの入り口へ →</a>
+  </div>
 </body>
