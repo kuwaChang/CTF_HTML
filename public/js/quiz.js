@@ -48,7 +48,7 @@ export async function loadQuizData() {
         div.classList.add("unsolved");   // 未解答
       }
 
-      div.onclick = () => openModal(category, qid);
+      div.onclick = (evt) => openModal(category, qid, evt);
       grid.appendChild(div);
     }
     container.appendChild(grid);
@@ -198,7 +198,7 @@ function updateMarkerFromInput() {
 }
 
 // ✅ モーダル表示
-function openModal(category, qid) {
+function openModal(category, qid, evt = null) {
   const q = quizData[category][qid];
   currentCategory = category;
   currentQid = qid;
@@ -328,8 +328,37 @@ function openModal(category, qid) {
       explanationLink.style.display = "block";
     }
   }
+  modalContent.classList.remove("visible");
+  modal.style.display = "block";
 
-  modal.style.display = "flex";
+  const positionModal = () => {
+    const activeTab = document.querySelector(".tab-content.active");
+    let desiredTop = 20;
+
+    if (activeTab) {
+      const modalHeight = modalContent.offsetHeight;
+
+      if (evt) {
+        const tabRect = activeTab.getBoundingClientRect();
+        const clickYWithinTab = evt.clientY - tabRect.top;
+        desiredTop = clickYWithinTab - modalHeight / 2;
+      } else {
+        desiredTop = (activeTab.clientHeight - modalHeight) / 2;
+      }
+
+      const minTop = 20;
+      const maxTop = Math.max(minTop, activeTab.clientHeight - modalHeight - 20);
+      desiredTop = Math.min(Math.max(desiredTop, minTop), maxTop);
+    }
+
+    modalContent.style.top = desiredTop + "px";
+
+    requestAnimationFrame(() => {
+      modalContent.classList.add("visible");
+    });
+  };
+
+  requestAnimationFrame(positionModal);
 
   console.log(`📝 openModal: ${category} - ${qid}`);
 }
@@ -342,6 +371,11 @@ export function closeModal() {
   const activeElement = document.activeElement;
   
   document.getElementById("modal").style.display = "none";
+  const modalContent = document.querySelector("#modal .modal-content");
+  if (modalContent) {
+    modalContent.style.top = "";
+    modalContent.classList.remove("visible");
+  }
   
   // 地図を破棄（メモリリーク防止）
   const mapContainer = document.getElementById("map-container");

@@ -200,7 +200,7 @@
       .challenge:hover {
         transform: translateY(-8px);
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        border-color: rgba(255, 255, 255, 0.5);
+        border-color: rgba(255, 0, 0, 0.5);
       }
 
       .challenge:hover::before {
@@ -237,12 +237,9 @@
       /* モーダル */
       .modal {
         display: none;
-        position: fixed;
+        position: absolute;
         z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
+        inset: 0;
         background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(5px);
         animation: fadeIn 0.3s ease;
@@ -259,7 +256,6 @@
 
       .modal-content {
         background: rgba(250, 252, 255, 0.98);
-        margin: 5% auto;
         padding: 40px;
         border-radius: 20px;
         width: 90%;
@@ -269,19 +265,18 @@
         color: #ffffff;
         text-align: left;
         box-shadow: 0 25px 80px rgb(103 101 175 / 50%);
-        animation: slideUp 0.3s ease;
         border: 1px solid rgb(242 242 242 / 30%);
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -10px);
+        top: 5%;
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
       }
 
-      @keyframes slideUp {
-        from {
-          transform: translateY(50px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
+      .modal-content.visible {
+        opacity: 1;
+        transform: translate(-50%, 0);
       }
 
       .modal-content h2 {
@@ -300,7 +295,7 @@
         float: right;
         font-size: 32px;
         cursor: pointer;
-        color: #999;
+        color: #999;  /*閉じるボタンの色*/
         line-height: 1;
         transition: color 0.3s;
       }
@@ -336,7 +331,7 @@
         font-size: 15px;
         font-weight: 600;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 4px 15px rgba(24, 47, 153, 0.3);  /*送信ボタン影の色*/
       }
 
       button:hover {
@@ -452,6 +447,7 @@
         margin-top: 20px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         border: 1px solid rgba(220, 220, 220, 0.5);
+        position: relative;
       }
 
       .tab-content.active {
