@@ -1,5 +1,76 @@
 import { initTabs } from "./tabs.js";
 import { loadQuizData } from "./quiz.js";
+
+let loginStartTime = null;
+let studyTrackingEventsBound = false;
+let studyTimeSent = false;
+
+function initializeLoginStartTime() {
+  const stored = sessionStorage.getItem("loginStartTime");
+  if (stored) {
+    const parsed = Number(stored);
+    if (Number.isFinite(parsed) && parsed > 0) {
+      loginStartTime = parsed;
+    } else {
+      loginStartTime = Date.now();
+      sessionStorage.setItem("loginStartTime", String(loginStartTime));
+    }
+  } else {
+    loginStartTime = Date.now();
+    sessionStorage.setItem("loginStartTime", String(loginStartTime));
+  }
+  studyTimeSent = false;
+}
+
+function sendStudyTime() {
+  if (!loginStartTime || studyTimeSent) return;
+
+  const durationMs = Date.now() - loginStartTime;
+  if (durationMs <= 0) {
+    return;
+  }
+
+  const payload = JSON.stringify({
+    durationMs,
+    sessionStartedAt: new Date(loginStartTime).toISOString()
+  });
+
+  let sent = false;
+  if (navigator.sendBeacon) {
+    const blob = new Blob([payload], { type: "application/json" });
+    sent = navigator.sendBeacon("/auth/study-time", blob);
+  }
+
+  if (!sent) {
+    fetch("/auth/study-time", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: payload,
+      credentials: "include",
+      keepalive: true
+    }).catch(() => {
+      // 送信失敗時は再送しないが、アプリの挙動を止めない
+    });
+  }
+
+  studyTimeSent = true;
+  sessionStorage.removeItem("loginStartTime");
+  loginStartTime = null;
+}
+
+function setupStudyTimeTracking() {
+  initializeLoginStartTime();
+
+  if (studyTrackingEventsBound) return;
+
+  const handlePageHide = () => {
+    sendStudyTime();
+  };
+
+  window.addEventListener("pagehide", handlePageHide);
+  window.addEventListener("beforeunload", handlePageHide);
+  studyTrackingEventsBound = true;
+}
 // ✅ ページ読み込み時にログイン状態をチェック
 window.addEventListener("DOMContentLoaded", async () => {
   const res = await fetch("/session-check", { credentials: "include" });
@@ -13,6 +84,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     initTabs();
     loadQuizData();
+    setupStudyTimeTracking();
   } else {
     // 未ログインならログインフォームを表示
     document.getElementById("loginSection").classList.remove("hidden");
@@ -46,6 +118,7 @@ export function initLogin(onLoginSuccess) {
 
       // ✅ ログイン成功後の処理（タブと問題をロード）
       if (typeof onLoginSuccess === "function") onLoginSuccess();
+      setupStudyTimeTracking();
     } else {
       document.getElementById("loginMessage").innerText = result.message;
     }
@@ -56,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
+      sendStudyTime();
       const res = await fetch("/auth/logout", { credentials: "include" });
       const data = await res.json();
 

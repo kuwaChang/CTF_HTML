@@ -119,6 +119,34 @@ router.post("/login", (req, res) => {
   });
 });
 
+// 学習時間記録
+router.post("/study-time", requireLogin, (req, res) => {
+  const { durationMs, sessionStartedAt } = req.body || {};
+
+  const duration = Number(durationMs);
+  if (!Number.isFinite(duration) || duration <= 0) {
+    return res.status(400).json({ success: false, message: "学習時間が不正です" });
+  }
+
+  let startDate = sessionStartedAt ? new Date(sessionStartedAt) : new Date(Date.now() - duration);
+  if (Number.isNaN(startDate.getTime())) {
+    startDate = new Date(Date.now() - duration);
+  }
+  const endDate = new Date();
+
+  db.run(
+    `INSERT INTO study_sessions (userid, start_time, end_time, duration_ms) VALUES (?, ?, ?, ?)`,
+    [req.session.userid, startDate.toISOString(), endDate.toISOString(), Math.round(duration)],
+    (err) => {
+      if (err) {
+        console.error("学習時間記録エラー:", err);
+        return res.status(500).json({ success: false, message: "学習時間の記録に失敗しました" });
+      }
+      res.json({ success: true });
+    }
+  );
+});
+
 // ログアウト
 router.get("/logout", (req, res) => {
   req.session.destroy(() => res.json({ success: true, message: "ログアウトしました" }));

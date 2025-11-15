@@ -261,6 +261,14 @@ db.serialize(() => {
     qid TEXT,
     PRIMARY KEY (userid, category, qid)
   )`);
+
+  db.run(`CREATE TABLE IF NOT EXISTS study_sessions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid TEXT,
+    start_time TEXT,
+    end_time TEXT,
+    duration_ms INTEGER
+  )`);
 });
 
 
