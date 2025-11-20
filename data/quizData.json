@@ -2,14 +2,13 @@
   "beginner": {
     "crypto": {
       "answer": "flag{base64cryptoencode}",
-      "title": "もう一つの",
+      "title": "★暗号の祖",
       "desc": "与えられた文字列からflagを見つけてください。\nZmxhZ3tiYXNlNjRjcnlwdG9lbmNvZGV9",
       "hint": [
         "元に戻すためのツールcyberchefを使ってみよう!"
       ],
       "point": 10,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
+      "files": []
     },
     "forensics1": {
       "answer": "flag{hidden_672349}",
@@ -30,8 +29,7 @@
         "fileコマンドで中身がどのようなものなのか調べてみましょう！"
       ],
       "point": 20,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
+      "files": []
     }
   },
   "Reversing": {
@@ -125,7 +123,7 @@
     },
     "web4": {
       "answer": "FLAG{web4}",
-      "title": "SQLインジェクション",
+      "title": "★SQLインジェクション",
       "desc": "以下のログインページで実際にSQLインジェクションをしてみよう.",
       "url": "http://localhost:3333/sql_index.html",
       "hint": [
@@ -137,7 +135,7 @@
     },
     "web5": {
       "answer": "FLAG{hidden_flag_discovered}",
-      "title": "邪魔な広告",
+      "title": "★邪魔な広告",
       "desc": "次のページから不要な広告をよけてフラグを入手してください.",
       "url": "http://localhost:3333/advertisement.html",
       "hint": [
@@ -225,138 +223,6 @@
   },
   "OSINT": {
     "osint1": {
-      "answer": "FLAG{osint1}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 30,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint2": {
-      "answer": "FLAG{osint2}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 30,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint3": {
-      "answer": "FLAG{osint3}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 30,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint4": {
-      "answer": "FLAG{osint4}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 30,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint5": {
-      "answer": "FLAG{osint5}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 40,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint6": {
-      "answer": "FLAG{osint6}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 40,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint7": {
-      "answer": "FLAG{osint7}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 50,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint8": {
-      "answer": "FLAG{osint8}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 50,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint9": {
-      "answer": "FLAG{osint9}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 60,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint10": {
-      "answer": "FLAG{osint10}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 60,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint11": {
-      "answer": "FLAG{osint11}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 60,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint12": {
-      "answer": "FLAG{osint12}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 70,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "osint13": {
       "answer": "FLAG{location_mystery}",
       "answerType": "flag",
       "title": "謎の場所を探せ",
@@ -370,7 +236,7 @@
       "files": [],
       "explanation": "解説ページのURLを入力してください"
     },
-    "osint14": {
+    "osint2": {
       "answer": "35.6812,139.7671",
       "answerType": "coordinates",
       "title": "座標で答えろ",
@@ -386,10 +252,11 @@
       "explanation": "解説ページのURLを入力してください"
     }
   },
+
   "sad server": {
     "easy1": {
       "answer": "FLAG{easy_flag}",
-      "title": "easy1",
+      "title": "★easy1",
       "desc": "Easy シナリオ：シンプルなファイル読み取りに挑戦してください。\nflagファイルを見つけて内容を確認しましょう。",
       "hint": [
         "まずは /challenge ディレクトリを探索してみましょう",

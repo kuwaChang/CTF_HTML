@@ -144,53 +144,6 @@
   <div class="ad">広告9 - 動画配信サービス</div>
   <div class="ad">広告10 - クラウドストレージ</div>
 
-  <!-- 隠された広告要素（様々な方法で） -->
-  
-  <!-- 方法1: 完全透明 -->
-  <a class="ad secret-ad-1" href="/flag-hidden">隠し広告1</a>
-  
-  <!-- 方法2: display: none -->
-  <a class="ad secret-ad-2" href="/flag-hidden">隠し広告2</a>
-  
-  <!-- 方法3: visibility: hidden -->
-  <a class="ad secret-ad-3" href="/flag-hidden">隠し広告3</a>
-  
-  <!-- 方法4: 画面外に配置 -->
-  <a class="ad secret-ad-4" href="/flag-hidden">隠し広告4</a>
-  
-  <!-- 方法5: z-indexで背面 -->
-  <a class="ad secret-ad-5" href="/flag-hidden">隠し広告5</a>
-  
-  <!-- 方法6: 文字を透明に -->
-  <a class="ad secret-ad-6" href="/flag-hidden">隠し広告6</a>
-  
-  <!-- 方法7: フォントサイズ0 -->
-  <a class="ad secret-ad-7" href="/flag-hidden">隠し広告7</a>
-  
-  <!-- 方法8: clip-path -->
-  <a class="ad secret-ad-8" href="/flag-hidden">隠し広告8</a>
-  
-  <!-- 方法9: transform scale -->
-  <a class="ad secret-ad-9" href="/flag-hidden">隠し広告9</a>
-  
-  <!-- 方法10: ほぼ透明 -->
-  <a class="ad secret-ad-10" href="/flag-hidden">隠し広告10</a>
-  
-  <!-- 方法11: 幅高さ0 -->
-  <a class="ad secret-ad-11" href="/flag-hidden">隠し広告11</a>
-  
-  <!-- 方法12: 右側画面外 -->
-  <a class="ad secret-ad-12" href="/flag-hidden">隠し広告12</a>
-  
-  <!-- 方法13: 下側画面外 -->
-  <a class="ad secret-ad-13" href="/flag-hidden">隠し広告13</a>
-  
-  <!-- 方法14: マージンで画面外 -->
-  <a class="ad secret-ad-14" href="/flag-hidden">隠し広告14</a>
-  
-  <!-- 方法15: 実際にクリック可能な隠しリンク（これが本物） -->
-  <a class="secret-ad-real" href="/flag-hidden" style="top: 50%; left: 50%;">隠しフラグページへ</a>
-
   <!-- さらに通常の広告を追加して紛らわしく -->
   <div class="ad">広告11 - 自動車販売</div>
   <div class="ad">広告12 - 不動産情報</div>
@@ -203,38 +156,173 @@
   <div class="ad">広告19 - ガス会社</div>
   <div class="ad">広告20 - 水道局</div>
 
-  <!-- コメント内にも隠しリンク（HTMLコメントはDevToolsで見える） -->
-  <!-- <a href="/flag-hidden" style="display:none;">コメント内のリンク</a> -->
-
-  <!-- さらに隠された要素 -->
-  <div style="display: none;">
-    <a href="/flag-hidden">display:noneの中のリンク</a>
-  </div>
-
-  <div style="visibility: hidden;">
-    <a href="/flag-hidden">visibility:hiddenの中のリンク</a>
-  </div>
-
-  <div style="opacity: 0; position: absolute;">
-    <a href="/flag-hidden">opacity:0の中のリンク</a>
-  </div>
-
   <script>
-    // JavaScriptで動的に追加される隠しリンク（ソースを見れば見つかる）
-    setTimeout(() => {
-      const hiddenLink = document.createElement('a');
-      hiddenLink.href = '/flag-hidden';
-      hiddenLink.textContent = 'JavaScriptで追加されたリンク';
-      hiddenLink.style.cssText = 'position:absolute;opacity:0;width:1px;height:1px;pointer-events:auto;z-index:9999;';
-      document.body.appendChild(hiddenLink);
-    }, 1000);
-
-    // さらに隠されたリンク（data属性にURLを保存）
-    const secretData = {
-      url: '/flag-hidden',
-      text: 'data属性に保存されたリンク'
-    };
-    document.body.setAttribute('data-secret-url', secretData.url);
+    // 難読化されたURL生成関数群
+    (function() {
+      'use strict';
+      
+      // 方法1: Base64デコード
+      const _0x1a2b = atob('L2ZsYWctaGlkZGVu');
+      
+      // 方法2: 文字列を分割して結合
+      const _0x3c4d = ['/', 'f', 'l', 'a', 'g', '-', 'h', 'i', 'd', 'd', 'e', 'n'].join('');
+      
+      // 方法3: 文字コードから復元
+      const _0x5e6f = String.fromCharCode(47, 102, 108, 97, 103, 45, 104, 105, 100, 100, 101, 110);
+      
+      // 方法4: 逆順にしてから反転
+      const _0x7g8h = 'neddih-galf/'.split('').reverse().join('');
+      
+      // 方法5: Unicodeエスケープ
+      const _0x9i0j = '\u002f\u0066\u006c\u0061\u0067\u002d\u0068\u0069\u0064\u0064\u0065\u006e';
+      
+      // 方法6: シーザー暗号（ROT13風）
+      function _0xabc123(str) {
+        return str.split('').map(c => {
+          const code = c.charCodeAt(0);
+          if (code >= 97 && code <= 122) {
+            return String.fromCharCode(((code - 97 + 13) % 26) + 97);
+          }
+          return c;
+        }).join('');
+      }
+      const _0xdef456 = _0xabc123('sybt-uvqra') === 'flag-hidden' ? '/flag-hidden' : '/flag-hidden';
+      
+      // 方法7: 配列操作で生成
+      const _0xghi789 = ['flag', 'hidden'].map(s => s.split('').reverse().join('')).reverse().map(s => s.split('').reverse().join('')).join('-').replace(/^/, '/');
+      
+      // 方法8: 計算で生成
+      const _0xjkl012 = '/' + (0x66 + 0x6).toString(36) + (0x6c).toString(36) + (0x61).toString(36) + (0x67).toString(36) + '-' + (0x68).toString(36) + (0x69).toString(36) + (0x64).toString(36) + (0x64).toString(36) + (0x65).toString(36) + (0x6e).toString(36);
+      
+      // 方法9: 文字列置換
+      const _0x345 = 'a/b/c'.replace(/a\/b\/c/, '/flag-hidden');
+      
+      // 方法10: テンプレートリテラル（分割）
+      const _0x678 = `${'/'}${'flag'}${'-'}${'hidden'}`;
+      
+      // 実際に使用するURL（複数の方法から選択）
+      const targetUrl = _0x1a2b;
+      
+      // URLを動的に構築する関数（難読化）
+      function buildUrl() {
+        return _0x1a2b;
+      }
+      
+      // クリックイベントハンドラー（難読化）
+      function handleClick(e) {
+        e.preventDefault();
+        const url = buildUrl();
+        window.location.href = url;
+      }
+      
+      // 隠された広告要素を動的に生成
+      function createHiddenAds() {
+        const methods = [
+          { name: 'secret-ad-1', style: 'opacity: 0; pointer-events: none;' },
+          { name: 'secret-ad-2', style: 'display: none;' },
+          { name: 'secret-ad-3', style: 'visibility: hidden;' },
+          { name: 'secret-ad-4', style: 'position: absolute; left: -9999px; top: -9999px;' },
+          { name: 'secret-ad-5', style: 'position: relative; z-index: -1; opacity: 0;' },
+          { name: 'secret-ad-6', style: 'color: transparent; background: transparent; border: none;' },
+          { name: 'secret-ad-7', style: 'font-size: 0; width: 0; height: 0; overflow: hidden;' },
+          { name: 'secret-ad-8', style: 'clip-path: inset(100%); position: absolute;' },
+          { name: 'secret-ad-9', style: 'transform: scale(0); position: absolute;' },
+          { name: 'secret-ad-10', style: 'opacity: 0.001; pointer-events: none;' },
+          { name: 'secret-ad-11', style: 'width: 0; height: 0; overflow: hidden; position: absolute;' },
+          { name: 'secret-ad-12', style: 'position: absolute; right: -9999px;' },
+          { name: 'secret-ad-13', style: 'position: absolute; bottom: -9999px;' },
+          { name: 'secret-ad-14', style: 'margin-left: -9999px;' }
+        ];
+        
+        methods.forEach((method, index) => {
+          const link = document.createElement('a');
+          link.className = `ad ${method.name}`;
+          link.href = '#'; // hrefには直接URLを設定しない
+          link.textContent = `隠し広告${index + 1}`;
+          link.style.cssText = method.style;
+          link.addEventListener('click', handleClick);
+          document.body.appendChild(link);
+        });
+        
+        // 実際にクリック可能な隠しリンク
+        const realLink = document.createElement('a');
+        realLink.className = 'secret-ad-real';
+        realLink.href = '#'; // hrefには直接URLを設定しない
+        realLink.textContent = '隠しフラグページへ';
+        realLink.style.cssText = 'opacity: 0; position: absolute; width: 1px; height: 1px; pointer-events: auto; z-index: 9999; top: 50%; left: 50%;';
+        realLink.addEventListener('click', handleClick);
+        document.body.appendChild(realLink);
+      }
+      
+      // さらに難読化: 関数名を偽装
+      const initAds = createHiddenAds;
+      const setupPage = function() {
+        setTimeout(initAds, Math.random() * 100 + 50);
+      };
+      
+      // イベントリスナーで実行（より難読化）
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupPage);
+      } else {
+        setupPage();
+      }
+      
+      // 追加の難読化: data属性に保存（Base64エンコード）
+      const encoded = btoa(targetUrl);
+      document.body.setAttribute('data-ad', encoded);
+      
+      // さらに難読化: グローバル変数に保存（変数名を偽装）
+      window['_ad' + 'Config'] = {
+        'url': targetUrl,
+        'enabled': true
+      };
+    })();
+    
+    // 別の難読化方法: 文字列を分割して保存
+    (function() {
+      const parts = ['/', 'fl', 'ag', '-', 'hi', 'dd', 'en'];
+      
+      // URLを構築する関数
+      function getUrl() {
+        return parts.join('');
+      }
+      
+      // クリックハンドラー
+      function clickHandler(e) {
+        e.preventDefault();
+        window.location.href = getUrl();
+      }
+      
+      // display:noneの中にリンクを追加
+      const div = document.createElement('div');
+      div.style.display = 'none';
+      const link = document.createElement('a');
+      link.href = '#'; // hrefには直接URLを設定しない
+      link.textContent = 'display:noneの中のリンク';
+      link.addEventListener('click', clickHandler);
+      div.appendChild(link);
+      document.body.appendChild(div);
+      
+      // visibility:hiddenの中にリンクを追加
+      const div2 = document.createElement('div');
+      div2.style.visibility = 'hidden';
+      const link2 = document.createElement('a');
+      link2.href = '#'; // hrefには直接URLを設定しない
+      link2.textContent = 'visibility:hiddenの中のリンク';
+      link2.addEventListener('click', clickHandler);
+      div2.appendChild(link2);
+      document.body.appendChild(div2);
+      
+      // opacity:0の中にリンクを追加
+      const div3 = document.createElement('div');
+      div3.style.cssText = 'opacity: 0; position: absolute;';
+      const link3 = document.createElement('a');
+      link3.href = '#'; // hrefには直接URLを設定しない
+      link3.textContent = 'opacity:0の中のリンク';
+      link3.addEventListener('click', clickHandler);
+      div3.appendChild(link3);
+      document.body.appendChild(div3);
+    })();
   </script>
 
 </body>
