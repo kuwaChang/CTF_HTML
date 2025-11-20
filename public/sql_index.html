@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLインジェクション練習環境</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .warning {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+
+        .result.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .result.error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+
+        .result h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .result pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .hint {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 6px;
+        }
+
+        .hint h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .hint ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .hint code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔓 SQLインジェクション練習環境</h1>
+        
+        <div class="warning">
+            ⚠️ このページは学習目的のみで使用してください。実際のアプリケーションではこのような脆弱性を絶対に含めないでください。
+        </div>
+
+        <!-- ログインセクション -->
+        <div class="section">
+            <h2>1. ログイン機能（SQLインジェクション脆弱性あり）</h2>
+            <div class="form-group">
+                <label for="username">ユーザー名:</label>
+                <input type="text" id="username" placeholder="ユーザー名を入力">
+            </div>
+            <div class="form-group">
+                <label for="password">パスワード:</label>
+                <input type="password" id="password" placeholder="パスワードを入力">
+            </div>
+            <button onclick="attemptLogin()">ログイン</button>
+            
+            <div class="hint">
+                <h4>💡 ヒント:</h4>
+                <ul>
+                    <li>通常のログイン: <code>admin</code> / <code>password123</code></li>
+                    <li>パスワードを無視する: ユーザー名に <code>admin' OR '1'='1</code> を入力</li>
+                    <li>コメントアウト: ユーザー名に <code>admin' --</code> を入力（パスワードは空でもOK）</li>
+                    <li>すべてのユーザーでログイン: ユーザー名に <code>' OR '1'='1</code> を入力</li>
+                </ul>
+            </div>
+
+            <div id="loginResult"></div>
+        </div>
+
+        <!-- 検索セクション -->
+        <div class="section">
+            <h2>2. ユーザー検索機能（SQLインジェクション脆弱性あり）</h2>
+            <div class="form-group">
+                <label for="search">検索キーワード:</label>
+                <input type="text" id="search" placeholder="ユーザー名またはメールアドレスで検索">
+            </div>
+            <button onclick="searchUsers()">検索</button>
+            
+            <div class="hint">
+                <h4>💡 ヒント:</h4>
+                <ul>
+                    <li>通常の検索: <code>alice</code></li>
+                    <li>すべてのユーザーを取得: <code>' OR '1'='1</code></li>
+                    <li>UNION攻撃: <code>' UNION SELECT * FROM users --</code></li>
+                    <li>データベース名を取得: <code>' UNION SELECT sqlite_version(), NULL, NULL, NULL --</code></li>
+                </ul>
+            </div>
+
+            <div id="searchResult"></div>
+        </div>
+
+        <!-- ユーザー一覧 -->
+        <div class="section">
+            <h2>3. 全ユーザー一覧（参考）</h2>
+            <button onclick="loadAllUsers()">全ユーザーを表示</button>
+            <div id="allUsersResult"></div>
+        </div>
+    </div>
+
+    <script>
+        async function attemptLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('loginResult');
+
+            if (!username || !password) {
+                resultDiv.innerHTML = '<div class="result error"><h3>エラー</h3><p>ユーザー名とパスワードを入力してください。</p></div>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <h3>✅ ${data.message}</h3>
+                            <p><strong>ユーザー情報:</strong></p>
+                            <ul>
+                                <li>ユーザー名: ${data.user.username}</li>
+                                <li>メール: ${data.user.email}</li>
+                                <li>ロール: ${data.user.role}</li>
+                            </ul>
+                            <p><strong>実行されたSQLクエリ:</strong></p>
+                            <pre>${data.query}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <h3>❌ ${data.message}</h3>
+                            <p><strong>実行されたSQLクエリ:</strong></p>
+                            <pre>${data.query}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error"><h3>エラー</h3><p>${error.message}</p></div>`;
+            }
+        }
+
+        async function searchUsers() {
+            const searchTerm = document.getElementById('search').value;
+            const resultDiv = document.getElementById('searchResult');
+
+            if (!searchTerm) {
+                resultDiv.innerHTML = '<div class="result error"><h3>エラー</h3><p>検索キーワードを入力してください。</p></div>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ search: searchTerm })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    let tableHTML = '';
+                    if (data.results.length > 0) {
+                        tableHTML = `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>ユーザー名</th>
+                                        <th>メール</th>
+                                        <th>ロール</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${data.results.map(user => `
+                                        <tr>
+                                            <td>${user.id}</td>
+                                            <td>${user.username}</td>
+                                            <td>${user.email}</td>
+                                            <td>${user.role}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        `;
+                    } else {
+                        tableHTML = '<p>該当するユーザーが見つかりませんでした。</p>';
+                    }
+
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <h3>✅ 検索結果 (${data.count}件)</h3>
+                            ${tableHTML}
+                            <p><strong>実行されたSQLクエリ:</strong></p>
+                            <pre>${data.query}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <h3>❌ ${data.message}</h3>
+                            <p><strong>実行されたSQLクエリ:</strong></p>
+                            <pre>${data.query}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error"><h3>エラー</h3><p>${error.message}</p></div>`;
+            }
+        }
+
+        async function loadAllUsers() {
+            const resultDiv = document.getElementById('allUsersResult');
+
+            try {
+                const response = await fetch('/users');
+                const data = await response.json();
+                
+                if (data.success) {
+                    let tableHTML = '';
+                    if (data.users.length > 0) {
+                        tableHTML = `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>ユーザー名</th>
+                                        <th>メール</th>
+                                        <th>ロール</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${data.users.map(user => `
+                                        <tr>
+                                            <td>${user.id}</td>
+                                            <td>${user.username}</td>
+                                            <td>${user.email}</td>
+                                            <td>${user.role}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        `;
+                    }
+
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <h3>全ユーザー一覧 (${data.users.length}件)</h3>
+                            ${tableHTML}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="result error"><h3>❌ ${data.message}</h3></div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error"><h3>エラー</h3><p>${error.message}</p></div>`;
+            }
+        }
+
+        // Enterキーで送信
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
+
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                attemptLogin();
+            }
+        });
+
+        document.getElementById('search').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchUsers();
+            }
+        });
+    </script>
+</body>
+</html>

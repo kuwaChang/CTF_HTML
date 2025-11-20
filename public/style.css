@@ -440,7 +440,7 @@
 
       .tab-content {
         display: none;
-        background: rgba(245, 247, 250, 0.98);
+        background: rgba(245, 247, 250, 0.98);  /*背景*/
         backdrop-filter: blur(10px);
         padding: 30px;
         border-radius: 16px;

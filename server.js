@@ -18,6 +18,7 @@ const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15分
 const RATE_LIMIT_MAX_REQUESTS = 100; // 15分間に100リクエストまで
 const LOGIN_RATE_LIMIT_MAX = 5; // ログイン試行は15分間に5回まで
 
+// レート制限(ブルートフォース対策)
 function rateLimit(req, res, next) {
   const ip = req.ip || req.connection.remoteAddress || 'unknown';
   const now = Date.now();
@@ -63,6 +64,9 @@ const app = express();
 app.set('trust proxy', true);
 
 const db = new sqlite3.Database("users.db");
+// SQLインジェクション練習用データベース（別ファイル）
+const sqlDbPath = path.join(__dirname, "public", "files", "user_database.db");
+const sqlDb = new sqlite3.Database(sqlDbPath);
 const http = require("http");
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -186,6 +190,158 @@ app.use(session({
 // ルーティング設定
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// ============================================
+// SQLインジェクション練習用ルート（学習目的）
+// ============================================
+
+// SQLインジェクション練習用ページ
+app.get(["/sql", "/sql_index", "/sqli"], (_req, res) => {
+	res.sendFile(path.join(__dirname, "public", "sql_index.html"));
+});
+
+// SQLインジェクション練習用データベース初期化
+sqlDb.serialize(() => {
+	// usersテーブル（学習用）- emailとroleカラムを追加
+	sqlDb.run(`CREATE TABLE IF NOT EXISTS users (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		username TEXT UNIQUE,
+		password TEXT,
+		email TEXT,
+		role TEXT
+	)`);
+
+	// 既存テーブルにカラムがなければ追加（マイグレーション）
+	sqlDb.run(`ALTER TABLE users ADD COLUMN email TEXT`, () => {});
+	sqlDb.run(`ALTER TABLE users ADD COLUMN role TEXT`, () => {});
+
+	// テストユーザー投入（存在しなければ）または既存データの更新
+	sqlDb.get(`SELECT COUNT(*) AS cnt FROM users`, (err, row) => {
+		if (err) {
+			console.error("SQL練習DB初期化エラー:", err);
+			return;
+		}
+		
+		const seedUsers = [
+			{ username: "admin", password: "password123", email: "admin@example.com", role: "administrator" },
+			{ username: "alice", password: "alicepass", email: "alice@example.com", role: "user" },
+			{ username: "bob", password: "bobpass", email: "bob@example.com", role: "user" }
+		];
+		
+		if (!row || row.cnt === 0) {
+			// データが存在しない場合は新規投入
+			const stmt = sqlDb.prepare(`INSERT OR IGNORE INTO users (username, password, email, role) VALUES (?, ?, ?, ?)`);
+			for (const u of seedUsers) {
+				stmt.run(u.username, u.password, u.email, u.role);
+			}
+			stmt.finalize();
+			console.log("✅ SQL練習用ユーザーを投入しました:", seedUsers.map(u => u.username).join(", "));
+		} else {
+			// 既存データがある場合は、emailとroleを更新
+			const updateStmt = sqlDb.prepare(`UPDATE users SET email = ?, role = ? WHERE username = ?`);
+			for (const u of seedUsers) {
+				updateStmt.run(u.email, u.role, u.username);
+			}
+			updateStmt.finalize();
+			console.log("✅ SQL練習用ユーザーのemailとroleを更新しました");
+		}
+		console.log("🗄️ SQL練習DBファイル:", sqlDbPath);
+	});
+});
+
+// ログイン機能（SQLインジェクション脆弱性あり - 学習用）
+app.post("/login", (req, res) => {
+    const username = req.body.username || "";
+    const password = req.body.password || "";
+
+    // ❌ SQLインジェクションできる超危険なクエリ（練習用）
+    const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+
+    console.log("実行されるSQL:", query);
+
+    sqlDb.get(query, (err, row) => {
+        if (err) {
+            return res.json({
+                success: false,
+                message: "エラー: " + err.message,
+                query: query
+            });
+        }
+        if (row) {
+            res.json({
+                success: true,
+                message: "ログイン成功",
+                user: {
+                    id: row.id,
+                    username: row.username,
+                    email: row.email || "",
+                    role: row.role || "user"
+                },
+                query: query
+            });
+        } else {
+            res.json({
+                success: false,
+                message: "ログイン失敗: ユーザー名またはパスワードが正しくありません",
+                query: query
+            });
+        }
+    });
+});
+
+// 検索機能（SQLインジェクション脆弱性あり - 学習用）
+app.post("/search", (req, res) => {
+    const searchTerm = req.body.search || "";
+
+    // ❌ SQLインジェクションできる超危険なクエリ（練習用）
+    const query = `SELECT * FROM users WHERE username LIKE '%${searchTerm}%' OR email LIKE '%${searchTerm}%'`;
+
+    console.log("実行されるSQL:", query);
+
+    sqlDb.all(query, (err, rows) => {
+        if (err) {
+            return res.json({
+                success: false,
+                message: "エラー: " + err.message,
+                query: query
+            });
+        }
+        res.json({
+            success: true,
+            results: rows.map(row => ({
+                id: row.id,
+                username: row.username,
+                email: row.email || "",
+                role: row.role || "user"
+            })),
+            count: rows.length,
+            query: query
+        });
+    });
+});
+
+// 全ユーザー一覧取得（SQLインジェクション練習用）
+app.get("/users", (req, res) => {
+    const query = `SELECT * FROM users`;
+
+    sqlDb.all(query, (err, rows) => {
+        if (err) {
+            return res.json({
+                success: false,
+                message: "エラー: " + err.message
+            });
+        }
+        res.json({
+            success: true,
+            users: rows.map(row => ({
+                id: row.id,
+                username: row.username,
+                email: row.email || "",
+                role: row.role || "user"
+            }))
+        });
+    });
 });
 
 // JSONデータを返すAPI（認証必須に変更）
@@ -319,5 +475,6 @@ const PORT = 3333;
 // LAN内のすべてのインターフェースでリッスン
 server.listen(PORT, () => {
   console.log(`✅ サーバー起動: http://localhost:${PORT}`);
+  console.log(`🔓 SQLインジェクション練習: http://localhost:${PORT}/sql`);
   //console.log(`📡 LAN内の他のデバイスからアクセス可能です`);
 });

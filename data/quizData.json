@@ -124,8 +124,8 @@
     },
     "web4": {
       "answer": "FLAG{web4}",
-      "title": "title",
-      "desc": "desc",
+      "title": "SQLインジェクション",
+      "desc": "以下のログインページで実際にSQLインジェクションをしてみよう. http://localhost:3333/sql_index.html",
       "hint": [
         "hint"
       ],
