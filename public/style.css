@@ -421,7 +421,7 @@
         border-radius: 12px;
         background: rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px);
-        color: #ffffff;
+        color: #010101;
         font-weight: 600;
         font-size: 15px;
         transition: all 0.3s ease;

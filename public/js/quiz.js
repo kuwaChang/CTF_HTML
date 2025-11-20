@@ -208,7 +208,17 @@ function openModal(category, qid, evt = null) {
   const modalContent = modal.querySelector(".modal-content");
 
   document.getElementById("modal-title").textContent = q.title;
-  document.getElementById("modal-desc").textContent = q.desc;
+  
+  // descとurlの表示
+  const descElement = document.getElementById("modal-desc");
+  if (q.url) {
+    // urlがある場合、descの後にリンクを追加
+    descElement.innerHTML = `${q.desc}<br><a href="${q.url}" target="_blank" style="color: #0078ff; text-decoration: underline; font-weight: 600;">${q.url}</a>`;
+  } else {
+    // urlがない場合、通常通りtextContentを使用
+    descElement.textContent = q.desc;
+  }
+  
   document.getElementById("modal-point").textContent = q.point;
   
   // ヒントの初期化

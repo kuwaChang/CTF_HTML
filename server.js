@@ -201,6 +201,11 @@ app.get(["/sql", "/sql_index", "/sqli"], (_req, res) => {
 	res.sendFile(path.join(__dirname, "public", "sql_index.html"));
 });
 
+// 隠しフラグページ（広告ページから発見できる）
+app.get("/flag-hidden", (_req, res) => {
+	res.sendFile(path.join(__dirname, "public", "flag-hidden.html"));
+});
+
 // SQLインジェクション練習用データベース初期化
 sqlDb.serialize(() => {
 	// usersテーブル（学習用）- emailとroleカラムを追加

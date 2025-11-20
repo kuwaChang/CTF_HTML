@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>広告だらけのページ</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f5f5f5;
+  }
+
+  h1 {
+    color: #333;
+    text-align: center;
+  }
+
+  .ad {
+    width: 300px;
+    height: 250px;
+    background: #eee;
+    margin: 20px;
+    display: inline-block;
+    border: 1px solid #ddd;
+    text-align: center;
+    line-height: 250px;
+    font-size: 18px;
+  }
+
+  /* 様々な隠し方の広告要素 */
+  
+  /* 方法1: 完全透明 */
+  .secret-ad-1 {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* 方法2: display: none */
+  .secret-ad-2 {
+    display: none;
+  }
+
+  /* 方法3: visibility: hidden */
+  .secret-ad-3 {
+    visibility: hidden;
+  }
+
+  /* 方法4: 画面外に配置 */
+  .secret-ad-4 {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+  }
+
+  /* 方法5: z-indexで背面に */
+  .secret-ad-5 {
+    position: relative;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  /* 方法6: 文字を透明に */
+  .secret-ad-6 {
+    color: transparent;
+    background: transparent;
+    border: none;
+  }
+
+  /* 方法7: フォントサイズ0 */
+  .secret-ad-7 {
+    font-size: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  /* 方法8: clip-pathでクリップ */
+  .secret-ad-8 {
+    clip-path: inset(100%);
+    position: absolute;
+  }
+
+  /* 方法9: transformで縮小 */
+  .secret-ad-9 {
+    transform: scale(0);
+    position: absolute;
+  }
+
+  /* 方法10: ほぼ透明 */
+  .secret-ad-10 {
+    opacity: 0.001;
+    pointer-events: none;
+  }
+
+  /* 方法11: 幅と高さを0に */
+  .secret-ad-11 {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  /* 方法12: 右側の画面外 */
+  .secret-ad-12 {
+    position: absolute;
+    right: -9999px;
+  }
+
+  /* 方法13: 下側の画面外 */
+  .secret-ad-13 {
+    position: absolute;
+    bottom: -9999px;
+  }
+
+  /* 方法14: マージンで画面外 */
+  .secret-ad-14 {
+    margin-left: -9999px;
+  }
+
+  /* 方法15: 実際のリンク（pointer-eventsを有効にする必要がある） */
+  .secret-ad-real {
+    opacity: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    pointer-events: auto; /* これが重要！クリック可能にする */
+    z-index: 9999;
+  }
+</style>
+</head>
+<body>
+  <h1>スポンサー広告ページ</h1>
+  <p>このページには様々な広告が表示されています。ご覧ください。</p>
+
+  <!-- 通常の広告（見える） -->
+  <div class="ad">広告1 - 最新スマートフォン</div>
+  <div class="ad">広告2 - お得な旅行プラン</div>
+  <div class="ad">広告3 - 新発売のゲーム</div>
+  <div class="ad">広告4 - 美味しいレストラン</div>
+  <div class="ad">広告5 - ファッションセール</div>
+  <div class="ad">広告6 - オンライン学習</div>
+  <div class="ad">広告7 - フィットネスジム</div>
+  <div class="ad">広告8 - 音楽ストリーミング</div>
+  <div class="ad">広告9 - 動画配信サービス</div>
+  <div class="ad">広告10 - クラウドストレージ</div>
+
+  <!-- 隠された広告要素（様々な方法で） -->
+  
+  <!-- 方法1: 完全透明 -->
+  <a class="ad secret-ad-1" href="/flag-hidden">隠し広告1</a>
+  
+  <!-- 方法2: display: none -->
+  <a class="ad secret-ad-2" href="/flag-hidden">隠し広告2</a>
+  
+  <!-- 方法3: visibility: hidden -->
+  <a class="ad secret-ad-3" href="/flag-hidden">隠し広告3</a>
+  
+  <!-- 方法4: 画面外に配置 -->
+  <a class="ad secret-ad-4" href="/flag-hidden">隠し広告4</a>
+  
+  <!-- 方法5: z-indexで背面 -->
+  <a class="ad secret-ad-5" href="/flag-hidden">隠し広告5</a>
+  
+  <!-- 方法6: 文字を透明に -->
+  <a class="ad secret-ad-6" href="/flag-hidden">隠し広告6</a>
+  
+  <!-- 方法7: フォントサイズ0 -->
+  <a class="ad secret-ad-7" href="/flag-hidden">隠し広告7</a>
+  
+  <!-- 方法8: clip-path -->
+  <a class="ad secret-ad-8" href="/flag-hidden">隠し広告8</a>
+  
+  <!-- 方法9: transform scale -->
+  <a class="ad secret-ad-9" href="/flag-hidden">隠し広告9</a>
+  
+  <!-- 方法10: ほぼ透明 -->
+  <a class="ad secret-ad-10" href="/flag-hidden">隠し広告10</a>
+  
+  <!-- 方法11: 幅高さ0 -->
+  <a class="ad secret-ad-11" href="/flag-hidden">隠し広告11</a>
+  
+  <!-- 方法12: 右側画面外 -->
+  <a class="ad secret-ad-12" href="/flag-hidden">隠し広告12</a>
+  
+  <!-- 方法13: 下側画面外 -->
+  <a class="ad secret-ad-13" href="/flag-hidden">隠し広告13</a>
+  
+  <!-- 方法14: マージンで画面外 -->
+  <a class="ad secret-ad-14" href="/flag-hidden">隠し広告14</a>
+  
+  <!-- 方法15: 実際にクリック可能な隠しリンク（これが本物） -->
+  <a class="secret-ad-real" href="/flag-hidden" style="top: 50%; left: 50%;">隠しフラグページへ</a>
+
+  <!-- さらに通常の広告を追加して紛らわしく -->
+  <div class="ad">広告11 - 自動車販売</div>
+  <div class="ad">広告12 - 不動産情報</div>
+  <div class="ad">広告13 - 保険商品</div>
+  <div class="ad">広告14 - 投資サービス</div>
+  <div class="ad">広告15 - クレジットカード</div>
+  <div class="ad">広告16 - 銀行サービス</div>
+  <div class="ad">広告17 - 通信会社</div>
+  <div class="ad">広告18 - 電力会社</div>
+  <div class="ad">広告19 - ガス会社</div>
+  <div class="ad">広告20 - 水道局</div>
+
+  <!-- コメント内にも隠しリンク（HTMLコメントはDevToolsで見える） -->
+  <!-- <a href="/flag-hidden" style="display:none;">コメント内のリンク</a> -->
+
+  <!-- さらに隠された要素 -->
+  <div style="display: none;">
+    <a href="/flag-hidden">display:noneの中のリンク</a>
+  </div>
+
+  <div style="visibility: hidden;">
+    <a href="/flag-hidden">visibility:hiddenの中のリンク</a>
+  </div>
+
+  <div style="opacity: 0; position: absolute;">
+    <a href="/flag-hidden">opacity:0の中のリンク</a>
+  </div>
+
+  <script>
+    // JavaScriptで動的に追加される隠しリンク（ソースを見れば見つかる）
+    setTimeout(() => {
+      const hiddenLink = document.createElement('a');
+      hiddenLink.href = '/flag-hidden';
+      hiddenLink.textContent = 'JavaScriptで追加されたリンク';
+      hiddenLink.style.cssText = 'position:absolute;opacity:0;width:1px;height:1px;pointer-events:auto;z-index:9999;';
+      document.body.appendChild(hiddenLink);
+    }, 1000);
+
+    // さらに隠されたリンク（data属性にURLを保存）
+    const secretData = {
+      url: '/flag-hidden',
+      text: 'data属性に保存されたリンク'
+    };
+    document.body.setAttribute('data-secret-url', secretData.url);
+  </script>
+
+</body>
+</html>

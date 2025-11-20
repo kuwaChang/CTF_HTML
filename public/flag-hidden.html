@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>隠しフラグページ</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    color: white;
+  }
+
+  .container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 600px;
+    color: #333;
+  }
+
+  h1 {
+    color: #667eea;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .congratulations {
+    font-size: 24px;
+    color: #764ba2;
+    margin: 30px 0;
+    font-weight: bold;
+  }
+
+  .flag {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    font-size: 28px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    margin: 30px 0;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    letter-spacing: 2px;
+  }
+
+  .message {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+    margin-top: 20px;
+  }
+
+  .hint {
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+    border-left: 4px solid #667eea;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+  }
+
+  .back-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 おめでとうございます！</h1>
+    
+    <div class="congratulations">
+      隠しフラグページを発見しました！
+    </div>
+
+    <div class="flag">
+      FLAG{hidden_flag_discovered}
+    </div>
+
+    <div class="message">
+      DevToolsを使って、見えない広告要素の中からこのページへのリンクを見つけることができましたね！<br>
+      これは、Webページのソースコードや開発者ツールを調査することで、隠された情報を見つけるCTFチャレンジの一例です。
+    </div>
+
+    <div class="hint">
+      <strong>ヒント:</strong> 実際のCTFでは、様々な方法で情報が隠されています。
+      <ul style="text-align: left; margin-top: 10px;">
+        <li>HTMLコメント内の情報</li>
+        <li>CSSで非表示にされた要素</li>
+        <li>JavaScriptで動的に生成される要素</li>
+        <li>HTTPレスポンスヘッダー</li>
+        <li>ソースコード内のコメント</li>
+      </ul>
+    </div>
+
+    <a href="advertisement.html" class="back-link">広告ページに戻る</a>
+  </div>
+</body>
+</html>
+

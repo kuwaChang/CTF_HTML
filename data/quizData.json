@@ -114,7 +114,8 @@
     "web3": {
       "answer": "FLAG{web3}",
       "title": "web3",
-      "desc": "あ，リンクを作り忘れてるページがあるじゃん．OKが出たらflagゲットできるよ. http://153.143.238.156:8080/response.html",
+      "desc": "あ，リンクを作り忘れてるページがあるじゃん．OKが出たらflagゲットできるよ.",
+      "url": "http://153.143.238.156:8080/response.html",
       "hint": [
         "hint"
       ],
@@ -125,9 +126,25 @@
     "web4": {
       "answer": "FLAG{web4}",
       "title": "SQLインジェクション",
-      "desc": "以下のログインページで実際にSQLインジェクションをしてみよう. http://localhost:3333/sql_index.html",
+      "desc": "以下のログインページで実際にSQLインジェクションをしてみよう.",
+      "url": "http://localhost:3333/sql_index.html",
       "hint": [
         "hint"
+      ],
+      "point": 50,
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "web5": {
+      "answer": "FLAG{hidden_flag_discovered}",
+      "title": "邪魔な広告",
+      "desc": "次のページから不要な広告をよけてフラグを入手してください.",
+      "url": "http://localhost:3333/advertisement.html",
+      "hint": [
+        "解き方は一つじゃないよ。色々試してみよう！",
+        "DevToolsを使ってみよう！",
+        "ブラウザのソースコードを見てみよう！",
+        "全部で15種類の隠しページがあるよ。"
       ],
       "point": 50,
       "files": [],
