@@ -387,9 +387,23 @@ app.get("/getScore", (req, res) => {
       return res.status(500).json({ success: false, message: "エラーが発生しました" });
     }
     if (!row) {
-      return res.json({ success: false, score: 0 });
+      return res.json({ success: false, score: 0, studyTime: 0 });
     }
-    res.json({ success: true, score: row.score });
+    
+    // 学習時間の合計を取得
+    db.get(
+      "SELECT COALESCE(SUM(duration_ms), 0) as total_study_time FROM study_sessions WHERE userid = ?",
+      [req.session.userid],
+      (studyErr, studyRow) => {
+        if (studyErr) {
+          console.error("学習時間取得エラー:", studyErr);
+          // 学習時間の取得に失敗してもスコアは返す
+          return res.json({ success: true, score: row.score, studyTime: 0 });
+        }
+        const studyTime = studyRow ? (studyRow.total_study_time || 0) : 0;
+        res.json({ success: true, score: row.score, studyTime: studyTime });
+      }
+    );
   });
 });
 //データベースへのアクセス
