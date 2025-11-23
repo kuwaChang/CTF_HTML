@@ -523,12 +523,44 @@ console.log("📡 /checkAnswer応答:", res.status);
   }
 });
 
+// ✅ ミリ秒を読みやすい形式に変換
+function formatStudyTime(ms) {
+  if (!ms || ms <= 0) return "0分";
+  
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  
+  const remainingMinutes = minutes % 60;
+  const remainingSeconds = seconds % 60;
+  
+  let timeStr = "";
+  if (hours > 0) {
+    timeStr += hours + "時間";
+  }
+  if (remainingMinutes > 0) {
+    timeStr += remainingMinutes + "分";
+  }
+  if (hours === 0 && remainingSeconds > 0) {
+    timeStr += remainingSeconds + "秒";
+  }
+  
+  return timeStr || "0分";
+}
+
 // ✅ スコア表示
 export async function loadScore() {
   const res = await fetch("/getScore", { credentials: "include" });
   const result = await res.json();
   document.getElementById("scoreDisplay").innerText =
-    "現在の得点: " + result.score;
+    "現在の得点: " + (result.score || 0);
+  
+  // 学習時間を表示
+  const studyTimeMs = result.studyTime || 0;
+  const studyTimeDisplay = document.getElementById("studyTimeDisplay");
+  if (studyTimeDisplay) {
+    studyTimeDisplay.innerText = "学習時間: " + formatStudyTime(studyTimeMs);
+  }
 }
 
 
