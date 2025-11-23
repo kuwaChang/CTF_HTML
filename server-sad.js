@@ -176,4 +176,48 @@ router.post("/start-sad", async (req, res) => {
   });
 });
 
+// コンテナ停止API
+router.post("/stop-sad", async (req, res) => {
+  const instanceId = req.body && req.body.instanceId;
+  
+  if (!instanceId) {
+    return res.status(400).json({ error: "instanceIdが必要です" });
+  }
+
+  // instanceIdの検証（sad_で始まる16進数のみ許可）
+  if (!/^sad_[a-f0-9]{8}$/.test(instanceId)) {
+    return res.status(400).json({ error: "無効なinstanceId形式" });
+  }
+
+  console.log(`🛑 停止: ${instanceId}`);
+
+  const stop = spawn("docker", ["stop", instanceId]);
+  
+  const stderrChunks = [];
+  stop.stderr.on("data", (data) => {
+    stderrChunks.push(Buffer.from(data));
+    console.error(`[docker stop stderr] ${data}`);
+  });
+
+  stop.on("error", (err) => {
+    console.error("[docker stop error]", err);
+    return res.status(500).json({ error: "コンテナ停止失敗 (spawn error)", detail: String(err) });
+  });
+
+  stop.on("close", (code) => {
+    if (code !== 0) {
+      const detail = Buffer.concat(stderrChunks).toString();
+      // コンテナが既に存在しない場合も成功として扱う
+      if (detail.includes("No such container")) {
+        console.log(`⚠️ コンテナ ${instanceId} は既に存在しません`);
+        return res.json({ message: "コンテナは既に停止されています", instanceId });
+      }
+      return res.status(500).json({ error: "コンテナ停止失敗", detail });
+    }
+
+    console.log(`✅ 停止成功: ${instanceId}`);
+    res.json({ message: "コンテナを停止しました", instanceId });
+  });
+});
+
 module.exports = { router, setSocketIO };

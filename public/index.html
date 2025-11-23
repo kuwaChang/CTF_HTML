@@ -39,7 +39,35 @@
       margin-bottom: 10px;
     }
     #sad-start-btn:hover { background-color: #005ecb; }
-    #sad-terminal { width: 100%; height: 400px; background: #000; margin-top: 10px; }
+    #sad-terminal { 
+      width: 100%; 
+      height: 400px; 
+      background: #000; 
+      margin-top: 10px;
+      position: relative;
+    }
+    /* xterm.jsのスクロールバーを表示 */
+    #sad-terminal .xterm-viewport {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+    }
+    #sad-terminal .xterm-scroll-area {
+      overflow-y: auto !important;
+    }
+    /* xterm.jsのスクロールバーのスタイル */
+    #sad-terminal .xterm-viewport::-webkit-scrollbar {
+      width: 10px;
+    }
+    #sad-terminal .xterm-viewport::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+    #sad-terminal .xterm-viewport::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 5px;
+    }
+    #sad-terminal .xterm-viewport::-webkit-scrollbar-thumb:hover {
+      background: #777;
+    }
   </style>
 </head>
 
@@ -99,7 +127,8 @@
           <label>
             難易度:
             <select id="sad-scenario-select">
-              <option value="easy">Easy</option>
+              <option value="easy1">Easy 1</option>
+              <option value="easy2">Easy 2</option>
               <option value="medium">Medium</option>
               <option value="hard">Hard</option>
             </select>

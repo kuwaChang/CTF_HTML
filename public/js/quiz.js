@@ -4,6 +4,10 @@ let currentCategory = null;
 let currentQid = null;
 let currentPoint = 0;
 
+// Sad Server用のグローバル変数
+let currentSadInstanceId = null;
+let currentSadSocket = null;
+
 // JSONから問題一覧を読み込み
 export async function loadQuizData() {
   console.log("📡 loadQuizData開始");
@@ -438,6 +442,34 @@ export function closeModal() {
   if (scenarioSelect) scenarioSelect.style.display = "block";
   if (label) label.style.display = "block";
   
+  // コンテナが起動している場合は停止
+  if (currentSadInstanceId) {
+    console.log(`🛑 コンテナ停止: ${currentSadInstanceId}`);
+    
+    // Socket.io接続を切断
+    if (currentSadSocket) {
+      currentSadSocket.disconnect();
+      currentSadSocket = null;
+    }
+    
+    // サーバーにコンテナ停止をリクエスト
+    fetch("/sad/stop-sad", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ instanceId: currentSadInstanceId }),
+    }).then(res => {
+      if (res.ok) {
+        console.log(`✅ コンテナ停止成功: ${currentSadInstanceId}`);
+      } else {
+        console.error(`❌ コンテナ停止失敗: ${currentSadInstanceId}`);
+      }
+    }).catch(err => {
+      console.error("❌ コンテナ停止エラー:", err);
+    });
+    
+    currentSadInstanceId = null;
+  }
+  
   console.log("closeModal");
 }
 
@@ -555,11 +587,23 @@ async function startSadScenario() {
     const { wsPath, instanceId } = await res.json();
     console.log(`✅ シナリオ起動成功: ${instanceId}, wsPath: ${wsPath}`);
 
+    // instanceIdを保存
+    currentSadInstanceId = instanceId;
+
     // ターミナルをクリア
     terminalDiv.innerHTML = "";
     
-    // xterm.jsでターミナル作成
-    const term = new Terminal();
+    // xterm.jsでターミナル作成（スクロール設定を有効化）
+    const term = new Terminal({
+      scrollback: 10000, // スクロールバック行数（10000行まで）
+      cursorBlink: true,
+      fontSize: 14,
+      fontFamily: 'Consolas, "Courier New", monospace',
+      theme: {
+        background: '#000000',
+        foreground: '#ffffff'
+      }
+    });
     term.open(terminalDiv);
     term.write(`\r\n✅ シナリオ ${scenarioId} が起動されました\r\n`);
     term.write(`WebSocket: ${wsPath}\r\n`);
@@ -572,9 +616,18 @@ async function startSadScenario() {
       withCredentials: true,
     });
 
+    // socketを保存
+    currentSadSocket = socket;
+
     // 入力出力をバインド
     term.onData((input) => socket.emit("input", input));
-    socket.on("output", (data) => term.write(data));
+    socket.on("output", (data) => {
+      term.write(data);
+      // 出力後に自動スクロール（次のフレームで実行）
+      setTimeout(() => {
+        term.scrollToBottom();
+      }, 0);
+    });
 
     socket.on("connect", () => {
       console.log("🟢 WebSocket接続成功");
@@ -586,6 +639,9 @@ async function startSadScenario() {
       term.write("\r\n\r\n[🔴 セッション終了]\r\n");
       startBtn.disabled = false;
       startBtn.textContent = "シナリオを開始";
+      // 切断時にクリーンアップ
+      currentSadInstanceId = null;
+      currentSadSocket = null;
     });
 
     socket.on("connect_error", (err) => {
@@ -600,5 +656,8 @@ async function startSadScenario() {
     terminalDiv.innerHTML = `<p style="color: red;">エラー: ${error.message}</p>`;
     startBtn.disabled = false;
     startBtn.textContent = "シナリオを開始";
+    // エラー時もクリーンアップ
+    currentSadInstanceId = null;
+    currentSadSocket = null;
   }
 }
