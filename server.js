@@ -231,7 +231,28 @@ sqlDb.serialize(() => {
 		const seedUsers = [
 			{ username: "admin", password: "password123", email: "admin@example.com", role: "administrator" },
 			{ username: "alice", password: "alicepass", email: "alice@example.com", role: "user" },
-			{ username: "bob", password: "bobpass", email: "bob@example.com", role: "user" }
+			{ username: "bob", password: "bobpass", email: "bob@example.com", role: "user" },
+			{ username: "charlie", password: "charliepass", email: "charlie@example.com", role: "user" },
+			{ username: "david", password: "davidpass", email: "david@example.com", role: "user" },
+			{ username: "eve", password: "evepass", email: "eve@example.com", role: "user" },
+			{ username: "frank", password: "frankpass", email: "frank@example.com", role: "user" },
+			{ username: "george", password: "georgepass", email: "george@example.com", role: "user" },
+			{ username: "hannah", password: "hannahpass", email: "hannah@example.com", role: "user" },
+			{ username: "ian", password: "ianpass", email: "ian@example.com", role: "user" },
+			{ username: "jane", password: "janepass", email: "jane@example.com", role: "user" },
+			{ username: "kevin", password: "kevinpass", email: "kevin@example.com", role: "user" },
+			{ username: "linda", password: "lindapass", email: "linda@example.com", role: "user" },
+			{ username: "mike", password: "mikepass", email: "mike@example.com", role: "user" },
+			{ username: "natalie", password: "nataliepass", email: "natalie@example.com", role: "user" },
+			{ username: "oliver", password: "oliverpass", email: "oliver@example.com", role: "user" },
+			{ username: "pam", password: "pampass", email: "pam@example.com", role: "user" },
+			{ username: "quincy", password: "quincypass", email: "quincy@example.com", role: "user" },
+			{ username: "rachel", password: "rachelpass", email: "rachel@example.com", role: "user" },
+			{ username: "sam", password: "sampass", email: "sam@example.com", role: "user" },
+			{ username: "taylor", password: "taylorpass", email: "taylor@example.com", role: "user" },
+			{ username: "uwe", password: "uwepass", email: "uwe@example.com", role: "user" },
+			{ username: "victor", password: "victorpass", email: "victor@example.com", role: "user" },
+			{ username: "wendy", password: "wendypass", email: "wendy@example.com", role: "user" }
 		];
 		
 		if (!row || row.cnt === 0) {
@@ -491,9 +512,45 @@ io.on("connection", (socket) => {
 
 const PORT = 3333;
 
+// ネットワークインターフェースのIPアドレスを取得
+const os = require("os");
+function getLocalIPAddresses() {
+  const interfaces = os.networkInterfaces();
+  const addresses = [];
+  const preferredAddresses = []; // 192.168.x.xを優先
+  
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      // IPv4で、内部（非ループバック）アドレスのみ
+      if (iface.family === 'IPv4' && !iface.internal) {
+        const ip = iface.address;
+        // 192.168.x.xを優先リストに追加
+        if (ip.startsWith('192.168.')) {
+          preferredAddresses.push(ip);
+        } else {
+          addresses.push(ip);
+        }
+      }
+    }
+  }
+  
+  // 優先アドレスがあればそれを返す、なければ通常のアドレスを返す
+  return preferredAddresses.length > 0 ? preferredAddresses : addresses;
+}
+
 // LAN内のすべてのインターフェースでリッスン
-server.listen(PORT, () => {
-  console.log(`✅ サーバー起動: http://localhost:${PORT}`);
-  console.log(`🔓 SQLインジェクション練習: http://localhost:${PORT}/sql`);
-  //console.log(`📡 LAN内の他のデバイスからアクセス可能です`);
+server.listen(PORT, '0.0.0.0', () => {  
+  const localIPs = getLocalIPAddresses();
+  if (localIPs.length > 0) {
+    // 最初のIPアドレス（主要なもの）を表示
+    const mainIP = localIPs[0];
+    console.log(`📡 LAN内の他のデバイスからアクセス可能です: http://${mainIP}:${PORT}`);
+    
+    // 複数のIPアドレスがある場合は、それも表示
+    if (localIPs.length > 1) {
+      console.log(`   （その他のIPアドレス: ${localIPs.slice(1).join(', ')}）`);
+    }
+  } else {
+    console.log(`📡 LAN内の他のデバイスからアクセス可能です（IPアドレスを取得できませんでした）`);
+  }
 });

@@ -11,15 +11,16 @@
       "files": []
     },
     "forensics1": {
-      "answer": "flag{hidden_672349}",
-      "title": "画像に隠されたflag",
+      "answer": "FLAG{VERY_CUTE_CAT}",
+      "title": "★画像に隠されたflag",
       "desc": "画像ファイルに隠されたflagを見つけてください。",
+      "point": 15,
       "hint": [
         "画像データの詳しい情報を調べるコマンドを調べてみましょう！"
       ],
-      "point": 15,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
+      "files": [
+        "image.jpg"
+      ]
     },
     "forensics2": {
       "answer": "flag{true_file extension}",
@@ -122,7 +123,7 @@
       "explanation": "解説ページのURLを入力してください"
     },
     "web4": {
-      "answer": "FLAG{web4}",
+      "answer": "FLAG{try-SQL}",
       "title": "★SQLインジェクション",
       "desc": "以下のログインページで実際にSQLインジェクションをしてみよう.",
       "url": "http://localhost:3333/sql_index.html",
@@ -252,7 +253,6 @@
       "explanation": "解説ページのURLを入力してください"
     }
   },
-
   "sad server": {
     "easy1": {
       "answer": "FLAG{easy_flag}",
