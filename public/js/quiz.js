@@ -242,8 +242,9 @@ function openModal(category, qid, evt = null) {
   const filesDiv = document.getElementById("modal-files");
   filesDiv.innerHTML = ""; // 一旦クリア
   if (q.files && q.files.length > 0) {
+    // カテゴリー名を含むパスでファイルを参照
     const fileLinks = q.files.map(f => 
-      `<a href="files/${f}" download class="download-btn">📄 ${f}</a>`
+      `<a href="files/${category}/${f}" download class="download-btn">📄 ${f}</a>`
     ).join("<br>");
     document.getElementById("modal-files").innerHTML += `<div class="download-section">${fileLinks}</div>`;
   } else {
