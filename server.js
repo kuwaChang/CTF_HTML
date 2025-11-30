@@ -206,6 +206,153 @@ app.get("/flag-hidden", (_req, res) => {
 	res.sendFile(path.join(__dirname, "public", "flag-hidden.html"));
 });
 
+// ============================================
+// HTTPリクエスト/レスポンスにフラグを隠す問題用エンドポイント
+// ============================================
+
+// web6: HTTPレスポンスヘッダーにフラグを隠す
+app.get("/web/header-flag", (_req, res) => {
+	// カスタムヘッダーにフラグを設定
+	res.setHeader("X-Flag", "FLAG{check_http_headers}");
+	res.setHeader("X-Secret-Key", "FLAG{check_http_headers}");
+	res.setHeader("Content-Type", "text/html; charset=utf-8");
+	res.send(`
+		<!DOCTYPE html>
+		<html lang="ja">
+		<head>
+			<meta charset="UTF-8">
+			<title>HTTPヘッダーを確認しよう</title>
+			<style>
+				body {
+					font-family: Arial, sans-serif;
+					max-width: 800px;
+					margin: 50px auto;
+					padding: 20px;
+					background: #f5f5f5;
+				}
+				.container {
+					background: white;
+					padding: 30px;
+					border-radius: 10px;
+					box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+				}
+				h1 { color: #333; }
+				p { color: #666; line-height: 1.6; }
+			</style>
+		</head>
+		<body>
+			<div class="container">
+				<h1>HTTPヘッダーを確認しよう</h1>
+				<p>このページには何も表示されていませんが、HTTPレスポンスには重要な情報が含まれているかもしれません。</p>
+				<p>ブラウザの開発者ツール（DevTools）を使って、HTTPレスポンスヘッダーを確認してみましょう。</p>
+				<p><strong>ヒント:</strong> Networkタブでこのページのリクエストを選択し、Response Headersを確認してください。</p>
+			</div>
+		</body>
+		</html>
+	`);
+});
+
+// web7: リクエストヘッダーをチェックしてフラグを返す
+app.get("/web/request-header-flag", (req, res) => {
+	const userAgent = req.headers["user-agent"] || "";
+	const customHeader = req.headers["x-secret-header"] || "";
+	
+	// 特定のUser-Agentまたはカスタムヘッダーをチェック
+	if (userAgent.includes("CTF-Browser") || customHeader === "secret-key-123") {
+		res.setHeader("X-Flag", "FLAG{modify_request_headers}");
+		res.json({
+			success: true,
+			message: "正しいリクエストヘッダーが送信されました！",
+			flag: "FLAG{modify_request_headers}"
+		});
+	} else {
+		res.json({
+			success: false,
+			message: "このエンドポイントは特定のリクエストヘッダーを要求します。",
+			hint: "User-Agentやカスタムヘッダーを変更してみましょう。"
+		});
+	}
+});
+
+// web8: レスポンスボディのHTMLコメントにフラグを隠す
+app.get("/web/comment-flag", (_req, res) => {
+	res.send(`
+		<!DOCTYPE html>
+		<html lang="ja">
+		<head>
+			<meta charset="UTF-8">
+			<title>ソースコードを確認しよう</title>
+			<style>
+				body {
+					font-family: Arial, sans-serif;
+					max-width: 800px;
+					margin: 50px auto;
+					padding: 20px;
+					background: #f5f5f5;
+				}
+				.container {
+					background: white;
+					padding: 30px;
+					border-radius: 10px;
+					box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+				}
+				h1 { color: #333; }
+				p { color: #666; line-height: 1.6; }
+			</style>
+		</head>
+		<body>
+			<div class="container">
+				<h1>ソースコードを確認しよう</h1>
+				<p>このページのHTMLソースコードを確認してみましょう。</p>
+				<p>ブラウザで「ページのソースを表示」するか、開発者ツールのElementsタブを確認してください。</p>
+				<!-- FLAG{check_html_comments} -->
+				<!-- フラグはHTMLコメントの中に隠されています -->
+			</div>
+		</body>
+		</html>
+	`);
+});
+
+// web9: ETagヘッダーにフラグを隠す
+app.get("/web/etag-flag", (_req, res) => {
+	// ETagヘッダーにフラグを設定
+	res.setHeader("ETag", '"FLAG{check_etag_header}"');
+	res.setHeader("Cache-Control", "no-cache");
+	res.send(`
+		<!DOCTYPE html>
+		<html lang="ja">
+		<head>
+			<meta charset="UTF-8">
+			<title>ETagを確認しよう</title>
+			<style>
+				body {
+					font-family: Arial, sans-serif;
+					max-width: 800px;
+					margin: 50px auto;
+					padding: 20px;
+					background: #f5f5f5;
+				}
+				.container {
+					background: white;
+					padding: 30px;
+					border-radius: 10px;
+					box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+				}
+				h1 { color: #333; }
+				p { color: #666; line-height: 1.6; }
+			</style>
+		</head>
+		<body>
+			<div class="container">
+				<h1>ETagヘッダーを確認しよう</h1>
+				<p>HTTPレスポンスには様々なヘッダーが含まれています。</p>
+				<p>ETagヘッダーも確認してみましょう。</p>
+			</div>
+		</body>
+		</html>
+	`);
+});
+
 // SQLインジェクション練習用データベース初期化
 sqlDb.serialize(() => {
 	// usersテーブル（学習用）- emailとroleカラムを追加

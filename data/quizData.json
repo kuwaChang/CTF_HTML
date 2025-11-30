@@ -148,6 +148,66 @@
       "point": 50,
       "files": [],
       "explanation": "解説ページのURLを入力してください"
+    },
+    "web6": {
+      "answer": "FLAG{check_http_headers}",
+      "title": "★HTTPレスポンスヘッダー",
+      "desc": "HTTPレスポンスヘッダーにフラグが隠されています。ブラウザの開発者ツールを使って、レスポンスヘッダーを確認してみましょう。",
+      "url": "http://localhost:3333/web/header-flag",
+      "hint": [
+        "ブラウザの開発者ツール（F12）を開いてみましょう",
+        "Networkタブでリクエストを確認してみましょう",
+        "Response Headersを確認してください",
+        "カスタムヘッダーに注目してみましょう"
+      ],
+      "point": 30,
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "web7": {
+      "answer": "FLAG{modify_request_headers}",
+      "title": "★リクエストヘッダーを変更",
+      "desc": "このエンドポイントは特定のリクエストヘッダーを要求しています。リクエストヘッダーを変更してフラグを取得してください。",
+      "url": "http://localhost:3333/web/request-header-flag",
+      "hint": [
+        "ブラウザの開発者ツールでリクエストを編集してみましょう",
+        "User-AgentヘッダーをCTF-Browserに変更してみましょう",
+        "カスタムヘッダーをsecret-key-123に変更してみましょう",
+        "X-Secret-Headerというヘッダーを試してみましょう"
+      ],
+      "point": 40,
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "web8": {
+      "answer": "FLAG{check_html_comments}",
+      "title": "★HTMLコメント",
+      "desc": "HTMLソースコードの中にフラグが隠されています。ページのソースコードを確認してみましょう。",
+      "url": "http://localhost:3333/web/comment-flag",
+      "hint": [
+        "ブラウザで「ページのソースを表示」してみましょう",
+        "開発者ツールのElementsタブを確認してみましょう",
+        "HTMLコメント（<!-- -->）を探してみましょう",
+        "Ctrl+U（Windows）またはCmd+Option+U（Mac）でソースを表示できます"
+      ],
+      "point": 25,
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "web9": {
+      "answer": "FLAG{check_etag_header}",
+      "title": "★ETagヘッダー",
+      "desc": "ETagヘッダーにフラグが隠されています。HTTPレスポンスヘッダーを詳しく確認してみましょう。",
+      "url": "http://localhost:3333/web/etag-flag",
+      "hint": [
+        "ブラウザの開発者ツールのNetworkタブを使いましょう",
+        "レスポンスヘッダーを確認してください",
+        "ETagヘッダーに注目してみましょう",
+        "ETagはキャッシュ制御に使われる標準的なHTTPヘッダーです"
+      ],
+      "point": 35,
+      "files": [],
+      "explanation": "解説ページのURLを入力してください"
     }
   },
   "Forensics": {
