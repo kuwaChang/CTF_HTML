@@ -6,9 +6,9 @@
   <title>問題一覧</title>
   <!-- Socket.io はサーバーから提供される -->
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-  <!-- xterm.js はCDN経由 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
-  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+  <!-- xterm.js はローカルファイル -->
+  <link rel="stylesheet" href="lib/xterm/xterm.css">
+  <script src="lib/xterm/xterm.min.js"></script>
   <!-- Leaflet（オープンソースの地図ライブラリ、APIキー不要） -->
   <!-- CSSとJSはquiz.jsで動的に読み込む -->
   <style>
@@ -131,10 +131,32 @@
               <option value="easy2">Easy 2</option>
               <option value="medium">Medium</option>
               <option value="hard">Hard</option>
+              <option value="reversing">Reversing</option>
             </select>
           </label>
           <button id="sad-start-btn">シナリオを開始</button>
           <div id="sad-terminal"></div>
+        </div>
+
+        <!-- Reversing用の逆アセンブラ環境 -->
+        <div id="reversing-container" style="display: none; margin-top: 20px;">
+          <h3 style="color: #0078ff; margin-bottom: 10px;">🔧 逆アセンブラ環境</h3>
+          <div style="margin-bottom: 10px;">
+            <button id="reversing-start-btn" style="padding: 8px 16px; background-color: #0078ff; border: none; border-radius: 5px; color: white; cursor: pointer; margin-right: 10px;">
+              環境を起動
+            </button>
+            <button id="reversing-rizin-btn" style="padding: 8px 16px; background-color: #28a745; border: none; border-radius: 5px; color: white; cursor: pointer; margin-right: 10px; display: none;">
+              Rizin Web UIを起動
+            </button>
+            <button id="reversing-stop-btn" style="padding: 8px 16px; background-color: #dc3545; border: none; border-radius: 5px; color: white; cursor: pointer; display: none;">
+              環境を停止
+            </button>
+          </div>
+          <div id="reversing-info" style="padding: 10px; background-color: #2d3035; border-radius: 5px; margin-bottom: 10px; display: none;">
+            <p id="reversing-status" style="margin: 5px 0; color: #fff;"></p>
+            <p id="reversing-webui-url" style="margin: 5px 0; color: #0078ff; display: none;"></p>
+          </div>
+          <div id="reversing-terminal" style="display: none;"></div>
         </div>
 
         <hr>

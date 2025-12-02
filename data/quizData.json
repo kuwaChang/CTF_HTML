@@ -1,85 +1,68 @@
 {
-  "beginner": {
-    "crypto": {
-      "answer": "flag{base64cryptoencode}",
-      "title": "★暗号の祖",
-      "desc": "与えられた文字列からflagを見つけてください。\nZmxhZ3tiYXNlNjRjcnlwdG9lbmNvZGV9",
+  "Easy1": {
+    "beginner1": {
+      "answer": "FLAG{rot13}",
+      "title": "[ サブシステム A：旧式ログ解析 ]",
+      "desc": "このサブシステムは、研究施設の古いシステムログを管理している。アクセスするには、単純な方法で難読化されたキーを解読する必要があるんだ。研究員たちがメモ書きレベルの情報を隠すのに使っていたものらしい。僕の思考ルーチンだと、こういう“人間の感覚”に近い暗号は逆に解析しにくい。頼んだよ！\nSYNT{ebg13}",
       "hint": [
-        "元に戻すためのツールcyberchefを使ってみよう!"
+        "答はFLAG{}の形式だよね?見比べてみよう！"
       ],
       "point": 10,
-      "files": []
+      "files": [
+        "dropped_memo.txt"
+      ]
+
     },
-    "forensics1": {
-      "answer": "FLAG{VERY_CUTE_CAT}",
-      "title": "★画像に隠されたflag",
-      "desc": "画像ファイルに隠されたflagを見つけてください。",
+    "beginner2": {
+      "answer": "FLAG{morse_and_binary}",
+      "title": "[ サブシステム B：物理サーバー監視 ]",
+      "desc": "これは物理サーバー自体を監視しているサブシステムだ。今、サーバーのステータスランプが、古い通信プロトコル…xxxで緊急停止コードを発信している。この信号を読み取ってコードを教えてくれれば、サブシステムを一時的にダウンさせられるはずだ！",
       "point": 15,
       "hint": [
-        "画像データの詳しい情報を調べるコマンドを調べてみましょう！"
+        "...これで良しと。後は、確か・・・－－－・・・が何かあった時のsosの連絡だったよな",
+        "この点と棒の暗号は昔からある暗号みたいだね",
+        "この暗号は復号サイトによっては数字に対応していないみたい…数字に対応しているサイトを使おう!"
       ],
       "files": [
-        "image.jpg"
+        "server_log.txt"
       ]
     },
-    "forensics2": {
-      "answer": "flag{true_file extension}",
-      "title": "拡張子もヒントになる",
-      "desc": "このfileからflagを見つけてください！",
+    "beginner3": {
+      "answer": "FLAG{secret_key}",
+      "title": "[ サブシステム C：ファイルインデックス ]",
+      "desc": "6-12-1-7{19-5-3-18-5-20_11-5-25}\nファイル管理システムのインデックス情報にかけられたロックだね。ここの研究員たちは、ファイル名を独特の方式で管理していたみたいなんだ。この数字の羅列がどのファイルを指しているのか突き止めて、ロックを解除してほしい",
+      "point": 15,
       "hint": [
-        "fileコマンドで中身がどのようなものなのか調べてみましょう！"
+        "この暗号は復号サイトによっては数字に対応していないみたい…数字に対応しているサイトを使おう!"
       ],
-      "point": 20,
-      "files": []
+      "files": [
+        "server_log.txt"
+      ]
+    },
+    "beginner4": {
+      "answer": "flag{FreeWiFi-NARITA}",
+      "title": "[ サブシステム D：開発者プロファイル ]",
+      "desc": "**Noah:**\n開発者の個人プロファイルに連動するサブシステムだ。開発者の一人、サカキ主任は旅行が趣味で、特にある飛行機での旅がお気に入りだったと記録に残っている。\n**Noah:**\n彼が、この機体の【**定期便が就航している空港**】で使われている【**公式フリーWi-FiのSSID**】を、このシステムのパスフレーズに設定したようだ。彼の足跡を追って、そのSSIDを突き止めてほしい。これは君の得意分野じゃないかな？その機体の写真は下の画像ファイルだよ",
+      "point": 15,
+      "hint": [
+        "google画像検索を利用してみよう！"
+      ],
+      "files": [
+        "honu.jpg"
+      ]
+    },
+    "beginner5": {
+      "answer": "FLAG{minecraft_enchant}",
+      "title": "[ サブシステム E：個人用暗号化フォルダ ]",
+      "desc": "**Noah:**\nこれは…一番厄介かもしれない。僕を設計した一番若い研究員が、自分のパスワードを管理するのに、趣味のゲームの文字を使っていたんだ。彼が残したこのメモを解読できれば、この個人用フォルダのロックを解除できる。最後の力を貸して！",
+      "point": 15,
+      "hint": [
+        "このゲームはとても有名だから、問題文の文字を調べたらすぐに出てくるかもね！"
+      ]
     }
   },
-  "Reversing": {
-    "reversing1": {
-      "answer": "FLAG{reversing1}",
-      "title": "want_to_execute",
-      "desc": "このファイルをコンパイルして実行してね。",
-      "hint": [
-        "gcc ./want_to_execute.c",
-        "./a.out"
-      ],
-      "point": 15,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "reversing2": {
-      "answer": "FLAG{reversing2}",
-      "title": "Passchecker",
-      "desc": "パスワードチェッカーを作ったよ！もしかしたらパスワードがファイルに残っているかも...",
-      "hint": [
-        "stringsってコマンドがあるらしい...",
-        "flag.txtにはflagを暗号化したものが入っています. 見ても何も分からないので諦めてpasscheckerだけを調査してね．"
-      ],
-      "point": 20,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "reversing3": {
-      "answer": "FLAG{reversing3}",
-      "title": "Password Crack!",
-      "desc": "実行してパスワードを入れるとフラグが出力されるって聞いたよ！！",
-      "hint": [
-        "実行してみてね"
-      ],
-      "point": 30,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    },
-    "reversing4": {
-      "answer": "FLAG{reversing4}",
-      "title": "Ghidra Tutorial (旧 Let's reversing 1)",
-      "desc": "このプログラムを実行してパスワードを入れるとフラグが出現します 正しいパスワードを入力してください pdfは環境構築や解き方などの資料",
-      "hint": [
-        "GhidraとかIDAとか使ってみるのはありかも？"
-      ],
-      "point": 100,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    }
+  "Easy2": {
+
   },
   "WEB": {
     "web1": {
@@ -265,19 +248,6 @@
         "hint"
       ],
       "point": 60,
-      "files": [],
-      "explanation": "解説ページのURLを入力してください"
-    }
-  },
-  "Pwn": {
-    "pwn1": {
-      "answer": "FLAG{pwn1}",
-      "title": "title",
-      "desc": "desc",
-      "hint": [
-        "hint"
-      ],
-      "point": 30,
       "files": [],
       "explanation": "解説ページのURLを入力してください"
     }
