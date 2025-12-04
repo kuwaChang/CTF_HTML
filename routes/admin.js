@@ -30,7 +30,30 @@ function isValidFile(filename) {
 
 // アップロード設定
 const storage = multer.diskStorage({
-  destination: uploadDir,
+  destination: (req, file, cb) => {
+    // カテゴリー別のディレクトリに保存
+    let category = req.body.category;
+    
+    // quizDataがJSON文字列の場合はパース
+    if (!category && req.body.quizData) {
+      try {
+        const quizData = JSON.parse(req.body.quizData);
+        category = quizData.category;
+      } catch (e) {
+        // パースに失敗した場合はデフォルト
+      }
+    }
+    
+    const safeCategory = category ? sanitizeFilename(category) : 'default';
+    const categoryDir = path.join(uploadDir, safeCategory);
+    
+    // ディレクトリが存在しない場合は作成
+    if (!fs.existsSync(categoryDir)) {
+      fs.mkdirSync(categoryDir, { recursive: true });
+    }
+    
+    cb(null, categoryDir);
+  },
   filename: (req, file, cb) => {
     // セキュリティ: ファイル名をサニタイズ
     const sanitized = sanitizeFilename(file.originalname);
@@ -97,7 +120,9 @@ router.post("/addQuiz", requireAdmin, upload.array("files"), (req, res) => {
       if (file.filename !== sanitized || !isValidFile(file.originalname)) {
         // 不正なファイル名のファイルを削除
         try {
-          fs.unlinkSync(path.join(uploadDir, file.filename));
+          // file.destination が設定されている場合はそれを使用、なければ uploadDir を使用
+          const filePath = file.destination ? path.join(file.destination, file.filename) : path.join(uploadDir, file.filename);
+          fs.unlinkSync(filePath);
         } catch (e) {
           console.error("ファイル削除エラー:", e);
         }

@@ -215,12 +215,14 @@ function openModal(category, qid, evt = null) {
   
   // descとurlの表示
   const descElement = document.getElementById("modal-desc");
+  // 改行文字を<br>タグに変換
+  const descWithBreaks = (q.desc || "").replace(/\n/g, "<br>");
   if (q.url) {
     // urlがある場合、descの後にリンクを追加
-    descElement.innerHTML = `${q.desc}<br><a href="${q.url}" target="_blank" style="color: #0078ff; text-decoration: underline; font-weight: 600;">${q.url}</a>`;
+    descElement.innerHTML = `${descWithBreaks}<br><a href="${q.url}" target="_blank" style="color: #0078ff; text-decoration: underline; font-weight: 600;">${q.url}</a>`;
   } else {
-    // urlがない場合、通常通りtextContentを使用
-    descElement.textContent = q.desc;
+    // urlがない場合、改行を反映して表示
+    descElement.innerHTML = descWithBreaks;
   }
   
   document.getElementById("modal-point").textContent = q.point;
@@ -232,9 +234,20 @@ function openModal(category, qid, evt = null) {
   const hintsArray = Array.isArray(q.hint) ? q.hint : [q.hint];
   hintsContainer.allHints = hintsArray;
   
-  // 最初のヒントを表示
+  // ヒントがある場合は「最初のヒントを見る」ボタンを表示
   if (hintsArray.length > 0) {
-    showNextHint(hintsContainer);
+    const firstHintBtn = document.createElement("button");
+    firstHintBtn.textContent = "最初のヒントを見る";
+    firstHintBtn.className = "next-hint-btn";
+    firstHintBtn.style.marginTop = "10px";
+    firstHintBtn.style.padding = "8px 16px";
+    firstHintBtn.style.backgroundColor = "#0078ff";
+    firstHintBtn.style.border = "none";
+    firstHintBtn.style.borderRadius = "5px";
+    firstHintBtn.style.color = "white";
+    firstHintBtn.style.cursor = "pointer";
+    firstHintBtn.onclick = () => showNextHint(hintsContainer);
+    hintsContainer.appendChild(firstHintBtn);
   }
 
   // 🔽 ファイルボタン生成
@@ -242,9 +255,9 @@ function openModal(category, qid, evt = null) {
   const filesDiv = document.getElementById("modal-files");
   filesDiv.innerHTML = ""; // 一旦クリア
   if (q.files && q.files.length > 0) {
-    // カテゴリー名を含むパスでファイルを参照
+    // ファイルダウンロード用エンドポイントを使用
     const fileLinks = q.files.map(f => 
-      `<a href="files/${category}/${f}" download class="download-btn">📄 ${f}</a>`
+      `<a href="/quiz/file/${encodeURIComponent(category)}/${encodeURIComponent(f)}" download class="download-btn">📄 ${f}</a>`
     ).join("<br>");
     document.getElementById("modal-files").innerHTML += `<div class="download-section">${fileLinks}</div>`;
   } else {
@@ -395,12 +408,24 @@ export function closeModal() {
   // モーダルを閉じる前にフォーカスを維持（スクロールを防ぐため）
   const activeElement = document.activeElement;
   
-  document.getElementById("modal").style.display = "none";
+  const modal = document.getElementById("modal");
   const modalContent = document.querySelector("#modal .modal-content");
+  
   if (modalContent) {
-    modalContent.style.top = "";
     modalContent.classList.remove("visible");
   }
+  
+  // フェードアウトアニメーションを開始
+  modal.classList.add("fade-out");
+  
+  // アニメーション完了後にモーダルを非表示にする
+  setTimeout(() => {
+    modal.style.display = "none";
+    modal.classList.remove("fade-out");
+    if (modalContent) {
+      modalContent.style.top = "";
+    }
+  }, 400); // アニメーション時間（0.4s）に合わせる
   
   // 地図を破棄（メモリリーク防止）
   const mapContainer = document.getElementById("map-container");
@@ -515,7 +540,7 @@ console.log("📡 /checkAnswer応答:", res.status);
     resultEl.innerText = "この問題はすでに解いています！";
     resultEl.style.color = "orange";
   } else if (data.correct) {
-    resultEl.innerText = "正解！ +" + (data.point || 0) + "点";
+    resultEl.innerText = "";
     resultEl.style.color = "limegreen";
     solvedList.push({ category: currentCategory, qid: currentQid });
     modalContent.style.backgroundColor = "#6cd463ff";
@@ -572,6 +597,102 @@ export async function loadScore() {
   if (studyTimeDisplay) {
     studyTimeDisplay.innerText = "学習時間: " + formatStudyTime(studyTimeMs);
   }
+
+  // カテゴリー別解答状況を取得して円グラフを表示
+  await loadCategoryChart();
+}
+
+// カテゴリー別解答状況の円グラフを表示
+async function loadCategoryChart() {
+  // 解いた問題リストを取得
+  const solvedRes = await fetch("/quiz/solvedList", { credentials: "include" });
+  if (!solvedRes.ok) return;
+  
+  const solvedList = await solvedRes.json();
+  
+  // 問題データを取得
+  const quizRes = await fetch("/api/quizData");
+  if (!quizRes.ok) return;
+  
+  const quizData = await quizRes.json();
+  
+  // カテゴリー別に解いた問題数を集計
+  const categoryCounts = {};
+  const categoryTotals = {};
+  
+  // 全問題数をカテゴリー別に集計
+  for (const [category, questions] of Object.entries(quizData)) {
+    categoryTotals[category] = Object.keys(questions).length;
+    categoryCounts[category] = 0;
+  }
+  
+  // 解いた問題数をカテゴリー別に集計
+  for (const solved of solvedList) {
+    if (categoryCounts.hasOwnProperty(solved.category)) {
+      categoryCounts[solved.category]++;
+    }
+  }
+  
+  // 円グラフ用のデータを準備（解いた問題数が0より大きいカテゴリーのみ）
+  const labels = [];
+  const data = [];
+  const colors = [
+    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', 
+    '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#FF6384'
+  ];
+  
+  for (const [category, count] of Object.entries(categoryCounts)) {
+    if (count > 0) {
+      labels.push(`${category} (${count}/${categoryTotals[category]})`);
+      data.push(count);
+    }
+  }
+  
+  // 円グラフを描画
+  const ctx = document.getElementById("categoryChart");
+  if (!ctx) return;
+  
+  // 既存のチャートがあれば破棄
+  if (window.categoryChartInstance) {
+    window.categoryChartInstance.destroy();
+  }
+  
+  window.categoryChartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: colors.slice(0, labels.length),
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            padding: 15,
+            font: {
+              size: 12
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const label = context.label || '';
+              const value = context.parsed || 0;
+              return `${label}: ${value}問`;
+            }
+          }
+        }
+      }
+    }
+  });
 }
 
 

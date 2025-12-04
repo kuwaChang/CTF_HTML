@@ -111,6 +111,61 @@ router.get("/solvedList", requireLogin, (req, res) => {
   });
 });
 
+// ファイルダウンロード用エンドポイント
+router.get("/file/:category/:filename", requireLogin, (req, res) => {
+  const { category, filename } = req.params;
+  const filesDir = path.join(__dirname, "../public/files");
+  
+  // セキュリティ: ファイル名のサニタイゼーション
+  const sanitizeFilename = (name) => {
+    return name
+      .replace(/[^a-zA-Z0-9._-]/g, '_')
+      .replace(/\.\./g, '')
+      .replace(/^\.+/, '')
+      .substring(0, 255);
+  };
+  
+  const safeFilename = sanitizeFilename(filename);
+  const safeCategory = sanitizeFilename(category);
+  
+  // 複数のパスを試す（カテゴリー名とディレクトリ名の不一致に対応）
+  const possiblePaths = [
+    path.join(filesDir, safeCategory, safeFilename), // カテゴリー名でディレクトリを探す
+    path.join(filesDir, safeFilename), // ルートディレクトリ
+  ];
+  
+  // カテゴリー名のマッピング（Easy1 -> beginner1 など）
+  const categoryMapping = {
+    "Easy1": "beginner1",
+    "Easy2": "beginner2",
+  };
+  
+  if (categoryMapping[safeCategory]) {
+    possiblePaths.unshift(path.join(filesDir, categoryMapping[safeCategory], safeFilename));
+  }
+  
+  // ファイルを探す
+  let fileFound = false;
+  for (const filePath of possiblePaths) {
+    if (fs.existsSync(filePath)) {
+      // セキュリティ: パストラバーサル対策（filesDir内か確認）
+      const resolvedPath = path.resolve(filePath);
+      const resolvedDir = path.resolve(filesDir);
+      if (!resolvedPath.startsWith(resolvedDir)) {
+        return res.status(403).json({ message: "アクセスが拒否されました" });
+      }
+      
+      res.sendFile(resolvedPath);
+      fileFound = true;
+      break;
+    }
+  }
+  
+  if (!fileFound) {
+    res.status(404).json({ message: "ファイルが見つかりません" });
+  }
+});
+
 // ランキング
 router.get("/ranking", (req, res) => {
   db.all("SELECT userid, SUM(point) as total FROM solves GROUP BY userid ORDER BY total DESC", [], (err, rows) => {
