@@ -616,20 +616,47 @@ async function loadCategoryChart() {
   
   const quizData = await quizRes.json();
   
-  // カテゴリー別に解いた問題数を集計
+  // categoryId別に解いた問題数を集計
   const categoryCounts = {};
   const categoryTotals = {};
   
-  // 全問題数をカテゴリー別に集計
-  for (const [category, questions] of Object.entries(quizData)) {
-    categoryTotals[category] = Object.keys(questions).length;
-    categoryCounts[category] = 0;
+  // カテゴリー名のマッピング（表示用）
+  const categoryNameMap = {
+    'crypto': 'Crypto',
+    'osint': 'OSINT',
+    'forensics': 'Forensics',
+    'web': 'WEB',
+    'reversing': 'Reversing'
+  };
+  
+  // 全問題数をcategoryId別に集計
+  for (const [topCategory, questions] of Object.entries(quizData)) {
+    for (const [qid, question] of Object.entries(questions)) {
+      // categoryIdが存在しない場合はスキップ
+      if (!question.categoryId) continue;
+      
+      const categoryId = question.categoryId;
+      const displayName = categoryNameMap[categoryId] || categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
+      
+      if (!categoryTotals[displayName]) {
+        categoryTotals[displayName] = 0;
+        categoryCounts[displayName] = 0;
+      }
+      categoryTotals[displayName]++;
+    }
   }
   
-  // 解いた問題数をカテゴリー別に集計
+  // 解いた問題数をcategoryId別に集計
   for (const solved of solvedList) {
-    if (categoryCounts.hasOwnProperty(solved.category)) {
-      categoryCounts[solved.category]++;
+    const question = quizData[solved.category]?.[solved.qid];
+    if (question && question.categoryId) {
+      // categoryIdが存在する場合のみ集計
+      const categoryId = question.categoryId;
+      const displayName = categoryNameMap[categoryId] || categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
+      
+      if (categoryCounts.hasOwnProperty(displayName)) {
+        categoryCounts[displayName]++;
+      }
     }
   }
   

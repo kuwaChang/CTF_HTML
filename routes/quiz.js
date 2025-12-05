@@ -68,10 +68,20 @@ router.post("/checkAnswer", requireLogin, (req, res) => {
   if (answerType === "coordinates") {
     // 座標形式の検証
     const tolerance = question.coordinateTolerance || 0.001;
-    isCorrect = checkCoordinates(answer.trim(), correct.trim(), tolerance);
+    // 複数の正解をサポート（配列の場合）
+    if (Array.isArray(correct)) {
+      isCorrect = correct.some(corr => checkCoordinates(answer.trim(), corr.trim(), tolerance));
+    } else {
+      isCorrect = checkCoordinates(answer.trim(), correct.trim(), tolerance);
+    }
   } else {
     // 通常のFLAG形式の検証
-    isCorrect = answer.trim() === correct.trim();
+    // 複数の正解をサポート（配列の場合）
+    if (Array.isArray(correct)) {
+      isCorrect = correct.some(corr => answer.trim() === corr.trim());
+    } else {
+      isCorrect = answer.trim() === correct.trim();
+    }
   }
 
   if (isCorrect) {
