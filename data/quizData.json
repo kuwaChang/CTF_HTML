@@ -236,7 +236,7 @@
       "point": 10
     },
     "medium1": {
-      "answer": "FLAG{this is a secret key}",
+      "answer": "FLAG{this_is_a_secret_key}",
       "title": "暗号化された内部メモ",
       "categoryId": "crypto",
       "desc": "調査メモ: 「XがE-Corpの内部チャットログを入手したが、彼らは単純な換字式暗号を使っていたらしい。『彼らの古い体質がアダとなったな』とXは言っていた。分析を行い、この暗号文からフラグを読み解け。」",

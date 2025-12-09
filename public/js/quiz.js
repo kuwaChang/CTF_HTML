@@ -221,23 +221,22 @@ function openModal(category, qid, evt = null) {
   
   // descとurlの表示（XSS対策: innerHTMLの代わりに安全なDOM操作を使用）
   const descElement = document.getElementById("modal-desc");
-<<<<<<< HEAD
   // 既存の内容をクリア
   descElement.textContent = "";
   
-  // 説明文を安全に追加
+  // 説明文を安全に追加（改行文字を<br>タグに変換）
   if (q.desc) {
-    descElement.textContent = q.desc;
-=======
-  // 改行文字を<br>タグに変換
-  const descWithBreaks = (q.desc || "").replace(/\n/g, "<br>");
-  if (q.url) {
-    // urlがある場合、descの後にリンクを追加
-    descElement.innerHTML = `${descWithBreaks}<br><a href="${q.url}" target="_blank" style="color: #0078ff; text-decoration: underline; font-weight: 600;">${q.url}</a>`;
-  } else {
-    // urlがない場合、改行を反映して表示
-    descElement.innerHTML = descWithBreaks;
->>>>>>> d1d3d8acaa5a2a9f0ef1036f6d9506725aa5a1f7
+    // 改行文字で分割して、各行を安全に追加
+    const lines = q.desc.split('\n');
+    lines.forEach((line, index) => {
+      if (index > 0) {
+        // 2行目以降の前に<br>タグを追加
+        descElement.appendChild(document.createElement("br"));
+      }
+      // テキストを安全に追加
+      const textNode = document.createTextNode(line);
+      descElement.appendChild(textNode);
+    });
   }
   
   // URLがある場合、安全にリンクを追加
@@ -304,7 +303,6 @@ function openModal(category, qid, evt = null) {
   const filesDiv = document.getElementById("modal-files");
   filesDiv.textContent = ""; // 一旦クリア（textContentで安全にクリア）
   if (q.files && q.files.length > 0) {
-<<<<<<< HEAD
     const downloadSection = document.createElement("div");
     downloadSection.className = "download-section";
     
@@ -331,13 +329,6 @@ function openModal(category, qid, evt = null) {
     });
     
     filesDiv.appendChild(downloadSection);
-=======
-    // ファイルダウンロード用エンドポイントを使用
-    const fileLinks = q.files.map(f => 
-      `<a href="/quiz/file/${encodeURIComponent(category)}/${encodeURIComponent(f)}" download class="download-btn">📄 ${f}</a>`
-    ).join("<br>");
-    document.getElementById("modal-files").innerHTML += `<div class="download-section">${fileLinks}</div>`;
->>>>>>> d1d3d8acaa5a2a9f0ef1036f6d9506725aa5a1f7
   } else {
     filesDiv.textContent = ""; // ファイルがない場合は非表示
   }
