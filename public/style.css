@@ -115,6 +115,10 @@
         margin-bottom: 20px;
       }
 
+      h3{
+        color: #000000;
+      }
+
       p {
         font-size: 16px;
         line-height: 1.6;
@@ -254,6 +258,19 @@
         }
       }
 
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      .modal.fade-out {
+        animation: fadeOut 0.4s ease forwards;
+      }
+
       .modal-content {
         background: rgba(250, 252, 255, 0.98);
         padding: 40px;
@@ -271,12 +288,18 @@
         transform: translate(-50%, -10px);
         top: 5%;
         opacity: 0;
-        transition: opacity 0.2s ease, transform 0.2s ease;
+        transition: opacity 0.3s ease, transform 0.3s ease;
       }
 
       .modal-content.visible {
         opacity: 1;
         transform: translate(-50%, 0);
+      }
+
+      .modal.fade-out .modal-content {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
       }
 
       .modal-content h2 {

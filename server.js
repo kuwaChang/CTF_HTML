@@ -141,36 +141,39 @@ app.use(rateLimit);
 app.use(express.static(path.join(__dirname, "public")));
 
 // セキュリティ: CORS設定の改善（LAN内のみ許可）
-app.use(cors({
-  origin: (origin, callback) => {
-    // オリジンなし（直接アクセス）またはプライベートIPからのアクセスのみ許可
-    if (!origin) return callback(null, true);
+app.use(cors(
+  //脆弱性検査用のコメントアウト
+  // {
+  // origin: (origin, callback) => {
+  //   // オリジンなし（直接アクセス）またはプライベートIPからのアクセスのみ許可
+  //   if (!origin) return callback(null, true);
     
-    // オリジンのホスト部分を抽出
-    try {
-      const url = new URL(origin);
-      const hostname = url.hostname;
+  //   // オリジンのホスト部分を抽出
+  //   try {
+  //     const url = new URL(origin);
+  //     const hostname = url.hostname;
       
-      // プライベートIPまたはlocalhostかチェック
-      const isPrivate = hostname === 'localhost' || 
-                       hostname === '127.0.0.1' ||
-                       hostname.startsWith('192.168.') ||
-                       hostname.startsWith('10.') ||
-                       /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname);
+  //     // プライベートIPまたはlocalhostかチェック
+  //     const isPrivate = hostname === 'localhost' || 
+  //                      hostname === '127.0.0.1' ||
+  //                      hostname.startsWith('192.168.') ||
+  //                      hostname.startsWith('10.') ||
+  //                      /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname);
       
-      if (isPrivate) {
-        callback(null, true);
-      } else {
-        callback(new Error('CORS: LAN内からのアクセスのみ許可されています'));
-      }
-    } catch (err) {
-      callback(new Error('CORS: 無効なオリジン'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+  //     if (isPrivate) {
+  //       callback(null, true);
+  //     } else {
+  //       callback(new Error('CORS: LAN内からのアクセスのみ許可されています'));
+  //     }
+  //   } catch (err) {
+  //     callback(new Error('CORS: 無効なオリジン'));
+  //   }
+  // },
+  // credentials: true,
+  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  // allowedHeaders: ['Content-Type', 'Authorization']
+  // }
+));
 
 app.use(session({
   secret: SESSION_SECRET,

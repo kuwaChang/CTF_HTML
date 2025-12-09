@@ -221,12 +221,23 @@ function openModal(category, qid, evt = null) {
   
   // descとurlの表示（XSS対策: innerHTMLの代わりに安全なDOM操作を使用）
   const descElement = document.getElementById("modal-desc");
+<<<<<<< HEAD
   // 既存の内容をクリア
   descElement.textContent = "";
   
   // 説明文を安全に追加
   if (q.desc) {
     descElement.textContent = q.desc;
+=======
+  // 改行文字を<br>タグに変換
+  const descWithBreaks = (q.desc || "").replace(/\n/g, "<br>");
+  if (q.url) {
+    // urlがある場合、descの後にリンクを追加
+    descElement.innerHTML = `${descWithBreaks}<br><a href="${q.url}" target="_blank" style="color: #0078ff; text-decoration: underline; font-weight: 600;">${q.url}</a>`;
+  } else {
+    // urlがない場合、改行を反映して表示
+    descElement.innerHTML = descWithBreaks;
+>>>>>>> d1d3d8acaa5a2a9f0ef1036f6d9506725aa5a1f7
   }
   
   // URLがある場合、安全にリンクを追加
@@ -272,9 +283,20 @@ function openModal(category, qid, evt = null) {
   const hintsArray = Array.isArray(q.hint) ? q.hint : [q.hint];
   hintsContainer.allHints = hintsArray;
   
-  // 最初のヒントを表示
+  // ヒントがある場合は「最初のヒントを見る」ボタンを表示
   if (hintsArray.length > 0) {
-    showNextHint(hintsContainer);
+    const firstHintBtn = document.createElement("button");
+    firstHintBtn.textContent = "最初のヒントを見る";
+    firstHintBtn.className = "next-hint-btn";
+    firstHintBtn.style.marginTop = "10px";
+    firstHintBtn.style.padding = "8px 16px";
+    firstHintBtn.style.backgroundColor = "#0078ff";
+    firstHintBtn.style.border = "none";
+    firstHintBtn.style.borderRadius = "5px";
+    firstHintBtn.style.color = "white";
+    firstHintBtn.style.cursor = "pointer";
+    firstHintBtn.onclick = () => showNextHint(hintsContainer);
+    hintsContainer.appendChild(firstHintBtn);
   }
 
   // 🔽 ファイルボタン生成（XSS対策: innerHTMLの代わりに安全なDOM操作を使用）
@@ -282,6 +304,7 @@ function openModal(category, qid, evt = null) {
   const filesDiv = document.getElementById("modal-files");
   filesDiv.textContent = ""; // 一旦クリア（textContentで安全にクリア）
   if (q.files && q.files.length > 0) {
+<<<<<<< HEAD
     const downloadSection = document.createElement("div");
     downloadSection.className = "download-section";
     
@@ -308,6 +331,13 @@ function openModal(category, qid, evt = null) {
     });
     
     filesDiv.appendChild(downloadSection);
+=======
+    // ファイルダウンロード用エンドポイントを使用
+    const fileLinks = q.files.map(f => 
+      `<a href="/quiz/file/${encodeURIComponent(category)}/${encodeURIComponent(f)}" download class="download-btn">📄 ${f}</a>`
+    ).join("<br>");
+    document.getElementById("modal-files").innerHTML += `<div class="download-section">${fileLinks}</div>`;
+>>>>>>> d1d3d8acaa5a2a9f0ef1036f6d9506725aa5a1f7
   } else {
     filesDiv.textContent = ""; // ファイルがない場合は非表示
   }
@@ -456,12 +486,24 @@ export function closeModal() {
   // モーダルを閉じる前にフォーカスを維持（スクロールを防ぐため）
   const activeElement = document.activeElement;
   
-  document.getElementById("modal").style.display = "none";
+  const modal = document.getElementById("modal");
   const modalContent = document.querySelector("#modal .modal-content");
+  
   if (modalContent) {
-    modalContent.style.top = "";
     modalContent.classList.remove("visible");
   }
+  
+  // フェードアウトアニメーションを開始
+  modal.classList.add("fade-out");
+  
+  // アニメーション完了後にモーダルを非表示にする
+  setTimeout(() => {
+    modal.style.display = "none";
+    modal.classList.remove("fade-out");
+    if (modalContent) {
+      modalContent.style.top = "";
+    }
+  }, 400); // アニメーション時間（0.4s）に合わせる
   
   // 地図を破棄（メモリリーク防止）
   const mapContainer = document.getElementById("map-container");
@@ -576,7 +618,7 @@ console.log("📡 /checkAnswer応答:", res.status);
     resultEl.innerText = "この問題はすでに解いています！";
     resultEl.style.color = "orange";
   } else if (data.correct) {
-    resultEl.innerText = "正解！ +" + (data.point || 0) + "点";
+    resultEl.innerText = "";
     resultEl.style.color = "limegreen";
     solvedList.push({ category: currentCategory, qid: currentQid });
     modalContent.style.backgroundColor = "#6cd463ff";
@@ -633,6 +675,129 @@ export async function loadScore() {
   if (studyTimeDisplay) {
     studyTimeDisplay.innerText = "学習時間: " + formatStudyTime(studyTimeMs);
   }
+
+  // カテゴリー別解答状況を取得して円グラフを表示
+  await loadCategoryChart();
+}
+
+// カテゴリー別解答状況の円グラフを表示
+async function loadCategoryChart() {
+  // 解いた問題リストを取得
+  const solvedRes = await fetch("/quiz/solvedList", { credentials: "include" });
+  if (!solvedRes.ok) return;
+  
+  const solvedList = await solvedRes.json();
+  
+  // 問題データを取得
+  const quizRes = await fetch("/api/quizData");
+  if (!quizRes.ok) return;
+  
+  const quizData = await quizRes.json();
+  
+  // categoryId別に解いた問題数を集計
+  const categoryCounts = {};
+  const categoryTotals = {};
+  
+  // カテゴリー名のマッピング（表示用）
+  const categoryNameMap = {
+    'crypto': 'Crypto',
+    'osint': 'OSINT',
+    'forensics': 'Forensics',
+    'web': 'WEB',
+    'reversing': 'Reversing'
+  };
+  
+  // 全問題数をcategoryId別に集計
+  for (const [topCategory, questions] of Object.entries(quizData)) {
+    for (const [qid, question] of Object.entries(questions)) {
+      // categoryIdが存在しない場合はスキップ
+      if (!question.categoryId) continue;
+      
+      const categoryId = question.categoryId;
+      const displayName = categoryNameMap[categoryId] || categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
+      
+      if (!categoryTotals[displayName]) {
+        categoryTotals[displayName] = 0;
+        categoryCounts[displayName] = 0;
+      }
+      categoryTotals[displayName]++;
+    }
+  }
+  
+  // 解いた問題数をcategoryId別に集計
+  for (const solved of solvedList) {
+    const question = quizData[solved.category]?.[solved.qid];
+    if (question && question.categoryId) {
+      // categoryIdが存在する場合のみ集計
+      const categoryId = question.categoryId;
+      const displayName = categoryNameMap[categoryId] || categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
+      
+      if (categoryCounts.hasOwnProperty(displayName)) {
+        categoryCounts[displayName]++;
+      }
+    }
+  }
+  
+  // 円グラフ用のデータを準備（解いた問題数が0より大きいカテゴリーのみ）
+  const labels = [];
+  const data = [];
+  const colors = [
+    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', 
+    '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#FF6384'
+  ];
+  
+  for (const [category, count] of Object.entries(categoryCounts)) {
+    if (count > 0) {
+      labels.push(`${category} (${count}/${categoryTotals[category]})`);
+      data.push(count);
+    }
+  }
+  
+  // 円グラフを描画
+  const ctx = document.getElementById("categoryChart");
+  if (!ctx) return;
+  
+  // 既存のチャートがあれば破棄
+  if (window.categoryChartInstance) {
+    window.categoryChartInstance.destroy();
+  }
+  
+  window.categoryChartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: colors.slice(0, labels.length),
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            padding: 15,
+            font: {
+              size: 12
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const label = context.label || '';
+              const value = context.parsed || 0;
+              return `${label}: ${value}問`;
+            }
+          }
+        }
+      }
+    }
+  });
 }
 
 
