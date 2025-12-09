@@ -39,10 +39,16 @@ export async function loadQuizData() {
     for (const [qid, q] of Object.entries(questions)) {
       const div = document.createElement("div");
       div.className = "challenge";
-      div.innerHTML = `
-        <div>${q.title}</div>
-        <div class="points">${q.point}点</div>
-      `;
+      
+      // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
+      const titleDiv = document.createElement("div");
+      titleDiv.textContent = q.title;
+      div.appendChild(titleDiv);
+      
+      const pointsDiv = document.createElement("div");
+      pointsDiv.className = "points";
+      pointsDiv.textContent = `${q.point}点`;
+      div.appendChild(pointsDiv);
 
       // ✅ ここで解いた問題を色分け
       const key = `${category}:${qid}`;
@@ -213,14 +219,48 @@ function openModal(category, qid, evt = null) {
 
   document.getElementById("modal-title").textContent = q.title;
   
-  // descとurlの表示
+  // descとurlの表示（XSS対策: innerHTMLの代わりに安全なDOM操作を使用）
   const descElement = document.getElementById("modal-desc");
-  if (q.url) {
-    // urlがある場合、descの後にリンクを追加
-    descElement.innerHTML = `${q.desc}<br><a href="${q.url}" target="_blank" style="color: #0078ff; text-decoration: underline; font-weight: 600;">${q.url}</a>`;
-  } else {
-    // urlがない場合、通常通りtextContentを使用
+  // 既存の内容をクリア
+  descElement.textContent = "";
+  
+  // 説明文を安全に追加
+  if (q.desc) {
     descElement.textContent = q.desc;
+  }
+  
+  // URLがある場合、安全にリンクを追加
+  if (q.url) {
+    const br = document.createElement("br");
+    descElement.appendChild(br);
+    
+    const link = document.createElement("a");
+    // URLの検証（javascript:やdata:などの危険なスキームを防ぐ）
+    try {
+      const urlObj = new URL(q.url, window.location.href);
+      // javascript:やdata:などの危険なスキームをブロック
+      if (urlObj.protocol === 'javascript:' || urlObj.protocol === 'data:' || urlObj.protocol === 'vbscript:') {
+        console.warn("危険なURLスキームが検出されました:", q.url);
+        // リンクとして機能させず、テキストのみ表示
+        link.textContent = q.url;
+      } else {
+        // 安全なURLの場合のみリンクとして設定
+        link.href = urlObj.href;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer"; // セキュリティ向上
+        link.textContent = q.url; // リンクテキストも安全に設定
+      }
+    } catch (e) {
+      // 無効なURLの場合はリンクとして機能させない
+      console.warn("無効なURL:", q.url);
+      link.textContent = q.url;
+    }
+    
+    link.style.color = "#0078ff";
+    link.style.textDecoration = "underline";
+    link.style.fontWeight = "600";
+    
+    descElement.appendChild(link);
   }
   
   document.getElementById("modal-point").textContent = q.point;
@@ -237,18 +277,39 @@ function openModal(category, qid, evt = null) {
     showNextHint(hintsContainer);
   }
 
-  // 🔽 ファイルボタン生成
+  // 🔽 ファイルボタン生成（XSS対策: innerHTMLの代わりに安全なDOM操作を使用）
   
   const filesDiv = document.getElementById("modal-files");
-  filesDiv.innerHTML = ""; // 一旦クリア
+  filesDiv.textContent = ""; // 一旦クリア（textContentで安全にクリア）
   if (q.files && q.files.length > 0) {
-    // カテゴリー名を含むパスでファイルを参照
-    const fileLinks = q.files.map(f => 
-      `<a href="files/${category}/${f}" download class="download-btn">📄 ${f}</a>`
-    ).join("<br>");
-    document.getElementById("modal-files").innerHTML += `<div class="download-section">${fileLinks}</div>`;
+    const downloadSection = document.createElement("div");
+    downloadSection.className = "download-section";
+    
+    // 各ファイルリンクを安全に作成
+    q.files.forEach((f, index) => {
+      if (index > 0) {
+        // 2つ目以降のファイルの前に改行を追加
+        downloadSection.appendChild(document.createElement("br"));
+      }
+      
+      const link = document.createElement("a");
+      // パストラバーサル対策: ファイル名とカテゴリ名をサニタイズ
+      const sanitizedCategory = category.replace(/[^a-zA-Z0-9_-]/g, '');
+      const sanitizedFile = f.replace(/[^a-zA-Z0-9._-]/g, '').replace(/\.\./g, '');
+      
+      // セキュリティ: サーバー側のエンドポイント経由でファイルをダウンロード
+      // サーバー側でパストラバーサル対策が実装されている
+      link.href = `/files/${sanitizedCategory}/${sanitizedFile}`;
+      link.download = sanitizedFile; // ダウンロード時のファイル名もサニタイズ済み
+      link.className = "download-btn";
+      link.textContent = `📄 ${f}`; // 表示用のファイル名（元のファイル名を表示）
+      
+      downloadSection.appendChild(link);
+    });
+    
+    filesDiv.appendChild(downloadSection);
   } else {
-    filesDiv.innerHTML = ""; // ファイルがない場合は非表示
+    filesDiv.textContent = ""; // ファイルがない場合は非表示
   }
 
   // Sad Server用のターミナルコンテナの表示/非表示
@@ -698,7 +759,12 @@ async function startSadScenario() {
 
   } catch (error) {
     console.error("❌ シナリオ起動エラー:", error);
-    terminalDiv.innerHTML = `<p style="color: red;">エラー: ${error.message}</p>`;
+    // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
+    terminalDiv.textContent = "";
+    const errorP = document.createElement("p");
+    errorP.style.color = "red";
+    errorP.textContent = `エラー: ${error.message}`;
+    terminalDiv.appendChild(errorP);
     startBtn.disabled = false;
     startBtn.textContent = "シナリオを開始";
     // エラー時もクリーンアップ
@@ -864,7 +930,12 @@ async function startReversingEnvironment() {
   } catch (error) {
     console.error("❌ Reversing環境起動エラー:", error);
     statusP.textContent = `❌ エラー: ${error.message}`;
-    terminalDiv.innerHTML = `<p style="color: red;">エラー: ${error.message}</p>`;
+    // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
+    terminalDiv.textContent = "";
+    const errorP = document.createElement("p");
+    errorP.style.color = "red";
+    errorP.textContent = `エラー: ${error.message}`;
+    terminalDiv.appendChild(errorP);
     resetReversingUI();
   }
 }
@@ -921,22 +992,95 @@ async function startRizinWebUI() {
     if (data.isRunning && webUIUrl) {
       statusP.textContent = `✅ Rizin Web UIが起動しました`;
       webUIUrlP.style.display = "block";
-      webUIUrlP.innerHTML = `<a href="${webUIUrl}" target="_blank" style="color: #0078ff; text-decoration: underline; font-weight: bold;">${webUIUrl} を開く</a>`;
+      // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
+      webUIUrlP.textContent = "";
+      const link = document.createElement("a");
+      try {
+        const urlObj = new URL(webUIUrl, window.location.href);
+        if (urlObj.protocol === 'javascript:' || urlObj.protocol === 'data:' || urlObj.protocol === 'vbscript:') {
+          link.textContent = `${webUIUrl} を開く`;
+        } else {
+          link.href = urlObj.href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = `${webUIUrl} を開く`;
+        }
+      } catch (e) {
+        link.textContent = `${webUIUrl} を開く`;
+      }
+      link.style.color = "#0078ff";
+      link.style.textDecoration = "underline";
+      link.style.fontWeight = "bold";
+      webUIUrlP.appendChild(link);
     } else if (webUIUrl) {
       statusP.textContent = `⚠️ Rizin Web UIの起動を試みましたが、確認できませんでした`;
       webUIUrlP.style.display = "block";
-      webUIUrlP.innerHTML = `
-        <div style="margin-bottom: 10px;">
-          <a href="${webUIUrl}" target="_blank" style="color: #0078ff; text-decoration: underline; font-weight: bold;">${webUIUrl} を開く</a>
-        </div>
-        ${data.suggestion ? `<div style="color: #ffa500; margin-top: 10px;">💡 ${data.suggestion}</div>` : ''}
-        ${data.log ? `<details style="margin-top: 10px;"><summary style="cursor: pointer; color: #0078ff;">ログを表示</summary><pre style="background: #2d3035; padding: 10px; border-radius: 5px; overflow-x: auto; font-size: 12px; color: #fff;">${data.log}</pre></details>` : ''}
-      `;
+      // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
+      webUIUrlP.textContent = "";
+      
+      const containerDiv = document.createElement("div");
+      containerDiv.style.marginBottom = "10px";
+      
+      const link = document.createElement("a");
+      try {
+        const urlObj = new URL(webUIUrl, window.location.href);
+        if (urlObj.protocol === 'javascript:' || urlObj.protocol === 'data:' || urlObj.protocol === 'vbscript:') {
+          link.textContent = `${webUIUrl} を開く`;
+        } else {
+          link.href = urlObj.href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = `${webUIUrl} を開く`;
+        }
+      } catch (e) {
+        link.textContent = `${webUIUrl} を開く`;
+      }
+      link.style.color = "#0078ff";
+      link.style.textDecoration = "underline";
+      link.style.fontWeight = "bold";
+      containerDiv.appendChild(link);
+      webUIUrlP.appendChild(containerDiv);
+      
+      if (data.suggestion) {
+        const suggestionDiv = document.createElement("div");
+        suggestionDiv.style.color = "#ffa500";
+        suggestionDiv.style.marginTop = "10px";
+        suggestionDiv.textContent = `💡 ${data.suggestion}`;
+        webUIUrlP.appendChild(suggestionDiv);
+      }
+      
+      if (data.log) {
+        const details = document.createElement("details");
+        details.style.marginTop = "10px";
+        
+        const summary = document.createElement("summary");
+        summary.style.cursor = "pointer";
+        summary.style.color = "#0078ff";
+        summary.textContent = "ログを表示";
+        details.appendChild(summary);
+        
+        const pre = document.createElement("pre");
+        pre.style.background = "#2d3035";
+        pre.style.padding = "10px";
+        pre.style.borderRadius = "5px";
+        pre.style.overflowX = "auto";
+        pre.style.fontSize = "12px";
+        pre.style.color = "#fff";
+        pre.textContent = data.log;
+        details.appendChild(pre);
+        
+        webUIUrlP.appendChild(details);
+      }
     } else {
       statusP.textContent = data.info || "Rizin Web UIを起動しました";
       if (data.suggestion) {
         webUIUrlP.style.display = "block";
-        webUIUrlP.innerHTML = `<div style="color: #ffa500;">💡 ${data.suggestion}</div>`;
+        // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
+        webUIUrlP.textContent = "";
+        const suggestionDiv = document.createElement("div");
+        suggestionDiv.style.color = "#ffa500";
+        suggestionDiv.textContent = `💡 ${data.suggestion}`;
+        webUIUrlP.appendChild(suggestionDiv);
       }
     }
 

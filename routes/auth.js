@@ -62,8 +62,9 @@ router.post("/register", async (req, res) => {
   const hashedPw = await bcrypt.hash(password, 10);
 
   // セキュリティ: SQLインジェクション対策（既にパラメータ化クエリを使用）
+  // 新規ユーザーはデフォルトで'user'ロールを設定
   db.run(
-    "INSERT INTO users (userid, username, password, score) VALUES (?, ?, ?, 0)",
+    "INSERT INTO users (userid, username, password, score, role) VALUES (?, ?, ?, 0, 'user')",
     [userid, username, hashedPw],
     (err) => {
       if (err) {
@@ -109,11 +110,17 @@ router.post("/login", (req, res) => {
       return res.json({ success: false, message: "ユーザーIDまたはパスワードが正しくありません" });
     }
 
+    // セキュリティ: データベースからroleを取得（デフォルトは'user'）
+    const userRole = user.role || 'user';
+    
+    // セキュリティ: セッションにuseridとroleを保存
     req.session.userid = userid;
+    req.session.role = userRole;
+    
     res.json({
       success: true,
       message: "ログイン成功",
-      role: userid === "admin" ? "admin" : "user",
+      role: userRole,
       username: user.username
     });
   });

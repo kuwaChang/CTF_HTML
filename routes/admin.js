@@ -55,15 +55,22 @@ const upload = multer({
   }
 });
 
-// 管理者認証ミドルウェア
+// 管理者認証ミドルウェア（roleベース認証）
 function requireAdmin(req, res, next) {
-  if (req.session.userid === "admin") {
-    console.log("✅ 管理者認証OK");
+  // セキュリティ: ログイン状態を確認
+  if (!req.session.userid) {
+    console.log("❌ 認証失敗: ログインしていません");
+    return res.status(401).json({ error: "ログインが必要です" });
+  }
+  
+  // セキュリティ: roleベースの認証（データベースから取得したroleを使用）
+  if (req.session.role === "admin") {
+    console.log("✅ 管理者認証OK:", req.session.userid);
     next();
   }
   else {
-    console.log("❌ 認証失敗:", req.session.userid);
-    res.status(403).send("アクセス権がありません（管理者専用）");
+    console.log("❌ 認証失敗: 管理者権限がありません", { userid: req.session.userid, role: req.session.role });
+    res.status(403).json({ error: "アクセス権がありません（管理者専用）" });
   }
 }
 
@@ -159,6 +166,12 @@ router.post("/addQuiz", requireAdmin, upload.array("files"), (req, res) => {
 
     // セキュリティ: ファイルがあればサニタイズされたファイル名を取得
     const fileNames = req.files ? req.files.map(f => sanitizeFilename(f.filename || f.originalname)) : [];
+    
+    // セキュリティ: カテゴリ名もサニタイズ（パストラバーサル対策）
+    const sanitizedCategory = sanitizeFilename(category);
+    if (category !== sanitizedCategory) {
+      return res.status(400).json({ message: "無効なカテゴリ名です" });
+    }
     
     // カテゴリがなければ作成
     if (!data[category]) data[category] = {};

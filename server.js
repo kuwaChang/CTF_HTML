@@ -517,6 +517,74 @@ app.get("/users", (req, res) => {
     });
 });
 
+// セキュリティ: ファイル名とカテゴリ名のサニタイゼーション関数
+function sanitizePathComponent(component) {
+  if (typeof component !== 'string') return '';
+  // 危険な文字を削除: 英数字、アンダースコア、ハイフンのみ許可
+  return component.replace(/[^a-zA-Z0-9_-]/g, '').replace(/\.\./g, '').substring(0, 100);
+}
+
+// セキュリティ: ファイルダウンロードエンドポイント（パストラバーサル対策）
+app.get("/files/:category/:filename", (req, res) => {
+  // セキュリティ: 認証チェック（ファイルダウンロードはログイン必須）
+  if (!req.session.userid) {
+    return res.status(401).json({ error: "ログインが必要です" });
+  }
+  
+  // セキュリティ: カテゴリ名とファイル名をサニタイズ
+  const sanitizedCategory = sanitizePathComponent(req.params.category);
+  const sanitizedFilename = sanitizePathComponent(req.params.filename);
+  
+  // セキュリティ: サニタイズ後の値が空でないことを確認
+  if (!sanitizedCategory || !sanitizedFilename) {
+    return res.status(400).json({ error: "無効なパラメータです" });
+  }
+  
+  // セキュリティ: 元の値とサニタイズ後の値が一致するか確認（不正な文字が含まれていないか）
+  if (req.params.category !== sanitizedCategory || req.params.filename !== sanitizedFilename) {
+    return res.status(400).json({ error: "無効なパラメータです" });
+  }
+  
+  // セキュリティ: 許可されたディレクトリ内のファイルのみアクセス可能
+  const filesDir = path.join(__dirname, "public", "files");
+  const categoryDir = path.join(filesDir, sanitizedCategory);
+  const filePath = path.join(categoryDir, sanitizedFilename);
+  
+  // セキュリティ: パストラバーサル対策 - 正規化されたパスが許可されたディレクトリ内にあることを確認
+  const resolvedFilesDir = path.resolve(filesDir);
+  const resolvedFilePath = path.resolve(filePath);
+  
+  if (!resolvedFilePath.startsWith(resolvedFilesDir)) {
+    console.warn(`🚫 パストラバーサル試行: ${req.params.category}/${req.params.filename}`);
+    return res.status(403).json({ error: "アクセスが拒否されました" });
+  }
+  
+  // セキュリティ: カテゴリディレクトリが許可されたディレクトリ内にあることを確認
+  const resolvedCategoryDir = path.resolve(categoryDir);
+  if (!resolvedCategoryDir.startsWith(resolvedFilesDir)) {
+    console.warn(`🚫 パストラバーサル試行（カテゴリ）: ${req.params.category}`);
+    return res.status(403).json({ error: "アクセスが拒否されました" });
+  }
+  
+  // ファイルの存在確認
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error("ファイルアクセスエラー:", err);
+      return res.status(404).json({ error: "ファイルが見つかりません" });
+    }
+    
+    // ファイルを送信
+    res.sendFile(filePath, (sendErr) => {
+      if (sendErr) {
+        console.error("ファイル送信エラー:", sendErr);
+        if (!res.headersSent) {
+          res.status(500).json({ error: "ファイルの送信に失敗しました" });
+        }
+      }
+    });
+  });
+});
+
 // JSONデータを返すAPI（認証必須に変更）
 app.get("/api/quizData", (req, res) => {
   // セキュリティ: 認証チェック追加
@@ -595,8 +663,26 @@ db.serialize(() => {
     userid TEXT UNIQUE,
     username TEXT,
     password TEXT,
-    score INTEGER
+    score INTEGER,
+    role TEXT DEFAULT 'user'
   )`);
+
+  // 既存テーブルにroleカラムがなければ追加（マイグレーション）
+  db.run(`ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'`, (err) => {
+    // カラムが既に存在する場合はエラーになるが、無視する
+    if (err && !err.message.includes('duplicate column name')) {
+      console.error("roleカラム追加エラー:", err);
+    }
+  });
+
+  // 既存のadminユーザーにroleを設定（マイグレーション）
+  db.run(`UPDATE users SET role = 'admin' WHERE userid = 'admin' AND (role IS NULL OR role = 'user')`, (err) => {
+    if (err) {
+      console.error("adminユーザーのrole設定エラー:", err);
+    } else {
+      console.log("✅ adminユーザーのroleを設定しました");
+    }
+  });
 
   db.run(`CREATE TABLE IF NOT EXISTS solved (
     userid TEXT,
@@ -618,12 +704,21 @@ db.serialize(() => {
 //セッション確認API
 app.get("/session-check", (req, res) => {
   if (req.session.userid) {
-    // ログイン中ならユーザー情報を返す
-    db.get("SELECT username FROM users WHERE userid = ?", [req.session.userid], (err, row) => {
+    // ログイン中ならユーザー情報を返す（roleも含む）
+    db.get("SELECT username, role FROM users WHERE userid = ?", [req.session.userid], (err, row) => {
       if (err || !row) {
         return res.json({ loggedIn: false });
       }
-      res.json({ loggedIn: true, username: row.username });
+      // セッションのroleとデータベースのroleを同期（セキュリティ向上）
+      const userRole = row.role || 'user';
+      if (req.session.role !== userRole) {
+        req.session.role = userRole; // セッションのroleを更新
+      }
+      res.json({ 
+        loggedIn: true, 
+        username: row.username,
+        role: userRole
+      });
     });
   } else {
     res.json({ loggedIn: false });
