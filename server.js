@@ -5,6 +5,7 @@ const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 const cors = require("cors");
 const fs = require("fs");
+const os = require("os");
 const { Server } = require("socket.io");
 const { router: sadRouter, setSocketIO } = require("./server-sad");
 const crypto = require("crypto");
@@ -143,36 +144,36 @@ app.use(express.static(path.join(__dirname, "public")));
 // セキュリティ: CORS設定の改善（LAN内のみ許可）
 app.use(cors(
   //脆弱性検査用のコメントアウト
-  // {
-  // origin: (origin, callback) => {
-  //   // オリジンなし（直接アクセス）またはプライベートIPからのアクセスのみ許可
-  //   if (!origin) return callback(null, true);
+  {
+  origin: (origin, callback) => {
+    // オリジンなし（直接アクセス）またはプライベートIPからのアクセスのみ許可
+    if (!origin) return callback(null, true);
     
-  //   // オリジンのホスト部分を抽出
-  //   try {
-  //     const url = new URL(origin);
-  //     const hostname = url.hostname;
+    // オリジンのホスト部分を抽出
+    try {
+      const url = new URL(origin);
+      const hostname = url.hostname;
       
-  //     // プライベートIPまたはlocalhostかチェック
-  //     const isPrivate = hostname === 'localhost' || 
-  //                      hostname === '127.0.0.1' ||
-  //                      hostname.startsWith('192.168.') ||
-  //                      hostname.startsWith('10.') ||
-  //                      /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname);
+      // プライベートIPまたはlocalhostかチェック
+      const isPrivate = hostname === 'localhost' || 
+                       hostname === '127.0.0.1' ||
+                       hostname.startsWith('192.168.') ||
+                       hostname.startsWith('10.') ||
+                       /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname);
       
-  //     if (isPrivate) {
-  //       callback(null, true);
-  //     } else {
-  //       callback(new Error('CORS: LAN内からのアクセスのみ許可されています'));
-  //     }
-  //   } catch (err) {
-  //     callback(new Error('CORS: 無効なオリジン'));
-  //   }
-  // },
-  // credentials: true,
-  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  // allowedHeaders: ['Content-Type', 'Authorization']
-  // }
+      if (isPrivate) {
+        callback(null, true);
+      } else {
+        callback(new Error('CORS: LAN内からのアクセスのみ許可されています'));
+      }
+    } catch (err) {
+      callback(new Error('CORS: 無効なオリジン'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+  }
 ));
 
 app.use(session({
@@ -202,6 +203,146 @@ app.get("/", (req, res) => {
 // SQLインジェクション練習用ページ
 app.get(["/sql", "/sql_index", "/sqli"], (_req, res) => {
 	res.sendFile(path.join(__dirname, "public", "sql_index.html"));
+});
+
+// XSS練習用ページ
+app.get(["/xss", "/xss_index"], (_req, res) => {
+	res.sendFile(path.join(__dirname, "public", "xss_index.html"));
+});
+
+// XSS攻撃成功ページ（リダイレクト先）
+app.get("/xss/attack-success", (_req, res) => {
+	res.send(`
+		<!DOCTYPE html>
+		<html lang="ja">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>XSS攻撃成功！</title>
+			<style>
+				* {
+					margin: 0;
+					padding: 0;
+					box-sizing: border-box;
+				}
+				body {
+					font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+					background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+					min-height: 100vh;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					padding: 20px;
+				}
+				.container {
+					background: white;
+					border-radius: 20px;
+					padding: 50px;
+					max-width: 600px;
+					box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+					text-align: center;
+					animation: slideIn 0.5s ease-out;
+				}
+				@keyframes slideIn {
+					from {
+						opacity: 0;
+						transform: translateY(-30px);
+					}
+					to {
+						opacity: 1;
+						transform: translateY(0);
+					}
+				}
+				h1 {
+					color: #dc3545;
+					font-size: 2.5em;
+					margin-bottom: 20px;
+					text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+				}
+				.success-icon {
+					font-size: 5em;
+					margin-bottom: 20px;
+					animation: bounce 1s infinite;
+				}
+				@keyframes bounce {
+					0%, 100% {
+						transform: translateY(0);
+					}
+					50% {
+						transform: translateY(-10px);
+					}
+				}
+				.flag-box {
+					background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+					color: white;
+					padding: 30px;
+					border-radius: 15px;
+					margin: 30px 0;
+					box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+				}
+				.flag-box h2 {
+					font-size: 1.5em;
+					margin-bottom: 15px;
+				}
+				.flag {
+					font-family: 'Courier New', monospace;
+					font-size: 1.8em;
+					font-weight: bold;
+					background: rgba(255,255,255,0.2);
+					padding: 15px;
+					border-radius: 8px;
+					letter-spacing: 2px;
+					word-break: break-all;
+				}
+				.message {
+					color: #333;
+					font-size: 1.1em;
+					line-height: 1.8;
+					margin-top: 20px;
+				}
+				.warning {
+					background: #fff3cd;
+					border-left: 4px solid #ffc107;
+					padding: 15px;
+					margin-top: 30px;
+					border-radius: 4px;
+					text-align: left;
+					color: #856404;
+				}
+				.warning strong {
+					display: block;
+					margin-bottom: 10px;
+				}
+			</style>
+		</head>
+		<body>
+			<div class="container">
+				<div class="success-icon">🎯</div>
+				<h1>XSS攻撃成功！</h1>
+				<div class="flag-box">
+					<h2>🏆 フラグ</h2>
+					<div class="flag">FLAG{xss_attack_success}</div>
+				</div>
+				<div class="message">
+					<p><strong>おめでとうございます！</strong></p>
+					<p>XSS攻撃により、このページにリダイレクトされました。</p>
+					<p>実際の攻撃では、このように被害者を悪意のあるページに誘導して、</p>
+					<p>情報を盗んだり、さらなる攻撃を行ったりします。</p>
+				</div>
+				<div class="warning">
+					<strong>⚠️ セキュリティ警告</strong>
+					<p>このページは学習目的で作成されています。実際のWebアプリケーションでは、XSS攻撃を防ぐために以下の対策が必要です：</p>
+					<ul style="margin-left: 20px; margin-top: 10px;">
+						<li>ユーザー入力をサニタイズする</li>
+						<li>Content Security Policy (CSP) を設定する</li>
+						<li>innerHTMLの代わりにtextContentを使用する</li>
+						<li>適切なエスケープ処理を実装する</li>
+					</ul>
+				</div>
+			</div>
+		</body>
+		</html>
+	`);
 });
 
 // 隠しフラグページ（広告ページから発見できる）
@@ -520,6 +661,142 @@ app.get("/users", (req, res) => {
     });
 });
 
+// ============================================
+// XSS練習用ルート（学習目的）
+// ============================================
+
+// XSS練習用の投稿データ（メモリ上に保存）
+const xssPosts = [];
+
+// XSS練習用: フォーラム投稿（サニタイズなし - 学習用）
+app.post("/xss/post", (req, res) => {
+    const author = req.body.author || "";
+    const content = req.body.content || "";
+
+    if (!author || !content) {
+        return res.json({
+            success: false,
+            message: "投稿者名と投稿内容を入力してください"
+        });
+    }
+
+    // ❌ XSS脆弱性: サニタイズせずにそのまま保存（練習用）
+    const post = {
+        id: xssPosts.length + 1,
+        author: author,  // サニタイズなし
+        content: content,  // サニタイズなし
+        timestamp: new Date().toISOString()
+    };
+
+    xssPosts.push(post);
+    console.log("📝 XSS練習用投稿:", post);
+
+    res.json({
+        success: true,
+        message: "投稿が保存されました",
+        post: post
+    });
+});
+
+// XSS練習用: フォーラム投稿一覧取得（サニタイズなし - 学習用）
+app.get("/xss/posts", (req, res) => {
+    // ❌ XSS脆弱性: サニタイズせずにそのまま返す（練習用）
+    res.json({
+        success: true,
+        posts: xssPosts.slice().reverse() // 新しい投稿が上に来るように（元の配列を変更しない）
+    });
+});
+
+// ============================================
+// パストラバーサル練習用ルート（学習目的 - 脆弱性あり）
+// ============================================
+
+// ❌ パストラバーサル脆弱性あり: サニタイズなしのファイルダウンロードエンドポイント（練習用）
+app.get("/path-traversal/download", (req, res) => {
+  const filePath = req.query.file || "";
+  
+  if (!filePath) {
+    return res.status(400).json({ 
+      error: "fileパラメータが必要です",
+      hint: "例: /path-traversal/download?file=../flag.txt"
+    });
+  }
+  
+  // ❌ 脆弱性: パスのサニタイズを行わない
+  // ❌ 脆弱性: パストラバーサルチェックを行わない
+  const fullPath = path.join(__dirname, "public", "files", filePath);
+  const resolvedPath = path.resolve(fullPath);
+  const projectRoot = path.resolve(__dirname);
+  
+  // セキュリティ: 機密ファイルへのアクセスをブロック（練習用の制限）
+  const blockedFiles = [
+    'server.js',
+    'users.db',
+    'package.json',
+    'package-lock.json',
+    '.env',
+    'sessions.sqlite',
+    'server-sad.js',
+    'routes',
+    'node_modules',
+    'data',
+    'private'
+  ];
+  
+  // ブロックされたファイル名が含まれているかチェック
+  const fileName = path.basename(resolvedPath);
+  const pathParts = resolvedPath.split(path.sep);
+  
+  for (const blocked of blockedFiles) {
+    if (fileName === blocked || pathParts.includes(blocked)) {
+      console.warn(`🚫 機密ファイルへのアクセス試行がブロックされました: ${filePath}`);
+      return res.status(403).json({ 
+        error: "このファイルへのアクセスは許可されていません",
+        attemptedPath: filePath,
+        hint: "練習用のフラグファイル（flag.txt、secret.txtなど）を探してみてください"
+      });
+    }
+  }
+  
+  // プロジェクトルート外へのアクセスをブロック（セキュリティ向上）
+  if (!resolvedPath.startsWith(projectRoot)) {
+    console.warn(`🚫 プロジェクトルート外へのアクセス試行がブロックされました: ${filePath}`);
+    return res.status(403).json({ 
+      error: "プロジェクトルート外のファイルへのアクセスは許可されていません",
+      attemptedPath: filePath
+    });
+  }
+  
+  console.log("⚠️ パストラバーサル試行（脆弱エンドポイント）:", filePath);
+  console.log("⚠️ 解決されたパス:", resolvedPath);
+  
+  // ファイルの存在確認
+  fs.access(resolvedPath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).json({ 
+        error: "ファイルが見つかりません",
+        attemptedPath: filePath,
+        resolvedPath: resolvedPath
+      });
+    }
+    
+    // ファイルを送信
+    res.sendFile(resolvedPath, (sendErr) => {
+      if (sendErr) {
+        console.error("ファイル送信エラー:", sendErr);
+        if (!res.headersSent) {
+          res.status(500).json({ error: "ファイルの送信に失敗しました" });
+        }
+      }
+    });
+  });
+});
+
+// パストラバーサル練習用ページ
+app.get(["/path-traversal", "/path-traversal_index", "/pt"], (_req, res) => {
+  res.sendFile(path.join(__dirname, "public", "path-traversal_index.html"));
+});
+
 // セキュリティ: ファイル名とカテゴリ名のサニタイゼーション関数
 function sanitizePathComponent(component) {
   if (typeof component !== 'string') return '';
@@ -589,6 +866,46 @@ app.get("/files/:category/:filename", (req, res) => {
 });
 
 // JSONデータを返すAPI（認証必須に変更）
+// サーバーのIPアドレスを取得する関数（quizData.json用）
+function getServerHostForQuiz() {
+  // 環境変数が設定されている場合はそれを優先
+  if (process.env.SERVER_HOST) {
+    return process.env.SERVER_HOST;
+  }
+  
+  // IPアドレスを取得
+  const interfaces = os.networkInterfaces();
+  const addresses = [];
+  const preferredAddresses = []; // 192.168.x.xを優先
+  
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      // IPv4で、内部（非ループバック）アドレスのみ
+      if (iface.family === 'IPv4' && !iface.internal) {
+        const ip = iface.address;
+        // 192.168.x.xを優先リストに追加
+        if (ip.startsWith('192.168.')) {
+          preferredAddresses.push(ip);
+        } else {
+          addresses.push(ip);
+        }
+      }
+    }
+  }
+  
+  // 優先アドレスがあればそれを返す、なければ通常のアドレスを返す
+  const ipList = preferredAddresses.length > 0 ? preferredAddresses : addresses;
+  return ipList.length > 0 ? ipList[0] : 'localhost';
+}
+
+// quizData.jsonのlocalhostをサーバーのIPアドレスに置き換える関数
+function replaceLocalhostInQuizData(data) {
+  const serverHost = getServerHostForQuiz();
+  const dataString = JSON.stringify(data);
+  const replacedString = dataString.replace(/http:\/\/localhost:(\d+)/g, `http://${serverHost}:$1`);
+  return JSON.parse(replacedString);
+}
+
 app.get("/api/quizData", (req, res) => {
   // セキュリティ: 認証チェック追加
   if (!req.session.userid) {
@@ -603,7 +920,9 @@ app.get("/api/quizData", (req, res) => {
       return res.status(500).json({ error: "読み込み失敗" });
     }
     try {
-      res.json(JSON.parse(data));
+      const parsedData = JSON.parse(data);
+      const replacedData = replaceLocalhostInQuizData(parsedData);
+      res.json(replacedData);
     } catch (parseErr) {
       console.error("JSON解析エラー:", parseErr);
       return res.status(500).json({ error: "データ形式エラー" });
@@ -758,7 +1077,6 @@ io.on("connection", (socket) => {
 const PORT = 3333;
 
 // ネットワークインターフェースのIPアドレスを取得
-const os = require("os");
 function getLocalIPAddresses() {
   const interfaces = os.networkInterfaces();
   const addresses = [];
