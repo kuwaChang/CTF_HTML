@@ -701,11 +701,15 @@ async function loadCategoryChart() {
   // 全問題数をcategoryId別に集計
   for (const [topCategory, questions] of Object.entries(quizData)) {
     for (const [qid, question] of Object.entries(questions)) {
-      // categoryIdが存在しない場合はスキップ
-      if (!question.categoryId) continue;
+      let displayName;
       
-      const categoryId = question.categoryId;
-      const displayName = categoryNameMap[categoryId] || categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
+      // categoryIdを使用（question.categoryIdがない場合はtopCategoryをcategoryIdとして使用）
+      const categoryId = question.categoryId || topCategory;
+      // categoryNameMapに存在する場合のみ集計対象にする
+      if (!categoryNameMap[categoryId]) {
+        continue; // 存在しないカテゴリーIDはスキップ
+      }
+      displayName = categoryNameMap[categoryId];
       
       if (!categoryTotals[displayName]) {
         categoryTotals[displayName] = 0;
@@ -718,14 +722,18 @@ async function loadCategoryChart() {
   // 解いた問題数をcategoryId別に集計
   for (const solved of solvedList) {
     const question = quizData[solved.category]?.[solved.qid];
-    if (question && question.categoryId) {
-      // categoryIdが存在する場合のみ集計
-      const categoryId = question.categoryId;
-      const displayName = categoryNameMap[categoryId] || categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
-      
-      if (categoryCounts.hasOwnProperty(displayName)) {
-        categoryCounts[displayName]++;
-      }
+    if (!question) continue;
+    
+    // categoryIdを使用（question.categoryIdがない場合はsolved.categoryをcategoryIdとして使用）
+    const categoryId = question.categoryId || solved.category;
+    // categoryNameMapに存在する場合のみ集計対象にする
+    if (!categoryNameMap[categoryId]) {
+      continue; // 存在しないカテゴリーIDはスキップ
+    }
+    const displayName = categoryNameMap[categoryId];
+    
+    if (categoryCounts.hasOwnProperty(displayName)) {
+      categoryCounts[displayName]++;
     }
   }
   
@@ -751,6 +759,11 @@ async function loadCategoryChart() {
   // 既存のチャートがあれば破棄
   if (window.categoryChartInstance) {
     window.categoryChartInstance.destroy();
+  }
+  
+  // データが空の場合は何も表示しない
+  if (labels.length === 0 || data.length === 0) {
+    return;
   }
   
   window.categoryChartInstance = new Chart(ctx, {

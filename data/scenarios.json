@@ -1,4 +1,26 @@
 {
+  "test1": {
+    "cpus": "0.5",
+    "memory": "256m",
+    "packages": [],
+    "files": [
+      {
+        "path": "/challenge/README.txt",
+        "content": "ようこそ test1 シナリオ。\nHELLO WORLD",
+        "mode": "0644"
+      },
+      {
+        "path": "/challenge/evil.sh",
+        "content": "#!/bin/bash# evil.sh\n\nPROC_NAME=\"ctf_loader\"\nLOG=\"/var/log/auth.log\"\n\n# プロセス名偽装\nexec -a \"$PROC_NAME\" bash -c 'while true; do\n  echo \"$(date) FAILED LOGIN from 203.0.113.45 user=root\" >> /var/log/auth.log\n  sleep 5\ndone'\n",
+        "mode": "0444"
+      },
+      {
+        "path": "/challenge/watcher.sh",
+        "content": "#!/bin/bash# watcher.sh\n\nFLAG=\"/flag.txt\"\nPROC=\"ctf_loader\"\n\nwhile true; do\n  if ! pgrep \"$PROC\" > /dev/null; then\n    echo \"flag{you_stopped_the_suspicious_process}\" > $FLAG\n    chmod 644 $FLAG\n    break\n  fi\n  sleep 2\ndone\n",
+        "mode": "0444"
+      }
+    ]
+  },
   "easy1": {
     "cpus": "0.5",
     "memory": "256m",

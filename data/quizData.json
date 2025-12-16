@@ -160,7 +160,6 @@
     "medium": {
       "answer": "FLAG{welcome}",
       "title": "はじめに",
-      "categoryId": "crypto",
       "desc": "メンター: 「新人君、聞こえるか。ついに我々は、失われた文明『アトラス』が遺した仮想聖域（サンクチュアリ）への接続に成功した。」\nメンター: 「君は今、その入り口である『ハブ・チャンバー』に立っている。そこから全てが始まる。」\nメンター: 「センサーによると、この広間から5つの回廊が伸びている。それぞれの奥に、アトラスの貴重な『遺物（データ）』が眠っているようだ。」\nメンター: 「ただし、各回廊は別々のセキュリティ・プロトコルで封印されている。我々の目的は、5つ全ての遺物を回収することだ。」\nメンター: 「各回廊のセキュリティは独立している。**どれから挑んでも構わない。**君の直感を信じ、調査する回廊を選んでくれ。」",
       "hint": [
         "フラグはFLAG{welcome}"
@@ -299,10 +298,70 @@
       "point": 15
     }
   },
+  "Hard1": {
+    "hard": {
+      "answer": "FLAG{welcome}",
+      "title": "はじめに",
+      "desc": "舞台は、県立湊（みなと）高校の情報処理部、通称「電脳部」。\nあなたはこの春に入部したばかりの、期待の高校1年生だ。\n文化祭での発表を目指し、部員みんなで心血を注いで作り上げたオリジナルゲーム。その大切なデータが、ある日突然、何者かによって固くロックされてしまった！\n残されたのは、一枚の「挑戦状」。\n犯人は「魔法使い」の異名を持つ、伝説のOBハッカーだった。彼は後輩たちの実力を試すため、5つの難解なセキュリティ課題を仕掛けたのだ。\n大切なゲームを、仲間たちの努力の結晶を取り戻せるかは、あなたの腕にかかっている。\nさあ、部長のサポートを受けながら、伝説の先輩との知恵比べを始めよう！",
+      "hint": ["フラグはFLAG{welcome}"],
+      "point": 10
+    },
+    "hard1": {
+      "answer": "FLAG{.???}",
+      "title": "page1",
+      "categoryId": "forensics",
+      "desc": "キミは和樹先輩に教えられ、部のサーバー内にある特別なトレーニングシステムにアクセスした。黒い画面に一つのファイルが示される。\n「これが最初のステージ、『ウォームアップ』だ。あの人からのメッセージは挑発的だけど、最初の問題はきっと基礎的なもののはず。落ち着いていけば大丈夫だ。さあ、問題を見てみよう」",
+      "hint": [
+        "開き方にはいろいろな方法があるよ",
+        "このファイルの元の形式は何だろう…？"
+      ],
+      "point": 10,
+      "files": [
+        "flag.bin"
+      ]
+    },
+    "hard2": {
+      "answer": "FLAG{hard3}",
+      "title": "hard3",
+      "categoryId": "sad server",
+      "desc": "hard3シナリオ",
+      "hint": [
+        "まずは README.txt を読んでみましょう"
+      ]
+    },
+    "hard3": {
+      "answer": "FLAG{hard4}",
+      "title": "hard4",
+      "categoryId": "sad server",
+      "desc": "hard4シナリオ",
+      "hint": [
+        "まずは README.txt を読んでみましょう"
+      ]
+    },
+    "hard4": {
+      "answer": "FLAG{hard5}",
+      "title": "hard5",
+      "categoryId": "sad server",
+      "desc": "hard5シナリオ",
+      "hint": [
+        "まずは README.txt を読んでみましょう"
+      ]
+    },
+    "hard5": {
+      "answer": "FLAG{hard6}",
+      "title": "hard6",
+      "categoryId": "sad server",
+      "desc": "hard6シナリオ",
+      "hint": [
+        "まずは README.txt を読んでみましょう"
+      ]
+    }
+  },
   "WEB": {
     "web4": {
       "answer": "FLAG{try-SQL}",
       "title": "★SQLインジェクション",
+      "categoryId": "web",
       "desc": "以下のログインページで実際にSQLインジェクションをしてみよう.",
       "hint": [
         "hint"
@@ -315,6 +374,7 @@
     "web5": {
       "answer": "FLAG{hidden_flag_discovered}",
       "title": "★邪魔な広告",
+      "categoryId": "web",
       "desc": "次のページから不要な広告をよけてフラグを入手してください.",
       "hint": [
         "解き方は一つじゃないよ。色々試してみよう！",
@@ -330,6 +390,7 @@
     "web6": {
       "answer": "FLAG{check_http_headers}",
       "title": "★HTTPレスポンスヘッダー",
+      "categoryId": "web",
       "desc": "HTTPレスポンスヘッダーにフラグが隠されています。ブラウザの開発者ツールを使って、レスポンスヘッダーを確認してみましょう。",
       "hint": [
         "ブラウザの開発者ツール（F12）を開いてみましょう",
@@ -345,6 +406,7 @@
     "web7": {
       "answer": "FLAG{modify_request_headers}",
       "title": "★リクエストヘッダーを変更",
+      "categoryId": "web",
       "desc": "このエンドポイントは特定のリクエストヘッダーを要求しています。リクエストヘッダーを変更してフラグを取得してください。",
       "hint": [
         "ブラウザの開発者ツールでリクエストを編集してみましょう",
@@ -360,6 +422,7 @@
     "web8": {
       "answer": "FLAG{check_html_comments}",
       "title": "★HTMLコメント",
+      "categoryId": "web",
       "desc": "HTMLソースコードの中にフラグが隠されています。ページのソースコードを確認してみましょう。",
       "hint": [
         "ブラウザで「ページのソースを表示」してみましょう",
@@ -375,6 +438,7 @@
     "web9": {
       "answer": "FLAG{check_etag_header}",
       "title": "★ETagヘッダー",
+      "categoryId": "web",
       "desc": "ETagヘッダーにフラグが隠されています。HTTPレスポンスヘッダーを詳しく確認してみましょう。",
       "hint": [
         "ブラウザの開発者ツールのNetworkタブを使いましょう",
@@ -390,6 +454,7 @@
     "web10": {
       "answer": "FLAG{xss_attack_success}",
       "title": "★XSS（Cross-Site Scripting）",
+      "categoryId": "web",
       "desc": "以下のフォーラムページで実際にXSS攻撃をしてみよう。\n投稿内容にスクリプトを注入して、攻撃成功ページ（/xss/attack-success）にリダイレクトさせることができれば成功です。\n\n⚠️ このページは学習目的で作成されています。実際のWebアプリケーションでは絶対にこのような実装をしないでください。",
       "hint": [
         "基本的なXSS: <script>alert('XSS')</script>",
@@ -407,10 +472,9 @@
     "web11": {
       "answer": "FLAG{見ないでよ}",
       "title": "★パストラバーサル攻撃",
+      "categoryId": "web",
       "desc": "以下のページで実際にパストラバーサル攻撃をしてみよう.",
-      "hint": [
-        "hint"
-      ],
+      "hint": [],
       "point": 50,
       "files": [],
       "url": "http://localhost:3333/path-traversal_index.html",
@@ -421,6 +485,7 @@
     "forensics1": {
       "answer": "FLAG{forensics_easy}",
       "title": "簡単なフォレンジック",
+      "categoryId": "forensics",
       "desc": "画像ファイルに隠されたFLAGを見つけよう。",
       "hint": [
         "ステガノグラフィーツールを使ってみよう"
@@ -434,6 +499,7 @@
     "crypto1": {
       "answer": "FLAG{crypto1}",
       "title": "title",
+      "categoryId": "crypto",
       "desc": "desc",
       "hint": [
         "hint"
@@ -445,6 +511,7 @@
     "crypto2": {
       "answer": "FLAG{crypto2}",
       "title": "title",
+      "categoryId": "crypto",
       "desc": "desc",
       "hint": [
         "hint"
@@ -456,6 +523,7 @@
     "crypto3": {
       "answer": "FLAG{crypto3}",
       "title": "title",
+      "categoryId": "crypto",
       "desc": "desc",
       "hint": [
         "hint"
@@ -467,10 +535,9 @@
     "crypto4": {
       "answer": "FLAG{crypto4}",
       "title": "title",
+      "categoryId": "crypto",
       "desc": "desc",
-      "hint": [
-        "hint"
-      ],
+      "hint": [],
       "point": 60,
       "files": [],
       "explanation": "解説ページのURLを入力してください"
@@ -480,6 +547,7 @@
     "osint1": {
       "answer": "FLAG{location_mystery}",
       "title": "謎の場所を探せ",
+      "categoryId": "osint",
       "desc": "添付されている画像や説明文から、その場所を特定してください。\n正しい場所が特定できたら、その場所名をフラグ形式で入力してください。\n\nヒント: 建物の特徴や周辺環境、看板などに注目してみましょう。",
       "hint": [
         "画像に写っている建物や風景をよく観察してみましょう",
@@ -494,6 +562,7 @@
     "osint2": {
       "answer": "35.6812,139.7671",
       "title": "座標で答えろ",
+      "categoryId": "osint",
       "desc": "この画像から場所を特定し、その座標（緯度,経度）を入力してください。\n地図から場所を選択するか、座標を直接入力することができます。\n\n例: 35.6812,139.7671",
       "hint": [
         "画像をよく観察して、特徴的な建物や風景を探してみましょう",
@@ -511,6 +580,7 @@
     "easy1": {
       "answer": "FLAG{easy_flag}",
       "title": "★easy1",
+      "categoryId": "sad server",
       "desc": "Easy シナリオ：シンプルなファイル読み取りに挑戦してください。\nflagファイルを見つけて内容を確認しましょう。",
       "hint": [
         "まずは /challenge ディレクトリを探索してみましょう",
@@ -525,6 +595,7 @@
     "easy2": {
       "answer": "FLAG{easy_flag_2}",
       "title": "easy2",
+      "categoryId": "sad server",
       "desc": "index.txt ファイルに隠されたflagを見つけてください。",
       "hint": [
         "まずは /challenge ディレクトリを探索してみましょう",
@@ -540,6 +611,7 @@
     "medium1": {
       "answer": "FLAG{medium_flag}",
       "title": "medium1",
+      "categoryId": "sad server",
       "desc": "Medium シナリオ：エンコードされたflagファイルを復号してください。\nヒントディレクトリを探索してみましょう。",
       "hint": [
         "まずは README.txt を読んでみましょう",
@@ -555,6 +627,7 @@
     "hard1": {
       "answer": "FLAG{hard_flag}",
       "title": "hard1",
+      "categoryId": "sad server",
       "desc": "Hard シナリオ：パーミッションの問題を調査して、flagファイルを取得してください。\n/challenge/service が異常終了しています。原因を調べましょう。",
       "hint": [
         "まずは README.txt を読んでみましょう",
@@ -569,6 +642,19 @@
       "point": 30,
       "files": [],
       "scenarioId": "hard",
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "test1": {
+      "answer": "FLAG{test1}",
+      "title": "test1",
+      "categoryId": "sad server",
+      "desc": "testシナリオ",
+      "hint": [
+        "まずは README.txt を読んでみましょう"
+      ],
+      "point": 30,
+      "files": [],
+      "scenarioId": "test1",
       "explanation": "解説ページのURLを入力してください"
     }
   }
