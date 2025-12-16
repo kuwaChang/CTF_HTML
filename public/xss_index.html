@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS（Cross-Site Scripting）練習環境</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .warning {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section h2 {
+            color: #f5576c;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #f5576c;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .hint {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .hint h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .hint ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .hint code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .result.success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+
+        .result.error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+
+        .result h3 {
+            margin-bottom: 10px;
+        }
+
+        .result pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .forum-posts {
+            margin-top: 20px;
+        }
+
+        .post {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .post-date {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .post-content {
+            color: #212529;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #6c757d;
+            padding: 40px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔓 XSS（Cross-Site Scripting）練習環境</h1>
+
+        <div class="warning">
+            ⚠️ このページは学習目的で作成されています。実際のWebアプリケーションでは絶対にこのような実装をしないでください。
+        </div>
+
+        <!-- 投稿セクション -->
+        <div class="section">
+            <h2>1. フォーラム投稿機能（XSS脆弱性あり）</h2>
+            <div class="form-group">
+                <label for="author">投稿者名:</label>
+                <input type="text" id="author" placeholder="投稿者名を入力">
+            </div>
+            <div class="form-group">
+                <label for="content">投稿内容:</label>
+                <textarea id="content" placeholder="投稿内容を入力（XSSペイロードを試してみましょう）"></textarea>
+            </div>
+            <button onclick="submitPost()">投稿する</button>
+            
+            <div class="hint">
+                <h4>💡 ヒント:</h4>
+                <ul>
+                    <li>基本的なXSS: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code></li>
+                    <li>イベントハンドラ: <code>&lt;img src=x onerror=alert('XSS')&gt;</code></li>
+                    <li>JavaScript実行: <code>&lt;svg onload=alert('XSS')&gt;</code></li>
+                    <li><strong>リダイレクト攻撃:</strong> <code>&lt;script&gt;window.location.href='/xss/attack-success'&lt;/script&gt;</code></li>
+                    <li>短縮版リダイレクト: <code>&lt;script&gt;location='/xss/attack-success'&lt;/script&gt;</code></li>
+                    <li>イベントハンドラでリダイレクト: <code>&lt;img src=x onerror="location='/xss/attack-success'"&gt;</code></li>
+                    <li>Cookie取得: <code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></li>
+                </ul>
+                <p style="margin-top: 10px; color: #856404; font-weight: bold;">
+                    🎯 目標: XSS攻撃で <code>/xss/attack-success</code> にリダイレクトしてフラグを取得しよう！
+                </p>
+            </div>
+
+            <div id="postResult"></div>
+        </div>
+
+        <!-- 投稿一覧 -->
+        <div class="section">
+            <h2>2. フォーラム投稿一覧</h2>
+            <button onclick="loadPosts()">投稿を読み込む</button>
+            <div id="postsResult" class="forum-posts"></div>
+        </div>
+    </div>
+
+    <script>
+        async function submitPost() {
+            const author = document.getElementById('author').value;
+            const content = document.getElementById('content').value;
+            const resultDiv = document.getElementById('postResult');
+
+            if (!author || !content) {
+                resultDiv.innerHTML = '<div class="result error"><h3>エラー</h3><p>投稿者名と投稿内容を入力してください。</p></div>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/xss/post', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ author, content })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <h3>✅ ${data.message}</h3>
+                        </div>
+                    `;
+                    // 投稿後に自動的に投稿一覧を更新
+                    setTimeout(() => {
+                        loadPosts();
+                    }, 500);
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <h3>❌ ${data.message}</h3>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error"><h3>エラー</h3><p>${error.message}</p></div>`;
+            }
+        }
+
+        async function loadPosts() {
+            const resultDiv = document.getElementById('postsResult');
+
+            try {
+                const response = await fetch('/xss/posts');
+                const data = await response.json();
+
+                if (data.success && data.posts && data.posts.length > 0) {
+                    let html = '';
+                    data.posts.forEach(post => {
+                        html += `
+                            <div class="post">
+                                <div class="post-header">
+                                    <span class="post-author">${post.author}</span>
+                                    <span class="post-date">${new Date(post.timestamp).toLocaleString('ja-JP')}</span>
+                                </div>
+                                <div class="post-content">${post.content}</div>
+                            </div>
+                        `;
+                    });
+                    // ⚠️ 意図的にinnerHTMLを使用（XSS脆弱性のデモンストレーション）
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = '<div class="empty-state">まだ投稿がありません。最初の投稿をしてみましょう！</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error"><h3>エラー</h3><p>${error.message}</p></div>`;
+            }
+        }
+
+        // ページ読み込み時に投稿を読み込む
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPosts();
+        });
+    </script>
+</body>
+</html>
+

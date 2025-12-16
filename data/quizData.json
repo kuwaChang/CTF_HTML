@@ -236,7 +236,7 @@
       "point": 10
     },
     "medium1": {
-      "answer": "FLAG{this is a secret key}",
+      "answer": "FLAG{this_is_a_secret_key}",
       "title": "暗号化された内部メモ",
       "categoryId": "crypto",
       "desc": "調査メモ: 「XがE-Corpの内部チャットログを入手したが、彼らは単純な換字式暗号を使っていたらしい。『彼らの古い体質がアダとなったな』とXは言っていた。分析を行い、この暗号文からフラグを読み解け。」",
@@ -385,6 +385,35 @@
       "point": 35,
       "files": [],
       "url": "http://localhost:3333/web/etag-flag",
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "web10": {
+      "answer": "FLAG{xss_attack_success}",
+      "title": "★XSS（Cross-Site Scripting）",
+      "desc": "以下のフォーラムページで実際にXSS攻撃をしてみよう。\n投稿内容にスクリプトを注入して、攻撃成功ページ（/xss/attack-success）にリダイレクトさせることができれば成功です。\n\n⚠️ このページは学習目的で作成されています。実際のWebアプリケーションでは絶対にこのような実装をしないでください。",
+      "hint": [
+        "基本的なXSS: <script>alert('XSS')</script>",
+        "リダイレクト攻撃: <script>window.location.href='/xss/attack-success'</script>",
+        "イベントハンドラでリダイレクト: <img src=x onerror=\"location='/xss/attack-success'\">",
+        "投稿内容がそのまま表示されることを確認してみましょう",
+        "投稿一覧でスクリプトが実行され、攻撃成功ページにリダイレクトされることを確認してください",
+        "攻撃成功ページにフラグが表示されます"
+      ],
+      "point": 50,
+      "files": [],
+      "url": "http://localhost:3333/xss_index.html",
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "web11": {
+      "answer": "FLAG{見ないでよ}",
+      "title": "★パストラバーサル攻撃",
+      "desc": "以下のページで実際にパストラバーサル攻撃をしてみよう.",
+      "hint": [
+        "hint"
+      ],
+      "point": 50,
+      "files": [],
+      "url": "http://localhost:3333/path-traversal_index.html",
       "explanation": "解説ページのURLを入力してください"
     }
   },

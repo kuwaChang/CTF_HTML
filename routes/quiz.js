@@ -1,11 +1,52 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const os = require("os");
 const sqlite3 = require("sqlite3").verbose();
 const router = express.Router();
 
 const db = new sqlite3.Database(path.join(__dirname, "../users.db"));
 const quizPath = path.join(__dirname, "../data/quizData.json");
+
+// サーバーのIPアドレスを取得する関数
+function getServerHost() {
+  // 環境変数が設定されている場合はそれを優先
+  if (process.env.SERVER_HOST) {
+    return process.env.SERVER_HOST;
+  }
+  
+  // IPアドレスを取得
+  const interfaces = os.networkInterfaces();
+  const addresses = [];
+  const preferredAddresses = []; // 192.168.x.xを優先
+  
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      // IPv4で、内部（非ループバック）アドレスのみ
+      if (iface.family === 'IPv4' && !iface.internal) {
+        const ip = iface.address;
+        // 192.168.x.xを優先リストに追加
+        if (ip.startsWith('192.168.')) {
+          preferredAddresses.push(ip);
+        } else {
+          addresses.push(ip);
+        }
+      }
+    }
+  }
+  
+  // 優先アドレスがあればそれを返す、なければ通常のアドレスを返す
+  const ipList = preferredAddresses.length > 0 ? preferredAddresses : addresses;
+  return ipList.length > 0 ? ipList[0] : 'localhost';
+}
+
+// quizData.jsonのlocalhostをサーバーのIPアドレスに置き換える関数
+function replaceLocalhostInQuizData(data) {
+  const serverHost = getServerHost();
+  const dataString = JSON.stringify(data);
+  const replacedString = dataString.replace(/http:\/\/localhost:(\d+)/g, `http://${serverHost}:$1`);
+  return JSON.parse(replacedString);
+}
 
 function requireLogin(req, res, next) {
   if (!req.session.userid) return res.status(401).json({ message: "ログインが必要です" });
@@ -15,7 +56,8 @@ function requireLogin(req, res, next) {
 // 全問題を返す
 router.get("/all", requireLogin, (req, res) => {
   const data = JSON.parse(fs.readFileSync(quizPath, "utf-8"));
-  res.json(data);
+  const replacedData = replaceLocalhostInQuizData(data);
+  res.json(replacedData);
 });
 
 // 座標の距離を計算（ハーバサイン公式）
@@ -56,7 +98,8 @@ function checkCoordinates(userAnswer, correctAnswer, tolerance = 0.001) {
 router.post("/checkAnswer", requireLogin, (req, res) => {
   const { category, qid, answer, point } = req.body;
   const userid = req.session.userid;
-  const data = JSON.parse(fs.readFileSync(quizPath, "utf-8"));
+  const rawData = JSON.parse(fs.readFileSync(quizPath, "utf-8"));
+  const data = replaceLocalhostInQuizData(rawData);
   const question = data[category]?.[qid];
   
   if (!question) return res.status(404).json({ message: "問題が見つかりません" });

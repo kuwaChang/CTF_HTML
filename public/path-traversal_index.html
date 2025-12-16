@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パストラバーサル練習環境</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .warning {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+
+        .result.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+
+        .result.error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+
+        .result pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            color: #1976D2;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #333;
+        }
+
+        .info-box li {
+            margin-bottom: 5px;
+        }
+
+        .hint {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .hint h4 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .hint p {
+            color: #856404;
+            margin-bottom: 5px;
+        }
+
+        .example {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔓 パストラバーサル練習環境</h1>
+        
+        <div class="warning">
+            ⚠️ このページは学習目的で作成されています。実際のWebアプリケーションでは、このような脆弱性を防ぐ必要があります。
+        </div>
+
+        <div class="section">
+            <h2>📚 パストラバーサル攻撃とは</h2>
+            <div class="info-box">
+                <h3>概要</h3>
+                <p>パストラバーサル（Path Traversal）攻撃は、ファイルパスに含まれる相対パス（../）などを利用して、意図しないディレクトリにアクセスする攻撃手法です。</p>
+            </div>
+            <div class="info-box">
+                <h3>攻撃の仕組み</h3>
+                <ul>
+                    <li>アプリケーションがユーザー入力からファイルパスを構築する際、適切な検証を行わない場合に発生</li>
+                    <li><code>../</code> を使用して親ディレクトリに移動</li>
+                    <li>システムファイルや機密情報を含むファイルにアクセス可能になる</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h3>実際の事例</h3>
+                <ul>
+                    <li>2017年: Equifaxのデータ侵害 - パストラバーサル脆弱性を含む複数の脆弱性が悪用され、1億4700万人の個人情報が漏洩</li>
+                    <li>2019年: 複数のCMS（Content Management System）でパストラバーサル脆弱性が発見され、機密ファイルへのアクセスが可能に</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 練習問題</h2>
+            <p style="margin-bottom: 20px; color: #666;">
+                以下のフォームを使用して、ファイルをダウンロードしてみましょう。
+                通常のファイル名だけでなく、パストラバーサル攻撃を試してみてください。
+            </p>
+
+            <div class="form-group">
+                <label for="filePath">ファイルパス:</label>
+                <input type="text" id="filePath" placeholder="例: ../flag.txt または web/flag.png" value="">
+                <div class="hint">
+                    <h4>💡 ヒント</h4>
+                    <p>通常のファイルパス: <code>web/flag.png</code></p>
+                    <p>パストラバーサル攻撃: <code>../flag.txt</code> や <code>../../secret.txt</code></p>
+                    <p>目標: プロジェクトルートにある <code>flag.txt</code> ファイルを取得してください！</p>
+                </div>
+            </div>
+
+            <button onclick="downloadFile()">ファイルをダウンロード</button>
+
+            <div id="result"></div>
+        </div>
+
+        <div class="section">
+            <h2>🛡️ 対策方法</h2>
+            <div class="info-box">
+                <h3>1. 入力のサニタイズ</h3>
+                <p>ユーザー入力から危険な文字（<code>../</code>、<code>..\\</code> など）を削除またはエスケープ</p>
+                <div class="example">
+                    function sanitizePath(path) {<br>
+                    &nbsp;&nbsp;return path.replace(/\.\./g, '').replace(/[^a-zA-Z0-9_/-]/g, '');<br>
+                    }
+                </div>
+            </div>
+            <div class="info-box">
+                <h3>2. パスの正規化と検証</h3>
+                <p><code>path.resolve()</code> を使用してパスを正規化し、許可されたディレクトリ内にあることを確認</p>
+                <div class="example">
+                    const allowedDir = path.resolve('/safe/directory');<br>
+                    const filePath = path.resolve(allowedDir, userInput);<br>
+                    if (!filePath.startsWith(allowedDir)) {<br>
+                    &nbsp;&nbsp;return error; // アクセス拒否<br>
+                    }
+                </div>
+            </div>
+            <div class="info-box">
+                <h3>3. ホワイトリスト方式</h3>
+                <p>許可されたファイル名のリストを使用し、それ以外のファイルへのアクセスを拒否</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function downloadFile() {
+            const filePath = document.getElementById('filePath').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!filePath) {
+                resultDiv.innerHTML = '<div class="result error">ファイルパスを入力してください。</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="result">読み込み中...</div>';
+
+            try {
+                const url = `/path-traversal/download?file=${encodeURIComponent(filePath)}`;
+                const response = await fetch(url);
+                
+                if (response.ok) {
+                    // テキストファイルの場合は内容を表示
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('text/')) {
+                        const text = await response.text();
+                        resultDiv.innerHTML = `
+                            <div class="result success">
+                                <strong>✅ ファイルの取得に成功しました！</strong>
+                                <p>ファイルパス: <code>${filePath}</code></p>
+                                <p>Content-Type: ${contentType}</p>
+                                <pre>${escapeHtml(text)}</pre>
+                            </div>
+                        `;
+                    } else {
+                        // バイナリファイルの場合はダウンロードリンクを表示
+                        const blob = await response.blob();
+                        const downloadUrl = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = downloadUrl;
+                        a.download = filePath.split('/').pop() || 'download';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(downloadUrl);
+                        
+                        resultDiv.innerHTML = `
+                            <div class="result success">
+                                <strong>✅ ファイルのダウンロードに成功しました！</strong>
+                                <p>ファイルパス: <code>${filePath}</code></p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    const errorData = await response.json().catch(() => ({ error: 'エラーが発生しました' }));
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <strong>❌ エラー: ${response.status}</strong>
+                            <p>${errorData.error || 'ファイルの取得に失敗しました'}</p>
+                            ${errorData.attemptedPath ? `<p>試行したパス: <code>${errorData.attemptedPath}</code></p>` : ''}
+                            ${errorData.resolvedPath ? `<p>解決されたパス: <code>${errorData.resolvedPath}</code></p>` : ''}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <strong>❌ エラーが発生しました</strong>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Enterキーでダウンロード
+        document.getElementById('filePath').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                downloadFile();
+            }
+        });
+    </script>
+</body>
+</html>
+
