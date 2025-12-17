@@ -2,10 +2,47 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const os = require("os");
+const crypto = require("crypto");
 const sqlite3 = require("sqlite3").verbose();
 const router = express.Router();
 
-const db = new sqlite3.Database(path.join(__dirname, "../users.db"));
+// dbフォルダが存在しない場合は作成
+const dbDir = path.join(__dirname, "../db");
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
+
+const dbPath = path.join(__dirname, "../db/users.db");
+console.log("[quiz.js] データベースパス:", dbPath);
+console.log("[quiz.js] ファイル存在確認:", fs.existsSync(dbPath));
+console.log("[quiz.js] ディレクトリ存在確認:", fs.existsSync(path.dirname(dbPath)));
+let db;
+try {
+  db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+    if (err) {
+      console.error("❌ データベース接続エラー (quiz.js):", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   エラー番号:", err.errno);
+      console.error("   データベースパス:", dbPath);
+      console.error("   スタックトレース:", err.stack);
+    } else {
+      console.log("✅ [quiz.js] データベース接続成功");
+    }
+  });
+} catch (err) {
+  console.error("❌ データベース作成時の例外 (quiz.js):", err.message);
+  console.error("   スタックトレース:", err.stack);
+  throw err;
+}
+db.on('error', (err) => {
+  console.error("❌ データベースエラー (quiz.js):", err.message);
+  console.error("   エラーコード:", err.code);
+  console.error("   エラー番号:", err.errno);
+  console.error("   データベースパス:", dbPath);
+  if (err.stack) {
+    console.error("   スタックトレース:", err.stack);
+  }
+});
 const quizPath = path.join(__dirname, "../data/quizData.json");
 
 // サーバーのIPアドレスを取得する関数
@@ -73,7 +110,45 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   return R * c; // 距離（km）
 }
 
-// 座標が許容範囲内かチェック
+// 答えをハッシュ化する関数（SHA-256）
+function hashAnswer(answer) {
+  return crypto.createHash('sha256').update(answer.trim()).digest('hex');
+}
+
+// 座標が許容範囲内かチェック（ハッシュ化された座標用）
+function checkCoordinatesHash(userAnswerHash, correctAnswer, tolerance = 0.001) {
+  try {
+    const correctCoords = correctAnswer.split(',').map(c => parseFloat(c.trim()));
+    if (correctCoords.length !== 2) return false;
+    if (isNaN(correctCoords[0]) || isNaN(correctCoords[1])) return false;
+    
+    // 許容範囲内の座標を生成してハッシュ化し、一致するかチェック
+    // ステップサイズを設定（toleranceの1/5の精度でチェック、パフォーマンスと精度のバランス）
+    const step = tolerance / 5;
+    const latStart = correctCoords[0] - tolerance;
+    const latEnd = correctCoords[0] + tolerance;
+    const lonStart = correctCoords[1] - tolerance;
+    const lonEnd = correctCoords[1] + tolerance;
+    
+    // 許容範囲内の座標を生成してハッシュ化
+    // 精度を6桁に固定（一般的な座標の精度）
+    for (let lat = latStart; lat <= latEnd; lat += step) {
+      for (let lon = lonStart; lon <= lonEnd; lon += step) {
+        const coordStr = `${lat.toFixed(6)},${lon.toFixed(6)}`;
+        const coordHash = hashAnswer(coordStr);
+        if (coordHash === userAnswerHash) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
+  } catch (e) {
+    return false;
+  }
+}
+
+// 座標が許容範囲内かチェック（生の座標用）
 function checkCoordinates(userAnswer, correctAnswer, tolerance = 0.001) {
   try {
     const userCoords = userAnswer.split(',').map(c => parseFloat(c.trim()));
@@ -96,7 +171,7 @@ function checkCoordinates(userAnswer, correctAnswer, tolerance = 0.001) {
 
 // 正解判定
 router.post("/checkAnswer", requireLogin, (req, res) => {
-  const { category, qid, answer, point } = req.body;
+  const { category, qid, answer, answerType: clientAnswerType, point } = req.body;
   const userid = req.session.userid;
   const rawData = JSON.parse(fs.readFileSync(quizPath, "utf-8"));
   const data = replaceLocalhostInQuizData(rawData);
@@ -109,21 +184,25 @@ router.post("/checkAnswer", requireLogin, (req, res) => {
   let isCorrect = false;
 
   if (answerType === "coordinates") {
-    // 座標形式の検証
+    // 座標形式の検証（ハッシュ化された座標で比較）
     const tolerance = question.coordinateTolerance || 0.001;
     // 複数の正解をサポート（配列の場合）
     if (Array.isArray(correct)) {
-      isCorrect = correct.some(corr => checkCoordinates(answer.trim(), corr.trim(), tolerance));
+      isCorrect = correct.some(corr => checkCoordinatesHash(answer, corr.trim(), tolerance));
     } else {
-      isCorrect = checkCoordinates(answer.trim(), correct.trim(), tolerance);
+      isCorrect = checkCoordinatesHash(answer, correct.trim(), tolerance);
     }
   } else {
-    // 通常のFLAG形式の検証
+    // 通常のFLAG形式の検証（ハッシュ化された答えを比較）
     // 複数の正解をサポート（配列の場合）
     if (Array.isArray(correct)) {
-      isCorrect = correct.some(corr => answer.trim() === corr.trim());
+      isCorrect = correct.some(corr => {
+        const correctHash = hashAnswer(corr);
+        return answer === correctHash;
+      });
     } else {
-      isCorrect = answer.trim() === correct.trim();
+      const correctHash = hashAnswer(correct);
+      isCorrect = answer === correctHash;
     }
   }
 

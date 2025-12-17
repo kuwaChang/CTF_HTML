@@ -2,9 +2,46 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const fs = require("fs");
 const router = express.Router();
 
-const db = new sqlite3.Database(path.join(__dirname, "../users.db"));
+// dbフォルダが存在しない場合は作成
+const dbDir = path.join(__dirname, "../db");
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
+
+const dbPath = path.join(__dirname, "../db/users.db");
+console.log("[auth.js] データベースパス:", dbPath);
+console.log("[auth.js] ファイル存在確認:", fs.existsSync(dbPath));
+console.log("[auth.js] ディレクトリ存在確認:", fs.existsSync(path.dirname(dbPath)));
+let db;
+try {
+  db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+    if (err) {
+      console.error("❌ データベース接続エラー (auth.js):", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   エラー番号:", err.errno);
+      console.error("   データベースパス:", dbPath);
+      console.error("   スタックトレース:", err.stack);
+    } else {
+      console.log("✅ [auth.js] データベース接続成功");
+    }
+  });
+} catch (err) {
+  console.error("❌ データベース作成時の例外 (auth.js):", err.message);
+  console.error("   スタックトレース:", err.stack);
+  throw err;
+}
+db.on('error', (err) => {
+  console.error("❌ データベースエラー (auth.js):", err.message);
+  console.error("   エラーコード:", err.code);
+  console.error("   エラー番号:", err.errno);
+  console.error("   データベースパス:", dbPath);
+  if (err.stack) {
+    console.error("   スタックトレース:", err.stack);
+  }
+});
 
 // セッション用: ログイン必須ミドルウェア（他でも再利用できる）
 function requireLogin(req, res, next) {
@@ -91,9 +128,13 @@ router.post("/login", (req, res) => {
   }
 
   // セキュリティ: SQLインジェクション対策（既にパラメータ化クエリを使用）
+  console.log("[auth.js] ログイン試行:", userid);
   db.get("SELECT * FROM users WHERE userid = ?", [userid], async (err, user) => {
     if (err) {
-      console.error("ログインエラー:", err);
+      console.error("❌ ログインエラー (auth.js):", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   エラー番号:", err.errno);
+      console.error("   スタックトレース:", err.stack);
       // セキュリティ: エラー詳細をクライアントに返さない
       return res.json({ success: false, message: "ログインに失敗しました" });
     }
@@ -113,10 +154,17 @@ router.post("/login", (req, res) => {
     // セキュリティ: データベースからroleを取得（デフォルトは'user'）
     const userRole = user.role || 'user';
     
+    // セッションが利用可能か確認
+    if (!req.session) {
+      console.error("❌ セッションが利用できません (auth.js)");
+      return res.json({ success: false, message: "セッションエラーが発生しました" });
+    }
+    
     // セキュリティ: セッションにuseridとroleを保存
     req.session.userid = userid;
     req.session.role = userRole;
     
+    console.log("✅ [auth.js] ログイン成功:", userid, "role:", userRole);
     res.json({
       success: true,
       message: "ログイン成功",

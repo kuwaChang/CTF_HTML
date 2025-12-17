@@ -321,39 +321,130 @@
       ]
     },
     "hard2": {
-      "answer": "FLAG{hard3}",
-      "title": "hard3",
-      "categoryId": "sad server",
-      "desc": "hard3シナリオ",
+      "answer": "FLAG{WO2023203804A1}",
+      "title": "page2",
+      "categoryId": "osint",
+      "desc": "「やったな！ 見事クリアだ！」\n\nキミが答えを入力すると、画面に『STAGE 1 CLEAR』の文字が浮かび上がった。隣で見ていた和樹先輩が、自分のことのように喜んでくれる。\n\n「その調子だ。少しずつ、あの人の思考に近づいていってるぞ。次はステージ2、『偵察任務（リコネッサンス）』だ。ここからは少し実践的になるかもしれない。情報を集めるのが得意なお前にピッタリの課題のはずだ」\n\n特徴\n\n- この権利を持つ会社は今から100年以上前に設立されている。\n- 花札やトランプを製造していた時期がある。\n- この特許の出願された日は2022-11-11である。\n- この特許番号を持つものは以下の図面をもつ\n\nこの国際公開番号がわかったら下に入力しよう\n例　WO10000000",
       "hint": [
-        "まずは README.txt を読んでみましょう"
-      ]
+        "google patents",
+        "この会社は上2行の特徴から任天堂であることがわかる。特許出願日と会社名をgooglepatentsの左の検索欄に入れてみよう!"
+      ],
+      "point": 10
     },
     "hard3": {
-      "answer": "FLAG{hard4}",
-      "title": "hard4",
-      "categoryId": "sad server",
-      "desc": "hard4シナリオ",
+      "answer": "FLAG{SPL}",
+      "title": "page3",
+      "categoryId": "crypto",
+      "desc": "ステージ2も無事にクリアし、少しだけ自信がついてきた。その時、トレーニングシステムのメッセージログに、新しい通知がポップアップした。\n[wizard]: へえ、なかなかやるじゃないか。ウォームアップはここまでだ。ここからは少し楽しませてもらうよ。\n「wizard……！ 伝説の先輩本人からのメッセージだ！ どうやらリアルタイムでこっちの様子を見ているらしい」\n 和樹先輩がゴクリと息をのむ。\n「面白くなってきたじゃないか。先輩に俺たちの実力、見せてやろうぜ。ステージ3、『暗号解読（クリプトグラフィ）』。ここが中盤の山場だ！」\n\n以下の文章は、ある特定の読み方をすることで隠された3文字の文字列を浮かび上がらせます。その3文字の文字列を解答してください。\n\nThe Infamous World Program.\nAemilia, Hamlet's childhood friend.\nHamlet, Village Boy.\n\nAct I: A certain rural village.\nScene I: A strange conversation.\n\n[Enter Hamlet and Aemilia]\n\nHamlet:you fair honest mighty brave amazing beautiful angel!\nyou are as amazing as the difference between thyself and a dirty bad fat horrible devil!\n\nAemilia:you are as noble as the sum of a king and the gentle hero.\nthee are the sum of me and you.\nSpeak your mind!\nyou are the difference between you and the sum of a king and the gentle hero.\nSpeak your mind!\nHamlet:you are as loving as the difference between you and  a cute good angel. \nSpeak your mind. \n [exeunt] ",
       "hint": [
-        "まずは README.txt を読んでみましょう"
-      ]
+        "これはプログラムです",
+        "登場人物を見ると、有名な名前ではありませんか？"
+      ],
+      "point": 10
     },
     "hard4": {
-      "answer": "FLAG{hard5}",
-      "title": "hard5",
-      "categoryId": "sad server",
-      "desc": "hard5シナリオ",
+      "answer": "FLAG{qrcode_synthesis293}",
+      "title": "page4",
+      "categoryId": "forensics",
+      "desc": "難易度が上がったステージ3をクリアし、ゴールがはっきりと見えてきた。和樹先輩の声にも熱がこもる。\n「あの先輩は、ただ意地悪でこんなことをしてるんじゃないのかもしれないな……。きっと、俺たちに何かを教えようとしてるんだ。その期待に応えるためにも、最後まで走り抜けよう！ ステージ4、『証拠分析（フォレンジック）』。残された痕跡から、解答を導き出すんだ！」",
       "hint": [
-        "まずは README.txt を読んでみましょう"
-      ]
+        "pptxはパワーポイントです。パワーポイントは実は、他の形式でもあるのです "
+      ],
+      "point": 10
     },
     "hard5": {
       "answer": "FLAG{hard6}",
-      "title": "hard6",
-      "categoryId": "sad server",
-      "desc": "hard6シナリオ",
+      "title": "page5",
+      "categoryId": "forensics",
+      "desc": "ついに4つのステージをクリアした。トレーニングシステムの画面には、禍々しいオーラを放つ最後のステージへのゲートが表示されている。\n\n`[wizard]: …最後の扉へようこそ。これを突破できれば、君の勝ちだ。`\n\n先輩からの短いメッセージが、最終決戦のゴングを鳴らす。\n\n「ここまで来れたのは、紛れもなくキミの力だ。俺はもう何も言うことはない。今までやってきたこと全てを信じて、最後の鍵を開けてくれ！ ラストステージだ！頼んだぞ！」",
       "hint": [
-        "まずは README.txt を読んでみましょう"
+        "拡張子ではないみたい",
+        "pngを含む多くのファイル形式にはそのファイル形式であることを証明するために定められている数字があります",
+        "バイナリの変更をする必要があります"
+      ],
+      "point": 10
+    }
+  },
+  "Hard2": {
+    "hard": {
+      "answer": "FLAG{welcome}",
+      "title": "はじめに",
+      "desc": "あなたのヘッドセットに、上官である**Zero**の冷静な声が響く。\n\n「新人、聞こえるか。緊急事態だ。正体不明のハッカー集団**『ファントム・ノード』**が、重要インフラ企業のウェブサーバーに侵入した。奇妙なことに、彼らは情報を盗むでもなく、システムを破壊するでもなく…ただ**5つの謎の痕跡**を残して消えた。」\n\nモニターに、5つのファイルアイコンがポップアップ表示される。\n\n「これは彼らからの挑戦状だ。君の初任務として、これらの痕跡の解析を命じる。**どれから手を付けても構わない。**すべての謎を解き明かし、彼らの真の目的を突き止めるんだ。君の実力を見せてみろ。」\n\n以下の5つの「痕跡ファイル」から自由に選択して問題に挑戦します。\n\n- **Trace-01:  破損したログインポータル**\n- **Trace-02: 傍受された通信記録**\n- **Trace-03: 不正なセッションデータ**\n- **Trace-04: 偽装されたアクセス**\n- **Trace-05: サーバーの設定メモ**",
+      "hint": [
+        "フラグはFLAG{welcome}"
+      ],
+      "point": 10,
+      "files": [
+      
+      ]
+    },
+    "hard1": {
+      "answer": "FLAG{welcomewebctf82743510}",
+      "title": "Trace-01:  破損したログインポータル",
+      "categoryId": "web",
+      "desc": "Zero: 「まず手始めに、彼らが設置したと思われる偽のログインポータルだ。一見すると何も機能していないが、こういう時、答えは表面には見えないものだ。ページの裏側…その構造自体に何か隠されているかもしれん。開発者の視点で調べてみろ。」",
+      "hint": [
+        "webページを詳しく調べる機能があるはず！"
+      ],
+      "point": 10,
+      "files": [
+        "web1.html"
+      ]
+    },
+    "hard2": {
+      "answer": "FLAG{wireshark_open}",
+      "title": "Trace-02: 傍受された通信記録",
+      "categoryId": "web",
+      "desc": "Zero: 「これは侵入前後のネットワーク通信を記録したpcapファイルだ。膨大なデータ量だが、奴らの通信には必ず特徴があるはずだ。パケットの一つ一つを丁寧に追い、彼らが交わしていた秘密のメッセージを見つけ出せ。」",
+      "hint": [
+        "このファイルを開くためには何が必要かな?",
+        "どうやら何かアプリをダウンロードしなければいけないみたいだ…",
+        "no1~20まであるけど、一つだけ何か違うことが書かれているところがある?"
+      ],
+      "point": 10,
+      "files": [
+        "web_file.pcapng"
+      ]
+    },
+    "hard3": {
+      "answer": "FLAG{cookie_is_sweet}",
+      "title": "Trace-03: 不正なセッションデータ",
+      "categoryId": "web",
+      "desc": "Zero: 「サーバーに残されていたセッションデータだ。特に、サイトがユーザーに発行したCookieに注目しろ。ハッカーは時々、最も見えやすい場所にこそ、大胆なメッセージを残すものだ。この**“お菓子”に込められた彼らのメッセージ**そのものを、注意深く読み取ってみろ。」\n\n以下のファイルをダウンロードしてください\n\n注意\nこの問題では、フォルダから直接アクセスして答えを見ないでください。\nまた、以下の手順に従いアクセスしてください\nダウンロードしたフォルダに移動\npyファイルを実行\n実行するとlocalhost8000とコマンドラインに表記されるのでそこをctrlを押しながらクリック\nページにアクセスしたら再読み込みを行う",
+      "hint": [
+        "このフォルダ名を見てみよう",
+        "cookieを見るためにはどうしたらよいのだろう"
+      ],
+      "point": 10,
+      "files": [
+        "cookie_challenge.zip"
+      ]
+    },
+    "hard4": {
+      "answer": "FLAG{robots_find}",
+      "title": "Trace-04: 偽装されたアクセス",
+      "categoryId": "web",
+      "desc": "Zero: 「ファントム・ノードがテスト用に作成したと思われるアカウントのアクセスURLだ。システムの不備を突いて、他のユーザーの情報を覗き見れるか試すんだ。」\n\n以下のzipファイルを展開してpyファイルを実行してlocalhostにアクセス後、flagを取得してください。取得したflagはflag{}の形式で、{}の中に記載してください。\n\nこの問題では、フォルダから直接アクセスして答えを見ないでください。\npyファイルを実行して、localhostにアクセスしてください",
+      "hint": [
+        "webページには、アクセスをしてほしくない場所が書いてあるファイルがあるらしい"
+      ],
+      "point": 10,
+      "files": [
+        "web_challenge.zip"
+      ]
+    },
+    "hard5": {
+      "answer": "FLAG{}",
+      "title": "Trace-05: サーバーの設定メモ",
+      "categoryId": "web",
+      "desc": "Zero: 「これはウェブサーバーのルートディレクトリに残されていた設定ファイルの一部だ。ウェブクローラーに対する指示が書かれているようだが…。開発者は時々、検索エンジンから隠す目的で、重要なディレクトリをそこに記述することがある。訪問を拒否している場所ほど、怪しいと思わないか？」",
+      "hint": [
+        "画面全体を見よう!特にguestでログインした後だね",
+        "userid=2 とurlに書いてありますね。useridは変更できるのかな？"
+      ],
+      "point": 10,
+      "files": [
+        "web5.zip"
       ]
     }
   },

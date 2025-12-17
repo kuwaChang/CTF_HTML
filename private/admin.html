@@ -428,6 +428,17 @@
       .quiz-list-header button {
         width: 100%;
       }
+      .tabs {
+        flex-direction: column;
+        border-radius: 12px 12px 0 0;
+      }
+      .tab {
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+        border-right: none;
+      }
+      .tab.active {
+        border-bottom: 3px solid #667eea;
+      }
     }
     @keyframes fadeIn {
       from {
@@ -454,13 +465,64 @@
     ::-webkit-scrollbar-thumb:hover {
       background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
+    /* タブスタイル */
+    .tabs {
+      display: flex;
+      margin-bottom: 0;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 12px 12px 0 0;
+      padding: 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .tab {
+      flex: 1;
+      padding: 16px 24px;
+      cursor: pointer;
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      border: none;
+      border-bottom: 3px solid transparent;
+      text-align: center;
+      position: relative;
+    }
+    .tab:hover {
+      background: rgba(102, 126, 234, 0.2);
+    }
+    .tab.active {
+      background: rgba(255, 255, 255, 0.98);
+      color: #667eea;
+      border-bottom: 3px solid #667eea;
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-out;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .tab-content > .form-section {
+      border-radius: 0 0 20px 20px;
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
   <h1>管理者ページ</h1>
 
-  <div class="form-section">
-    <h2>問題追加・編集</h2>
+  <div class="tabs">
+    <div class="tab active" data-target="quiz-edit">問題編集</div>
+    <div class="tab" data-target="quiz-list">問題一覧</div>
+    <div class="tab" data-target="user-management">ユーザー管理</div>
+  </div>
+
+  <!-- 問題編集タブ -->
+  <div id="quiz-edit" class="tab-content active">
+    <div class="form-section">
+      <h2>問題追加・編集</h2>
     <form id="addForm">
       <div class="form-group">
         <label>カテゴリ <span class="required">*</span></label>
@@ -548,14 +610,39 @@
       </div>
       <button type="submit" class="delete">削除</button>
     </form>
+    </div>
   </div>
 
-  <div id="quizListContainer">
-    <div class="quiz-list-header">
-      <h2>問題一覧</h2>
-      <button onclick="loadQuizzes()">更新</button>
+  <!-- 問題一覧タブ -->
+  <div id="quiz-list" class="tab-content">
+    <div id="quizListContainer" class="form-section">
+      <div class="quiz-list-header">
+        <h2>問題一覧</h2>
+        <button onclick="loadQuizzes()">更新</button>
+      </div>
+      <div id="quizList"></div>
     </div>
-    <div id="quizList"></div>
+  </div>
+
+  <!-- ユーザー管理タブ -->
+  <div id="user-management" class="tab-content">
+    <div class="form-section">
+      <h2>ユーザー管理</h2>
+      <form id="userSearchForm" style="margin-bottom: 30px;">
+        <div class="form-group">
+          <label>ユーザーID検索 <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="searchUserId" 
+            placeholder="ユーザーIDを入力してください" 
+            required
+            style="max-width: 400px;"
+          >
+          <button type="submit" style="margin-top: 15px;">検索</button>
+        </div>
+      </form>
+      <div id="userList"></div>
+    </div>
   </div>
 
   <script src="/js/admin.js"></script>

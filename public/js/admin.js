@@ -20,9 +20,56 @@ window.removeHintField = function(btn) {
   }
 };
 
+// タブ切り替え機能
+function initAdminTabs() {
+  const tabs = document.querySelectorAll(".tab");
+  const contents = document.querySelectorAll(".tab-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
+      tab.classList.add("active");
+      const targetId = tab.dataset.target;
+      if (targetId) {
+        const targetContent = document.getElementById(targetId);
+        if (targetContent) {
+          targetContent.classList.add("active");
+          
+          // タブ切り替え時にデータを読み込む
+          if (targetId === "quiz-list") {
+            loadQuizzes();
+          } else if (targetId === "user-management") {
+            // ユーザー管理タブでは検索フォームを表示するだけ
+            // 検索はユーザーが実行する
+          }
+        }
+      }
+    });
+  });
+}
+
+// 全ユーザーデータを保持（検索用）
+let allUsersData = [];
+
 // 答えの形式が変更された時の処理
 document.addEventListener("DOMContentLoaded", () => {
+  initAdminTabs();
   loadQuizzes();
+  
+  // ユーザー検索フォームのイベントリスナー
+  const userSearchForm = document.getElementById("userSearchForm");
+  if (userSearchForm) {
+    userSearchForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const searchUserId = document.getElementById("searchUserId").value.trim();
+      if (!searchUserId) {
+        alert("ユーザーIDを入力してください");
+        return;
+      }
+      await searchUser(searchUserId);
+    });
+  }
 
   const answerTypeSelect = document.getElementById("answerType");
   const coordinateToleranceGroup = document.getElementById("coordinateToleranceGroup");
@@ -345,3 +392,184 @@ window.loadQuizzes = async function() {
     alert("問題の読み込みに失敗しました");
   }
 };
+
+// 全ユーザーを取得（検索用に保持）
+async function fetchAllUsers() {
+  try {
+    const res = await fetch("/admin/users", { credentials: "include" });
+    if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        throw new Error("アクセス権がありません");
+      }
+      throw new Error("読み込み失敗");
+    }
+    allUsersData = await res.json();
+    return allUsersData;
+  } catch (err) {
+    console.error("ユーザー一覧取得エラー:", err);
+    throw err;
+  }
+}
+
+// ユーザーを検索して表示
+async function searchUser(userid) {
+  try {
+    // 全ユーザーを取得（まだ取得していない場合）
+    if (allUsersData.length === 0) {
+      await fetchAllUsers();
+    }
+    
+    // ユーザーIDで検索（部分一致）
+    const searchTerm = userid.toLowerCase();
+    const matchedUsers = allUsersData.filter(user => 
+      user.userid.toLowerCase().includes(searchTerm)
+    );
+    
+    const container = document.getElementById("userList");
+    container.innerHTML = "";
+
+    if (matchedUsers.length === 0) {
+      container.innerHTML = `<p style="text-align: center; color: #888; padding: 20px;">ユーザーID "${userid}" に一致するユーザーが見つかりませんでした</p>`;
+      return;
+    }
+
+    // 検索結果を表示
+    for (const user of matchedUsers) {
+      const userDiv = document.createElement("div");
+      userDiv.className = "quiz-item";
+      
+      const currentRole = user.role || 'user';
+      const roleOptions = ['user', 'admin'];
+      
+      userDiv.innerHTML = `
+        <div class="quiz-header">
+          <h3>${user.username || user.userid}</h3>
+        </div>
+        <p><strong>ユーザーID:</strong> ${user.userid}</p>
+        <p><strong>ユーザー名:</strong> ${user.username || '（未設定）'}</p>
+        <p><strong>スコア:</strong> ${user.score || 0}</p>
+        <p><strong>現在のロール:</strong> <span style="color: #667eea; font-weight: 600;">${currentRole}</span></p>
+        <div class="form-group" style="margin-top: 15px;">
+          <label>新しいロール</label>
+          <select id="role-${user.userid}" style="max-width: 200px;">
+            ${roleOptions.map(role => 
+              `<option value="${role}" ${role === currentRole ? 'selected' : ''}>${role}</option>`
+            ).join('')}
+          </select>
+          <button 
+            type="button" 
+            class="edit-btn" 
+            onclick="updateUserRole('${user.userid}')"
+            style="margin-top: 10px;"
+          >
+            ロールを変更
+          </button>
+        </div>
+      `;
+      
+      container.appendChild(userDiv);
+    }
+  } catch (err) {
+    console.error("ユーザー検索エラー:", err);
+    const container = document.getElementById("userList");
+    container.innerHTML = `<p style="text-align: center; color: #f5576c; padding: 20px;">${err.message || "ユーザー検索に失敗しました"}</p>`;
+  }
+}
+
+// ユーザー一覧を表示（後方互換性のため残す）
+window.loadUsers = async function() {
+  // 検索フォームが表示されている場合は何もしない
+  const searchForm = document.getElementById("userSearchForm");
+  if (searchForm) {
+    return;
+  }
+  
+  // 旧形式の場合は全ユーザーを表示
+  try {
+    const users = await fetchAllUsers();
+    const container = document.getElementById("userList");
+    container.innerHTML = "";
+
+    if (users.length === 0) {
+      container.innerHTML = "<p>ユーザーが見つかりません</p>";
+      return;
+    }
+
+    for (const user of users) {
+      const userDiv = document.createElement("div");
+      userDiv.className = "quiz-item";
+      
+      const currentRole = user.role || 'user';
+      const roleOptions = ['user', 'admin'];
+      
+      userDiv.innerHTML = `
+        <div class="quiz-header">
+          <h3>${user.username || user.userid}</h3>
+        </div>
+        <p><strong>ユーザーID:</strong> ${user.userid}</p>
+        <p><strong>スコア:</strong> ${user.score || 0}</p>
+        <div class="form-group" style="margin-top: 15px;">
+          <label>ロール</label>
+          <select id="role-${user.userid}" style="max-width: 200px;">
+            ${roleOptions.map(role => 
+              `<option value="${role}" ${role === currentRole ? 'selected' : ''}>${role}</option>`
+            ).join('')}
+          </select>
+          <button 
+            type="button" 
+            class="edit-btn" 
+            onclick="updateUserRole('${user.userid}')"
+            style="margin-top: 10px;"
+          >
+            ロールを変更
+          </button>
+        </div>
+      `;
+      
+      container.appendChild(userDiv);
+    }
+  } catch (err) {
+    console.error("ユーザー一覧読み込みエラー:", err);
+    alert("ユーザー一覧の読み込みに失敗しました");
+  }
+};
+
+// ユーザーのroleを変更（グローバル関数として定義）
+window.updateUserRole = async function(userid) {
+  const selectElement = document.getElementById(`role-${userid}`);
+  if (!selectElement) {
+    alert("エラー: role選択要素が見つかりません");
+    return;
+  }
+
+  const newRole = selectElement.value;
+  
+  if (!confirm(`ユーザー ${userid} のロールを ${newRole} に変更しますか？`)) {
+    return;
+  }
+
+  try {
+    const res = await fetch(`/admin/users/${encodeURIComponent(userid)}/role`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role: newRole }),
+      credentials: "include"
+    });
+    
+    const result = await res.json();
+    
+    if (res.ok) {
+      alert(result.message || "ロールを変更しました");
+      // 検索結果を再表示（検索フォームの値を使用）
+      const searchUserId = document.getElementById("searchUserId");
+      if (searchUserId && searchUserId.value.trim()) {
+        await searchUser(searchUserId.value.trim());
+      }
+    } else {
+      alert(result.message || "ロールの変更に失敗しました");
+    }
+  } catch (err) {
+    console.error("ロール変更エラー:", err);
+    alert("サーバーエラーが発生しました");
+  }
+}

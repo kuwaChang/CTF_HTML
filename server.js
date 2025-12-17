@@ -10,6 +10,24 @@ const { Server } = require("socket.io");
 const { router: sadRouter, setSocketIO } = require("./server-sad");
 const crypto = require("crypto");
 
+// グローバルエラーハンドラー（未処理のエラーをキャッチ）
+process.on('uncaughtException', (err) => {
+  console.error("❌ 未処理の例外:", err.message);
+  console.error("   エラーコード:", err.code);
+  console.error("   エラー番号:", err.errno);
+  console.error("   スタックトレース:", err.stack);
+  // アプリケーションを終了させずに続行（ログイン機能を維持）
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error("❌ 未処理のPromise拒否:", reason);
+  if (reason instanceof Error) {
+    console.error("   エラーコード:", reason.code);
+    console.error("   エラー番号:", reason.errno);
+    console.error("   スタックトレース:", reason.stack);
+  }
+});
+
 // セキュリティ: セッションシークレットの生成（環境変数があれば使用、なければランダム生成）
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(64).toString('hex');
 
@@ -64,7 +82,35 @@ function rateLimit(req, res, next) {
 const app = express();
 app.set('trust proxy', true);
 
-const db = new sqlite3.Database("users.db");
+// dbフォルダが存在しない場合は作成
+const dbDir = path.join(__dirname, "db");
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
+
+const dbPath = path.join(__dirname, "db", "users.db");
+const sessionsDbPath = path.join(__dirname, "db", "sessions.sqlite");
+console.log("[server.js] データベースパス:", dbPath);
+console.log("[server.js] ファイル存在確認:", fs.existsSync(dbPath));
+console.log("[server.js] sessions.sqliteパス:", sessionsDbPath);
+console.log("[server.js] sessions.sqlite存在確認:", fs.existsSync(sessionsDbPath));
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error("データベース接続エラー (server.js):", err);
+    console.error("データベースパス:", dbPath);
+  } else {
+    console.log("[server.js] データベース接続成功");
+  }
+});
+db.on('error', (err) => {
+  console.error("❌ データベースエラー (server.js):", err.message);
+  console.error("   エラーコード:", err.code);
+  console.error("   エラー番号:", err.errno);
+  console.error("   データベースパス:", dbPath);
+  if (err.stack) {
+    console.error("   スタックトレース:", err.stack);
+  }
+});
 // SQLインジェクション練習用データベース（別ファイル）
 const sqlDbPath = path.join(__dirname, "public", "files", "user_database.db");
 const sqlDb = new sqlite3.Database(sqlDbPath);
@@ -176,11 +222,57 @@ app.use(cors(
   }
 ));
 
+// SQLiteStoreの初期化を試行
+let sessionStore;
+try {
+  console.log("[server.js] SQLiteStoreを初期化します...");
+  console.log("[server.js] sessions.sqliteの絶対パス:", path.resolve(sessionsDbPath));
+  console.log("[server.js] dbディレクトリの絶対パス:", path.resolve(dbDir));
+  
+  // SQLiteStoreのオプションを設定
+  // dbオプションにファイル名だけを指定し、dirオプションにディレクトリを指定
+  const storeOptions = {
+    db: 'sessions.sqlite',  // ファイル名のみ
+    table: 'sessions',
+    dir: dbDir,  // ディレクトリを指定
+    errorHandler: (err) => {
+      console.error("❌ SQLiteStoreエラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   エラー番号:", err.errno);
+      console.error("   データベースパス:", path.join(dbDir, 'sessions.sqlite'));
+      if (err.stack) {
+        console.error("   スタックトレース:", err.stack);
+      }
+    }
+  };
+  
+  sessionStore = new SQLiteStore(storeOptions);
+  
+  // SQLiteStoreの内部接続を監視
+  if (sessionStore && sessionStore.db) {
+    sessionStore.db.on('error', (err) => {
+      console.error("❌ SQLiteStore内部データベースエラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   エラー番号:", err.errno);
+      if (err.stack) {
+        console.error("   スタックトレース:", err.stack);
+      }
+    });
+  }
+  
+  console.log("✅ [server.js] SQLiteStore初期化成功");
+} catch (err) {
+  console.error("❌ SQLiteStore初期化エラー:", err.message);
+  console.error("   スタックトレース:", err.stack);
+  // エラーが発生してもセッションストアなしで続行（メモリストアにフォールバック）
+  sessionStore = undefined;
+}
+
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: new SQLiteStore({ db: "sessions.sqlite" }),
+  store: sessionStore,
   cookie: {
     maxAge: 24 * 60 * 60 * 1000,  // 1日
     sameSite: "lax",
@@ -543,27 +635,79 @@ sqlDb.serialize(() => {
 			{ username: "taylor", password: "taylorpass", email: "taylor@example.com", role: "user" },
 			{ username: "uwe", password: "uwepass", email: "uwe@example.com", role: "user" },
 			{ username: "victor", password: "victorpass", email: "victor@example.com", role: "user" },
-			{ username: "wendy", password: "wendypass", email: "wendy@example.com", role: "user" }
+			{ username: "wendy", password: "wendypass", email: "wendy@example.com", role: "user" },
+			{ username: "xavier", password: "xavierpass", email: "xavier@example.com", role: "user" },
+			{ username: "yolanda", password: "yolandapass", email: "yolanda@example.com", role: "user" },
+			{ username: "zachary", password: "zacharypass", email: "zachary@example.com", role: "user" },
+			{ username: "alex", password: "alexpass", email: "alex@example.com", role: "user" },
+			{ username: "bella", password: "bellapass", email: "bella@example.com", role: "user" },
+			{ username: "chris", password: "chrispass", email: "chris@example.com", role: "user" },
+			{ username: "diana", password: "dianapass", email: "diana@example.com", role: "user" },
+			{ username: "eric", password: "ericpass", email: "eric@example.com", role: "user" },
+			{ username: "fiona", password: "fionapass", email: "fiona@example.com", role: "user" },
+			{ username: "gavin", password: "gavinpass", email: "gavin@example.com", role: "user" },
+			{ username: "helen", password: "helenpass", email: "helen@example.com", role: "user" },
+			{ username: "isaac", password: "isaacpass", email: "isaac@example.com", role: "user" },
+			{ username: "julia", password: "juliapass", email: "julia@example.com", role: "user" },
+			{ username: "kyle", password: "kylepass", email: "kyle@example.com", role: "user" },
+			{ username: "luna", password: "lunapass", email: "luna@example.com", role: "user" },
+			{ username: "mason", password: "masonpass", email: "mason@example.com", role: "user" },
+			{ username: "nina", password: "ninapass", email: "nina@example.com", role: "user" },
+			{ username: "oscar", password: "oscarpass", email: "oscar@example.com", role: "user" },
+			{ username: "paula", password: "paulapass", email: "paula@example.com", role: "user" },
+			{ username: "quinn", password: "quinnpass", email: "quinn@example.com", role: "user" },
+			{ username: "ruby", password: "rubypass", email: "ruby@example.com", role: "user" },
+			{ username: "steve", password: "stevepass", email: "steve@example.com", role: "user" },
+			{ username: "tina", password: "tinapass", email: "tina@example.com", role: "user" },
+			{ username: "uma", password: "umapass", email: "uma@example.com", role: "user" },
+			{ username: "violet", password: "violetpass", email: "violet@example.com", role: "user" },
+			{ username: "william", password: "williampass", email: "william@example.com", role: "user" },
+			{ username: "xena", password: "xenapass", email: "xena@example.com", role: "user" },
+			{ username: "yuki", password: "yuki", email: "yuki@example.com", role: "user" },
+			{ username: "yuta", password: "yuta", email: "yuta@example.com", role: "user" },
+			{ username: "yusuke", password: "yusuke", email: "yusuke@example.com", role: "user" },
+			{ username: "sakura", password: "FLAG{try-SQL}", email: "FLAG{try-SQL}@example.com", role: "user" },
+			{ username: "ryo", password: "ryo", email: "ryo@example.com", role: "user" },
+			{ username: "akira", password: "akira", email: "akira@example.com", role: "user" },
+			{ username: "haruka", password: "haruka", email: "haruka@example.com", role: "user" },
+			{ username: "kenji", password: "kenji", email: "kenji@example.com", role: "user" },
+			{ username: "mai", password: "mai", email: "mai@example.com", role: "user" },
+			{ username: "naoki", password: "naoki", email: "naoki@example.com", role: "user" },
+			{ username: "satoshi", password: "satoshi", email: "satoshi@example.com", role: "user" },
+			{ username: "tomoya", password: "tomoya", email: "tomoya@example.com", role: "user" },
+			{ username: "yui", password: "yui", email: "yui@example.com", role: "user" },
+			{ username: "aoi", password: "aoi", email: "aoi@example.com", role: "user" },
+			{ username: "daiki", password: "daiki", email: "daiki@example.com", role: "user" },
+			{ username: "emi", password: "emi", email: "emi@example.com", role: "user" },
+			{ username: "hiroshi", password: "hiroshi", email: "hiroshi@example.com", role: "user" },
+			{ username: "kaori", password: "kaori", email: "kaori@example.com", role: "user" },
+			{ username: "masato", password: "masato", email: "masato@example.com", role: "user" },
+			{ username: "nana", password: "nana", email: "nana@example.com", role: "user" },
+			{ username: "osamu", password: "osamu", email: "osamu@example.com", role: "user" },
+			{ username: "reina", password: "reina", email: "reina@example.com", role: "user" },
+			{ username: "shota", password: "shota", email: "shota@example.com", role: "user" },
+			{ username: "takeshi", password: "takeshi", email: "takeshi@example.com", role: "user" },
+			{ username: "umi", password: "umi", email: "umi@example.com", role: "user" },
+			{ username: "yoko", password: "yoko", email: "yoko@example.com", role: "user" },
+			{ username: "zen", password: "zen", email: "zen@example.com", role: "user" }
 		];
 		
-		if (!row || row.cnt === 0) {
-			// データが存在しない場合は新規投入
-			const stmt = sqlDb.prepare(`INSERT OR IGNORE INTO users (username, password, email, role) VALUES (?, ?, ?, ?)`);
-			for (const u of seedUsers) {
-				stmt.run(u.username, u.password, u.email, u.role);
-			}
-			stmt.finalize();
-			console.log("✅ SQL練習用ユーザーを投入しました:", seedUsers.map(u => u.username).join(", "));
-		} else {
-			// 既存データがある場合は、emailとroleを更新
-			const updateStmt = sqlDb.prepare(`UPDATE users SET email = ?, role = ? WHERE username = ?`);
-			for (const u of seedUsers) {
-				updateStmt.run(u.email, u.role, u.username);
-			}
-			updateStmt.finalize();
-			console.log("✅ SQL練習用ユーザーのemailとroleを更新しました");
+		// 全ユーザーをINSERT OR IGNOREで追加（既存ユーザーは無視、新規ユーザーは追加）
+		const stmt = sqlDb.prepare(`INSERT OR IGNORE INTO users (username, password, email, role) VALUES (?, ?, ?, ?)`);
+		for (const u of seedUsers) {
+			stmt.run(u.username, u.password, u.email, u.role);
 		}
-		console.log("🗄️ SQL練習DBファイル:", sqlDbPath);
+		stmt.finalize();
+		
+		// 既存ユーザーのemailとroleを更新
+		const updateStmt = sqlDb.prepare(`UPDATE users SET email = ?, role = ? WHERE username = ?`);
+		for (const u of seedUsers) {
+			updateStmt.run(u.email, u.role, u.username);
+		}
+		updateStmt.finalize();
+		
+		console.log("✅ SQL練習用ユーザーを投入/更新しました:", seedUsers.map(u => u.username).join(", "));
+		//console.log("🗄️ SQL練習DBファイル:", sqlDbPath);
 	});
 });
 
@@ -575,7 +719,7 @@ app.post("/login", (req, res) => {
     // ❌ SQLインジェクションできる超危険なクエリ（練習用）
     const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
 
-    console.log("実行されるSQL:", query);
+    //console.log("実行されるSQL:", query);
 
     sqlDb.get(query, (err, row) => {
         if (err) {
@@ -614,7 +758,7 @@ app.post("/search", (req, res) => {
     // ❌ SQLインジェクションできる超危険なクエリ（練習用）
     const query = `SELECT * FROM users WHERE username LIKE '%${searchTerm}%' OR email LIKE '%${searchTerm}%'`;
 
-    console.log("実行されるSQL:", query);
+    //console.log("実行されるSQL:", query);
 
     sqlDb.all(query, (err, rows) => {
         if (err) {
@@ -689,7 +833,7 @@ app.post("/xss/post", (req, res) => {
     };
 
     xssPosts.push(post);
-    console.log("📝 XSS練習用投稿:", post);
+    //console.log("📝 XSS練習用投稿:", post);
 
     res.json({
         success: true,
@@ -767,8 +911,8 @@ app.get("/path-traversal/download", (req, res) => {
     });
   }
   
-  console.log("⚠️ パストラバーサル試行（脆弱エンドポイント）:", filePath);
-  console.log("⚠️ 解決されたパス:", resolvedPath);
+  //console.log("⚠️ パストラバーサル試行（脆弱エンドポイント）:", filePath);
+  //console.log("⚠️ 解決されたパス:", resolvedPath);
   
   // ファイルの存在確認
   fs.access(resolvedPath, fs.constants.F_OK, (err) => {
@@ -906,6 +1050,22 @@ function replaceLocalhostInQuizData(data) {
   return JSON.parse(replacedString);
 }
 
+// 答えを削除する関数（セキュリティ対策）
+function removeAnswersFromQuizData(data) {
+  const sanitized = JSON.parse(JSON.stringify(data)); // コピー
+  for (const category in sanitized) {
+    if (sanitized.hasOwnProperty(category)) {
+      for (const qid in sanitized[category]) {
+        if (sanitized[category].hasOwnProperty(qid)) {
+          // answerフィールドを削除
+          delete sanitized[category][qid].answer;
+        }
+      }
+    }
+  }
+  return sanitized;
+}
+
 app.get("/api/quizData", (req, res) => {
   // セキュリティ: 認証チェック追加
   if (!req.session.userid) {
@@ -922,7 +1082,9 @@ app.get("/api/quizData", (req, res) => {
     try {
       const parsedData = JSON.parse(data);
       const replacedData = replaceLocalhostInQuizData(parsedData);
-      res.json(replacedData);
+      // セキュリティ: 答えを削除してから送信
+      const sanitizedData = removeAnswersFromQuizData(replacedData);
+      res.json(sanitizedData);
     } catch (parseErr) {
       console.error("JSON解析エラー:", parseErr);
       return res.status(500).json({ error: "データ形式エラー" });
@@ -987,22 +1149,32 @@ db.serialize(() => {
     password TEXT,
     score INTEGER,
     role TEXT DEFAULT 'user'
-  )`);
+  )`, (err) => {
+    if (err) {
+      console.error("❌ usersテーブル作成エラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   スタックトレース:", err.stack);
+    }
+  });
 
   // 既存テーブルにroleカラムがなければ追加（マイグレーション）
   db.run(`ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'`, (err) => {
     // カラムが既に存在する場合はエラーになるが、無視する
     if (err && !err.message.includes('duplicate column name')) {
-      console.error("roleカラム追加エラー:", err);
+      console.error("❌ roleカラム追加エラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   スタックトレース:", err.stack);
     }
   });
 
   // 既存のadminユーザーにroleを設定（マイグレーション）
   db.run(`UPDATE users SET role = 'admin' WHERE userid = 'admin' AND (role IS NULL OR role = 'user')`, (err) => {
     if (err) {
-      console.error("adminユーザーのrole設定エラー:", err);
+      console.error("❌ adminユーザーのrole設定エラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   スタックトレース:", err.stack);
     } else {
-      console.log("✅ adminユーザーのroleを設定しました");
+      //console.log("✅ adminユーザーのroleを設定しました");
     }
   });
 
@@ -1011,7 +1183,13 @@ db.serialize(() => {
     category TEXT,
     qid TEXT,
     PRIMARY KEY (userid, category, qid)
-  )`);
+  )`, (err) => {
+    if (err) {
+      console.error("❌ solvedテーブル作成エラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   スタックトレース:", err.stack);
+    }
+  });
 
   db.run(`CREATE TABLE IF NOT EXISTS study_sessions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1019,7 +1197,15 @@ db.serialize(() => {
     start_time TEXT,
     end_time TEXT,
     duration_ms INTEGER
-  )`);
+  )`, (err) => {
+    if (err) {
+      console.error("❌ study_sessionsテーブル作成エラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   スタックトレース:", err.stack);
+    } else {
+      console.log("✅ [server.js] データベース初期化完了");
+    }
+  });
 });
 
 

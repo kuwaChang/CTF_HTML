@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
+const sqlite3 = require("sqlite3").verbose();
 const router = express.Router();
 
 // セキュリティ: ファイル名のサニタイゼーション関数（先に定義）
@@ -16,6 +17,44 @@ function sanitizeFilename(filename) {
 
 const quizPath = path.join(__dirname, "../data/quizData.json");
 const uploadDir = path.join(__dirname, "../public/files");
+
+// dbフォルダが存在しない場合は作成
+const dbDir = path.join(__dirname, "../db");
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
+
+const dbPath = path.join(__dirname, "../db/users.db");
+console.log("[admin.js] データベースパス:", dbPath);
+console.log("[admin.js] ファイル存在確認:", fs.existsSync(dbPath));
+console.log("[admin.js] ディレクトリ存在確認:", fs.existsSync(path.dirname(dbPath)));
+let db;
+try {
+  db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+    if (err) {
+      console.error("❌ データベース接続エラー (admin.js):", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   エラー番号:", err.errno);
+      console.error("   データベースパス:", dbPath);
+      console.error("   スタックトレース:", err.stack);
+    } else {
+      console.log("✅ [admin.js] データベース接続成功");
+    }
+  });
+} catch (err) {
+  console.error("❌ データベース作成時の例外 (admin.js):", err.message);
+  console.error("   スタックトレース:", err.stack);
+  throw err;
+}
+db.on('error', (err) => {
+  console.error("❌ データベースエラー (admin.js):", err.message);
+  console.error("   エラーコード:", err.code);
+  console.error("   エラー番号:", err.errno);
+  console.error("   データベースパス:", dbPath);
+  if (err.stack) {
+    console.error("   スタックトレース:", err.stack);
+  }
+});
 
 
 // セキュリティ: 許可するファイル拡張子
@@ -284,4 +323,85 @@ router.delete("/deleteQuiz", requireAdmin, (req, res) => {
     res.status(500).json({ message: "削除中にエラーが発生しました" });
   }
 });
+
+// セキュリティ: 入力値のサニタイゼーションとバリデーション
+function sanitizeInput(input, maxLength = 100) {
+  if (typeof input !== 'string') return '';
+  return input.trim().substring(0, maxLength);
+}
+
+function validateUserId(userid) {
+  // 英数字とアンダースコアのみ許可、3-20文字
+  return /^[a-zA-Z0-9_]{3,20}$/.test(userid);
+}
+
+function validateRole(role) {
+  // 許可されたroleのみ
+  return ['user', 'admin'].includes(role);
+}
+
+// 管理者用API：ユーザー一覧取得
+router.get("/users", requireAdmin, (req, res) => {
+  db.all(
+    "SELECT userid, username, score, role FROM users ORDER BY userid",
+    [],
+    (err, rows) => {
+      if (err) {
+        console.error("ユーザー一覧取得エラー:", err);
+        return res.status(500).json({ message: "ユーザー一覧の取得に失敗しました" });
+      }
+      // セキュリティ: パスワードは返さない
+      res.json(rows.map(row => ({
+        userid: row.userid,
+        username: row.username,
+        score: row.score || 0,
+        role: row.role || 'user'
+      })));
+    }
+  );
+});
+
+// 管理者用API：ユーザーのrole変更
+router.put("/users/:userid/role", requireAdmin, (req, res) => {
+  let { userid } = req.params;
+  let { role } = req.body;
+
+  // セキュリティ: 入力値のサニタイゼーション
+  userid = sanitizeInput(userid, 20);
+  role = sanitizeInput(role, 20);
+
+  // セキュリティ: 入力値のバリデーション
+  if (!validateUserId(userid)) {
+    return res.status(400).json({ message: "無効なユーザーIDです" });
+  }
+
+  if (!validateRole(role)) {
+    return res.status(400).json({ message: "無効なroleです。許可された値: user, admin" });
+  }
+
+  // セキュリティ: 自分自身のroleを変更しようとしている場合は警告（ただし許可）
+  if (userid === req.session.userid && role !== 'admin') {
+    // 警告はするが、変更自体は許可（管理者が意図的に変更する場合もあるため）
+    console.warn(`⚠️ 警告: 管理者 ${req.session.userid} が自分のroleを ${role} に変更しようとしています`);
+  }
+
+  // セキュリティ: SQLインジェクション対策（パラメータ化クエリを使用）
+  db.run(
+    "UPDATE users SET role = ? WHERE userid = ?",
+    [role, userid],
+    function(err) {
+      if (err) {
+        console.error("role変更エラー:", err);
+        return res.status(500).json({ message: "roleの変更に失敗しました" });
+      }
+      
+      if (this.changes === 0) {
+        return res.status(404).json({ message: "ユーザーが見つかりません" });
+      }
+
+      res.json({ message: `ユーザー ${userid} のroleを ${role} に変更しました` });
+    }
+  );
+});
+
 module.exports = router;

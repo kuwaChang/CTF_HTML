@@ -17,7 +17,7 @@ export async function loadQuizData() {
     return Promise.resolve();
   }
   quizData = await res.json();
-  console.log("📦 取得したデータ:", quizData);
+  //console.log("📦 取得したデータ:", quizData);
   const container = document.getElementById("quizContainer");
   container.innerHTML = "";
 
@@ -467,7 +467,7 @@ function openModal(category, qid, evt = null) {
 
   requestAnimationFrame(positionModal);
 
-  console.log(`📝 openModal: ${category} - ${qid}`);
+  //console.log(`📝 openModal: ${category} - ${qid}`);
 }
 
 export function closeModal() {
@@ -575,17 +575,32 @@ export function closeModal() {
     currentSadInstanceId = null;
   }
   
-  console.log("closeModal");
+  //console.log("closeModal");
 }
 
 window.onclick = (e) => {
   if (e.target === document.getElementById("modal")) closeModal();
 };
 
+// 答えをハッシュ化する関数（SHA-256）
+async function hashAnswer(answer) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(answer.trim());
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
 // ✅ 答え送信
 document.getElementById("submitBtn").addEventListener("click", async (e) => {
   e.preventDefault();
   const answer = document.getElementById("answer").value;
+  const q = quizData[currentCategory][currentQid];
+  const answerType = q?.answerType || "flag";
+
+  // 全ての答えをハッシュ化して送信（ネットワークタブから答えを覗かれないようにする）
+  const answerToSend = await hashAnswer(answer);
 
   const res = await fetch("/quiz/checkAnswer", {
     method: "POST",
@@ -593,7 +608,8 @@ document.getElementById("submitBtn").addEventListener("click", async (e) => {
     body: JSON.stringify({
       category: currentCategory,
       qid: currentQid,
-      answer: answer,
+      answer: answerToSend,
+      answerType: answerType,
       point: currentPoint
     }),
     credentials: "include"
