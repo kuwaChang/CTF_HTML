@@ -1202,6 +1202,23 @@ db.serialize(() => {
       console.error("❌ study_sessionsテーブル作成エラー:", err.message);
       console.error("   エラーコード:", err.code);
       console.error("   スタックトレース:", err.stack);
+    }
+  });
+
+  // 実績システム用テーブル
+  db.run(`CREATE TABLE IF NOT EXISTS user_achievements (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid TEXT,
+    achievement_id TEXT,
+    unlocked_at TEXT,
+    progress INTEGER DEFAULT 0,
+    max_progress INTEGER DEFAULT 1,
+    UNIQUE(userid, achievement_id)
+  )`, (err) => {
+    if (err) {
+      console.error("❌ user_achievementsテーブル作成エラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   スタックトレース:", err.stack);
     } else {
       console.log("✅ [server.js] データベース初期化完了");
     }
@@ -1239,10 +1256,12 @@ app.get("/session-check", (req, res) => {
 const authRoutes = require("./routes/auth");
 const quizRoutes = require("./routes/quiz");
 const adminRoutes = require("./routes/admin");
+const { router: achievementRoutes, checkAchievements } = require("./routes/achievements");
 
 app.use("/auth", authRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/admin", adminRoutes);
+app.use("/achievements", achievementRoutes);
 app.use("/sad", sadRouter);
 
 // ✅ Socket.ioが有効化されることを確認

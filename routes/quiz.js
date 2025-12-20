@@ -110,43 +110,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   return R * c; // 距離（km）
 }
 
-// 答えをハッシュ化する関数（SHA-256）
-function hashAnswer(answer) {
-  return crypto.createHash('sha256').update(answer.trim()).digest('hex');
-}
-
-// 座標が許容範囲内かチェック（ハッシュ化された座標用）
-function checkCoordinatesHash(userAnswerHash, correctAnswer, tolerance = 0.001) {
-  try {
-    const correctCoords = correctAnswer.split(',').map(c => parseFloat(c.trim()));
-    if (correctCoords.length !== 2) return false;
-    if (isNaN(correctCoords[0]) || isNaN(correctCoords[1])) return false;
-    
-    // 許容範囲内の座標を生成してハッシュ化し、一致するかチェック
-    // ステップサイズを設定（toleranceの1/5の精度でチェック、パフォーマンスと精度のバランス）
-    const step = tolerance / 5;
-    const latStart = correctCoords[0] - tolerance;
-    const latEnd = correctCoords[0] + tolerance;
-    const lonStart = correctCoords[1] - tolerance;
-    const lonEnd = correctCoords[1] + tolerance;
-    
-    // 許容範囲内の座標を生成してハッシュ化
-    // 精度を6桁に固定（一般的な座標の精度）
-    for (let lat = latStart; lat <= latEnd; lat += step) {
-      for (let lon = lonStart; lon <= lonEnd; lon += step) {
-        const coordStr = `${lat.toFixed(6)},${lon.toFixed(6)}`;
-        const coordHash = hashAnswer(coordStr);
-        if (coordHash === userAnswerHash) {
-          return true;
-        }
-      }
-    }
-    
-    return false;
-  } catch (e) {
-    return false;
-  }
-}
 
 // 座標が許容範囲内かチェック（生の座標用）
 function checkCoordinates(userAnswer, correctAnswer, tolerance = 0.001) {
@@ -179,30 +142,29 @@ router.post("/checkAnswer", requireLogin, (req, res) => {
   
   if (!question) return res.status(404).json({ message: "問題が見つかりません" });
   
+  // 問題のcategoryIdを取得（実績チェック用）
+  const questionCategoryId = question.categoryId || null;
+  
   const correct = question.answer;
   const answerType = question.answerType || "flag"; // デフォルトはflag形式
   let isCorrect = false;
 
   if (answerType === "coordinates") {
-    // 座標形式の検証（ハッシュ化された座標で比較）
+    // 座標形式の検証（生の座標で比較）
     const tolerance = question.coordinateTolerance || 0.001;
     // 複数の正解をサポート（配列の場合）
     if (Array.isArray(correct)) {
-      isCorrect = correct.some(corr => checkCoordinatesHash(answer, corr.trim(), tolerance));
+      isCorrect = correct.some(corr => checkCoordinates(answer, corr.trim(), tolerance));
     } else {
-      isCorrect = checkCoordinatesHash(answer, correct.trim(), tolerance);
+      isCorrect = checkCoordinates(answer, correct.trim(), tolerance);
     }
   } else {
-    // 通常のFLAG形式の検証（ハッシュ化された答えを比較）
+    // 通常のFLAG形式の検証（生の答えを直接比較）
     // 複数の正解をサポート（配列の場合）
     if (Array.isArray(correct)) {
-      isCorrect = correct.some(corr => {
-        const correctHash = hashAnswer(corr);
-        return answer === correctHash;
-      });
+      isCorrect = correct.some(corr => answer.trim() === corr.trim());
     } else {
-      const correctHash = hashAnswer(correct);
-      isCorrect = answer === correctHash;
+      isCorrect = answer.trim() === correct.trim();
     }
   }
 
@@ -227,7 +189,47 @@ router.post("/checkAnswer", requireLogin, (req, res) => {
           console.error("DB update error:", err);
           return res.status(500).json({ message: "DBエラー" });
         }
+        
+        // 実績チェック
+        const { checkAchievements } = require("./achievements");
+        checkAchievements(userid, "solve_count", { solved: true })
+          .then(unlocked => {
+            if (unlocked.length > 0) {
+              // 実績解除通知はクライアント側で処理
+            }
+          })
+          .catch(err => console.error("実績チェックエラー:", err));
+        
+        // カテゴリー別実績チェック（categoryIdを使用）
+        if (questionCategoryId) {
+          checkAchievements(userid, "category_solve", { solved: true, category: questionCategoryId })
+            .then(unlocked => {
+              if (unlocked.length > 0) {
+                // 実績解除通知はクライアント側で処理
+              }
+            })
+            .catch(err => console.error("実績チェックエラー:", err));
+        }
+        
+        // 全カテゴリー制覇チェック
+        checkAchievements(userid, "all_categories", { solved: true })
+          .then(unlocked => {
+            if (unlocked.length > 0) {
+              // 実績解除通知はクライアント側で処理
+            }
+          })
+          .catch(err => console.error("実績チェックエラー:", err));
       });
+      
+      // スコア実績チェック
+      db.get("SELECT score FROM users WHERE userid = ?", [userid], (err, scoreRow) => {
+        if (!err && scoreRow) {
+          const { checkAchievements } = require("./achievements");
+          checkAchievements(userid, "score", { score: scoreRow.score + point })
+            .catch(err => console.error("実績チェックエラー:", err));
+        }
+      });
+      
       res.json({ correct: true, message: "正解！" });
     });
   } else {

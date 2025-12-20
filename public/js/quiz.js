@@ -353,15 +353,6 @@ function openModal(category, qid, evt = null) {
     if (label) label.style.display = "block";
   }
 
-  // Reversing用のコンテナの表示/非表示
-  const reversingContainer = document.getElementById("reversing-container");
-  if (category === "Reversing") {
-    reversingContainer.style.display = "block";
-    // reversing環境の状態をリセット
-    resetReversingUI();
-  } else {
-    reversingContainer.style.display = "none";
-  }
 
   modalContent.style.backgroundColor = "#5b5b5bff";
   modalContent.style.color = "white";
@@ -582,15 +573,6 @@ window.onclick = (e) => {
   if (e.target === document.getElementById("modal")) closeModal();
 };
 
-// 答えをハッシュ化する関数（SHA-256）
-async function hashAnswer(answer) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(answer.trim());
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  return hashHex;
-}
 
 // ✅ 答え送信
 document.getElementById("submitBtn").addEventListener("click", async (e) => {
@@ -599,8 +581,8 @@ document.getElementById("submitBtn").addEventListener("click", async (e) => {
   const q = quizData[currentCategory][currentQid];
   const answerType = q?.answerType || "flag";
 
-  // 全ての答えをハッシュ化して送信（ネットワークタブから答えを覗かれないようにする）
-  const answerToSend = await hashAnswer(answer);
+  // 答えをそのまま送信（HTTP環境対応のためハッシュ化を削除）
+  const answerToSend = answer.trim();
 
   const res = await fetch("/quiz/checkAnswer", {
     method: "POST",
@@ -638,6 +620,30 @@ console.log("📡 /checkAnswer応答:", res.status);
       explanationAnchor.href = q.explanation;
       explanationLink.style.display = "block";
     }
+    
+    // 実績チェック（少し遅延させてサーバー側の処理を待つ）
+    setTimeout(async () => {
+      try {
+        const achievementsRes = await fetch("/achievements/list", { credentials: "include" });
+        if (achievementsRes.ok) {
+          const achievements = await achievementsRes.json();
+          // 新しく解除された実績を検出
+          for (const [id, achievement] of Object.entries(achievements)) {
+            if (achievement.unlocked && achievement.unlockedAt) {
+              const unlockDate = new Date(achievement.unlockedAt);
+              const now = new Date();
+              // 5秒以内に解除された実績のみ通知（重複通知を防ぐ）
+              if (now - unlockDate < 5000) {
+                const { showAchievementUnlocked } = await import("./achievements.js");
+                showAchievementUnlocked(achievement);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.error("実績チェックエラー:", err);
+      }
+    }, 500);
   } else {
     resultEl.innerText = "不正解...";
     resultEl.style.color = "red";
@@ -685,6 +691,23 @@ export async function loadScore() {
 
   // カテゴリー別解答状況を取得して円グラフを表示
   await loadCategoryChart();
+  
+  // スコア実績チェック（バックグラウンドで実行）
+  setTimeout(async () => {
+    try {
+      await fetch("/achievements/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventType: "score",
+          eventData: { score: result.score || 0 }
+        }),
+        credentials: "include"
+      });
+    } catch (err) {
+      console.error("スコア実績チェックエラー:", err);
+    }
+  }, 100);
 }
 
 // カテゴリー別解答状況の円グラフを表示
@@ -711,7 +734,7 @@ async function loadCategoryChart() {
     'osint': 'OSINT',
     'forensics': 'Forensics',
     'web': 'WEB',
-    'reversing': 'Reversing'
+    "sad server": "Sad Server"
   };
   
   // 全問題数をcategoryId別に集計
@@ -958,369 +981,3 @@ async function startSadScenario() {
   }
 }
 
-// Reversing用のグローバル変数
-let currentReversingInstanceId = null;
-let currentReversingSocket = null;
-let currentReversingTerm = null;
-let currentReversingWebUIPort = null;
-
-// Reversing UIをリセット
-function resetReversingUI() {
-  const startBtn = document.getElementById("reversing-start-btn");
-  const rizinBtn = document.getElementById("reversing-rizin-btn");
-  const stopBtn = document.getElementById("reversing-stop-btn");
-  const infoDiv = document.getElementById("reversing-info");
-  const statusP = document.getElementById("reversing-status");
-  const webUIUrlP = document.getElementById("reversing-webui-url");
-  const terminalDiv = document.getElementById("reversing-terminal");
-
-  if (startBtn) {
-    startBtn.style.display = "inline-block";
-    startBtn.disabled = false;
-  }
-  if (rizinBtn) rizinBtn.style.display = "none";
-  if (stopBtn) stopBtn.style.display = "none";
-  if (infoDiv) infoDiv.style.display = "none";
-  if (statusP) statusP.textContent = "";
-  if (webUIUrlP) {
-    webUIUrlP.style.display = "none";
-    webUIUrlP.innerHTML = "";
-  }
-  if (terminalDiv) {
-    terminalDiv.style.display = "none";
-    terminalDiv.innerHTML = "";
-  }
-
-  // 既存の接続をクリーンアップ
-  if (currentReversingSocket) {
-    currentReversingSocket.disconnect();
-    currentReversingSocket = null;
-  }
-  currentReversingInstanceId = null;
-  currentReversingTerm = null;
-  currentReversingWebUIPort = null;
-}
-
-// Reversing環境を起動
-async function startReversingEnvironment() {
-  const startBtn = document.getElementById("reversing-start-btn");
-  const infoDiv = document.getElementById("reversing-info");
-  const statusP = document.getElementById("reversing-status");
-  const terminalDiv = document.getElementById("reversing-terminal");
-
-  if (!startBtn || !infoDiv || !statusP || !terminalDiv) {
-    console.error("Reversing用の要素が見つかりません");
-    return;
-  }
-
-  startBtn.disabled = true;
-  startBtn.textContent = "起動中...";
-  infoDiv.style.display = "block";
-  statusP.textContent = "環境を起動しています...";
-  terminalDiv.style.display = "block";
-
-  try {
-    // reversingシナリオを起動
-    const res = await fetch("/sad/start-sad", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ scenarioId: "reversing" }),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ error: "不明なエラー" }));
-      console.error("サーバーエラー詳細:", errorData);
-      throw new Error(`サーバーエラー: ${res.status} - ${errorData.error || errorData.detail || "不明なエラー"}`);
-    }
-
-    const data = await res.json();
-    const { wsPath, instanceId, webUIPort, setupInProgress, message } = data;
-    console.log(`✅ Reversing環境起動成功: ${instanceId}`);
-
-    currentReversingInstanceId = instanceId;
-    currentReversingWebUIPort = webUIPort;
-
-    // ターミナルを初期化
-    terminalDiv.innerHTML = "";
-    const term = new Terminal({
-      scrollback: 10000,
-      cursorBlink: true,
-      fontSize: 14,
-      fontFamily: 'Consolas, "Courier New", monospace',
-      theme: {
-        background: '#000000',
-        foreground: '#ffffff'
-      }
-    });
-    term.open(terminalDiv);
-    currentReversingTerm = term;
-
-    term.write(`\r\n✅ Reversing環境が起動されました\r\n`);
-    term.write(`Instance ID: ${instanceId}\r\n`);
-    if (webUIPort) {
-      const currentHost = window.location.hostname;
-      const webUIUrl = `http://${currentHost}:${webUIPort}`;
-      term.write(`Web UI Port: ${webUIPort}\r\n`);
-      term.write(`Web UI URL: ${webUIUrl}\r\n`);
-    }
-    if (setupInProgress) {
-      term.write(`\r\n⚠️ ${message}\r\n`);
-      term.write(`セットアップの進捗を確認するには: tail -f /tmp/setup.log\r\n`);
-      statusP.textContent = message;
-    }
-    term.write(`―`.repeat(50) + `\r\n\r\n`);
-
-    // Socket.ioで接続（現在のホスト名を使用）
-    const currentHost = window.location.hostname;
-    const socketUrl = `http://${currentHost}:3333${wsPath}`;
-    const socket = io(socketUrl, {
-      path: "/socket.io",
-      transports: ["websocket", "polling"],
-      withCredentials: true,
-    });
-
-    currentReversingSocket = socket;
-
-    // 入出力をバインド
-    term.onData((input) => socket.emit("input", input));
-    socket.on("output", (data) => {
-      term.write(data);
-      setTimeout(() => term.scrollToBottom(), 0);
-    });
-
-    socket.on("connect", () => {
-      console.log("🟢 Reversing環境接続成功");
-      term.write("\r\n🟢 接続完了\r\n\r\n");
-      statusP.textContent = `✅ 環境が起動しました (Instance: ${instanceId})`;
-      
-      // ボタンの状態を更新
-      startBtn.style.display = "none";
-      document.getElementById("reversing-rizin-btn").style.display = "inline-block";
-      document.getElementById("reversing-stop-btn").style.display = "inline-block";
-    });
-
-    socket.on("disconnect", () => {
-      console.log("🔴 Reversing環境切断");
-      term.write("\r\n\r\n[🔴 セッション終了]\r\n");
-      resetReversingUI();
-    });
-
-    socket.on("connect_error", (err) => {
-      console.error("❌ Reversing環境接続エラー:", err);
-      term.write(`\r\n❌ 接続エラー: ${err.message}\r\n`);
-      statusP.textContent = `❌ 接続エラー: ${err.message}`;
-      resetReversingUI();
-    });
-
-  } catch (error) {
-    console.error("❌ Reversing環境起動エラー:", error);
-    statusP.textContent = `❌ エラー: ${error.message}`;
-    // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
-    terminalDiv.textContent = "";
-    const errorP = document.createElement("p");
-    errorP.style.color = "red";
-    errorP.textContent = `エラー: ${error.message}`;
-    terminalDiv.appendChild(errorP);
-    resetReversingUI();
-  }
-}
-
-// Rizin Web UIを起動
-async function startRizinWebUI() {
-  if (!currentReversingInstanceId) {
-    alert("先に環境を起動してください");
-    return;
-  }
-
-  const rizinBtn = document.getElementById("reversing-rizin-btn");
-  const statusP = document.getElementById("reversing-status");
-  const webUIUrlP = document.getElementById("reversing-webui-url");
-
-  rizinBtn.disabled = true;
-  rizinBtn.textContent = "起動中...";
-  statusP.textContent = "Rizin Web UIを起動しています...";
-
-  try {
-    const res = await fetch("/sad/start-rizin-webui", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        instanceId: currentReversingInstanceId,
-        filePath: "/challenge/sample_binary"
-      }),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ error: "不明なエラー" }));
-      console.error("サーバーエラー詳細:", errorData);
-      throw new Error(`サーバーエラー: ${res.status} - ${errorData.error || errorData.detail || "不明なエラー"}`);
-    }
-
-    const data = await res.json();
-    console.log("Rizin Web UI起動結果:", data);
-
-    // 現在のホスト名を使用してURLを生成
-    const currentHost = window.location.hostname;
-    let webUIUrl = data.webUIUrl;
-    
-    // サーバーから返されたURLがlocalhostの場合は、現在のホスト名に置き換え
-    if (webUIUrl && webUIUrl.includes('localhost')) {
-      const port = data.webUIPort || currentReversingWebUIPort;
-      if (port) {
-        webUIUrl = `http://${currentHost}:${port}`;
-      }
-    } else if (!webUIUrl && currentReversingWebUIPort) {
-      // webUIPortが既に取得されている場合は、それを使用
-      webUIUrl = `http://${currentHost}:${currentReversingWebUIPort}`;
-    }
-
-    if (data.isRunning && webUIUrl) {
-      statusP.textContent = `✅ Rizin Web UIが起動しました`;
-      webUIUrlP.style.display = "block";
-      // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
-      webUIUrlP.textContent = "";
-      const link = document.createElement("a");
-      try {
-        const urlObj = new URL(webUIUrl, window.location.href);
-        if (urlObj.protocol === 'javascript:' || urlObj.protocol === 'data:' || urlObj.protocol === 'vbscript:') {
-          link.textContent = `${webUIUrl} を開く`;
-        } else {
-          link.href = urlObj.href;
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-          link.textContent = `${webUIUrl} を開く`;
-        }
-      } catch (e) {
-        link.textContent = `${webUIUrl} を開く`;
-      }
-      link.style.color = "#0078ff";
-      link.style.textDecoration = "underline";
-      link.style.fontWeight = "bold";
-      webUIUrlP.appendChild(link);
-    } else if (webUIUrl) {
-      statusP.textContent = `⚠️ Rizin Web UIの起動を試みましたが、確認できませんでした`;
-      webUIUrlP.style.display = "block";
-      // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
-      webUIUrlP.textContent = "";
-      
-      const containerDiv = document.createElement("div");
-      containerDiv.style.marginBottom = "10px";
-      
-      const link = document.createElement("a");
-      try {
-        const urlObj = new URL(webUIUrl, window.location.href);
-        if (urlObj.protocol === 'javascript:' || urlObj.protocol === 'data:' || urlObj.protocol === 'vbscript:') {
-          link.textContent = `${webUIUrl} を開く`;
-        } else {
-          link.href = urlObj.href;
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-          link.textContent = `${webUIUrl} を開く`;
-        }
-      } catch (e) {
-        link.textContent = `${webUIUrl} を開く`;
-      }
-      link.style.color = "#0078ff";
-      link.style.textDecoration = "underline";
-      link.style.fontWeight = "bold";
-      containerDiv.appendChild(link);
-      webUIUrlP.appendChild(containerDiv);
-      
-      if (data.suggestion) {
-        const suggestionDiv = document.createElement("div");
-        suggestionDiv.style.color = "#ffa500";
-        suggestionDiv.style.marginTop = "10px";
-        suggestionDiv.textContent = `💡 ${data.suggestion}`;
-        webUIUrlP.appendChild(suggestionDiv);
-      }
-      
-      if (data.log) {
-        const details = document.createElement("details");
-        details.style.marginTop = "10px";
-        
-        const summary = document.createElement("summary");
-        summary.style.cursor = "pointer";
-        summary.style.color = "#0078ff";
-        summary.textContent = "ログを表示";
-        details.appendChild(summary);
-        
-        const pre = document.createElement("pre");
-        pre.style.background = "#2d3035";
-        pre.style.padding = "10px";
-        pre.style.borderRadius = "5px";
-        pre.style.overflowX = "auto";
-        pre.style.fontSize = "12px";
-        pre.style.color = "#fff";
-        pre.textContent = data.log;
-        details.appendChild(pre);
-        
-        webUIUrlP.appendChild(details);
-      }
-    } else {
-      statusP.textContent = data.info || "Rizin Web UIを起動しました";
-      if (data.suggestion) {
-        webUIUrlP.style.display = "block";
-        // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
-        webUIUrlP.textContent = "";
-        const suggestionDiv = document.createElement("div");
-        suggestionDiv.style.color = "#ffa500";
-        suggestionDiv.textContent = `💡 ${data.suggestion}`;
-        webUIUrlP.appendChild(suggestionDiv);
-      }
-    }
-
-    rizinBtn.disabled = false;
-    rizinBtn.textContent = "Rizin Web UIを起動";
-
-  } catch (error) {
-    console.error("❌ Rizin Web UI起動エラー:", error);
-    statusP.textContent = `❌ エラー: ${error.message}`;
-    rizinBtn.disabled = false;
-    rizinBtn.textContent = "Rizin Web UIを起動";
-  }
-}
-
-// Reversing環境を停止
-async function stopReversingEnvironment() {
-  if (!currentReversingInstanceId) {
-    return;
-  }
-
-  if (currentReversingSocket) {
-    currentReversingSocket.disconnect();
-    currentReversingSocket = null;
-  }
-
-  try {
-    const res = await fetch("/sad/stop-sad", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ instanceId: currentReversingInstanceId }),
-    });
-
-    if (res.ok) {
-      console.log("✅ Reversing環境停止成功");
-    }
-  } catch (error) {
-    console.error("❌ Reversing環境停止エラー:", error);
-  }
-
-  resetReversingUI();
-}
-
-// Reversing用のイベントリスナーを設定
-document.addEventListener("DOMContentLoaded", () => {
-  const reversingStartBtn = document.getElementById("reversing-start-btn");
-  const reversingRizinBtn = document.getElementById("reversing-rizin-btn");
-  const reversingStopBtn = document.getElementById("reversing-stop-btn");
-
-  if (reversingStartBtn) {
-    reversingStartBtn.addEventListener("click", startReversingEnvironment);
-  }
-  if (reversingRizinBtn) {
-    reversingRizinBtn.addEventListener("click", startRizinWebUI);
-  }
-  if (reversingStopBtn) {
-    reversingStopBtn.addEventListener("click", stopReversingEnvironment);
-  }
-});
