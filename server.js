@@ -9,6 +9,7 @@ const os = require("os");
 const { Server } = require("socket.io");
 const { router: sadRouter, setSocketIO } = require("./server-sad");
 const crypto = require("crypto");
+const multer = require("multer");
 
 // グローバルエラーハンドラー（未処理のエラーをキャッチ）
 process.on('uncaughtException', (err) => {
@@ -87,6 +88,54 @@ const dbDir = path.join(__dirname, "db");
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
+
+// ユーザーアイコン用のディレクトリを作成
+const iconsDir = path.join(__dirname, "public", "icons");
+if (!fs.existsSync(iconsDir)) {
+  fs.mkdirSync(iconsDir, { recursive: true });
+}
+
+// アイコンアップロード用のファイル名サニタイズ関数
+function sanitizeFilename(filename) {
+  return filename
+    .replace(/[^a-zA-Z0-9._-]/g, '_')
+    .replace(/\.\./g, '')
+    .replace(/^\.+/, '')
+    .substring(0, 255);
+}
+
+// アイコンアップロード用のmulter設定
+const iconStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, iconsDir);
+  },
+  filename: (req, file, cb) => {
+    // ユーザーIDを基にファイル名を生成（拡張子は保持）
+    const userid = req.session.userid || 'unknown';
+    const ext = path.extname(file.originalname).toLowerCase();
+    const sanitizedUserid = sanitizeFilename(userid);
+    const filename = `${sanitizedUserid}_${Date.now()}${ext}`;
+    cb(null, filename);
+  }
+});
+
+// アイコン用のファイルフィルタ（画像のみ許可）
+const iconFileFilter = (req, file, cb) => {
+  const allowedMimes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+  if (allowedMimes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('画像ファイルのみアップロードできます（JPEG, PNG, GIF, WebP）'));
+  }
+};
+
+const iconUpload = multer({
+  storage: iconStorage,
+  fileFilter: iconFileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB
+  }
+});
 
 const dbPath = path.join(__dirname, "db", "users.db");
 const sessionsDbPath = path.join(__dirname, "db", "sessions.sqlite");
@@ -285,7 +334,12 @@ app.use(session({
 
 // ルーティング設定
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+});
+
+// マイページ
+app.get("/mypage", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "mypage.html"));
 });
 
 // ============================================
@@ -294,12 +348,12 @@ app.get("/", (req, res) => {
 
 // SQLインジェクション練習用ページ
 app.get(["/sql", "/sql_index", "/sqli"], (_req, res) => {
-	res.sendFile(path.join(__dirname, "public", "sql_index.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "sql_index.html"));
 });
 
 // XSS練習用ページ
 app.get(["/xss", "/xss_index"], (_req, res) => {
-	res.sendFile(path.join(__dirname, "public", "xss_index.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "xss_index.html"));
 });
 
 // XSS攻撃成功ページ（リダイレクト先）
@@ -439,7 +493,7 @@ app.get("/xss/attack-success", (_req, res) => {
 
 // 隠しフラグページ（広告ページから発見できる）
 app.get("/flag-hidden", (_req, res) => {
-	res.sendFile(path.join(__dirname, "public", "flag-hidden.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "flag-hidden.html"));
 });
 
 // ============================================
@@ -938,7 +992,7 @@ app.get("/path-traversal/download", (req, res) => {
 
 // パストラバーサル練習用ページ
 app.get(["/path-traversal", "/path-traversal_index", "/pt"], (_req, res) => {
-  res.sendFile(path.join(__dirname, "public", "path-traversal_index.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "path-traversal_index.html"));
 });
 
 // セキュリティ: ファイル名とカテゴリ名のサニタイゼーション関数
@@ -1167,6 +1221,16 @@ db.serialize(() => {
     }
   });
 
+  // 既存テーブルにicon_pathカラムがなければ追加（マイグレーション）
+  db.run(`ALTER TABLE users ADD COLUMN icon_path TEXT`, (err) => {
+    // カラムが既に存在する場合はエラーになるが、無視する
+    if (err && !err.message.includes('duplicate column name')) {
+      console.error("❌ icon_pathカラム追加エラー:", err.message);
+      console.error("   エラーコード:", err.code);
+      console.error("   スタックトレース:", err.stack);
+    }
+  });
+
   // 既存のadminユーザーにroleを設定（マイグレーション）
   db.run(`UPDATE users SET role = 'admin' WHERE userid = 'admin' AND (role IS NULL OR role = 'user')`, (err) => {
     if (err) {
@@ -1229,8 +1293,8 @@ db.serialize(() => {
 //セッション確認API
 app.get("/session-check", (req, res) => {
   if (req.session.userid) {
-    // ログイン中ならユーザー情報を返す（roleも含む）
-    db.get("SELECT username, role FROM users WHERE userid = ?", [req.session.userid], (err, row) => {
+    // ログイン中ならユーザー情報を返す（roleとicon_pathも含む）
+    db.get("SELECT username, role, icon_path FROM users WHERE userid = ?", [req.session.userid], (err, row) => {
       if (err || !row) {
         return res.json({ loggedIn: false });
       }
@@ -1242,7 +1306,8 @@ app.get("/session-check", (req, res) => {
       res.json({ 
         loggedIn: true, 
         username: row.username,
-        role: userRole
+        role: userRole,
+        iconPath: row.icon_path || null
       });
     });
   } else {
@@ -1250,7 +1315,63 @@ app.get("/session-check", (req, res) => {
   }
 });
 
+// アイコンアップロードAPI
+app.post("/api/upload-icon", iconUpload.single('icon'), (req, res) => {
+  // セキュリティ: 認証チェック
+  if (!req.session.userid) {
+    return res.status(401).json({ success: false, message: "ログインが必要です" });
+  }
 
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "ファイルがアップロードされませんでした" });
+  }
+
+  const iconPath = `/icons/${req.file.filename}`;
+
+  // 古いアイコンを削除
+  db.get("SELECT icon_path FROM users WHERE userid = ?", [req.session.userid], (err, row) => {
+    if (err) {
+      console.error("アイコン取得エラー:", err);
+    } else if (row && row.icon_path) {
+      // 旧アイコンが存在する場合は削除
+      const oldIconPath = path.join(__dirname, "public", row.icon_path);
+      if (fs.existsSync(oldIconPath)) {
+        fs.unlink(oldIconPath, (unlinkErr) => {
+          if (unlinkErr) {
+            console.error("旧アイコン削除エラー:", unlinkErr);
+          }
+        });
+      }
+    }
+  });
+
+  // データベースにアイコンパスを保存
+  db.run("UPDATE users SET icon_path = ? WHERE userid = ?", [iconPath, req.session.userid], (err) => {
+    if (err) {
+      console.error("アイコン保存エラー:", err);
+      // アップロードしたファイルを削除
+      fs.unlink(req.file.path, () => {});
+      return res.status(500).json({ success: false, message: "アイコンの保存に失敗しました" });
+    }
+    res.json({ success: true, iconPath: iconPath });
+  });
+});
+
+// アイコン取得API
+app.get("/api/user-icon/:userid", (req, res) => {
+  const userid = req.params.userid;
+  db.get("SELECT icon_path FROM users WHERE userid = ?", [userid], (err, row) => {
+    if (err) {
+      console.error("アイコン取得エラー:", err);
+      return res.status(500).json({ success: false, message: "アイコンの取得に失敗しました" });
+    }
+    if (row && row.icon_path) {
+      res.json({ success: true, iconPath: row.icon_path });
+    } else {
+      res.json({ success: false, iconPath: null });
+    }
+  });
+});
 
 // 各ルート登録
 const authRoutes = require("./routes/auth");

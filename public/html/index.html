@@ -2,13 +2,13 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="../style.css">
   <title>問題一覧</title>
   <!-- Socket.io はサーバーから提供される -->
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <!-- xterm.js はローカルファイル -->
-  <link rel="stylesheet" href="lib/xterm/xterm.css">
-  <script src="lib/xterm/xterm.min.js"></script>
+  <link rel="stylesheet" href="../lib/xterm/xterm.css">
+  <script src="../lib/xterm/xterm.min.js"></script>
   <!-- Chart.js for pie chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Leaflet（オープンソースの地図ライブラリ、APIキー不要） -->
@@ -91,7 +91,14 @@
 
   <!-- ログイン後に見える部分 -->
   <div id="mainSection" class="hidden">
-    <h2 id="welcome"></h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative;">
+      <div style="width: 48px;"></div>
+      <h2 id="welcome" style="margin: 0; flex: 1; text-align: center;"></h2>
+      <a id="mypageIcon" href="/mypage" target="_blank" class="mypage-icon" title="マイページ" style="width: 48px;">
+        <img id="userIconImg" src="" alt="ユーザーアイコン" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: none;">
+        <span id="userIconDefault">👤</span>
+      </a>
+    </div>
 
   <button id="logoutBtn" style="margin:10px;">ログアウト</button>
 
@@ -198,5 +205,5 @@
   </div>
 
 </body>
-<script type="module" src="./js/main.js"></script>
+<script type="module" src="../js/main.js"></script>
 </html>

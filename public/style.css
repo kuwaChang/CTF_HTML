@@ -573,6 +573,36 @@
         font-size: 16px;
       }
 
+      /* マイページアイコン */
+      .mypage-icon {
+        font-size: 32px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        width: 48px;
+        height: 48px;
+        line-height: 1;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .mypage-icon:hover {
+        transform: scale(1.1);
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .mypage-icon #userIconDefault {
+        display: inline;
+      }
+
       /* レスポンシブデザイン */
       @media (max-width: 768px) {
         body {

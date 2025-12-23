@@ -459,7 +459,7 @@
       ],
       "point": 50,
       "files": [],
-      "url": "http://localhost:3333/sql_index.html",
+      "url": "http://localhost:3333/html/sql_index.html",
       "explanation": "解説ページのURLを入力してください"
     },
     "web5": {
@@ -475,7 +475,7 @@
       ],
       "point": 50,
       "files": [],
-      "url": "http://localhost:3333/advertisement.html",
+      "url": "http://localhost:3333/html/advertisement.html",
       "explanation": "解説ページのURLを入力してください"
     },
     "web6": {
@@ -557,7 +557,7 @@
       ],
       "point": 50,
       "files": [],
-      "url": "http://localhost:3333/xss_index.html",
+      "url": "http://localhost:3333/html/xss_index.html",
       "explanation": "解説ページのURLを入力してください"
     },
     "web11": {
@@ -568,7 +568,7 @@
       "hint": [],
       "point": 50,
       "files": [],
-      "url": "http://localhost:3333/path-traversal_index.html",
+      "url": "http://localhost:3333/html/path-traversal_index.html",
       "explanation": "解説ページのURLを入力してください"
     }
   },
