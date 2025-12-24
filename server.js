@@ -1289,7 +1289,6 @@ db.serialize(() => {
   });
 });
 
-
 //セッション確認API
 app.get("/session-check", (req, res) => {
   if (req.session.userid) {

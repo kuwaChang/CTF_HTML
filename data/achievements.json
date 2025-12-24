@@ -148,13 +148,13 @@
   },
   "no_hints": {
     "id": "no_hints",
-    "title": "ヒントなしマスター",
-    "description": "ヒントを使わずに10問解く",
+    "title": "僕にヒントはいらない",
+    "description": "ヒントを使わずに1問解く",
     "icon": "🧠",
     "category": "skill",
     "type": "no_hint_solve",
     "condition": {
-      "count": 10
+      "count": 1
     },
     "points": 80,
     "hidden": true

@@ -214,6 +214,122 @@ async function checkAchievements(userid, eventType, eventData) {
             }
           }
           break;
+
+        case "login_streak":
+          // 連続ログイン日数
+          if (eventData.logged_in) {
+            // ログイン履歴テーブルから連続日数を計算
+            // まず、usersテーブルにlast_loginカラムがあるか確認し、なければlogin_logsテーブルを使用
+            try {
+              // login_logsテーブルから最新のログイン日を取得
+              const loginRows = await dbAll(
+                "SELECT login_date FROM login_logs WHERE userid = ? ORDER BY login_date DESC",
+                [userid]
+              );
+              
+              let streak = 0;
+              if (loginRows.length > 0) {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                let expectedDate = new Date(today);
+                let foundToday = false;
+                
+                // 今日ログインしているか確認
+                for (const row of loginRows) {
+                  const loginDate = new Date(row.login_date);
+                  loginDate.setHours(0, 0, 0, 0);
+                  
+                  if (loginDate.getTime() === today.getTime()) {
+                    foundToday = true;
+                    streak = 1;
+                    expectedDate = new Date(today);
+                    expectedDate.setDate(expectedDate.getDate() - 1);
+                    break;
+                  }
+                }
+                
+                // 連続日数を計算
+                if (foundToday) {
+                  for (let i = foundToday ? 1 : 0; i < loginRows.length; i++) {
+                    const loginDate = new Date(loginRows[i].login_date);
+                    loginDate.setHours(0, 0, 0, 0);
+                    
+                    if (loginDate.getTime() === expectedDate.getTime()) {
+                      streak++;
+                      expectedDate.setDate(expectedDate.getDate() - 1);
+                    } else if (loginDate < expectedDate) {
+                      // 連続が途切れた
+                      break;
+                    }
+                  }
+                }
+              } else {
+                // 初回ログイン
+                streak = 1;
+              }
+              
+              progress = streak;
+              maxProgress = achievement.condition.days;
+              const result = await updateAchievementProgress(userid, achievementId, progress, maxProgress);
+              if (result.unlocked) {
+                unlockedAchievements.push(achievement);
+              }
+            } catch (err) {
+              // テーブルが存在しない場合はスキップ
+              console.error(`ログイン履歴取得エラー (${achievementId}):`, err);
+            }
+          }
+          break;
+
+        case "study_time":
+          // 累計学習時間
+          if (eventData.study_time_updated) {
+            try {
+              const studyRows = await dbAll(
+                "SELECT SUM(duration_ms) as total_ms FROM study_sessions WHERE userid = ?",
+                [userid]
+              );
+              
+              if (studyRows && studyRows[0] && studyRows[0].total_ms) {
+                const totalHours = studyRows[0].total_ms / (1000 * 60 * 60); // ミリ秒を時間に変換
+                progress = totalHours;
+                maxProgress = achievement.condition.hours;
+                const result = await updateAchievementProgress(userid, achievementId, progress, maxProgress);
+                if (result.unlocked) {
+                  unlockedAchievements.push(achievement);
+                }
+              }
+            } catch (err) {
+              console.error(`学習時間取得エラー (${achievementId}):`, err);
+            }
+          }
+          break;
+
+        case "no_hint_solve":
+          // ヒントを使わずに解いた問題数
+          if (eventData.solved && !eventData.used_hint) {
+            try {
+              // solvedテーブルにused_hintカラムがある場合
+              const noHintRows = await dbAll(
+                "SELECT COUNT(*) as count FROM solved WHERE userid = ? AND (used_hint = 0 OR used_hint IS NULL)",
+                [userid]
+              );
+              
+              if (noHintRows && noHintRows[0]) {
+                progress = noHintRows[0].count;
+                maxProgress = achievement.condition.count;
+                const result = await updateAchievementProgress(userid, achievementId, progress, maxProgress);
+                if (result.unlocked) {
+                  unlockedAchievements.push(achievement);
+                }
+              }
+            } catch (err) {
+              // カラムが存在しない場合は、全ての解答をカウント（後方互換性）
+              console.error(`ヒントなし解答カウントエラー (${achievementId}):`, err);
+            }
+          }
+          break;
       }
     } catch (err) {
       console.error(`実績チェックエラー (${achievementId}):`, err);
@@ -311,6 +427,107 @@ router.get("/list", requireLogin, async (req, res) => {
           const solvedCount = requiredCategories.filter(cat => solvedCategoryIds.has(cat)).length;
           progress = solvedCount;
           maxProgress = requiredCategories.length;
+          break;
+
+        case "login_streak":
+          // 連続ログイン日数の計算
+          try {
+            const loginRows = await dbAll(
+              "SELECT login_date FROM login_logs WHERE userid = ? ORDER BY login_date DESC",
+              [userid]
+            );
+            
+            let streak = 0;
+            if (loginRows.length > 0) {
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              
+              let expectedDate = new Date(today);
+              let foundToday = false;
+              
+              // 今日ログインしているか確認
+              for (const row of loginRows) {
+                const loginDate = new Date(row.login_date);
+                loginDate.setHours(0, 0, 0, 0);
+                
+                if (loginDate.getTime() === today.getTime()) {
+                  foundToday = true;
+                  streak = 1;
+                  expectedDate = new Date(today);
+                  expectedDate.setDate(expectedDate.getDate() - 1);
+                  break;
+                }
+              }
+              
+              // 連続日数を計算
+              if (foundToday) {
+                for (let i = 1; i < loginRows.length; i++) {
+                  const loginDate = new Date(loginRows[i].login_date);
+                  loginDate.setHours(0, 0, 0, 0);
+                  
+                  if (loginDate.getTime() === expectedDate.getTime()) {
+                    streak++;
+                    expectedDate.setDate(expectedDate.getDate() - 1);
+                  } else if (loginDate < expectedDate) {
+                    // 連続が途切れた
+                    break;
+                  }
+                }
+              }
+            }
+            
+            progress = streak;
+            maxProgress = achievement.condition.days;
+          } catch (err) {
+            // テーブルが存在しない場合は進捗0のまま
+            console.error(`ログイン履歴取得エラー (進捗計算):`, err);
+            progress = 0;
+            maxProgress = achievement.condition.days;
+          }
+          break;
+
+        case "study_time":
+          // 累計学習時間の計算
+          try {
+            const studyRows = await dbAll(
+              "SELECT SUM(duration_ms) as total_ms FROM study_sessions WHERE userid = ?",
+              [userid]
+            );
+            
+            if (studyRows && studyRows[0] && studyRows[0].total_ms) {
+              const totalHours = studyRows[0].total_ms / (1000 * 60 * 60); // ミリ秒を時間に変換
+              progress = totalHours;
+            } else {
+              progress = 0;
+            }
+            maxProgress = achievement.condition.hours;
+          } catch (err) {
+            console.error(`学習時間取得エラー (進捗計算):`, err);
+            progress = 0;
+            maxProgress = achievement.condition.hours;
+          }
+          break;
+
+        case "no_hint_solve":
+          // ヒントを使わずに解いた問題数の計算
+          try {
+            const noHintRows = await dbAll(
+              "SELECT COUNT(*) as count FROM solved WHERE userid = ? AND (used_hint = 0 OR used_hint IS NULL)",
+              [userid]
+            );
+            
+            if (noHintRows && noHintRows[0]) {
+              progress = noHintRows[0].count;
+            } else {
+              progress = 0;
+            }
+            maxProgress = achievement.condition.count;
+          } catch (err) {
+            // カラムが存在しない場合は、全ての解答をカウント（後方互換性）
+            console.error(`ヒントなし解答カウントエラー (進捗計算):`, err);
+            progress = 0;
+            maxProgress = achievement.condition.count;
+          }
           break;
       }
       

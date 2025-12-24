@@ -69,7 +69,8 @@ export async function loadQuizData() {
 }
 
 // ヒントを1つずつ表示する関数
-function showNextHint(container) {
+// skipRecord: trueの場合、サーバーへの記録送信をスキップ（既に開いた状態で自動表示する場合など）
+function showNextHint(container, skipRecord = false) {
   if (container.currentHintIndex < container.allHints.length) {
     const hintDiv = document.createElement("div");
     hintDiv.textContent = `・${container.allHints[container.currentHintIndex]}`;
@@ -79,6 +80,21 @@ function showNextHint(container) {
     hintDiv.style.borderRadius = "5px";
     container.appendChild(hintDiv);
     container.currentHintIndex++;
+    
+    // 最初のヒントを開いた時にサーバーに記録を送信（skipRecordがfalseの場合のみ）
+    if (!skipRecord && container.currentHintIndex === 1 && currentCategory && currentQid) {
+      fetch("/quiz/hintOpened", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          category: currentCategory,
+          qid: currentQid
+        }),
+        credentials: "include"
+      }).catch(err => {
+        console.error("ヒント記録送信エラー:", err);
+      });
+    }
     
     // 既存のボタンを削除
     const existingBtn = container.querySelector(".next-hint-btn");
@@ -282,20 +298,52 @@ function openModal(category, qid, evt = null) {
   const hintsArray = Array.isArray(q.hint) ? q.hint : [q.hint];
   hintsContainer.allHints = hintsArray;
   
-  // ヒントがある場合は「最初のヒントを見る」ボタンを表示
+  // ヒントがある場合は、既にヒントを開いたかどうかを確認
   if (hintsArray.length > 0) {
-    const firstHintBtn = document.createElement("button");
-    firstHintBtn.textContent = "最初のヒントを見る";
-    firstHintBtn.className = "next-hint-btn";
-    firstHintBtn.style.marginTop = "10px";
-    firstHintBtn.style.padding = "8px 16px";
-    firstHintBtn.style.backgroundColor = "#0078ff";
-    firstHintBtn.style.border = "none";
-    firstHintBtn.style.borderRadius = "5px";
-    firstHintBtn.style.color = "white";
-    firstHintBtn.style.cursor = "pointer";
-    firstHintBtn.onclick = () => showNextHint(hintsContainer);
-    hintsContainer.appendChild(firstHintBtn);
+    // 既にヒントを開いたかどうかをサーバーから取得
+    fetch(`/quiz/hintOpened/${encodeURIComponent(category)}/${encodeURIComponent(qid)}`, {
+      credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.opened) {
+        // 既にヒントを開いていた場合は、すべてのヒントを自動表示（記録送信はスキップ）
+        hintsContainer.currentHintIndex = 0;
+        hintsArray.forEach(() => {
+          showNextHint(hintsContainer, true);
+        });
+      } else {
+        // まだヒントを開いていない場合は「最初のヒントを見る」ボタンを表示
+        const firstHintBtn = document.createElement("button");
+        firstHintBtn.textContent = "最初のヒントを見る";
+        firstHintBtn.className = "next-hint-btn";
+        firstHintBtn.style.marginTop = "10px";
+        firstHintBtn.style.padding = "8px 16px";
+        firstHintBtn.style.backgroundColor = "#0078ff";
+        firstHintBtn.style.border = "none";
+        firstHintBtn.style.borderRadius = "5px";
+        firstHintBtn.style.color = "white";
+        firstHintBtn.style.cursor = "pointer";
+        firstHintBtn.onclick = () => showNextHint(hintsContainer);
+        hintsContainer.appendChild(firstHintBtn);
+      }
+    })
+    .catch(err => {
+      console.error("ヒント記録取得エラー:", err);
+      // エラー時は通常通り「最初のヒントを見る」ボタンを表示
+      const firstHintBtn = document.createElement("button");
+      firstHintBtn.textContent = "最初のヒントを見る";
+      firstHintBtn.className = "next-hint-btn";
+      firstHintBtn.style.marginTop = "10px";
+      firstHintBtn.style.padding = "8px 16px";
+      firstHintBtn.style.backgroundColor = "#0078ff";
+      firstHintBtn.style.border = "none";
+      firstHintBtn.style.borderRadius = "5px";
+      firstHintBtn.style.color = "white";
+      firstHintBtn.style.cursor = "pointer";
+      firstHintBtn.onclick = () => showNextHint(hintsContainer);
+      hintsContainer.appendChild(firstHintBtn);
+    });
   }
 
   // 🔽 ファイルボタン生成（XSS対策: innerHTMLの代わりに安全なDOM操作を使用）
