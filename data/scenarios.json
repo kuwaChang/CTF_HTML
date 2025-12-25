@@ -121,31 +121,5 @@
       }
     ],
     "postScript": []
-  },
-  "reversing": {
-    "cpus": "2.0",
-    "memory": "2g",
-    "packages": ["curl", "wget", "build-essential", "file", "binutils", "gdb", "radare2", "gcc", "g++", "make"],
-    "files": [
-      {
-        "path": "/challenge/README.txt",
-        "content": "Reversing シナリオ。\nこの環境では逆アセンブラツールを使ってバイナリファイルを解析できます。\n\n利用可能なツール:\n- rizin (r2): コマンドラインで使用可能。Web UIも利用可能\n- strings: 文字列を抽出\n- objdump: 逆アセンブル\n- gdb: デバッガ\n- file: ファイルタイプを確認\n\n/challenge ディレクトリに解析対象のファイルがあります。\n\nRizin Web UIを使用する場合:\n1. ターミナルから 'rizin -H 9090 /challenge/sample_binary' を実行\n2. ブラウザで http://localhost:8080+オフセット にアクセス\n\nまたは、ブラウザ上の「Rizin Web UIを起動」ボタンを使用してください。",
-        "mode": "0644"
-      },
-      {
-        "path": "/challenge/sample_binary.c",
-        "content": "#include <stdio.h>\n#include <string.h>\n\nint main(int argc, char *argv[]) {\n    char password[32];\n    char flag[] = \"FLAG{reversing_sample_flag}\";\n    \n    printf(\"Password: \");\n    fgets(password, sizeof(password), stdin);\n    \n    // パスワードチェック（簡単な例）\n    if (strcmp(password, \"secret123\\n\") == 0) {\n        printf(\"Correct! Flag: %s\\n\", flag);\n    } else {\n        printf(\"Wrong password!\\n\");\n    }\n    \n    return 0;\n}",
-        "mode": "0644"
-      }
-    ],
-    "postScript": [
-      "apt-get update || echo 'apt-get update failed'",
-      "DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common || echo 'software-properties-common install failed'",
-      "curl -fsSL https://github.com/rizinorg/rizin/releases/download/v0.6.1/rizin_0.6.1_amd64.deb -o /tmp/rizin.deb || echo 'Rizin download failed, will use radare2'",
-      "dpkg -i /tmp/rizin.deb 2>/dev/null || (apt-get install -y -f && dpkg -i /tmp/rizin.deb) || echo 'Rizin install failed, using radare2'",
-      "cd /challenge && (gcc -o sample_binary sample_binary.c -m32 -static 2>/dev/null || gcc -o sample_binary sample_binary.c -static || gcc -o sample_binary sample_binary.c) || echo 'Binary compilation failed'",
-      "chmod +x /challenge/sample_binary || true",
-      "echo 'セットアップ完了（一部のツールがインストールできなくても問題ありません）'"
-    ]
   }
 }

@@ -164,6 +164,35 @@ router.post("/login", (req, res) => {
     req.session.userid = userid;
     req.session.role = userRole;
     
+    // ログイン履歴を記録（login_logsテーブル）
+    // テーブルが存在しない場合は作成を試みる（同期的に実行）
+    db.run(`CREATE TABLE IF NOT EXISTS login_logs (
+      userid TEXT NOT NULL,
+      login_date TEXT NOT NULL,
+      PRIMARY KEY (userid, login_date)
+    )`, (err) => {
+      if (err) {
+        console.error("ログイン履歴テーブル作成エラー:", err);
+      } else {
+        // テーブル作成成功後、今日の日付をYYYY-MM-DD形式で記録
+        const today = new Date().toISOString().split('T')[0];
+        db.run(
+          "INSERT OR IGNORE INTO login_logs (userid, login_date) VALUES (?, ?)",
+          [userid, today],
+          (err) => {
+            if (err) {
+              console.error("ログイン履歴記録エラー:", err);
+            }
+            
+            // 実績チェック（連続ログイン）
+            const { checkAchievements } = require("./achievements");
+            checkAchievements(userid, "login_streak", { logged_in: true })
+              .catch(err => console.error("ログイン実績チェックエラー:", err));
+          }
+        );
+      }
+    });
+    
     console.log("✅ [auth.js] ログイン成功:", userid, "role:", userRole);
     res.json({
       success: true,
@@ -197,6 +226,12 @@ router.post("/study-time", requireLogin, (req, res) => {
         console.error("学習時間記録エラー:", err);
         return res.status(500).json({ success: false, message: "学習時間の記録に失敗しました" });
       }
+      
+      // 実績チェック（学習時間）
+      const { checkAchievements } = require("./achievements");
+      checkAchievements(req.session.userid, "study_time", { study_time_updated: true })
+        .catch(err => console.error("学習時間実績チェックエラー:", err));
+      
       res.json({ success: true });
     }
   );

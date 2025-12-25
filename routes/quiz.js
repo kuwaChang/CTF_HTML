@@ -110,43 +110,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   return R * c; // 距離（km）
 }
 
-// 答えをハッシュ化する関数（SHA-256）
-function hashAnswer(answer) {
-  return crypto.createHash('sha256').update(answer.trim()).digest('hex');
-}
-
-// 座標が許容範囲内かチェック（ハッシュ化された座標用）
-function checkCoordinatesHash(userAnswerHash, correctAnswer, tolerance = 0.001) {
-  try {
-    const correctCoords = correctAnswer.split(',').map(c => parseFloat(c.trim()));
-    if (correctCoords.length !== 2) return false;
-    if (isNaN(correctCoords[0]) || isNaN(correctCoords[1])) return false;
-    
-    // 許容範囲内の座標を生成してハッシュ化し、一致するかチェック
-    // ステップサイズを設定（toleranceの1/5の精度でチェック、パフォーマンスと精度のバランス）
-    const step = tolerance / 5;
-    const latStart = correctCoords[0] - tolerance;
-    const latEnd = correctCoords[0] + tolerance;
-    const lonStart = correctCoords[1] - tolerance;
-    const lonEnd = correctCoords[1] + tolerance;
-    
-    // 許容範囲内の座標を生成してハッシュ化
-    // 精度を6桁に固定（一般的な座標の精度）
-    for (let lat = latStart; lat <= latEnd; lat += step) {
-      for (let lon = lonStart; lon <= lonEnd; lon += step) {
-        const coordStr = `${lat.toFixed(6)},${lon.toFixed(6)}`;
-        const coordHash = hashAnswer(coordStr);
-        if (coordHash === userAnswerHash) {
-          return true;
-        }
-      }
-    }
-    
-    return false;
-  } catch (e) {
-    return false;
-  }
-}
 
 // 座標が許容範囲内かチェック（生の座標用）
 function checkCoordinates(userAnswer, correctAnswer, tolerance = 0.001) {
@@ -171,7 +134,7 @@ function checkCoordinates(userAnswer, correctAnswer, tolerance = 0.001) {
 
 // 正解判定
 router.post("/checkAnswer", requireLogin, (req, res) => {
-  const { category, qid, answer, answerType: clientAnswerType, point } = req.body;
+  const { category, qid, answer, answerType: clientAnswerType, point, usedHint } = req.body;
   const userid = req.session.userid;
   const rawData = JSON.parse(fs.readFileSync(quizPath, "utf-8"));
   const data = replaceLocalhostInQuizData(rawData);
@@ -179,30 +142,29 @@ router.post("/checkAnswer", requireLogin, (req, res) => {
   
   if (!question) return res.status(404).json({ message: "問題が見つかりません" });
   
+  // 問題のcategoryIdを取得（実績チェック用）
+  const questionCategoryId = question.categoryId || null;
+  
   const correct = question.answer;
   const answerType = question.answerType || "flag"; // デフォルトはflag形式
   let isCorrect = false;
 
   if (answerType === "coordinates") {
-    // 座標形式の検証（ハッシュ化された座標で比較）
+    // 座標形式の検証（生の座標で比較）
     const tolerance = question.coordinateTolerance || 0.001;
     // 複数の正解をサポート（配列の場合）
     if (Array.isArray(correct)) {
-      isCorrect = correct.some(corr => checkCoordinatesHash(answer, corr.trim(), tolerance));
+      isCorrect = correct.some(corr => checkCoordinates(answer, corr.trim(), tolerance));
     } else {
-      isCorrect = checkCoordinatesHash(answer, correct.trim(), tolerance);
+      isCorrect = checkCoordinates(answer, correct.trim(), tolerance);
     }
   } else {
-    // 通常のFLAG形式の検証（ハッシュ化された答えを比較）
+    // 通常のFLAG形式の検証（生の答えを直接比較）
     // 複数の正解をサポート（配列の場合）
     if (Array.isArray(correct)) {
-      isCorrect = correct.some(corr => {
-        const correctHash = hashAnswer(corr);
-        return answer === correctHash;
-      });
+      isCorrect = correct.some(corr => answer.trim() === corr.trim());
     } else {
-      const correctHash = hashAnswer(correct);
-      isCorrect = answer === correctHash;
+      isCorrect = answer.trim() === correct.trim();
     }
   }
 
@@ -216,22 +178,125 @@ router.post("/checkAnswer", requireLogin, (req, res) => {
         return res.json({ correct: true, alreadySolved: true, message: "既に解答済みです" });
       }
 
-      db.run("INSERT INTO solved VALUES (?, ?, ?)", [userid, category, qid], (err) => {
-        if (err) {
-          console.error("DB insert error:", err);
-          return res.status(500).json({ message: "DBエラー" });
+      // スコア更新と実績チェックを実行する関数
+      const executeScoreUpdateAndAchievementCheck = () => {
+        db.run("UPDATE users SET score = score + ? WHERE userid = ?", [point, userid], (err) => {
+          if (err) {
+            console.error("DB update error:", err);
+            return res.status(500).json({ message: "DBエラー" });
+          }
+          
+          // 実績チェック
+          const { checkAchievements } = require("./achievements");
+          checkAchievements(userid, "solve_count", { solved: true })
+            .then(unlocked => {
+              if (unlocked.length > 0) {
+                // 実績解除通知はクライアント側で処理
+              }
+            })
+            .catch(err => console.error("実績チェックエラー:", err));
+          
+          // カテゴリー別実績チェック（categoryIdを使用）
+          if (questionCategoryId) {
+            checkAchievements(userid, "category_solve", { solved: true, category: questionCategoryId })
+              .then(unlocked => {
+                if (unlocked.length > 0) {
+                  // 実績解除通知はクライアント側で処理
+                }
+              })
+              .catch(err => console.error("実績チェックエラー:", err));
+          }
+          
+          // 全カテゴリー制覇チェック
+          checkAchievements(userid, "all_categories", { solved: true })
+            .then(unlocked => {
+              if (unlocked.length > 0) {
+                // 実績解除通知はクライアント側で処理
+              }
+            })
+            .catch(err => console.error("実績チェックエラー:", err));
+          
+          // ヒントなし解答実績チェック
+          if (!usedHint) {
+            checkAchievements(userid, "no_hint_solve", { solved: true, used_hint: false })
+              .then(unlocked => {
+                if (unlocked.length > 0) {
+                  // 実績解除通知はクライアント側で処理
+                }
+              })
+              .catch(err => console.error("実績チェックエラー:", err));
+          }
+          
+          // スコア実績チェック
+          db.get("SELECT score FROM users WHERE userid = ?", [userid], (err, scoreRow) => {
+            if (!err && scoreRow) {
+              checkAchievements(userid, "score", { score: scoreRow.score })
+                .catch(err => console.error("実績チェックエラー:", err));
+            }
+          });
+          
+          res.json({ correct: true, message: "正解！" });
+        });
+      };
+      
+      // INSERTを実行する関数
+      const executeInsert = () => {
+        // ヒント使用フラグ（0または1）を記録
+        const usedHintFlag = usedHint ? 1 : 0;
+        
+        // まず、used_hintカラムが存在するかどうかを確認してから適切なINSERT文を実行
+        // テーブル構造を確認するために、まず4カラムで試行
+        db.run("INSERT INTO solved (userid, category, qid, used_hint) VALUES (?, ?, ?, ?)", 
+          [userid, category, qid, usedHintFlag], (err) => {
+          if (err) {
+            // used_hintカラムが存在しない場合は、カラム名を指定せずにINSERT
+            // ただし、テーブルに既に4カラムある場合はエラーになる可能性がある
+            // その場合は、明示的に3カラムを指定
+            db.run("INSERT INTO solved (userid, category, qid) VALUES (?, ?, ?)", 
+              [userid, category, qid], (err2) => {
+              if (err2) {
+                console.error("DB insert error:", err2);
+                return res.status(500).json({ message: "DBエラー" });
+              }
+              // 3カラムでの挿入成功時も同じ処理を実行
+              executeScoreUpdateAndAchievementCheck();
+            });
+          } else {
+            // 4カラムでの挿入成功時
+            executeScoreUpdateAndAchievementCheck();
+          }
+        });
+      };
+
+      // solvedテーブルにused_hintカラムを追加（存在しない場合）
+      // カラム追加を同期的に実行してからINSERTを実行
+      db.run(`ALTER TABLE solved ADD COLUMN used_hint INTEGER DEFAULT 0`, (err) => {
+        // カラムが既に存在する場合はエラーになるが無視
+        if (err && !err.message.includes("duplicate column") && !err.message.includes("duplicate column name")) {
+          console.error("used_hintカラム追加エラー:", err);
         }
+        
+        // カラム追加後（または既に存在する場合）にINSERTを実行
+        executeInsert();
       });
-      db.run("UPDATE users SET score = score + ? WHERE userid = ?", [point, userid], (err) => {
-        if (err) {
-          console.error("DB update error:", err);
-          return res.status(500).json({ message: "DBエラー" });
-        }
-      });
-      res.json({ correct: true, message: "正解！" });
     });
   } else {
     res.json({ correct: false, message: "不正解..." });
+  }
+});
+
+// hint_openedテーブルを作成（存在しない場合）
+db.run(`CREATE TABLE IF NOT EXISTS hint_opened (
+  userid TEXT NOT NULL,
+  category TEXT NOT NULL,
+  qid TEXT NOT NULL,
+  opened_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (userid, category, qid)
+)`, (err) => {
+  if (err) {
+    console.error("hint_openedテーブル作成エラー:", err);
+  } else {
+    console.log("✅ hint_openedテーブル確認/作成完了");
   }
 });
 
@@ -240,6 +305,55 @@ router.get("/solvedList", requireLogin, (req, res) => {
   db.all("SELECT category, qid FROM solved WHERE userid = ?", [req.session.userid], (err, rows) => {
     if (err) return res.status(500).json({ message: "DBエラー" });
     res.json(rows);
+  });
+});
+
+// ヒントを開いた記録を保存
+router.post("/hintOpened", requireLogin, (req, res) => {
+  const { category, qid } = req.body;
+  const userid = req.session.userid;
+  
+  if (!category || !qid) {
+    return res.status(400).json({ message: "categoryとqidが必要です" });
+  }
+  
+  // 既に記録があるか確認
+  db.get("SELECT * FROM hint_opened WHERE userid = ? AND category = ? AND qid = ?", 
+    [userid, category, qid], (err, row) => {
+    if (err) {
+      console.error("ヒント記録確認エラー:", err);
+      return res.status(500).json({ message: "DBエラー" });
+    }
+    
+    // 既に記録がある場合は何もしない
+    if (row) {
+      return res.json({ success: true, message: "既に記録済み" });
+    }
+    
+    // 新規記録を追加
+    db.run("INSERT INTO hint_opened (userid, category, qid) VALUES (?, ?, ?)", 
+      [userid, category, qid], (err) => {
+      if (err) {
+        console.error("ヒント記録保存エラー:", err);
+        return res.status(500).json({ message: "DBエラー" });
+      }
+      res.json({ success: true, message: "ヒント記録を保存しました" });
+    });
+  });
+});
+
+// ヒントを開いたかどうかを取得
+router.get("/hintOpened/:category/:qid", requireLogin, (req, res) => {
+  const { category, qid } = req.params;
+  const userid = req.session.userid;
+  
+  db.get("SELECT * FROM hint_opened WHERE userid = ? AND category = ? AND qid = ?", 
+    [userid, category, qid], (err, row) => {
+    if (err) {
+      console.error("ヒント記録取得エラー:", err);
+      return res.status(500).json({ message: "DBエラー" });
+    }
+    res.json({ opened: !!row });
   });
 });
 

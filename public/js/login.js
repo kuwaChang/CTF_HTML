@@ -1,6 +1,27 @@
 import { initTabs } from "./tabs.js";
 import { loadQuizData } from "./quiz.js";
 
+// ユーザーアイコンを更新する関数
+function updateUserIcon(iconPath) {
+  const iconImg = document.getElementById("userIconImg");
+  const iconDefault = document.getElementById("userIconDefault");
+  
+  if (iconPath && iconImg && iconDefault) {
+    iconImg.src = iconPath + "?t=" + Date.now(); // キャッシュ回避
+    iconImg.style.display = "block";
+    iconDefault.style.display = "none";
+    iconImg.onerror = () => {
+      // アイコン読み込み失敗時はデフォルトアイコンを表示
+      iconImg.style.display = "none";
+      iconDefault.style.display = "inline";
+    };
+  } else if (iconDefault) {
+    // アイコンがない場合はデフォルトを表示
+    if (iconImg) iconImg.style.display = "none";
+    iconDefault.style.display = "inline";
+  }
+}
+
 let loginStartTime = null;
 let studyTrackingEventsBound = false;
 let studyTimeSent = false;
@@ -82,6 +103,9 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("mainSection").classList.remove("hidden");
     document.getElementById("welcome").innerText = "ようこそ " + data.username + " さん！";
 
+    // ユーザーアイコンを表示
+    updateUserIcon(data.iconPath);
+
     initTabs();
     loadQuizData();
     setupStudyTimeTracking();
@@ -115,6 +139,13 @@ export function initLogin(onLoginSuccess) {
       document.getElementById("loginSection").classList.add("hidden");
       document.getElementById("mainSection").classList.remove("hidden");
       document.getElementById("welcome").innerText = "ようこそ " + result.username + " さん！";
+
+      // ユーザーアイコンを取得して表示
+      const sessionRes = await fetch("/session-check", { credentials: "include" });
+      const sessionData = await sessionRes.json();
+      if (sessionData.loggedIn) {
+        updateUserIcon(sessionData.iconPath);
+      }
 
       // ✅ ログイン成功後の処理（タブと問題をロード）
       if (typeof onLoginSuccess === "function") onLoginSuccess();

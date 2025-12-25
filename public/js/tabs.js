@@ -1,5 +1,6 @@
 import { loadScore } from "./quiz.js";
 import { loadRanking } from "./ranking.js";
+import { loadAchievements } from "./achievements.js";
 
 export function initTabs() {
   const tabs = document.querySelectorAll(".tab");
@@ -16,6 +17,8 @@ export function initTabs() {
         loadRanking();
       } else if (tab.dataset.target === "score") {
         loadScore();
+      } else if (tab.dataset.target === "achievements") {
+        loadAchievements();
       }
     });
   });

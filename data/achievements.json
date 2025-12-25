@@ -1,0 +1,163 @@
+{
+  "first_steps": {
+    "id": "first_steps",
+    "title": "最初の一歩",
+    "description": "最初の問題を解く",
+    "icon": "🎯",
+    "category": "beginner",
+    "type": "solve_count",
+    "condition": {
+      "count": 1
+    },
+    "points": 10,
+    "hidden": false
+  },
+  "crypto_master": {
+    "id": "crypto_master",
+    "title": "暗号の達人",
+    "description": "暗号問題を5問解く",
+    "icon": "🔐",
+    "category": "crypto",
+    "type": "category_solve",
+    "condition": {
+      "category": "crypto",
+      "count": 5
+    },
+    "points": 50,
+    "hidden": false
+  },
+  "forensics_expert": {
+    "id": "forensics_expert",
+    "title": "フォレンジックの専門家",
+    "description": "フォレンジック問題を3問解く",
+    "icon": "🔍",
+    "category": "forensics",
+    "type": "category_solve",
+    "condition": {
+      "category": "forensics",
+      "count": 3
+    },
+    "points": 40,
+    "hidden": false
+  },
+  "web_wizard": {
+    "id": "web_wizard",
+    "title": "Webの魔法使い",
+    "description": "Web問題を5問解く",
+    "icon": "🌐",
+    "category": "web",
+    "type": "category_solve",
+    "condition": {
+      "category": "web",
+      "count": 5
+    },
+    "points": 50,
+    "hidden": false
+  },
+  "score_100": {
+    "id": "score_100",
+    "title": "スコア100点達成",
+    "description": "累計スコアが100点に到達",
+    "icon": "💯",
+    "category": "milestone",
+    "type": "score",
+    "condition": {
+      "score": 100
+    },
+    "points": 20,
+    "hidden": false
+  },
+  "score_500": {
+    "id": "score_500",
+    "title": "スコア500点達成",
+    "description": "累計スコアが500点に到達",
+    "icon": "🏆",
+    "category": "milestone",
+    "type": "score",
+    "condition": {
+      "score": 500
+    },
+    "points": 50,
+    "hidden": false
+  },
+  "score_1000": {
+    "id": "score_1000",
+    "title": "スコア1000点達成",
+    "description": "累計スコアが1000点に到達",
+    "icon": "👑",
+    "category": "milestone",
+    "type": "score",
+    "condition": {
+      "score": 1000
+    },
+    "points": 100,
+    "hidden": false
+  },
+  "perfect_week": {
+    "id": "perfect_week",
+    "title": "完璧な一週間",
+    "description": "7日連続でログイン",
+    "icon": "📅",
+    "category": "streak",
+    "type": "login_streak",
+    "condition": {
+      "days": 7
+    },
+    "points": 30,
+    "hidden": false
+  },
+  "study_marathon": {
+    "id": "study_marathon",
+    "title": "学習マラソン",
+    "description": "累計学習時間が10時間に到達",
+    "icon": "⏰",
+    "category": "study",
+    "type": "study_time",
+    "condition": {
+      "hours": 10
+    },
+    "points": 40,
+    "hidden": false
+  },
+  "speed_solver": {
+    "id": "speed_solver",
+    "title": "スピードソルバー",
+    "description": "1時間以内に5問解く",
+    "icon": "⚡",
+    "category": "speed",
+    "type": "speed_solve",
+    "condition": {
+      "count": 5,
+      "time_limit": 3600000
+    },
+    "points": 60,
+    "hidden": false
+  },
+  "all_categories": {
+    "id": "all_categories",
+    "title": "オールラウンダー",
+    "description": "すべてのカテゴリーで問題を解く",
+    "icon": "🌟",
+    "category": "completion",
+    "type": "all_categories",
+    "condition": {
+      "categories": ["crypto", "forensics", "web", "osint"]
+    },
+    "points": 100,
+    "hidden": false
+  },
+  "no_hints": {
+    "id": "no_hints",
+    "title": "僕にヒントはいらない",
+    "description": "ヒントを使わずに1問解く",
+    "icon": "🧠",
+    "category": "skill",
+    "type": "no_hint_solve",
+    "condition": {
+      "count": 1
+    },
+    "points": 80,
+    "hidden": true
+  }
+}
+
