@@ -587,8 +587,9 @@ export function closeModal() {
   if (label) label.style.display = "block";
   
   // コンテナが起動している場合は停止
-  if (currentSadInstanceId) {
-    console.log(`🛑 コンテナ停止: ${currentSadInstanceId}`);
+  if (currentSadInstanceId && typeof currentSadInstanceId === 'string' && currentSadInstanceId.trim() !== '') {
+    const instanceIdToStop = currentSadInstanceId;
+    console.log(`🛑 コンテナ停止: ${instanceIdToStop}`);
     
     // Socket.io接続を切断
     if (currentSadSocket) {
@@ -596,22 +597,41 @@ export function closeModal() {
       currentSadSocket = null;
     }
     
+    // instanceIdをクリア（リクエスト完了前にクリアして重複送信を防ぐ）
+    currentSadInstanceId = null;
+    
     // サーバーにコンテナ停止をリクエスト
     fetch("/sad/stop-sad", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ instanceId: currentSadInstanceId }),
-    }).then(res => {
+      body: JSON.stringify({ instanceId: instanceIdToStop }),
+    }).then(async res => {
       if (res.ok) {
-        console.log(`✅ コンテナ停止成功: ${currentSadInstanceId}`);
+        const data = await res.json();
+        console.log(`✅ コンテナ停止成功: ${instanceIdToStop}`, data);
       } else {
-        console.error(`❌ コンテナ停止失敗: ${currentSadInstanceId}`);
+        // エラーレスポンスの内容を取得
+        let errorMessage = `HTTP ${res.status}`;
+        try {
+          const errorData = await res.json();
+          errorMessage = errorData.error || errorData.message || errorMessage;
+        } catch (e) {
+          // JSONパースに失敗した場合はステータステキストを使用
+          errorMessage = res.statusText || errorMessage;
+        }
+        console.error(`❌ コンテナ停止失敗: ${instanceIdToStop}`, errorMessage);
       }
     }).catch(err => {
       console.error("❌ コンテナ停止エラー:", err);
     });
-    
+  } else if (currentSadInstanceId) {
+    // instanceIdが無効な形式の場合
+    console.warn(`⚠️ 無効なinstanceId: ${currentSadInstanceId}`);
     currentSadInstanceId = null;
+    if (currentSadSocket) {
+      currentSadSocket.disconnect();
+      currentSadSocket = null;
+    }
   }
   
   //console.log("closeModal");

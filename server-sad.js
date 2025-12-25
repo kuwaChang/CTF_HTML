@@ -191,15 +191,20 @@ router.post("/start-sad", async (req, res) => {
 
 // コンテナ停止API
 router.post("/stop-sad", async (req, res) => {
+  // リクエストボディをログに出力（デバッグ用）
+  console.log("[stop-sad] リクエストボディ:", JSON.stringify(req.body));
+  
   const instanceId = req.body && req.body.instanceId;
   
   if (!instanceId) {
+    console.error("[stop-sad] instanceIdが提供されていません");
     return res.status(400).json({ error: "instanceIdが必要です" });
   }
 
   // instanceIdの検証（sad_で始まる16進数のみ許可）
   if (!/^sad_[a-f0-9]{8}$/.test(instanceId)) {
-    return res.status(400).json({ error: "無効なinstanceId形式" });
+    console.error(`[stop-sad] 無効なinstanceId形式: ${instanceId}`);
+    return res.status(400).json({ error: "無効なinstanceId形式", received: instanceId });
   }
 
   console.log(`🛑 停止: ${instanceId}`);
