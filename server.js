@@ -40,7 +40,33 @@ const LOGIN_RATE_LIMIT_MAX = 5; // ログイン試行は15分間に5回まで
 
 // レート制限(ブルートフォース対策)
 function rateLimit(req, res, next) {
-  const ip = req.ip || req.connection.remoteAddress || 'unknown';
+  // レート制限を除外するパス（APIエンドポイントや静的ファイルなど）
+  const excludedPaths = [
+    '/api/quizData',
+    '/sad/start-sad',
+    '/sad/stop-sad',
+    '/socket.io',
+    '/favicon.ico',
+    '/js/',
+    '/css/',
+    '/lib/',
+    '/icons/',
+    '/files/'
+  ];
+  
+  // 除外パスに該当する場合はレート制限をスキップ
+  const isExcluded = excludedPaths.some(path => req.path.startsWith(path));
+  if (isExcluded) {
+    return next();
+  }
+  
+  // Nginx経由の場合、X-Real-IPまたはX-Forwarded-ForからIPを取得
+  const ip = req.headers['x-real-ip'] || 
+             req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+             req.ip || 
+             req.connection.remoteAddress || 
+             'unknown';
+  
   const now = Date.now();
   
   if (!rateLimitMap.has(ip)) {
