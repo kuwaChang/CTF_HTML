@@ -98,7 +98,7 @@
       </form>   
       <p id="registerMessage"></p>
       <div class="back-link">
-        <a href="index.html">← ログインページに戻る</a>
+        <a href="/">← ログインページに戻る</a>
       </div>
     </div>
   </body>
@@ -126,7 +126,7 @@
         if (result.success) {
           messageEl.className = "success";
           setTimeout(() => {
-            window.location.href = "index.html";
+            window.location.href = "/";
           }, 1500);
         } else {
           messageEl.className = "error";

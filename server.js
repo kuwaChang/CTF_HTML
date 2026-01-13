@@ -36,7 +36,7 @@ const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(64).toSt
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15分
 const RATE_LIMIT_MAX_REQUESTS = 100; // 15分間に100リクエストまで
-const LOGIN_RATE_LIMIT_MAX = 5; // ログイン試行は15分間に5回まで
+const LOGIN_RATE_LIMIT_MAX = 10; // ログイン試行は15分間に10回まで
 
 // レート制限(ブルートフォース対策)
 function rateLimit(req, res, next) {
@@ -264,7 +264,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // セキュリティ: CORS設定の改善（LAN内のみ許可）
 app.use(cors(
-  //脆弱性検査用のコメントアウト
+  //脆弱性検査する際は以下のスコープをコメントアウト
   {
   origin: (origin, callback) => {
     // オリジンなし（直接アクセス）またはプライベートIPからのアクセスのみ許可
@@ -363,9 +363,19 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "index.html"));
 });
 
+// index.htmlへの直接アクセスも許可
+app.get("/index.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+});
+
 // マイページ
 app.get("/mypage", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "mypage.html"));
+});
+
+// 新規登録フォーム
+app.get("/register_form.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "register_form.html"));
 });
 
 // ============================================
