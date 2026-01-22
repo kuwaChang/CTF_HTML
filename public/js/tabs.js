@@ -1,6 +1,9 @@
 import { loadScore } from "./quiz.js";
 import { loadRanking } from "./ranking.js";
 import { loadAchievements } from "./achievements.js";
+import { initCodeEditor } from "./code-editor.js";
+
+let codeEditorInitialized = false;
 
 export function initTabs() {
   const tabs = document.querySelectorAll(".tab");
@@ -19,6 +22,12 @@ export function initTabs() {
         loadScore();
       } else if (tab.dataset.target === "achievements") {
         loadAchievements();
+      } else if (tab.dataset.target === "code-editor" && !codeEditorInitialized) {
+        initCodeEditor().then(() => {
+          codeEditorInitialized = true;
+        }).catch(err => {
+          console.error("コードエディタの初期化に失敗しました:", err);
+        });
       }
     });
   });

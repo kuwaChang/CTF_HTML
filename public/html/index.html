@@ -11,6 +11,8 @@
   <script src="../lib/xterm/xterm.min.js"></script>
   <!-- Chart.js for pie chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Monaco Editor -->
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
   <!-- Leaflet（オープンソースの地図ライブラリ、APIキー不要） -->
   <!-- CSSとJSはquiz.jsで動的に読み込む -->
   <style>
@@ -108,6 +110,7 @@
     <!--タブ選択-->
     <div class="tabs">
       <div class="tab active" data-target="quiz">問題</div>
+      <div class="tab" data-target="code-editor">コードエディタ</div>
       <div class="tab" data-target="score">得点</div>
       <div class="tab" data-target="result_check">ランキング</div>
       <div class="tab" data-target="achievements">実績</div>
@@ -193,6 +196,28 @@
         
     </tbody>
     </table>
+  </div>
+
+  <!--コードエディタ-->
+  <div id="code-editor" class="tab-content">
+    <h2>コードエディタ</h2>
+    <div style="margin-bottom: 15px;">
+      <label for="code-language-select" style="margin-right: 10px; color: #333; font-weight: 600;">言語:</label>
+      <select id="code-language-select" style="padding: 8px 12px; border: 2px solid #667eea; border-radius: 8px; background: white; color: #333; font-size: 14px; cursor: pointer;">
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="java">Java</option>
+      </select>
+      <button id="code-run-btn" style="margin-left: 15px;">実行</button>
+      <button id="code-clear-btn" style="margin-left: 10px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">クリア</button>
+    </div>
+    <div id="code-editor-container" style="width: 100%; height: 500px; border: 2px solid #667eea; border-radius: 8px; overflow: hidden;"></div>
+    <div style="margin-top: 20px;">
+      <h3 style="color: #333; margin-bottom: 10px;">出力</h3>
+      <div id="code-output"></div>
+    </div>
   </div>
 
   <!--実績表示-->

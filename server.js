@@ -10,6 +10,9 @@ const { Server } = require("socket.io");
 const { router: sadRouter, setSocketIO } = require("./server-sad");
 const crypto = require("crypto");
 const multer = require("multer");
+const { exec, spawn } = require("child_process");
+const { promisify } = require("util");
+const execAsync = promisify(exec);
 
 // グローバルエラーハンドラー（未処理のエラーをキャッチ）
 process.on('uncaughtException', (err) => {
@@ -1407,6 +1410,163 @@ app.get("/api/user-icon/:userid", (req, res) => {
     }
   });
 });
+
+// コード実行API
+app.post("/api/execute-code", (req, res) => {
+  // セキュリティ: 認証チェック
+  if (!req.session.userid) {
+    return res.status(401).json({ success: false, message: "ログインが必要です" });
+  }
+
+  const { code, language } = req.body;
+
+  if (!code || !language) {
+    return res.status(400).json({ success: false, message: "コードと言語を指定してください" });
+  }
+
+  // サポートされている言語のチェック
+  const supportedLanguages = ['python', 'c', 'cpp', 'java'];
+  if (!supportedLanguages.includes(language)) {
+    return res.status(400).json({ success: false, message: "サポートされていない言語です" });
+  }
+
+  // コード長の制限（10KB）
+  if (code.length > 10000) {
+    return res.status(400).json({ success: false, message: "コードが長すぎます（最大10KB）" });
+  }
+
+  // 一時ディレクトリの作成
+  const tempDir = path.join(__dirname, 'temp', `code_${Date.now()}_${crypto.randomBytes(8).toString('hex')}`);
+  if (!fs.existsSync(path.join(__dirname, 'temp'))) {
+    fs.mkdirSync(path.join(__dirname, 'temp'), { recursive: true });
+  }
+  fs.mkdirSync(tempDir, { recursive: true });
+
+  // 実行時間制限（10秒）
+  const TIMEOUT = 10000;
+
+  let command;
+  let filename;
+
+  switch (language) {
+    case 'python':
+      filename = 'main.py';
+      command = `python "${path.join(tempDir, filename)}"`;
+      break;
+    case 'c':
+      filename = 'main.c';
+      const cExe = path.join(tempDir, 'main.exe');
+      command = `gcc "${path.join(tempDir, filename)}" -o "${cExe}" && "${cExe}"`;
+      break;
+    case 'cpp':
+      filename = 'main.cpp';
+      const cppExe = path.join(tempDir, 'main.exe');
+      command = `g++ "${path.join(tempDir, filename)}" -o "${cppExe}" && "${cppExe}"`;
+      break;
+    case 'java':
+      filename = 'Main.java';
+      command = `cd "${tempDir}" && javac "${filename}" && java Main`;
+      break;
+    default:
+      cleanup(tempDir);
+      return res.status(400).json({ success: false, message: "サポートされていない言語です" });
+  }
+
+  // コードをファイルに書き込み
+  const filePath = path.join(tempDir, filename);
+  fs.writeFileSync(filePath, code, 'utf8');
+
+  // コード実行
+  const startTime = Date.now();
+  const childProcess = spawn(command, {
+    shell: true,
+    cwd: tempDir,
+    stdio: ['ignore', 'pipe', 'pipe'],
+    timeout: TIMEOUT
+  });
+
+  let stdout = '';
+  let stderr = '';
+  let isTimedOut = false;
+
+  childProcess.stdout.on('data', (data) => {
+    stdout += data.toString();
+  });
+
+  childProcess.stderr.on('data', (data) => {
+    stderr += data.toString();
+  });
+
+  // タイムアウト処理
+  const timeoutId = setTimeout(() => {
+    isTimedOut = true;
+    childProcess.kill();
+  }, TIMEOUT);
+
+  childProcess.on('close', (code) => {
+    clearTimeout(timeoutId);
+    
+    // 一時ファイルの削除
+    cleanup(tempDir);
+
+    const executionTime = Date.now() - startTime;
+
+    if (isTimedOut) {
+      return res.json({
+        success: false,
+        output: '',
+        error: `実行時間が制限（${TIMEOUT / 1000}秒）を超えました`
+      });
+    }
+
+    if (code !== 0 || stderr) {
+      return res.json({
+        success: false,
+        output: stdout,
+        error: stderr || `プロセスが終了コード ${code} で終了しました`
+      });
+    }
+
+    res.json({
+      success: true,
+      output: stdout || '（出力なし）',
+      executionTime: executionTime
+    });
+  });
+
+  childProcess.on('error', (error) => {
+    clearTimeout(timeoutId);
+    cleanup(tempDir);
+    res.status(500).json({
+      success: false,
+      output: '',
+      error: `実行エラー: ${error.message}`
+    });
+  });
+});
+
+// 一時ファイルのクリーンアップ関数
+function cleanup(dir) {
+  try {
+    if (fs.existsSync(dir)) {
+      fs.readdirSync(dir).forEach(file => {
+        const filePath = path.join(dir, file);
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          // ファイル削除エラーは無視
+        }
+      });
+      try {
+        fs.rmdirSync(dir);
+      } catch (err) {
+        // ディレクトリ削除エラーは無視
+      }
+    }
+  } catch (err) {
+    // クリーンアップエラーは無視
+  }
+}
 
 // 各ルート登録
 const authRoutes = require("./routes/auth");

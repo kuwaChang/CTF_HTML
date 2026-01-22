@@ -603,6 +603,83 @@
         display: inline;
       }
 
+      /* コードエディタ用のスタイル */
+      #code-editor {
+        text-align: left;
+      }
+
+      #code-editor h2,
+      #code-editor h3 {
+        text-align: left;
+      }
+
+      #code-editor > div {
+        text-align: left;
+      }
+
+      #code-editor-container {
+        border: 2px solid #667eea;
+        border-radius: 8px;
+        overflow: hidden;
+        text-align: left;
+      }
+
+      #code-language-select {
+        padding: 8px 12px;
+        border: 2px solid #667eea;
+        border-radius: 8px;
+        background: white;
+        color: #333;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      #code-language-select:hover {
+        border-color: #764ba2;
+      }
+
+      #code-language-select:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      #code-run-btn,
+      #code-clear-btn {
+        margin-top: 0;
+      }
+
+      #code-output {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 15px;
+        border-radius: 8px;
+        min-height: 100px;
+        max-height: 400px;
+        overflow-y: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        border: 2px solid #667eea;
+      }
+
+      #code-output::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      #code-output::-webkit-scrollbar-track {
+        background: #1e1e1e;
+      }
+
+      #code-output::-webkit-scrollbar-thumb {
+        background: #555;
+        border-radius: 5px;
+      }
+
+      #code-output::-webkit-scrollbar-thumb:hover {
+        background: #777;
+      }
+
       /* レスポンシブデザイン */
       @media (max-width: 768px) {
         body {
@@ -630,6 +707,10 @@
         .tab {
           flex: 1;
           min-width: 100px;
+        }
+
+        #code-editor-container {
+          height: 300px !important;
         }
       }
 
