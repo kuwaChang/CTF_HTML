@@ -1,0 +1,21 @@
+{
+  "name": "xss-vulnerable-shop",
+  "version": "1.0.0",
+  "description": "XSS攻撃を試せる脆弱性のあるショッピングサイト",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["xss", "ctf", "vulnerable"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

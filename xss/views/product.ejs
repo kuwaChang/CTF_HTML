@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.name %> - 脆弱ショップ</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🛒 脆弱ショップ</h1>
+            <nav>
+                <a href="/">ホーム</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="/" class="back-link">← 商品一覧に戻る</a>
+
+        <div class="product-detail">
+            <div class="product-image-large"><%= product.image %></div>
+            <div class="product-info">
+                <h1><%= product.name %></h1>
+                <p class="product-price-large">¥<%= product.price.toLocaleString() %></p>
+                <p class="product-description"><%= product.description %></p>
+            </div>
+        </div>
+
+        <div class="reviews-section">
+            <h2>レビュー</h2>
+
+            <!-- レビュー投稿フォーム -->
+            <div class="review-form">
+                <h3>レビューを投稿</h3>
+                <form action="/product/<%= product.id %>/review" method="POST">
+                    <div class="form-group">
+                        <label for="author">お名前:</label>
+                        <input type="text" id="author" name="author" placeholder="お名前を入力">
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">評価:</label>
+                        <select id="rating" name="rating">
+                            <option value="5">5つ星</option>
+                            <option value="4">4つ星</option>
+                            <option value="3">3つ星</option>
+                            <option value="2">2つ星</option>
+                            <option value="1">1つ星</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">コメント:</label>
+                        <textarea id="comment" name="comment" rows="5" placeholder="レビューを入力してください"></textarea>
+                    </div>
+                    <button type="submit" class="btn">レビューを投稿</button>
+                </form>
+            </div>
+
+            <!-- レビュー一覧（XSS脆弱性: レビュー内容がサニタイズされずに表示される） -->
+            <div class="reviews-list">
+                <% if (reviews.length === 0) { %>
+                    <p>まだレビューがありません。</p>
+                <% } else { %>
+                    <% reviews.forEach(review => { %>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <strong><%- review.author %></strong>
+                                <span class="rating">★<%= review.rating %></span>
+                                <span class="review-date"><%= new Date(review.date).toLocaleDateString('ja-JP') %></span>
+                            </div>
+                            <div class="review-comment">
+                                <%- review.comment %>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } %>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>⚠️ このサイトはXSS攻撃の練習用です。本番環境では使用しないでください。</p>
+        </div>
+    </footer>
+</body>
+</html>
