@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脆弱ショップ - 商品一覧</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🛒 脆弱ショップ</h1>
+            <nav>
+                <a href="/">ホーム</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="search-section">
+            <h2>商品検索</h2>
+            <form action="/search" method="GET">
+                <input type="text" name="q" placeholder="商品名で検索..." value="<%= searchQuery || '' %>">
+                <button type="submit">検索</button>
+            </form>
+            
+            <!-- XSS脆弱性: 検索クエリがそのまま表示される -->
+            <% if (searchQuery) { %>
+                <div class="search-result">
+                    <p>検索結果: "<%- searchQuery %>" の検索結果</p>
+                </div>
+            <% } %>
+        </div>
+
+        <h2>商品一覧</h2>
+        <div class="products-grid">
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <div class="product-image"><%= product.image %></div>
+                    <h3><%= product.name %></h3>
+                    <p class="product-description"><%= product.description %></p>
+                    <p class="product-price">¥<%= product.price.toLocaleString() %></p>
+                    <a href="/product/<%= product.id %>" class="btn">詳細を見る</a>
+                </div>
+            <% }); %>
+        </div>
+
+        <% if (products.length === 0) { %>
+            <p class="no-results">商品が見つかりませんでした。</p>
+        <% } %>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>⚠️ このサイトはXSS攻撃の練習用です。本番環境では使用しないでください。</p>
+        </div>
+    </footer>
+</body>
+</html>

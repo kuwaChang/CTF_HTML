@@ -1,0 +1,15 @@
+{
+  "name": "attack-server",
+  "version": "1.0.0",
+  "description": "XSS攻撃で盗取したCookieを受け取る攻撃者サーバー（CTF学習用）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["xss", "ctf", "security", "attack"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

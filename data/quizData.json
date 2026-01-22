@@ -569,6 +569,20 @@
       "explanation": "解説ページのURLを入力してください"
     },
     "web11": {
+      "answer": "FLAG{test_attack_XSS}",
+      "title": "脆弱性のあるショッピングサーバー",
+      "categoryId": "web",
+      "desc": "以下の脆弱性のあるショッピングサーバーでXSS攻撃をしてみよう。",
+      "hint": [
+        "好きに攻撃していいよ",
+        "フラグはFLAG{test_attack_XSS}"
+      ],
+      "point": 50,
+      "files": [],
+      "url": "http://localhost:3000",
+      "explanation": "解説ページのURLを入力してください"
+    },
+    "web12": {
       "answer": "FLAG{見ないでよ}",
       "title": "★パストラバーサル攻撃",
       "categoryId": "web",

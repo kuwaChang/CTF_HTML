@@ -38,6 +38,12 @@
         text-align: left;
       }
 
+      /* ログインボタンだけ中央寄せ */
+      #loginForm button[type="submit"] {
+        display: block;
+        margin: 20px auto 0;
+      }
+
       #loginSection label {
         display: block;
         margin-bottom: 8px;

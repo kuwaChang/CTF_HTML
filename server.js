@@ -1462,6 +1462,83 @@ function getLocalIPAddresses() {
   return preferredAddresses.length > 0 ? preferredAddresses : addresses;
 }
 
+// XSSショッピングサーバーと攻撃者サーバーを起動
+const { spawn } = require('child_process');
+const xssServerPath = path.join(__dirname, 'xss', 'server.js');
+const attackServerPath = path.join(__dirname, 'attack_server', 'server.js');
+
+let xssServerProcess = null;
+let attackServerProcess = null;
+
+function startXssServer() {
+  console.log('🛒 XSSショッピングサーバーを起動中...');
+  
+  xssServerProcess = spawn('node', [xssServerPath], {
+    cwd: path.join(__dirname, 'xss'),
+    stdio: 'inherit',
+    shell: true
+  });
+  
+  xssServerProcess.on('error', (err) => {
+    console.error('❌ XSSサーバー起動エラー:', err);
+  });
+  
+  xssServerProcess.on('exit', (code, signal) => {
+    if (code !== null && code !== 0) {
+      console.error(`❌ XSSサーバーが終了しました (コード: ${code})`);
+    } else if (signal) {
+      console.log(`🛑 XSSサーバーがシグナルで終了しました: ${signal}`);
+    }
+  });
+}
+
+function startAttackServer() {
+  console.log('🎯 攻撃者サーバーを起動中...');
+  
+  attackServerProcess = spawn('node', [attackServerPath], {
+    cwd: path.join(__dirname, 'attack_server'),
+    stdio: 'inherit',
+    shell: true
+  });
+  
+  attackServerProcess.on('error', (err) => {
+    console.error('❌ 攻撃者サーバー起動エラー:', err);
+  });
+  
+  attackServerProcess.on('exit', (code, signal) => {
+    if (code !== null && code !== 0) {
+      console.error(`❌ 攻撃者サーバーが終了しました (コード: ${code})`);
+    } else if (signal) {
+      console.log(`🛑 攻撃者サーバーがシグナルで終了しました: ${signal}`);
+    }
+  });
+}
+
+// メインサーバー終了時にすべてのサーバーも終了
+process.on('SIGINT', () => {
+  if (xssServerProcess) {
+    console.log('🛑 XSSサーバーを終了しています...');
+    xssServerProcess.kill();
+  }
+  if (attackServerProcess) {
+    console.log('🛑 攻撃者サーバーを終了しています...');
+    attackServerProcess.kill();
+  }
+  process.exit();
+});
+
+process.on('SIGTERM', () => {
+  if (xssServerProcess) {
+    console.log('🛑 XSSサーバーを終了しています...');
+    xssServerProcess.kill();
+  }
+  if (attackServerProcess) {
+    console.log('🛑 攻撃者サーバーを終了しています...');
+    attackServerProcess.kill();
+  }
+  process.exit();
+});
+
 // LAN内のすべてのインターフェースでリッスン
 server.listen(PORT, '0.0.0.0', () => {  
   const localIPs = getLocalIPAddresses();
@@ -1477,4 +1554,8 @@ server.listen(PORT, '0.0.0.0', () => {
   } else {
     console.log(`📡 LAN内の他のデバイスからアクセス可能です（IPアドレスを取得できませんでした）`);
   }
+  
+  // メインサーバー起動後にXSSサーバーと攻撃者サーバーを起動
+  startXssServer();
+  startAttackServer();
 });
