@@ -1,15 +1,51 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const path = require('path');
 const os = require('os');
 
 const app = express();
 const PORT = 3000;
 
+// セッション設定
+app.use(session({
+  secret: 'vulnerable-shop-secret-key-change-in-production',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false, // HTTPSの場合はtrueに変更
+    httpOnly: false,
+    maxAge: 24 * 60 * 60 * 1000 // 24時間
+  },
+  name: 'sessionId' // セッションCookie名
+}));
+
 // ミドルウェア設定
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+// セッション初期化ミドルウェア（初回訪問時にユーザー情報を設定）
+app.use((req, res, next) => {
+  // 静的ファイル（CSS、JS、画像など）へのリクエストはスキップ
+  const staticExtensions = ['.css', '.js', '.jpg', '.jpeg', '.png', '.gif', '.ico', '.svg', '.woff', '.woff2', '.ttf', '.eot'];
+  const isStaticFile = staticExtensions.some(ext => req.path.toLowerCase().endsWith(ext));
+  
+  if (isStaticFile) {
+    return next();
+  }
+  
+  if (!req.session.userId) {
+    // 初回訪問時にユーザーIDを生成
+    req.session.userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    req.session.username = 'ゲストユーザー';
+    req.session.visitCount = 0;
+    req.session.createdAt = new Date().toISOString();
+  }
+  req.session.visitCount = (req.session.visitCount || 0) + 1;
+  req.session.lastVisit = new Date().toISOString();
+  next();
+});
 
 // テンプレートエンジン設定
 app.set('view engine', 'ejs');
@@ -108,7 +144,7 @@ app.post('/product/:id/review', (req, res) => {
   const newReview = {
     id: reviews.length + 1,
     productId: productId,
-    author: author || '匿名',  // サニタイズされていない！
+    author: author || req.session.username || '匿名',  // サニタイズされていない！
     rating: parseInt(rating) || 5,
     comment: comment || '',  // サニタイズされていない！
     date: new Date().toISOString()
@@ -116,6 +152,42 @@ app.post('/product/:id/review', (req, res) => {
   
   reviews.push(newReview);
   res.redirect(`/product/${productId}`);
+});
+
+// ログイン/ユーザー名設定ページ
+app.get('/login', (req, res) => {
+  res.render('login', { error: null });
+});
+
+// ログイン処理
+app.post('/login', (req, res) => {
+  const { username } = req.body;
+  
+  if (username && username.trim()) {
+    req.session.username = username.trim();
+    req.session.loggedIn = true;
+    res.redirect('/mypage');
+  } else {
+    res.render('login', { error: 'ユーザー名を入力してください' });
+  }
+});
+
+// ログアウト処理
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('セッション破棄エラー:', err);
+    }
+    res.redirect('/');
+  });
+});
+
+// マイページ（セッション情報を表示）
+app.get('/mypage', (req, res) => {
+  res.render('mypage', {
+    session: req.session,
+    sessionId: req.sessionID
+  });
 });
 
 // ネットワークインターフェースのIPアドレスを取得
