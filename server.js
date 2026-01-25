@@ -799,7 +799,7 @@ sqlDb.serialize(() => {
 		}
 		updateStmt.finalize();
 		
-		console.log("✅ SQL練習用ユーザーを投入/更新しました:", seedUsers.map(u => u.username).join(", "));
+		//console.log("✅ SQL練習用ユーザーを投入/更新しました:", seedUsers.map(u => u.username).join(", "));
 		//console.log("🗄️ SQL練習DBファイル:", sqlDbPath);
 	});
 });
@@ -1623,7 +1623,6 @@ function getLocalIPAddresses() {
 }
 
 // XSSショッピングサーバーと攻撃者サーバーを起動
-const { spawn } = require('child_process');
 const xssServerPath = path.join(__dirname, 'xss', 'server.js');
 const attackServerPath = path.join(__dirname, 'attack_server', 'server.js');
 
