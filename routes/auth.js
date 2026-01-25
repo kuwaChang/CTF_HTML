@@ -12,9 +12,9 @@ if (!fs.existsSync(dbDir)) {
 }
 
 const dbPath = path.join(__dirname, "../db/users.db");
-console.log("[auth.js] データベースパス:", dbPath);
-console.log("[auth.js] ファイル存在確認:", fs.existsSync(dbPath));
-console.log("[auth.js] ディレクトリ存在確認:", fs.existsSync(path.dirname(dbPath)));
+//console.log("[auth.js] データベースパス:", dbPath);
+//console.log("[auth.js] ファイル存在確認:", fs.existsSync(dbPath));
+//console.log("[auth.js] ディレクトリ存在確認:", fs.existsSync(path.dirname(dbPath)));
 let db;
 try {
   db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
@@ -25,7 +25,7 @@ try {
       console.error("   データベースパス:", dbPath);
       console.error("   スタックトレース:", err.stack);
     } else {
-      console.log("✅ [auth.js] データベース接続成功");
+      //console.log("✅ [auth.js] データベース接続成功");
     }
   });
 } catch (err) {

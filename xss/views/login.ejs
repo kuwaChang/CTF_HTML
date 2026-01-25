@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン - 脆弱ショップ</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🛒 脆弱ショップ</h1>
+            <nav>
+                <a href="/">ホーム</a>
+                <a href="/mypage">マイページ</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="login-section">
+            <h2>ログイン / ユーザー名設定</h2>
+            
+            <% if (error) { %>
+                <div class="error-message" style="background-color: #ffebee; color: #c62828; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <form action="/login" method="POST" class="login-form">
+                <div class="form-group">
+                    <label for="username">ユーザー名:</label>
+                    <input type="text" id="username" name="username" placeholder="ユーザー名を入力" required>
+                </div>
+                <button type="submit" class="btn">ログイン</button>
+            </form>
+
+            <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                ユーザー名を設定すると、セッションが確立され、マイページでセッション情報を確認できます。
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>⚠️ このサイトはXSS攻撃の練習用です。本番環境では使用しないでください。</p>
+        </div>
+    </footer>
+</body>
+</html>
+

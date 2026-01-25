@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイページ - 脆弱ショップ</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🛒 脆弱ショップ</h1>
+            <nav>
+                <a href="/">ホーム</a>
+                <a href="/mypage">マイページ</a>
+                <a href="/login">ログイン</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="mypage-section">
+            <h2>マイページ</h2>
+
+            <div class="session-info">
+                <h3>セッション情報</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>セッションID:</strong>
+                        <code style="background: #f5f5f5; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;"><%= sessionId %></code>
+                    </div>
+                    <div class="info-item">
+                        <strong>ユーザーID:</strong>
+                        <span><%= session.userId %></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>ユーザー名:</strong>
+                        <span><%= session.username %></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>訪問回数:</strong>
+                        <span><%= session.visitCount %></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>セッション作成日時:</strong>
+                        <span><%= new Date(session.createdAt).toLocaleString('ja-JP') %></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>最終訪問日時:</strong>
+                        <span><%= new Date(session.lastVisit).toLocaleString('ja-JP') %></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>ログイン状態:</strong>
+                        <span><%= session.loggedIn ? 'ログイン中' : 'ゲスト' %></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-info" style="margin-top: 2rem;">
+                <h3>Cookie情報</h3>
+                <p style="color: #666; margin-bottom: 1rem;">
+                    このページでは、ブラウザに保存されているセッションCookieを確認できます。
+                    開発者ツール（F12）の「Application」タブ → 「Cookies」からも確認できます。
+                </p>
+                <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px; border: 1px solid #ddd;">
+                    <strong>セッションCookie名:</strong> sessionId<br>
+                    <strong>値:</strong> <code id="cookie-value" style="background: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;"></code>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top: 2rem;">
+                <form action="/logout" method="POST" style="display: inline;">
+                    <button type="submit" class="btn" style="background-color: #dc3545;">ログアウト</button>
+                </form>
+                <a href="/" class="btn" style="margin-left: 1rem;">ホームに戻る</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>⚠️ このサイトはXSS攻撃の練習用です。本番環境では使用しないでください。</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cookie値を表示（httpOnlyのためJavaScriptからは直接読めないが、セッションIDを表示）
+        document.getElementById('cookie-value').textContent = '<%= sessionId %>';
+        
+        // 実際のCookieを取得して表示（可能な場合）
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+        
+        const cookieValue = getCookie('sessionId');
+        if (cookieValue) {
+            document.getElementById('cookie-value').textContent = cookieValue;
+        }
+    </script>
+</body>
+</html>
+

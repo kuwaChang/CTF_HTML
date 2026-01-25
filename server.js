@@ -16,19 +16,19 @@ const execAsync = promisify(exec);
 
 // グローバルエラーハンドラー（未処理のエラーをキャッチ）
 process.on('uncaughtException', (err) => {
-  console.error("❌ 未処理の例外:", err.message);
-  console.error("   エラーコード:", err.code);
-  console.error("   エラー番号:", err.errno);
-  console.error("   スタックトレース:", err.stack);
+  //console.error("❌ 未処理の例外:", err.message);
+  //console.error("   エラーコード:", err.code);
+  //console.error("   エラー番号:", err.errno);
+  //console.error("   スタックトレース:", err.stack);
   // アプリケーションを終了させずに続行（ログイン機能を維持）
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  console.error("❌ 未処理のPromise拒否:", reason);
+  //console.error("❌ 未処理のPromise拒否:", reason);
   if (reason instanceof Error) {
-    console.error("   エラーコード:", reason.code);
-    console.error("   エラー番号:", reason.errno);
-    console.error("   スタックトレース:", reason.stack);
+    //console.error("   エラーコード:", reason.code);
+    //console.error("   エラー番号:", reason.errno);
+    //console.error("   スタックトレース:", reason.stack);
   }
 });
 
@@ -168,25 +168,25 @@ const iconUpload = multer({
 
 const dbPath = path.join(__dirname, "db", "users.db");
 const sessionsDbPath = path.join(__dirname, "db", "sessions.sqlite");
-console.log("[server.js] データベースパス:", dbPath);
-console.log("[server.js] ファイル存在確認:", fs.existsSync(dbPath));
-console.log("[server.js] sessions.sqliteパス:", sessionsDbPath);
-console.log("[server.js] sessions.sqlite存在確認:", fs.existsSync(sessionsDbPath));
+//console.log("[server.js] データベースパス:", dbPath);
+//console.log("[server.js] ファイル存在確認:", fs.existsSync(dbPath));
+//console.log("[server.js] sessions.sqliteパス:", sessionsDbPath);
+//console.log("[server.js] sessions.sqlite存在確認:", fs.existsSync(sessionsDbPath));
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
-    console.error("データベース接続エラー (server.js):", err);
-    console.error("データベースパス:", dbPath);
+    //console.error("データベース接続エラー (server.js):", err);
+    //console.error("データベースパス:", dbPath);
   } else {
-    console.log("[server.js] データベース接続成功");
+    //console.log("[server.js] データベース接続成功");
   }
 });
 db.on('error', (err) => {
-  console.error("❌ データベースエラー (server.js):", err.message);
-  console.error("   エラーコード:", err.code);
-  console.error("   エラー番号:", err.errno);
+  //console.error("❌ データベースエラー (server.js):", err.message);
+  //console.error("   エラーコード:", err.code);
+  //console.error("   エラー番号:", err.errno);
   console.error("   データベースパス:", dbPath);
   if (err.stack) {
-    console.error("   スタックトレース:", err.stack);
+    //console.error("   スタックトレース:", err.stack);
   }
 });
 // SQLインジェクション練習用データベース（別ファイル）
@@ -303,9 +303,9 @@ app.use(cors(
 // SQLiteStoreの初期化を試行
 let sessionStore;
 try {
-  console.log("[server.js] SQLiteStoreを初期化します...");
-  console.log("[server.js] sessions.sqliteの絶対パス:", path.resolve(sessionsDbPath));
-  console.log("[server.js] dbディレクトリの絶対パス:", path.resolve(dbDir));
+  //console.log("[server.js] SQLiteStoreを初期化します...");
+  //console.log("[server.js] sessions.sqliteの絶対パス:", path.resolve(sessionsDbPath));
+  //console.log("[server.js] dbディレクトリの絶対パス:", path.resolve(dbDir));
   
   // SQLiteStoreのオプションを設定
   // dbオプションにファイル名だけを指定し、dirオプションにディレクトリを指定
@@ -314,12 +314,12 @@ try {
     table: 'sessions',
     dir: dbDir,  // ディレクトリを指定
     errorHandler: (err) => {
-      console.error("❌ SQLiteStoreエラー:", err.message);
-      console.error("   エラーコード:", err.code);
-      console.error("   エラー番号:", err.errno);
-      console.error("   データベースパス:", path.join(dbDir, 'sessions.sqlite'));
+      //console.error("❌ SQLiteStoreエラー:", err.message);
+      //console.error("   エラーコード:", err.code);
+      //console.error("   エラー番号:", err.errno);
+      //console.error("   データベースパス:", path.join(dbDir, 'sessions.sqlite'));
       if (err.stack) {
-        console.error("   スタックトレース:", err.stack);
+        //console.error("   スタックトレース:", err.stack);
       }
     }
   };
@@ -329,19 +329,19 @@ try {
   // SQLiteStoreの内部接続を監視
   if (sessionStore && sessionStore.db) {
     sessionStore.db.on('error', (err) => {
-      console.error("❌ SQLiteStore内部データベースエラー:", err.message);
-      console.error("   エラーコード:", err.code);
-      console.error("   エラー番号:", err.errno);
+      //console.error("❌ SQLiteStore内部データベースエラー:", err.message);
+      //console.error("   エラーコード:", err.code);
+      //console.error("   エラー番号:", err.errno);
       if (err.stack) {
-        console.error("   スタックトレース:", err.stack);
+        //console.error("   スタックトレース:", err.stack);
       }
     });
   }
   
-  console.log("✅ [server.js] SQLiteStore初期化成功");
+  //console.log("✅ [server.js] SQLiteStore初期化成功");
 } catch (err) {
-  console.error("❌ SQLiteStore初期化エラー:", err.message);
-  console.error("   スタックトレース:", err.stack);
+  //console.error("❌ SQLiteStore初期化エラー:", err.message);
+  //console.error("   スタックトレース:", err.stack);
   // エラーが発生してもセッションストアなしで続行（メモリストアにフォールバック）
   sessionStore = undefined;
 }
@@ -1323,7 +1323,7 @@ db.serialize(() => {
       console.error("   エラーコード:", err.code);
       console.error("   スタックトレース:", err.stack);
     } else {
-      console.log("✅ [server.js] データベース初期化完了");
+      //console.log("✅ [server.js] データベース初期化完了");
     }
   });
 });
@@ -1623,6 +1623,10 @@ function getLocalIPAddresses() {
 }
 
 // XSSショッピングサーバーと攻撃者サーバーを起動
+<<<<<<< HEAD
+=======
+// spawnは既に13行目でインポート済み
+>>>>>>> f162fa28bc80068a9b6ada9e2d228d11139914db
 const xssServerPath = path.join(__dirname, 'xss', 'server.js');
 const attackServerPath = path.join(__dirname, 'attack_server', 'server.js');
 
