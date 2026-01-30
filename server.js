@@ -1871,7 +1871,16 @@ function getLocalIPAddresses() {
   return preferredAddresses.length > 0 ? preferredAddresses : addresses;
 }
 
+<<<<<<< HEAD
 // 攻撃者サーバーを起動（個別インスタンスではなく、単一インスタンス）
+=======
+// XSSショッピングサーバーと攻撃者サーバーを起動
+<<<<<<< HEAD
+=======
+// spawnは既に13行目でインポート済み
+>>>>>>> f162fa28bc80068a9b6ada9e2d228d11139914db
+const xssServerPath = path.join(__dirname, 'xss', 'server.js');
+>>>>>>> 9461d45b500f18cdfb873360e3381f5fc1a8fb1a
 const attackServerPath = path.join(__dirname, 'attack_server', 'server.js');
 
 let attackServerProcess = null;
