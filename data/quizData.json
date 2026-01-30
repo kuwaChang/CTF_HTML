@@ -579,7 +579,7 @@
       ],
       "point": 50,
       "files": [],
-      "url": "http://localhost:3000",
+      "url": "http://localhost:3333/shop",
       "explanation": "解説ページのURLを入力してください"
     },
     "web12": {

@@ -193,6 +193,7 @@ db.on('error', (err) => {
 const sqlDbPath = path.join(__dirname, "public", "files", "user_database.db");
 const sqlDb = new sqlite3.Database(sqlDbPath);
 const http = require("http");
+const net = require("net");
 const server = http.createServer(app);
 const io = new Server(server, {
   path: "/socket.io",
@@ -203,6 +204,142 @@ const io = new Server(server, {
     credentials: true,
   },
 });
+
+// ============================================
+// 個別ショッピングサーバー管理機能
+// ============================================
+
+// セッションIDとショッピングサーバーインスタンスのマッピング
+const shoppingServerInstances = new Map(); // sessionId -> { port, process, createdAt }
+
+// 利用可能なポートを検出する関数
+function findAvailablePort(startPort = 3000, maxAttempts = 100) {
+  return new Promise((resolve, reject) => {
+    let currentPort = startPort;
+    let attempts = 0;
+
+    function tryPort(port) {
+      if (attempts >= maxAttempts) {
+        reject(new Error('利用可能なポートが見つかりませんでした'));
+        return;
+      }
+
+      const server = net.createServer();
+      server.listen(port, '0.0.0.0', () => {
+        server.once('close', () => {
+          resolve(port);
+        });
+        server.close();
+      });
+
+      server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+          attempts++;
+          tryPort(port + 1);
+        } else {
+          reject(err);
+        }
+      });
+    }
+
+    tryPort(currentPort);
+  });
+}
+
+// 個別のショッピングサーバーを起動する関数
+async function startIndividualShoppingServer(sessionId) {
+  // 既にインスタンスが存在する場合はそれを返す
+  if (shoppingServerInstances.has(sessionId)) {
+    const instance = shoppingServerInstances.get(sessionId);
+    // プロセスがまだ実行中かチェック
+    if (instance.process && !instance.process.killed) {
+      return instance;
+    }
+    // プロセスが終了している場合は削除
+    shoppingServerInstances.delete(sessionId);
+  }
+
+  try {
+    // 利用可能なポートを検出
+    const port = await findAvailablePort(3000);
+    
+    console.log(`🛒 セッション ${sessionId} 用のショッピングサーバーをポート ${port} で起動中...`);
+
+    // 環境変数でポートを指定してショッピングサーバーを起動
+    const xssServerPath = path.join(__dirname, 'xss', 'server.js');
+    const childProcess = spawn('node', [xssServerPath], {
+      cwd: path.join(__dirname, 'xss'),
+      stdio: 'pipe', // 'inherit'から'pipe'に変更して出力を制御
+      shell: true,
+      env: {
+        ...process.env,
+        PORT: port.toString()
+      }
+    });
+
+    // プロセスの出力をログに記録（必要に応じて）
+    childProcess.stdout.on('data', (data) => {
+      // 個別インスタンスのログは必要に応じて記録
+      // console.log(`[ショッピングサーバー ${port}] ${data}`);
+    });
+
+    childProcess.stderr.on('data', (data) => {
+      console.error(`[ショッピングサーバー ${port} エラー] ${data}`);
+    });
+
+    childProcess.on('error', (err) => {
+      console.error(`❌ ショッピングサーバー起動エラー (ポート ${port}):`, err);
+      shoppingServerInstances.delete(sessionId);
+    });
+
+    childProcess.on('exit', (code, signal) => {
+      console.log(`🛑 ショッピングサーバー (ポート ${port}) が終了しました (コード: ${code}, シグナル: ${signal})`);
+      shoppingServerInstances.delete(sessionId);
+    });
+
+    // サーバーが起動するまで少し待つ
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const instance = {
+      port: port,
+      process: childProcess,
+      createdAt: new Date().toISOString(),
+      sessionId: sessionId
+    };
+
+    shoppingServerInstances.set(sessionId, instance);
+    console.log(`✅ セッション ${sessionId} 用のショッピングサーバーがポート ${port} で起動しました`);
+
+    return instance;
+  } catch (error) {
+    console.error(`❌ ショッピングサーバー起動エラー (セッション ${sessionId}):`, error);
+    throw error;
+  }
+}
+
+// 個別のショッピングサーバーを停止する関数
+function stopIndividualShoppingServer(sessionId) {
+  const instance = shoppingServerInstances.get(sessionId);
+  if (instance && instance.process) {
+    console.log(`🛑 セッション ${sessionId} 用のショッピングサーバー (ポート ${instance.port}) を停止中...`);
+    instance.process.kill();
+    shoppingServerInstances.delete(sessionId);
+  }
+}
+
+// 定期的に使用されていないインスタンスをクリーンアップ（30分間アクセスがない場合）
+setInterval(() => {
+  const now = Date.now();
+  const timeout = 30 * 60 * 1000; // 30分
+
+  for (const [sessionId, instance] of shoppingServerInstances.entries()) {
+    const createdAt = new Date(instance.createdAt).getTime();
+    if (now - createdAt > timeout) {
+      console.log(`🧹 タイムアウト: セッション ${sessionId} 用のショッピングサーバーをクリーンアップ`);
+      stopIndividualShoppingServer(sessionId);
+    }
+  }
+}, 5 * 60 * 1000); // 5分ごとにチェック
 
 // Socket.ioをSadサーバー機能に紐づけ
 setSocketIO(io);
@@ -360,6 +497,26 @@ app.use(session({
   },
   name: "sessionId"  // デフォルトのconnect.sidから変更（セキュリティ向上）
 }));
+
+// セッション破棄時にショッピングサーバーをクリーンアップするミドルウェア
+app.use((req, res, next) => {
+  // セッションが破棄される前にセッションIDを保存
+  const originalDestroy = req.session.destroy;
+  if (originalDestroy) {
+    req.session.destroy = function(callback) {
+      const sessionId = this.id;
+      const result = originalDestroy.call(this, (err) => {
+        // セッション破棄後にショッピングサーバーを停止
+        if (sessionId) {
+          stopIndividualShoppingServer(sessionId);
+        }
+        if (callback) callback(err);
+      });
+      return result;
+    };
+  }
+  next();
+});
 
 // ルーティング設定
 app.get("/", (req, res) => {
@@ -1580,6 +1737,98 @@ app.use("/admin", adminRoutes);
 app.use("/achievements", achievementRoutes);
 app.use("/sad", sadRouter);
 
+// ============================================
+// 個別ショッピングサーバーエンドポイント
+// ============================================
+
+// ショッピングサーバーにアクセスするエンドポイント（個別インスタンスを起動）
+app.get("/shop", async (req, res) => {
+  // セッションIDを取得（なければ新規作成）
+  if (!req.sessionID) {
+    // セッションが存在しない場合は新規作成
+    req.session.initialized = true;
+  }
+
+  const sessionId = req.sessionID;
+
+  try {
+    // 個別のショッピングサーバーを起動
+    const instance = await startIndividualShoppingServer(sessionId);
+    
+    // サーバーのURLを取得
+    const localIPs = getLocalIPAddresses();
+    const mainIP = localIPs.length > 0 ? localIPs[0] : 'localhost';
+    const shopUrl = `http://${mainIP}:${instance.port}`;
+
+    // ショッピングサーバーにリダイレクト
+    res.redirect(shopUrl);
+  } catch (error) {
+    console.error('ショッピングサーバー起動エラー:', error);
+    res.status(500).json({
+      success: false,
+      message: 'ショッピングサーバーの起動に失敗しました',
+      error: error.message
+    });
+  }
+});
+
+// ショッピングサーバーの情報を取得するエンドポイント
+app.get("/api/shop-info", async (req, res) => {
+  const sessionId = req.sessionID;
+
+  if (!sessionId) {
+    return res.status(401).json({
+      success: false,
+      message: 'セッションが存在しません'
+    });
+  }
+
+  try {
+    let instance = shoppingServerInstances.get(sessionId);
+    
+    // インスタンスが存在しない場合は起動
+    if (!instance) {
+      instance = await startIndividualShoppingServer(sessionId);
+    }
+
+    const localIPs = getLocalIPAddresses();
+    const mainIP = localIPs.length > 0 ? localIPs[0] : 'localhost';
+    const shopUrl = `http://${mainIP}:${instance.port}`;
+
+    res.json({
+      success: true,
+      shopUrl: shopUrl,
+      port: instance.port,
+      createdAt: instance.createdAt
+    });
+  } catch (error) {
+    console.error('ショッピングサーバー情報取得エラー:', error);
+    res.status(500).json({
+      success: false,
+      message: 'ショッピングサーバー情報の取得に失敗しました',
+      error: error.message
+    });
+  }
+});
+
+// ショッピングサーバーを停止するエンドポイント
+app.post("/api/shop/stop", (req, res) => {
+  const sessionId = req.sessionID;
+
+  if (!sessionId) {
+    return res.status(401).json({
+      success: false,
+      message: 'セッションが存在しません'
+    });
+  }
+
+  stopIndividualShoppingServer(sessionId);
+  res.json({
+    success: true,
+    message: 'ショッピングサーバーを停止しました'
+  });
+});
+
 // ✅ Socket.ioが有効化されることを確認
 // セキュリティ: Socket.ioの認証ミドルウェア追加
 io.use((socket, next) => {
@@ -1622,35 +1871,10 @@ function getLocalIPAddresses() {
   return preferredAddresses.length > 0 ? preferredAddresses : addresses;
 }
 
-// XSSショッピングサーバーと攻撃者サーバーを起動
-// spawnは既に13行目でインポート済み
-const xssServerPath = path.join(__dirname, 'xss', 'server.js');
+// 攻撃者サーバーを起動（個別インスタンスではなく、単一インスタンス）
 const attackServerPath = path.join(__dirname, 'attack_server', 'server.js');
 
-let xssServerProcess = null;
 let attackServerProcess = null;
-
-function startXssServer() {
-  console.log('🛒 XSSショッピングサーバーを起動中...');
-  
-  xssServerProcess = spawn('node', [xssServerPath], {
-    cwd: path.join(__dirname, 'xss'),
-    stdio: 'inherit',
-    shell: true
-  });
-  
-  xssServerProcess.on('error', (err) => {
-    console.error('❌ XSSサーバー起動エラー:', err);
-  });
-  
-  xssServerProcess.on('exit', (code, signal) => {
-    if (code !== null && code !== 0) {
-      console.error(`❌ XSSサーバーが終了しました (コード: ${code})`);
-    } else if (signal) {
-      console.log(`🛑 XSSサーバーがシグナルで終了しました: ${signal}`);
-    }
-  });
-}
 
 function startAttackServer() {
   console.log('🎯 攻撃者サーバーを起動中...');
@@ -1676,10 +1900,11 @@ function startAttackServer() {
 
 // メインサーバー終了時にすべてのサーバーも終了
 process.on('SIGINT', () => {
-  if (xssServerProcess) {
-    console.log('🛑 XSSサーバーを終了しています...');
-    xssServerProcess.kill();
+  // すべての個別ショッピングサーバーを停止
+  for (const [sessionId] of shoppingServerInstances.entries()) {
+    stopIndividualShoppingServer(sessionId);
   }
+  
   if (attackServerProcess) {
     console.log('🛑 攻撃者サーバーを終了しています...');
     attackServerProcess.kill();
@@ -1688,10 +1913,11 @@ process.on('SIGINT', () => {
 });
 
 process.on('SIGTERM', () => {
-  if (xssServerProcess) {
-    console.log('🛑 XSSサーバーを終了しています...');
-    xssServerProcess.kill();
+  // すべての個別ショッピングサーバーを停止
+  for (const [sessionId] of shoppingServerInstances.entries()) {
+    stopIndividualShoppingServer(sessionId);
   }
+  
   if (attackServerProcess) {
     console.log('🛑 攻撃者サーバーを終了しています...');
     attackServerProcess.kill();
@@ -1715,7 +1941,7 @@ server.listen(PORT, '0.0.0.0', () => {
     console.log(`📡 LAN内の他のデバイスからアクセス可能です（IPアドレスを取得できませんでした）`);
   }
   
-  // メインサーバー起動後にXSSサーバーと攻撃者サーバーを起動
-  startXssServer();
+  // メインサーバー起動後に攻撃者サーバーを起動
+  // ショッピングサーバーは個別に起動されるため、ここでは起動しない
   startAttackServer();
 });

