@@ -96,9 +96,49 @@ let reviews = [
   {
     id: 1,
     productId: 1,
-    author: '山田太郎',
+    author: '名無し',
     rating: 5,
-    comment: 'とても良い商品です！',
+    comment: 'とても良い商品です！\n学校で使っていますがとても便利です。',
+    date: new Date().toISOString()
+  },
+  {
+    id: 2,
+    productId: 2,
+    author: '名無し',
+    rating: 4,
+    comment: 'まあ普通に使える程度のものです。事務作業で使えるくらいの出来です。',
+    date: new Date().toISOString()
+  },
+  {
+    id: 2,
+    productId: 2,
+    author: '名無し',
+    rating: 2,
+    comment: 'ゲームには向かないです。。。\n速く動かすとポインターが飛んでしまいます。',
+    date: new Date().toISOString()
+  },
+  {
+    id: 3,
+    productId: 3,
+    author: '名無し',
+    rating: 3,
+    comment: '可もなく不可もなし！ごく普通なUSBメモリです。使いやすくはあるのかな？と思います。',
+    date: new Date().toISOString()
+  },
+  {
+    id: 4,
+    productId: 4,
+    author: '名無し',
+    rating: 5,
+    comment: 'ゲーム用で購入しました。まず最初に感じたのはクオリティがとても高いということです。今まで使ってたキーボードがおもちゃに感じるほどです。これからも使っていこうと思いました。',
+    date: new Date().toISOString()
+  },
+  {
+    id: 5,
+    productId: 5,
+    author: '名無し',
+    rating: 4,
+    comment: '解像度やカラーの豊かさがとても良いです。ゲームや動画鑑賞にも最適です。しかし27インチは少し大きすぎたかもしれないですね。',
     date: new Date().toISOString()
   }
 ];
