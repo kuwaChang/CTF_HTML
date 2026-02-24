@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # コード実行用の一時ディレクトリ
 temp/
+
+# ChromaDBデータベース
+db/chroma/
