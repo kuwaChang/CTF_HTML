@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 const sqlite3 = require("sqlite3").verbose();
+const bcrypt = require("bcrypt");
 const router = express.Router();
 
 // セキュリティ: ファイル名のサニタイゼーション関数（先に定義）
@@ -340,6 +341,18 @@ function validateRole(role) {
   return ['user', 'admin'].includes(role);
 }
 
+function validateUsername(username) {
+  // 3-50文字、危険な文字をチェック
+  if (!username || username.length < 3 || username.length > 50) return false;
+  // SQLインジェクション等の危険な文字がないかチェック
+  return !/[<>'"]/.test(username);
+}
+
+function validatePassword(password) {
+  // パスワードは8文字以上（必要に応じて強化）
+  return password && password.length >= 8;
+}
+
 // 管理者用API：ユーザー一覧取得
 router.get("/users", requireAdmin, (req, res) => {
   db.all(
@@ -402,6 +415,105 @@ router.put("/users/:userid/role", requireAdmin, (req, res) => {
       res.json({ message: `ユーザー ${userid} のroleを ${role} に変更しました` });
     }
   );
+});
+
+// 管理者用API：ユーザー名とパスワードの変更
+router.put("/users/:userid/profile", requireAdmin, async (req, res) => {
+  let { userid } = req.params;
+  let { username, password } = req.body;
+
+  // セキュリティ: 入力値のサニタイゼーション
+  userid = sanitizeInput(userid, 20);
+  if (username !== undefined) {
+    username = sanitizeInput(username, 50);
+  }
+
+  // セキュリティ: 入力値のバリデーション
+  if (!validateUserId(userid)) {
+    return res.status(400).json({ message: "無効なユーザーIDです" });
+  }
+
+  // 更新する情報がない場合はエラー
+  if (username === undefined && !password) {
+    return res.status(400).json({ message: "更新する情報（ユーザー名またはパスワード）を指定してください" });
+  }
+
+  // ユーザー名のバリデーション
+  if (username !== undefined && !validateUsername(username)) {
+    return res.status(400).json({ message: "ユーザー名は3-50文字で入力してください" });
+  }
+
+  // パスワードのバリデーション
+  if (password && !validatePassword(password)) {
+    return res.status(400).json({ message: "パスワードは8文字以上で入力してください" });
+  }
+
+  // パスワードのハッシュ化
+  let hashedPw = null;
+  if (password) {
+    try {
+      hashedPw = await bcrypt.hash(password, 10);
+    } catch (err) {
+      console.error("パスワードハッシュ化エラー:", err);
+      return res.status(500).json({ message: "パスワードの処理に失敗しました" });
+    }
+  }
+
+  // ユーザー名とパスワードの両方を更新する場合
+  if (username !== undefined && password) {
+    db.run(
+      "UPDATE users SET username = ?, password = ? WHERE userid = ?",
+      [username, hashedPw, userid],
+      function(err) {
+        if (err) {
+          console.error("ユーザー情報更新エラー:", err);
+          return res.status(500).json({ message: "更新に失敗しました" });
+        }
+        
+        if (this.changes === 0) {
+          return res.status(404).json({ message: "ユーザーが見つかりません" });
+        }
+
+        res.json({ message: `ユーザー ${userid} のユーザー名とパスワードを更新しました` });
+      }
+    );
+  } else if (username !== undefined) {
+    // ユーザー名のみ更新
+    db.run(
+      "UPDATE users SET username = ? WHERE userid = ?",
+      [username, userid],
+      function(err) {
+        if (err) {
+          console.error("ユーザー名更新エラー:", err);
+          return res.status(500).json({ message: "更新に失敗しました" });
+        }
+        
+        if (this.changes === 0) {
+          return res.status(404).json({ message: "ユーザーが見つかりません" });
+        }
+
+        res.json({ message: `ユーザー ${userid} のユーザー名を更新しました` });
+      }
+    );
+  } else if (password) {
+    // パスワードのみ更新
+    db.run(
+      "UPDATE users SET password = ? WHERE userid = ?",
+      [hashedPw, userid],
+      function(err) {
+        if (err) {
+          console.error("パスワード更新エラー:", err);
+          return res.status(500).json({ message: "更新に失敗しました" });
+        }
+        
+        if (this.changes === 0) {
+          return res.status(404).json({ message: "ユーザーが見つかりません" });
+        }
+
+        res.json({ message: `ユーザー ${userid} のパスワードを更新しました` });
+      }
+    );
+  }
 });
 
 module.exports = router;

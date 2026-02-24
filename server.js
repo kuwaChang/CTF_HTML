@@ -538,6 +538,11 @@ app.get("/register_form.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "register_form.html"));
 });
 
+// AIチューター
+app.get("/tutor", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "tutor.html"));
+});
+
 // ============================================
 // SQLインジェクション練習用ルート（学習目的）
 // ============================================
@@ -1500,6 +1505,7 @@ app.get("/session-check", (req, res) => {
       }
       res.json({ 
         loggedIn: true, 
+        userid: req.session.userid,
         username: row.username,
         role: userRole,
         iconPath: row.icon_path || null
@@ -1726,16 +1732,31 @@ function cleanup(dir) {
 }
 
 // 各ルート登録
-const authRoutes = require("./routes/auth");
-const quizRoutes = require("./routes/quiz");
-const adminRoutes = require("./routes/admin");
-const { router: achievementRoutes, checkAchievements } = require("./routes/achievements");
+console.log("📦 ルートモジュールを読み込み中...");
+try {
+  const authRoutes = require("./routes/auth");
+  console.log("✅ authルート読み込み完了");
+  const quizRoutes = require("./routes/quiz");
+  console.log("✅ quizルート読み込み完了");
+  const adminRoutes = require("./routes/admin");
+  console.log("✅ adminルート読み込み完了");
+  const { router: achievementRoutes, checkAchievements } = require("./routes/achievements");
+  console.log("✅ achievementsルート読み込み完了");
+  const tutorRoutes = require("./routes/tutor");
+  console.log("✅ tutorルート読み込み完了");
 
-app.use("/auth", authRoutes);
-app.use("/quiz", quizRoutes);
-app.use("/admin", adminRoutes);
-app.use("/achievements", achievementRoutes);
-app.use("/sad", sadRouter);
+  app.use("/auth", authRoutes);
+  app.use("/quiz", quizRoutes);
+  app.use("/admin", adminRoutes);
+  app.use("/achievements", achievementRoutes);
+  app.use("/tutor", tutorRoutes);
+  app.use("/sad", sadRouter);
+  console.log("✅ すべてのルートを登録しました");
+} catch (error) {
+  console.error("❌ ルートモジュール読み込みエラー:", error);
+  console.error("   スタックトレース:", error.stack);
+  // エラーが発生してもサーバーの起動を試みる
+}
 
 // ============================================
 // 個別ショッピングサーバーエンドポイント
@@ -1871,16 +1892,15 @@ function getLocalIPAddresses() {
   return preferredAddresses.length > 0 ? preferredAddresses : addresses;
 }
 
-<<<<<<< HEAD
+
 // 攻撃者サーバーを起動（個別インスタンスではなく、単一インスタンス）
-=======
+
 // XSSショッピングサーバーと攻撃者サーバーを起動
-<<<<<<< HEAD
-=======
+
 // spawnは既に13行目でインポート済み
->>>>>>> f162fa28bc80068a9b6ada9e2d228d11139914db
+
 const xssServerPath = path.join(__dirname, 'xss', 'server.js');
->>>>>>> 9461d45b500f18cdfb873360e3381f5fc1a8fb1a
+
 const attackServerPath = path.join(__dirname, 'attack_server', 'server.js');
 
 let attackServerProcess = null;
@@ -1935,22 +1955,39 @@ process.on('SIGTERM', () => {
 });
 
 // LAN内のすべてのインターフェースでリッスン
-server.listen(PORT, '0.0.0.0', () => {  
-  const localIPs = getLocalIPAddresses();
-  if (localIPs.length > 0) {
-    // 最初のIPアドレス（主要なもの）を表示
-    const mainIP = localIPs[0];
-    console.log(`📡 LAN内の他のデバイスからアクセス可能です: http://${mainIP}:${PORT}`);
-    
-    // 複数のIPアドレスがある場合は、それも表示
-    if (localIPs.length > 1) {
-      console.log(`   （その他のIPアドレス: ${localIPs.slice(1).join(', ')}）`);
+console.log(`🚀 サーバーをポート ${PORT} で起動中...`);
+try {
+  server.listen(PORT, '0.0.0.0', () => {  
+    console.log(`✅ サーバーが正常に起動しました！`);
+    const localIPs = getLocalIPAddresses();
+    if (localIPs.length > 0) {
+      // 最初のIPアドレス（主要なもの）を表示
+      const mainIP = localIPs[0];
+      console.log(`📡 LAN内の他のデバイスからアクセス可能です: http://${mainIP}:${PORT}`);
+      
+      // 複数のIPアドレスがある場合は、それも表示
+      if (localIPs.length > 1) {
+        console.log(`   （その他のIPアドレス: ${localIPs.slice(1).join(', ')}）`);
+      }
+    } else {
+      console.log(`📡 LAN内の他のデバイスからアクセス可能です（IPアドレスを取得できませんでした）`);
     }
-  } else {
-    console.log(`📡 LAN内の他のデバイスからアクセス可能です（IPアドレスを取得できませんでした）`);
-  }
+    
+    // メインサーバー起動後に攻撃者サーバーを起動
+    // ショッピングサーバーは個別に起動されるため、ここでは起動しない
+    startAttackServer();
+  });
   
-  // メインサーバー起動後に攻撃者サーバーを起動
-  // ショッピングサーバーは個別に起動されるため、ここでは起動しない
-  startAttackServer();
-});
+  server.on('error', (err) => {
+    console.error("❌ サーバー起動エラー:", err);
+    console.error("   エラーコード:", err.code);
+    console.error("   エラー番号:", err.errno);
+    if (err.code === 'EADDRINUSE') {
+      console.error(`⚠️ ポート ${PORT} は既に使用されています。`);
+      console.error(`💡 別のポートを使用するか、既存のプロセスを終了してください。`);
+    }
+  });
+} catch (error) {
+  console.error("❌ サーバー起動時の例外:", error);
+  console.error("   スタックトレース:", error.stack);
+}

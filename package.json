@@ -11,15 +11,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@langchain/community": "^1.1.16",
+    "@langchain/core": "^1.1.26",
+    "@langchain/ollama": "^0.1.0",
+    "@langchain/openai": "^1.2.8",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
+    "chromadb": "^1.8.1",
+    "connect-sqlite3": "^0.9.16",
     "ejs": "^4.0.1",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "helmet": "^8.1.0",
+    "langchain": "^1.2.25",
     "multer": "^2.0.2",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.7.5",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.0.2"
   }
 }

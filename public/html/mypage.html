@@ -154,12 +154,41 @@
           <span class="info-value" id="userid">-</span>
         </div>
         <div class="info-item">
+          <span class="info-label">ユーザー名:</span>
+          <span class="info-value" id="username">-</span>
+        </div>
+        <div class="info-item">
           <span class="info-label">スコア:</span>
           <span class="info-value" id="score">-</span>
         </div>
         <div class="info-item">
           <span class="info-label">学習時間:</span>
           <span class="info-value" id="studyTime">-</span>
+        </div>
+      </div>
+
+      <div class="user-info-section">
+        <h2>ユーザー情報の変更</h2>
+        
+        <div style="margin-bottom: 20px;">
+          <label for="usernameInput" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">ユーザー名:</label>
+          <input type="text" id="usernameInput" placeholder="新しいユーザー名" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; box-sizing: border-box;">
+          <button id="updateUsernameBtn" style="margin-top: 10px; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">ユーザー名を更新</button>
+          <p id="usernameUpdateStatus" style="margin-top: 10px; font-size: 14px;"></p>
+        </div>
+
+        <div style="margin-bottom: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+          <label for="currentPasswordInput" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">現在のパスワード:</label>
+          <input type="password" id="currentPasswordInput" placeholder="現在のパスワード" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; box-sizing: border-box; margin-bottom: 10px;">
+          
+          <label for="newPasswordInput" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">新しいパスワード:</label>
+          <input type="password" id="newPasswordInput" placeholder="新しいパスワード（8文字以上）" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; box-sizing: border-box; margin-bottom: 10px;">
+          
+          <label for="confirmPasswordInput" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">新しいパスワード（確認）:</label>
+          <input type="password" id="confirmPasswordInput" placeholder="新しいパスワード（確認）" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; box-sizing: border-box;">
+          
+          <button id="updatePasswordBtn" style="margin-top: 10px; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">パスワードを更新</button>
+          <p id="passwordUpdateStatus" style="margin-top: 10px; font-size: 14px;"></p>
         </div>
       </div>
     </div>

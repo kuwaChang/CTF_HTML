@@ -59,8 +59,27 @@
       font-weight: 700;
       color: #667eea;
     }
-    h2{
-      
+    .welcome-container ul {
+      color: #555;
+      line-height: 1.8;
+      margin-left: 20px;
+      margin-bottom: 15px;
+    }
+    .welcome-container li {
+      margin-bottom: 8px;
+    }
+    .info-box {
+      background: #e8f4f8;
+      border-left: 4px solid #667eea;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    .info-box p {
+      margin-bottom: 10px;
+    }
+    .info-box p:last-child {
+      margin-bottom: 0;
     }
     table {
       border-collapse: collapse; /* 枠線を重ねない */
@@ -83,6 +102,36 @@
 
 <body>
   <div class="welcome-container">
+    <h1>：） CTFとは？</h1>
+    <p><strong>CTF（Capture The Flag）</strong>は、サイバーセキュリティのスキルを競う競技です。</p>
+    <p>各問題には「フラグ」と呼ばれる答えが隠されており、暗号解読、ファイル解析、Webアプリケーションの脆弱性発見など、様々な技術を使ってフラグを見つけ出します。</p>
+    <p>このサイトでは、<strong>ストーリー仕立ての問題</strong>を通じて、CTFの基礎から応用まで楽しく学ぶことができます！</p>
+
+    <h1>：） このサイトでの学習方法</h1>
+    <p>このサイトには、<strong>Easy1、Easy2、Medium1、Medium2、Hard1、Hard2</strong>という6つの独立したストーリーが用意されています。</p>
+    
+    <div class="info-box">
+      <p><strong>✨ 重要：各ストーリーは完全に独立しています</strong></p>
+      <p>どのストーリーから始めても構いません。好きなストーリーを選んで、楽しくCTFを学びましょう！</p>
+    </div>
+    
+    <h2>📚 各ストーリーについて</h2>
+    <p>それぞれのストーリーには、独自の世界観と物語が用意されています：</p>
+    <ul>
+      <li><strong>Easy1</strong>：AI「ノア」が閉じ込められているシステムから脱出する物語</li>
+      <li><strong>Easy2</strong>：探偵事務所で様々な依頼を解決していく物語</li>
+      <li><strong>Medium1</strong>：失われた文明「アトラス」の遺跡を探索する物語</li>
+      <li>その他、それぞれ異なる世界観とストーリーが展開されます</li>
+    </ul>
+    
+    <p>各ストーリー内では、複数の問題（通常5問程度）を解いていくことで、ストーリーが進んでいきます。</p>
+    <p>問題は<strong>難易度順に並んでいるわけではない</strong>ので、「これなら解けそう」と思う問題から挑戦してください！</p>
+
+    <h2>🎯 初心者の方へ</h2>
+    <p>最初から難しい問題に挑戦すると、解き方や問題に対する取り組み方がわからないと思います。</p>
+    <p>そのため、<strong>Easy1またはEasy2から始める</strong>ことをおすすめします。</p>
+    <p>準備ができたら、どれかを選んでCTFに挑戦してみましょう！</p>
+
     <h1>：） 環境構築</h1>
     
     <h2>WSLをインストールしよう</h2>
@@ -90,14 +139,10 @@
     <div class="command-box">
       wsl --install
     </div>
+    <p style="color: #888; font-size: 14px; margin-top: 10px;">※WSL（Windows Subsystem for Linux）は、Windows上でLinux環境を使えるようにする機能です。CTFの問題を解く際に便利なツールが使えるようになります。</p>
 
-    <h1>：） Welcome New Player!</h1>
-    <p>ここにある様々なストーリーとともにCTFについて学習を進めていきましょう！</p>
-    <p>最初から問題に挑戦すると、解き方や問題に対する取り組み方などがわからないと思います。</p>
-    <p>そのため Beginner ページから初めて慣れていくのが良いと思います。<br>
-    準備ができたら、どれかを選びCTFに挑戦してみましょう！</p>
-
-    <h1>：）カテゴリーの簡単な説明</h1>
+    <h1>：） CTFカテゴリーの簡単な説明</h1>
+    <p>CTFの問題は、主に以下のカテゴリーに分類されます。各ストーリーでは、これらのカテゴリーの問題が登場します。</p>
     <h2>Crypto -暗号-</h2>
 <table border="1">
   <tr>

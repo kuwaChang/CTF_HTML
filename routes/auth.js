@@ -237,6 +237,99 @@ router.post("/study-time", requireLogin, (req, res) => {
   );
 });
 
+// ユーザー情報更新（ユーザー名とパスワード）
+router.post("/update-profile", requireLogin, async (req, res) => {
+  let { username, password, currentPassword } = req.body;
+  
+  // セキュリティ: 入力値のサニタイゼーション
+  if (username !== undefined) {
+    username = sanitizeInput(username, 50);
+  }
+  
+  // セキュリティ: 現在のパスワードを確認（パスワード変更時）
+  if (password) {
+    if (!currentPassword) {
+      return res.status(400).json({ success: false, message: "現在のパスワードを入力してください" });
+    }
+    
+    // セキュリティ: 現在のパスワードを検証
+    db.get("SELECT password FROM users WHERE userid = ?", [req.session.userid], async (err, user) => {
+      if (err) {
+        console.error("パスワード検証エラー:", err);
+        return res.status(500).json({ success: false, message: "エラーが発生しました" });
+      }
+      
+      if (!user) {
+        return res.status(404).json({ success: false, message: "ユーザーが見つかりません" });
+      }
+      
+      const match = await bcrypt.compare(currentPassword, user.password);
+      if (!match) {
+        return res.status(400).json({ success: false, message: "現在のパスワードが正しくありません" });
+      }
+      
+      // セキュリティ: 新しいパスワードのバリデーション
+      if (!validatePassword(password)) {
+        return res.status(400).json({ success: false, message: "パスワードは8文字以上で入力してください" });
+      }
+      
+      // セキュリティ: パスワードのハッシュ化
+      const hashedPw = await bcrypt.hash(password, 10);
+      
+      // ユーザー名とパスワードの両方を更新する場合
+      if (username !== undefined) {
+        if (!validateUsername(username)) {
+          return res.status(400).json({ success: false, message: "ユーザー名は3-50文字で入力してください" });
+        }
+        
+        db.run(
+          "UPDATE users SET username = ?, password = ? WHERE userid = ?",
+          [username, hashedPw, req.session.userid],
+          (err) => {
+            if (err) {
+              console.error("ユーザー情報更新エラー:", err);
+              return res.status(500).json({ success: false, message: "更新に失敗しました" });
+            }
+            res.json({ success: true, message: "ユーザー名とパスワードを更新しました" });
+          }
+        );
+      } else {
+        // パスワードのみ更新
+        db.run(
+          "UPDATE users SET password = ? WHERE userid = ?",
+          [hashedPw, req.session.userid],
+          (err) => {
+            if (err) {
+              console.error("パスワード更新エラー:", err);
+              return res.status(500).json({ success: false, message: "更新に失敗しました" });
+            }
+            res.json({ success: true, message: "パスワードを更新しました" });
+          }
+        );
+      }
+    });
+  } else if (username !== undefined) {
+    // ユーザー名のみ更新
+    if (!validateUsername(username)) {
+      return res.status(400).json({ success: false, message: "ユーザー名は3-50文字で入力してください" });
+    }
+    
+    db.run(
+      "UPDATE users SET username = ? WHERE userid = ?",
+      [username, req.session.userid],
+      (err) => {
+        if (err) {
+          console.error("ユーザー名更新エラー:", err);
+          return res.status(500).json({ success: false, message: "更新に失敗しました" });
+        }
+        res.json({ success: true, message: "ユーザー名を更新しました" });
+      }
+    );
+  } else {
+    return res.status(400).json({ success: false, message: "更新する情報を入力してください" });
+  }
+});
+
 // ログアウト
 router.get("/logout", (req, res) => {
   req.session.destroy(() => res.json({ success: true, message: "ログアウトしました" }));
