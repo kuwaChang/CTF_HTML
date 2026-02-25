@@ -25,6 +25,8 @@
     "helmet": "^8.1.0",
     "langchain": "^1.2.25",
     "multer": "^2.0.2",
+    "node-pre-gyp": "^0.17.0",
+    "npmlog": "^7.0.1",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.7.5",
     "sqlite3": "^5.0.2"
