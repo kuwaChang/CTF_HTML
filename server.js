@@ -1892,6 +1892,11 @@ function getLocalIPAddresses() {
   return preferredAddresses.length > 0 ? preferredAddresses : addresses;
 }
 
+
+// 攻撃者サーバーを起動（個別インスタンスではなく、単一インスタンス）
+
+// XSSショッピングサーバーと攻撃者サーバーを起動
+
 // spawnは既に13行目でインポート済み
 // 攻撃者サーバーを起動（個別インスタンスではなく、単一インスタンス）
 // XSSショッピングサーバーと攻撃者サーバーを起動
