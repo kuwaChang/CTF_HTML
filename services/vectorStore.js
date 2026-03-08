@@ -1,5 +1,4 @@
 const { ChromaClient } = require("chromadb");
-const { OpenAIEmbeddings } = require("@langchain/openai");
 const { OllamaEmbeddings } = require("@langchain/ollama");
 const fs = require("fs");
 const path = require("path");
@@ -68,44 +67,15 @@ class VectorStoreService {
     }
 
     try {
-      // デフォルトでローカル埋め込みモデル（Ollama）を使用
-      // USE_OPENAI=true の場合のみOpenAI埋め込みモデルを使用
-      const useOpenAI = process.env.USE_OPENAI === "true" || process.env.USE_OPENAI === "1";
       const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
       const ollamaEmbeddingModel = process.env.OLLAMA_EMBEDDING_MODEL || "nomic-embed-text";
 
-      if (!useOpenAI) {
-        // ローカル埋め込みモデル（Ollama）を使用（デフォルト）
-        try {
-          this.embeddings = new OllamaEmbeddings({
-            baseUrl: ollamaBaseUrl,
-            model: ollamaEmbeddingModel,
-          });
-          this.embeddingType = "ollama";
-          console.log(`✅ ローカル埋め込みモデル（Ollama）を初期化しました: ${ollamaEmbeddingModel} at ${ollamaBaseUrl}`);
-        } catch (error) {
-          console.error("❌ Ollama埋め込みモデル初期化エラー:", error);
-          console.warn("⚠️ Ollamaが起動していない可能性があります。");
-          console.warn("💡 Ollamaのインストール: https://ollama.com/download");
-          console.warn(`💡 埋め込みモデルのダウンロード: ollama pull ${ollamaEmbeddingModel}`);
-          throw error;
-        }
-      } else {
-        // OpenAI Embeddingsの初期化（オプション）
-        const apiKey = process.env.OPENAI_API_KEY;
-        if (!apiKey) {
-          console.warn("⚠️ USE_OPENAI=true が設定されていますが、OPENAI_API_KEYが設定されていません。");
-          console.warn("💡 ローカル埋め込みモデルを使用する場合は、USE_OPENAIを設定しないでください。");
-          // APIキーがない場合は後でエラーハンドリング
-        } else {
-          this.embeddings = new OpenAIEmbeddings({
-            openAIApiKey: apiKey,
-            modelName: "text-embedding-3-small"
-          });
-          this.embeddingType = "openai";
-          console.log("✅ OpenAI埋め込みモデルを初期化しました");
-        }
-      }
+      this.embeddings = new OllamaEmbeddings({
+        baseUrl: ollamaBaseUrl,
+        model: ollamaEmbeddingModel,
+      });
+      this.embeddingType = "ollama";
+      console.log(`✅ ローカル埋め込みモデル（Ollama）を初期化しました: ${ollamaEmbeddingModel} at ${ollamaBaseUrl}`);
 
       // コレクションの取得または作成
       try {
@@ -135,12 +105,7 @@ class VectorStoreService {
     }
 
     if (!this.embeddings) {
-      const useOpenAI = process.env.USE_OPENAI === "true" || process.env.USE_OPENAI === "1";
-      if (useOpenAI) {
-        throw new Error("OpenAI APIキーが設定されていません。");
-      } else {
-        throw new Error("ローカル埋め込みモデル（Ollama）の初期化に失敗しました。Ollamaが起動しているか確認してください。\n\n解決方法:\n1. Ollamaが起動しているか確認: `ollama list`\n2. 埋め込みモデルをダウンロード: `ollama pull nomic-embed-text`\n3. Ollamaのインストール: https://ollama.com/download");
-      }
+      throw new Error("ローカル埋め込みモデル（Ollama）の初期化に失敗しました。Ollamaが起動しているか確認してください。\n\n解決方法:\n1. Ollamaが起動しているか確認: `ollama list`\n2. 埋め込みモデルをダウンロード: `ollama pull nomic-embed-text`\n3. Ollamaのインストール: https://ollama.com/download");
     }
 
     const knowledgeDir = path.join(__dirname, "../data/knowledge");
@@ -155,8 +120,8 @@ class VectorStoreService {
 
     console.log("📚 知識ベースを読み込み中...");
 
-    const CHUNK_SIZE = 1000;
-    const CHUNK_OVERLAP = 200;
+    const CHUNK_SIZE = 600;
+    const CHUNK_OVERLAP = 150;
 
     const allChunks = [];
     const allMetadata = [];
@@ -204,12 +169,7 @@ class VectorStoreService {
     await this.initialize();
 
     if (!this.embeddings) {
-      const useOpenAI = process.env.USE_OPENAI === "true" || process.env.USE_OPENAI === "1";
-      if (useOpenAI) {
-        throw new Error("OpenAI APIキーが設定されていません。");
-      } else {
-        throw new Error("ローカル埋め込みモデル（Ollama）の初期化に失敗しました。Ollamaが起動しているか確認してください。");
-      }
+      throw new Error("ローカル埋め込みモデル（Ollama）の初期化に失敗しました。Ollamaが起動しているか確認してください。");
     }
 
     try {

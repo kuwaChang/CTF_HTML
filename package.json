@@ -14,7 +14,6 @@
     "@langchain/community": "^1.1.16",
     "@langchain/core": "^1.1.26",
     "@langchain/ollama": "^0.1.0",
-    "@langchain/openai": "^1.2.8",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
     "chromadb": "^1.8.1",

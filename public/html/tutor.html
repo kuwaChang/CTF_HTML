@@ -79,6 +79,15 @@
       color: #e0e0e0;
       align-self: flex-start;
     }
+    .message .message-body {
+      display: block;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .message .message-body strong {
+      font-weight: 700;
+    }
     .message .sources {
       margin-top: 10px;
       padding-top: 10px;
@@ -190,7 +199,7 @@
     <div id="errorMessage" class="error-message hidden"></div>
 
     <div class="quick-actions">
-      <button class="quick-action-btn" onclick="askQuickQuestion('この問題の解き方を教えてください')">
+      <button class="quick-action-btn" onclick="askQuickQuestion('問題の解き方を教えてください')">
         💡 解き方を聞く
       </button>
       <button class="quick-action-btn" onclick="askQuickQuestion('使用すべきツールを教えてください')">
@@ -220,14 +229,14 @@
   <script>
     let currentCategory = null;
     let currentQuestionId = null;
+    let statusPollTimer = null;
 
-    // ページ読み込み時にステータスを確認
+    // ページ読み込み時にステータスを確認し、準備完了までポーリング
     window.addEventListener('DOMContentLoaded', async () => {
-      await checkStatus();
-      // URLパラメータから問題情報を取得
       const urlParams = new URLSearchParams(window.location.search);
       currentCategory = urlParams.get('category');
       currentQuestionId = urlParams.get('questionId');
+      await checkStatusAndPoll();
     });
 
     // Enterキーで送信（Shift+Enterで改行）
@@ -238,6 +247,7 @@
       }
     });
 
+    /** ステータスを取得して表示を更新する。準備完了なら true を返す。 */
     async function checkStatus() {
       try {
         const response = await fetch('/tutor/status', {
@@ -249,43 +259,48 @@
         const statusText = document.getElementById('statusText');
         
         if (status.ready) {
+          if (statusPollTimer) {
+            clearInterval(statusPollTimer);
+            statusPollTimer = null;
+          }
           indicator.className = 'status-indicator';
-          if (status.useLocalLLM) {
-            statusText.textContent = `準備完了 (ローカルLLM: ${status.ollamaModel}, 知識ベース: ${status.knowledgeBaseCount}件)`;
-          } else {
-            statusText.textContent = `準備完了 (OpenAI API, 知識ベース: ${status.knowledgeBaseCount}件)`;
-          }
-        } else if (status.useLocalLLM) {
-          if (!status.llmReady) {
-            indicator.className = 'status-indicator warning';
-            statusText.textContent = `⚠️ Ollamaが起動していません (${status.ollamaBaseUrl})`;
-          } else if (!status.embeddingReady) {
-            indicator.className = 'status-indicator warning';
-            statusText.textContent = '埋め込みモデルを初期化中...';
-          } else if (!status.knowledgeBaseInitialized) {
-            indicator.className = 'status-indicator warning';
-            statusText.textContent = '知識ベースを初期化中...';
-          } else {
-            indicator.className = 'status-indicator error';
-            statusText.textContent = 'エラーが発生しています';
-          }
-        } else {
-          if (!status.apiKeySet) {
-            indicator.className = 'status-indicator warning';
-            statusText.textContent = '⚠️ OPENAI_API_KEYが設定されていません';
-          } else if (!status.knowledgeBaseInitialized) {
-            indicator.className = 'status-indicator warning';
-            statusText.textContent = '知識ベースを初期化中...';
-          } else {
-            indicator.className = 'status-indicator error';
-            statusText.textContent = 'エラーが発生しています';
-          }
+          statusText.textContent = `準備完了 (ローカルLLM: ${status.ollamaModel}, 知識ベース: ${status.knowledgeBaseCount}件)`;
+          return true;
         }
+        
+        if (!status.llmReady) {
+          indicator.className = 'status-indicator warning';
+          statusText.textContent = `⚠️ Ollamaが起動していません (${status.ollamaBaseUrl})`;
+        } else if (!status.embeddingReady) {
+          indicator.className = 'status-indicator warning';
+          statusText.textContent = '埋め込みモデルを初期化中...';
+        } else if (!status.knowledgeBaseInitialized) {
+          indicator.className = 'status-indicator warning';
+          statusText.textContent = '知識ベースを初期化中...';
+        } else {
+          indicator.className = 'status-indicator error';
+          statusText.textContent = 'エラーが発生しています';
+        }
+        return false;
       } catch (error) {
         console.error('ステータス確認エラー:', error);
         document.getElementById('statusIndicator').className = 'status-indicator error';
         document.getElementById('statusText').textContent = 'ステータス確認エラー';
+        return false;
       }
+    }
+
+    /** ステータスを確認し、準備完了まで2秒ごとにポーリングする */
+    async function checkStatusAndPoll() {
+      const ready = await checkStatus();
+      if (ready || statusPollTimer) return;
+      statusPollTimer = setInterval(async () => {
+        const isReady = await checkStatus();
+        if (isReady && statusPollTimer) {
+          clearInterval(statusPollTimer);
+          statusPollTimer = null;
+        }
+      }, 2000);
     }
 
     async function sendQuestion() {
@@ -335,18 +350,33 @@
       }
     }
 
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function formatAnswerText(content) {
+      const escaped = escapeHtml(content);
+      const withBreaks = escaped.replace(/\n/g, '<br>');
+      return withBreaks.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    }
+
     function addMessage(role, content, sources = []) {
       const container = document.getElementById('chatContainer');
       const messageDiv = document.createElement('div');
       messageDiv.className = `message ${role}`;
       
       const roleName = role === 'user' ? 'あなた' : 'AIチューター';
-      let html = `<strong>${roleName}:</strong> ${content}`;
+      const displayContent = role === 'assistant'
+        ? formatAnswerText(content)
+        : escapeHtml(content).replace(/\n/g, '<br>');
+      let html = `<strong>${roleName}:</strong> <span class="message-body">${displayContent}</span>`;
       
       if (sources && sources.length > 0) {
         html += '<div class="sources">';
         html += '<strong>参考資料:</strong> ';
-        html += sources.map(s => `${s.category} (関連度: ${s.relevance})`).join(', ');
+        html += sources.map(s => escapeHtml(`${s.category} (関連度: ${s.relevance})`)).join(', ');
         html += '</div>';
       }
       

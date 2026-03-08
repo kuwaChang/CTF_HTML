@@ -1,4 +1,3 @@
-const { ChatOpenAI } = require("@langchain/openai");
 const { ChatOllama } = require("@langchain/ollama");
 const vectorStore = require("./vectorStore");
 const fs = require("fs");
@@ -8,52 +7,27 @@ class TutorService {
   constructor() {
     this.llm = null;
     this.conversationHistory = new Map(); // userid -> history[]
-    this.llmType = null; // "openai" or "ollama"
   }
 
   initialize() {
-    // デフォルトでローカルLLM（Ollama）を使用
-    // USE_OPENAI=true の場合のみOpenAI APIを使用
-    const useOpenAI = process.env.USE_OPENAI === "true" || process.env.USE_OPENAI === "1";
     const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
     const ollamaModel = process.env.OLLAMA_MODEL || "llama3.2";
 
-    if (!useOpenAI) {
-      // ローカルLLM（Ollama）を使用（デフォルト）
-      try {
-        this.llm = new ChatOllama({
-          baseUrl: ollamaBaseUrl,
-          model: ollamaModel,
-          temperature: 0.7,
-        });
-        this.llmType = "ollama";
-        console.log(`✅ ローカルLLM（Ollama）を初期化しました: ${ollamaModel} at ${ollamaBaseUrl}`);
-        return true;
-      } catch (error) {
-        console.error("❌ Ollama初期化エラー:", error);
-        console.warn("⚠️ Ollamaが起動していない可能性があります。Ollamaを起動してください。");
-        console.warn("💡 Ollamaのインストール: https://ollama.com/download");
-        console.warn(`💡 モデルのダウンロード: ollama pull ${ollamaModel}`);
-        return false;
-      }
-    } else {
-      // OpenAI APIを使用（オプション）
-      const apiKey = process.env.OPENAI_API_KEY;
-      if (!apiKey) {
-        console.warn("⚠️ USE_OPENAI=true が設定されていますが、OPENAI_API_KEYが設定されていません。");
-        console.warn("💡 ローカルLLMを使用する場合は、USE_OPENAIを設定しないでください。");
-        return false;
-      }
-
-      this.llm = new ChatOpenAI({
-        openAIApiKey: apiKey,
-        modelName: "gpt-4o-mini",
+    try {
+      this.llm = new ChatOllama({
+        baseUrl: ollamaBaseUrl,
+        model: ollamaModel,
         temperature: 0.7,
-        maxTokens: 1000
+        numPredict: 1024,
       });
-      this.llmType = "openai";
-      console.log("✅ OpenAI APIを初期化しました");
+      console.log(`✅ ローカルLLM（Ollama）を初期化しました: ${ollamaModel} at ${ollamaBaseUrl}`);
       return true;
+    } catch (error) {
+      console.error("❌ Ollama初期化エラー:", error);
+      console.warn("⚠️ Ollamaが起動していない可能性があります。Ollamaを起動してください。");
+      console.warn("💡 Ollamaのインストール: https://ollama.com/download");
+      console.warn(`💡 モデルのダウンロード: ollama pull ${ollamaModel}`);
+      return false;
     }
   }
 
@@ -80,26 +54,18 @@ class TutorService {
   async answerQuestion(userid, question, category = null, questionId = null) {
     if (!this.llm) {
       if (!this.initialize()) {
-        const useOpenAI = process.env.USE_OPENAI === "true" || process.env.USE_OPENAI === "1";
-        if (useOpenAI) {
-          return {
-            answer: "申し訳ございません。OpenAI APIに接続できませんでした。OPENAI_API_KEYが正しく設定されているか確認してください。",
-            sources: []
-          };
-        } else {
-          return {
-            answer: "申し訳ございません。ローカルLLM（Ollama）に接続できませんでした。\n\n以下の手順を確認してください：\n1. Ollamaが起動しているか確認: `ollama list`\n2. 必要なモデルがダウンロードされているか確認: `ollama pull llama3.2`\n3. Ollamaのインストール: https://ollama.com/download",
-            sources: []
-          };
-        }
+        return {
+          answer: "申し訳ございません。ローカルLLM（Ollama）に接続できませんでした。\n\n以下の手順を確認してください：\n1. Ollamaが起動しているか確認: `ollama list`\n2. 必要なモデルがダウンロードされているか確認: `ollama pull llama3.2`\n3. Ollamaのインストール: https://ollama.com/download",
+          sources: []
+        };
       }
     }
 
     try {
-      // 関連する知識を検索
+      // 関連する知識を検索（5件取得してLLMが複数ソースを統合しやすくする）
       let relevantDocs = [];
       try {
-        relevantDocs = await vectorStore.search(question, 3);
+        relevantDocs = await vectorStore.search(question, 5);
       } catch (error) {
         console.error("知識ベース検索エラー:", error);
         // 検索に失敗しても続行
@@ -143,35 +109,35 @@ class TutorService {
 4. **励まし**: 学習者を励まし、モチベーションを維持する
 5. **ツールの紹介**: 必要に応じて、使用できるツールやコマンドを紹介する
 
-参考資料を活用して、正確で有用な回答を提供してください。
+参考資料は内容を理解したうえで、要約・統合し、学習者に合わせた自分の言葉で説明してください。資料の丸写しやそのままのコピーは避けてください。
+回答は簡潔に（目安: 800字程度）。同じ形式の項目を大量に列挙せず、必要な要点だけを5〜10項目程度にまとめてください。番号付きリストが長く続く場合は打ち切ってください。
+
+【文章の書き方・読みやすさ】
+- 段落は短くし、2〜3文ごとに改行を入れて区切ること。
+- 複数の手順やポイントがある場合は、行頭に「・」や「-」をつけた箇条書きにすること。
+- 重要な語句は**で囲むなどして強調してよい（Markdown形式で返してよい）。
+- 長い一文は避け、読んですぐ分かる短い文で書くこと。
+- 回答全体が一塊の長文にならないよう、見た目で構造が分かるようにすること。
 ${problemContext}
 
 参考資料:
 ${contextText}`;
 
-      // メッセージを構築
-      // Ollamaの場合はシステムプロンプトを最初のメッセージに含める
-      let messages;
-      if (this.llmType === "ollama") {
-        // Ollamaの場合、システムプロンプトを最初のメッセージに含める
-        messages = [
-          { role: "system", content: systemPrompt },
-          ...historyMessages,
-          { role: "user", content: question }
-        ];
-      } else {
-        // OpenAIの場合
-        messages = [
-          { role: "system", content: systemPrompt },
-          ...historyMessages,
-          { role: "user", content: question }
-        ];
-      }
+      // メッセージを構築（Ollama用：システムプロンプトを最初のメッセージに含める）
+      const messages = [
+        { role: "system", content: systemPrompt },
+        ...historyMessages,
+        { role: "user", content: question }
+      ];
 
       // LLMに質問
       const response = await this.llm.invoke(messages);
 
-      const answer = response.content;
+      let answer = response.content || "";
+      const MAX_ANSWER_LENGTH = 4000;
+      if (answer.length > MAX_ANSWER_LENGTH) {
+        answer = answer.slice(0, MAX_ANSWER_LENGTH) + "\n\n（回答が長いため省略しました。必要なら「〇〇についてもう少し」と質問してください。）";
+      }
 
       // 履歴に追加
       this.addToHistory(userid, "user", question);

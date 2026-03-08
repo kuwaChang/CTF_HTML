@@ -110,12 +110,10 @@ router.post("/rebuild", requireLogin, async (req, res) => {
   }
 });
 
-// ステータス確認
+// ステータス確認（初回で知識ベース初期化を開始するため ensureKnowledgeBase を呼ぶ）
 router.get("/status", requireLogin, async (req, res) => {
   try {
-    const useOpenAI = process.env.USE_OPENAI === "true" || process.env.USE_OPENAI === "1";
-    const useLocalLLM = !useOpenAI; // デフォルトでローカルLLMを使用
-    const apiKeySet = !!process.env.OPENAI_API_KEY;
+    await ensureKnowledgeBase();
     const kbInitialized = knowledgeBaseInitialized;
     
     let kbCount = 0;
@@ -132,54 +130,47 @@ router.get("/status", requireLogin, async (req, res) => {
       }
     }
 
-    // LLMの状態を確認
-    if (useLocalLLM) {
-      // ローカルLLMの場合、Ollamaが起動しているか確認
-      try {
-        const http = require('http');
-        const url = require('url');
-        const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
-        const parsedUrl = url.parse(`${ollamaBaseUrl}/api/tags`);
-        
-        await new Promise((resolve, reject) => {
-          const req = http.get({
-            hostname: parsedUrl.hostname,
-            port: parsedUrl.port || 11434,
-            path: parsedUrl.path,
-            timeout: 2000
-          }, (res) => {
-            if (res.statusCode === 200) {
-              llmReady = true;
-            }
-            resolve();
-          });
-          req.on('error', () => {
-            llmReady = false;
-            resolve();
-          });
-          req.on('timeout', () => {
-            req.destroy();
-            llmReady = false;
-            resolve();
-          });
+    // ローカルLLM（Ollama）の状態を確認
+    try {
+      const http = require('http');
+      const url = require('url');
+      const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
+      const parsedUrl = url.parse(`${ollamaBaseUrl}/api/tags`);
+      
+      await new Promise((resolve) => {
+        const req = http.get({
+          hostname: parsedUrl.hostname,
+          port: parsedUrl.port || 11434,
+          path: parsedUrl.path,
+          timeout: 2000
+        }, (res) => {
+          if (res.statusCode === 200) {
+            llmReady = true;
+          }
+          resolve();
         });
-      } catch (error) {
-        llmReady = false;
-      }
-    } else {
-      llmReady = apiKeySet;
+        req.on('error', () => {
+          llmReady = false;
+          resolve();
+        });
+        req.on('timeout', () => {
+          req.destroy();
+          llmReady = false;
+          resolve();
+        });
+      });
+    } catch (error) {
+      llmReady = false;
     }
 
     res.json({
-      useLocalLLM,
-      apiKeySet,
       llmReady,
       embeddingReady,
       knowledgeBaseInitialized: kbInitialized,
       knowledgeBaseCount: kbCount,
       ready: llmReady && embeddingReady && kbInitialized,
-      ollamaBaseUrl: useLocalLLM ? (process.env.OLLAMA_BASE_URL || "http://localhost:11434") : null,
-      ollamaModel: useLocalLLM ? (process.env.OLLAMA_MODEL || "llama3.2") : null
+      ollamaBaseUrl: process.env.OLLAMA_BASE_URL || "http://localhost:11434",
+      ollamaModel: process.env.OLLAMA_MODEL || "llama3.2"
     });
   } catch (error) {
     res.status(500).json({
