@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const tutorService = require("../services/tutorService");
 const vectorStore = require("../services/vectorStore");
+const tutorQaLog = require("../services/tutorQaLog");
 
 // ログイン必須ミドルウェア
 function requireLogin(req, res, next) {
@@ -55,6 +56,63 @@ router.post("/ask", requireLogin, async (req, res) => {
   }
 });
 
+// 質問に答える（ストリーミング・NDJSON 1行1イベント）
+router.post("/ask/stream", requireLogin, async (req, res) => {
+  try {
+    await ensureKnowledgeBase();
+
+    const { question, category, questionId } = req.body;
+    const userid = req.session.userid;
+
+    if (!question || question.trim() === "") {
+      return res.status(400).json({ message: "質問を入力してください" });
+    }
+
+    res.setHeader("Content-Type", "application/x-ndjson; charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache, no-transform");
+    res.setHeader("X-Accel-Buffering", "no");
+    if (typeof res.flushHeaders === "function") {
+      res.flushHeaders();
+    }
+
+    for await (const evt of tutorService.streamAnswerQuestion(
+      userid,
+      question.trim(),
+      category || null,
+      questionId || null
+    )) {
+      res.write(JSON.stringify(evt) + "\n");
+      if (typeof res.flush === "function") {
+        res.flush();
+      }
+    }
+    res.end();
+  } catch (error) {
+    console.error("❌ チューターストリーム質問エラー:", error);
+    if (!res.headersSent) {
+      res.status(500).json({
+        answer: "エラーが発生しました。もう一度お試しください。",
+        sources: [],
+        error: error.message
+      });
+    } else {
+      try {
+        res.write(
+          JSON.stringify({
+            type: "error",
+            answer: "エラーが発生しました。もう一度お試しください。",
+            sources: [],
+            error: error.message
+          }) + "\n"
+        );
+      } catch (_) {
+        /* ignore */
+      }
+      res.end();
+    }
+  }
+});
+
 // 問題のヒントを取得
 router.post("/hint", requireLogin, async (req, res) => {
   try {
@@ -86,7 +144,7 @@ router.post("/clear", requireLogin, (req, res) => {
 });
 
 // 知識ベースの再構築（管理者用）
-router.post("/rebuild", requireLogin, async (req, res) => {
+async function rebuildKnowledgeBase(req, res) {
   // 管理者権限チェック（簡易版）
   // 実際の実装では、適切な権限チェックを実装してください
   const userid = req.session.userid;
@@ -99,8 +157,23 @@ router.post("/rebuild", requireLogin, async (req, res) => {
     // 再構築
     await vectorStore.loadKnowledgeBase();
     knowledgeBaseInitialized = true;
-    
-    res.json({ message: "知識ベースを再構築しました" });
+
+    let qaExport = null;
+    try {
+      qaExport = tutorQaLog.flushPendingToDocs();
+    } catch (flushErr) {
+      console.error("❌ チューターQ&Aの書き出しエラー:", flushErr);
+    }
+
+    const body = { message: "知識ベースを再構築しました" };
+    if (qaExport) {
+      body.qaExport = {
+        filename: qaExport.filename,
+        path: `docs/${qaExport.filename}`,
+        entryCount: qaExport.count
+      };
+    }
+    res.json(body);
   } catch (error) {
     console.error("❌ 知識ベース再構築エラー:", error);
     res.status(500).json({
@@ -108,7 +181,13 @@ router.post("/rebuild", requireLogin, async (req, res) => {
       error: error.message
     });
   }
-});
+}
+
+router.post("/rebuild", requireLogin, rebuildKnowledgeBase);
+// 互換性のため、誤記されたエンドポイントも受け付ける
+router.post("/erbuild", requireLogin, rebuildKnowledgeBase);
+// ブラウザ直接アクセス時の
+router.get("/rebuild", requireLogin, rebuildKnowledgeBase);
 
 // ステータス確認（初回で知識ベース初期化を開始するため ensureKnowledgeBase を呼ぶ）
 router.get("/status", requireLogin, async (req, res) => {

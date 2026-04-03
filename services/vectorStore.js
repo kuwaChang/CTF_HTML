@@ -120,8 +120,8 @@ class VectorStoreService {
 
     console.log("📚 知識ベースを読み込み中...");
 
-    const CHUNK_SIZE = 600;
-    const CHUNK_OVERLAP = 150;
+    const CHUNK_SIZE = 400;
+    const CHUNK_OVERLAP = 40;
 
     const allChunks = [];
     const allMetadata = [];
@@ -198,6 +198,9 @@ class VectorStoreService {
     try {
       await this.client.deleteCollection({ name: this.collectionName });
       console.log("✅ コレクションを削除しました");
+      // 削除後は古い collection 参照が無効になるため再初期化を強制
+      this.collection = null;
+      this.initialized = false;
     } catch (error) {
       console.error("❌ コレクション削除エラー:", error);
     }

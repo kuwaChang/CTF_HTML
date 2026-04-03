@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../style.css">
-  <title>AIチューター</title>
+  <title>AI先生</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -63,10 +63,13 @@
       gap: 15px;
     }
     .message {
+      position: relative;
       padding: 12px 16px;
-      border-radius: 8px;
+      border-radius: 16px;
       max-width: 80%;
       word-wrap: break-word;
+      line-height: 1.6;
+      text-align: left;
     }
     .message.user {
       background-color: #4a9eff;
@@ -78,6 +81,32 @@
       background-color: #3d3d3d;
       color: #e0e0e0;
       align-self: flex-start;
+    }
+    .message.user::after,
+    .message.assistant::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      width: 10px;
+      height: 10px;
+      background: inherit;
+      transform: rotate(45deg);
+    }
+    .message.user::after {
+      right: -5px;
+      border-radius: 0 2px 0 0;
+    }
+    .message.assistant::before {
+      left: -5px;
+      border-radius: 2px 0 0 0;
+    }
+    .message .message-meta {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.8em;
+      opacity: 0.85;
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
     .message .message-body {
       display: block;
@@ -184,8 +213,8 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>🤖 AIチューター</h1>
-      <p>CTFの問題で困ったら、AIチューターに質問してみましょう！</p>
+      <h1>🤖 AI先生</h1>
+      <p>CTFの問題で困ったら、AI先生に質問してみましょう！</p>
     </div>
 
     <div class="status-bar" id="statusBar">
@@ -212,7 +241,8 @@
 
     <div class="chat-container" id="chatContainer">
       <div class="message assistant">
-        <strong>AIチューター:</strong> こんにちは！CTFの問題で困ったことがあれば、何でも質問してください。直接的な答えは教えませんが、ヒントや考え方を一緒に考えましょう！
+        <span class="message-meta">AI先生</span>
+        <span class="message-body">こんにちは！CTFの問題で困ったことがあれば、何でも質問してください。直接的な答えは教えませんが、ヒントや考え方を一緒に考えましょう！</span>
       </div>
     </div>
 
@@ -303,6 +333,35 @@
       }, 2000);
     }
 
+    /** ストリーミング用の空の AI メッセージ行を追加し、body / 参考資料用要素を返す */
+    function addStreamingAssistantMessage() {
+      const container = document.getElementById('chatContainer');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message assistant';
+      const meta = document.createElement('span');
+      meta.className = 'message-meta';
+      meta.textContent = 'AI先生';
+      const body = document.createElement('span');
+      body.className = 'message-body';
+      body.innerHTML = '<span class="loading"></span> 考え中...';
+      const sourcesEl = document.createElement('div');
+      sourcesEl.className = 'sources';
+      sourcesEl.style.display = 'none';
+      messageDiv.appendChild(meta);
+      messageDiv.appendChild(body);
+      messageDiv.appendChild(sourcesEl);
+      container.appendChild(messageDiv);
+      container.scrollTop = container.scrollHeight;
+      return { bodyEl: body, sourcesEl };
+    }
+
+    function setAssistantSources(sourcesEl, sources) {
+      if (!sources || sources.length === 0) return;
+      sourcesEl.style.display = 'block';
+      sourcesEl.innerHTML = '<strong>参考資料:</strong> ' +
+        sources.map(s => escapeHtml(`${s.category} (関連度: ${s.relevance})`)).join(', ');
+    }
+
     async function sendQuestion() {
       const input = document.getElementById('questionInput');
       const question = input.value.trim();
@@ -311,20 +370,21 @@
         return;
       }
 
-      // ユーザーメッセージを表示
       addMessage('user', question);
       input.value = '';
       
-      // 送信ボタンを無効化
       const sendBtn = document.getElementById('sendBtn');
       sendBtn.disabled = true;
       sendBtn.innerHTML = '<span class="loading"></span> 送信中...';
 
+      const streamRefs = addStreamingAssistantMessage();
+
       try {
-        const response = await fetch('/tutor/ask', {
+        const response = await fetch('/tutor/ask/stream', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/x-ndjson'
           },
           credentials: 'include',
           body: JSON.stringify({
@@ -334,15 +394,53 @@
           })
         });
 
-        const data = await response.json();
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          streamRefs.bodyEl.textContent = errData.message || 'リクエストに失敗しました。';
+          showError(errData.message || `HTTP ${response.status}`);
+          return;
+        }
 
-        if (data.error) {
-          showError(data.error);
-        } else {
-          addMessage('assistant', data.answer, data.sources);
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+        let fullText = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            let evt;
+            try {
+              evt = JSON.parse(line);
+            } catch (e) {
+              continue;
+            }
+            if (evt.type === 'sources') {
+              setAssistantSources(streamRefs.sourcesEl, evt.sources);
+            } else if (evt.type === 'chunk' && evt.text) {
+              fullText += evt.text;
+              streamRefs.bodyEl.innerHTML = formatAnswerText(fullText);
+            } else if (evt.type === 'done') {
+              if (evt.answer != null) {
+                fullText = evt.answer;
+                streamRefs.bodyEl.innerHTML = formatAnswerText(fullText);
+              }
+            } else if (evt.type === 'error') {
+              if (evt.error) showError(evt.error);
+              streamRefs.bodyEl.innerHTML = formatAnswerText(evt.answer || 'エラーが発生しました。');
+            }
+          }
+          document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
         }
       } catch (error) {
         console.error('質問送信エラー:', error);
+        streamRefs.bodyEl.textContent = 'エラーが発生しました。もう一度お試しください。';
         showError('エラーが発生しました。もう一度お試しください。');
       } finally {
         sendBtn.disabled = false;
@@ -367,11 +465,11 @@
       const messageDiv = document.createElement('div');
       messageDiv.className = `message ${role}`;
       
-      const roleName = role === 'user' ? 'あなた' : 'AIチューター';
+      const roleName = role === 'user' ? 'あなた' : 'AI先生';
       const displayContent = role === 'assistant'
         ? formatAnswerText(content)
         : escapeHtml(content).replace(/\n/g, '<br>');
-      let html = `<strong>${roleName}:</strong> <span class="message-body">${displayContent}</span>`;
+      let html = `<span class="message-meta">${roleName}</span><span class="message-body">${displayContent}</span>`;
       
       if (sources && sources.length > 0) {
         html += '<div class="sources">';
@@ -403,7 +501,7 @@
         
         if (response.ok) {
           const container = document.getElementById('chatContainer');
-          container.innerHTML = '<div class="message assistant"><strong>AIチューター:</strong> 会話履歴をクリアしました。新しい質問から始めましょう！</div>';
+          container.innerHTML = '<div class="message assistant"><span class="message-meta">AI先生</span><span class="message-body">会話履歴をクリアしました。新しい質問から始めましょう！</span></div>';
         }
       } catch (error) {
         console.error('履歴クリアエラー:', error);

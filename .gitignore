@@ -143,3 +143,6 @@ temp/
 
 # ChromaDBデータベース
 db/chroma/
+
+# チューターQ&A（rebuildまでの未書き出しキュー）
+db/tutor_qa_pending.jsonl
