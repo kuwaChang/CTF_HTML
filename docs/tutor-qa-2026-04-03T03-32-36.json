@@ -1,0 +1,216 @@
+{
+  "exportedAt": "2026-04-03T03:32:36.751Z",
+  "entryCount": 6,
+  "entries": [
+    {
+      "userid": "admin",
+      "question": "こんにちは",
+      "category": null,
+      "questionId": null,
+      "answer": "こんにちは！どうして私に話してくれてよかったです。CTFについて質問をすると良いかもしれませんね。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.24"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.24"
+        }
+      ],
+      "recordedAt": "2026-04-03T03:05:47.057Z"
+    },
+    {
+      "userid": "admin",
+      "question": "こんにちは！",
+      "category": null,
+      "questionId": null,
+      "answer": "お日-offsですね！\n\n今、CTF学習を始める準備ができましたか？あなたはCTFの世界に入り込んでいくために、このプラットフォームに会えて嬉しいです。\n\nまずはまず、目標とレベルを決めてみましょう。なぜなら、ここでは段階的にヒントやアドバイスを提供するからです！\n\n\n### 目標設定\n私たちCTFの新米生は、いろいろな種類の問題に挑戦してみますね？そのため、目標を設定しましょう。どんなタイプの問題に興味を持っていますか？パラメータ変更やフラグ探索、エンコードされたデータなど？\n\n### レベル決定\nあなたは初心者でしたが、どのレベルの問題に挑戦する方ですか？難易度を調べてみましょう。私たちは段階的にアドバイスを与えますから！\n\n\n### ヘルプ-requestできますか？\nCTF学習が始まること中に困ることがありますか？あなたの質問、問題、または思いつきがあることを私たちに伝えると嬉しいです。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.29"
+        }
+      ],
+      "recordedAt": "2026-04-03T03:25:40.776Z"
+    },
+    {
+      "userid": "admin",
+      "question": "こんにちは！",
+      "category": null,
+      "questionId": null,
+      "answer": "お日-offsですね！\n\n今、CTF学習を始める準備ができましたか？あなたはCTFの世界に入り込んでいくために、このプラットフォームに会えて嬉しいです。\n\n### ヘルプ-requestできますか？\n私たちはあなたの成長を支援することにしました！\n\n\n**このプロセスで助けになるツールやリソース**\n\n\n\n- [Wikipedia](https://ja.wikipedia.org/wiki/CTF)\n- [CTF Arena](https://ctf-arena.net/)\n- [Hack The Box](https://www.hackthebox.eu/)\n\n\n\n### 5つのステップ\nここでは、段階的にアドバイスを与えます。\n\n\n1.  **問題の種類**：どのような問題に興味を持っていますか？パラメータ変更やフラグ探索、エンコードされたデータなど？\n2.  **解決方法**：私たちは、段階的にアドバイスを与えます。たとえば、`grep`コマンドで文書化されたフラグを見つけるかどうか？\n3.  **ソリューション**：あなたがどのように問題を解決しますか？パイプラインを書くか、カタログ検索を行うか？\n4.  **デバッグ**：あなたは何を確認する必要があるでしょうか？例えば、エラーメッセージやロギングデータなど？\n5.  **モチベーション**：問題が解決されたときにどんな気分になるでしょうか？あなたの成長を支援するために、私たちはあなたのモチベーションを高めることにします！\n\n\nお日-offsまで待ってください。 CTf学習の準備ができたら私たちと触れます！",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.29"
+        }
+      ],
+      "recordedAt": "2026-04-03T03:26:31.295Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTってなに",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINTとは？**\n\n大規模な情報収集を簡単にするツールです。\n\n\n\n### OSINTの種類\n次のようなタイプがあります。\n\n*   **Web Search**: インターネット上で検索する\n*   **Social Media Search**: サイバースパイアやサムライなどのソーシャルメディアでの検索\n*   **Database Search**: データベースやファイルシステム内に保存された情報を探す\n*   **Network Reconnaissance**: ネットワークの構成とコンピューター間のコミュニケーションを分析する\n\n[参考資料1]\n# OSINTの基本知識\n大規模な情報収集に役立つツールです。",
+      "sources": [
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.13"
+        }
+      ],
+      "recordedAt": "2026-04-03T03:28:10.766Z"
+    },
+    {
+      "userid": "admin",
+      "question": "FORENSICSってなに",
+      "category": null,
+      "questionId": null,
+      "answer": "**FORENSICSTOOLSTOOL**\n\nこのプロセスは、法的証拠を生成するために使用されるツールです。\n\n\n\n### FORENICSの種類\n次のようなタイプがあります。\n\n*   **Digital Forensics**: デジタル証拠を分析するためのツールです。\n*   **Network Forensics**: ネットワークに関する情報を調査するためのツールです。\n*   **Computer Forensics**: コンピュータ上の証拠を分析するためのツールです。\n\n[参考資料2]\n# FORENICSの基本知識\nこのプロセスは、法的証拠を生成するために使用されるツールです。",
+      "sources": [
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.13"
+        }
+      ],
+      "recordedAt": "2026-04-03T03:28:41.483Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**CTFのOSINTカテゴリとは？**\n\nこのタイプの問題では、Web SearchやSocial Media Searchなどのオープンなソースの情報収集が目的です。\n\n\n\n### OSINTで求められるもの\n次のようなことが求められます。\n\n*   **人名**: したがって、特定の個人に関する情報を調べます。\n*   **組織名**: したがって、特定の組織や企業に関する情報を調べます。\n*   **場所**: したがって、特定の地域や都市に関する情報を調べます。\n*   **IPアドレス**: したがって、特定の IP アドレスからのトラフィックまたはデータの分析を行います。\n*   **URL**: したがって、特定の URL から得られる情報を分析します。\n\n[参考資料3]\n# CTFのOSINTカテゴリ\nこのタイプの問題では、Web SearchやSocial Media Searchなどのオープンなソースの情報収集が目的です。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.34"
+        }
+      ],
+      "recordedAt": "2026-04-03T03:29:31.317Z"
+    }
+  ]
+}
