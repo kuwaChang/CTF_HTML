@@ -1727,8 +1727,8 @@ app.post("/api/execute-code", (req, res) => {
   }
   fs.mkdirSync(tempDir, { recursive: true });
 
-  // 実行時間制限（10秒）
-  const TIMEOUT = 10000;
+  // 実行時間制限（100秒）
+  const TIMEOUT = 100000;
 
   let filename;
   switch (language) {
