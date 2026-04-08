@@ -160,13 +160,19 @@ function initMapForCoordinates() {
     mapDiv.innerHTML = '<p style="padding: 20px; text-align: center;">地図ライブラリを読み込んでいます...</p>';
     loadLeafletLibrary().then(() => {
       initMapForCoordinates();
+    }).catch((err) => {
+      console.error(err);
+      mapDiv.innerHTML = '<p style="padding: 20px; text-align: center; color: #c00;">地図を読み込めませんでした。ページを再読み込みしてください。</p>';
     });
   }
 }
 
 // Leafletライブラリを動的に読み込む
+// Monaco Editor の loader.js が AMD の define を置くため、Leaflet の UMD が
+// define() を呼び「Can only have one anonymous define call per script file」になる。
+// 読み込み中だけ define.amd を無効化し、グローバル window.L として登録させる。
 function loadLeafletLibrary() {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     if (typeof L !== 'undefined') {
       resolve();
       return;
@@ -180,12 +186,32 @@ function loadLeafletLibrary() {
     link.crossOrigin = '';
     document.head.appendChild(link);
     
+    const globalDefine = window.define;
+    let savedAmd = null;
+    if (typeof globalDefine === 'function' && globalDefine.amd) {
+      savedAmd = globalDefine.amd;
+      globalDefine.amd = false;
+    }
+
+    const restoreAmd = () => {
+      if (savedAmd !== null && typeof globalDefine === 'function') {
+        globalDefine.amd = savedAmd;
+      }
+    };
+
     // Leaflet JS
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
     script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
     script.crossOrigin = '';
-    script.onload = resolve;
+    script.onload = () => {
+      restoreAmd();
+      resolve();
+    };
+    script.onerror = () => {
+      restoreAmd();
+      reject(new Error('Leaflet の読み込みに失敗しました'));
+    };
     document.head.appendChild(script);
   });
 }
@@ -447,6 +473,11 @@ function openModal(category, qid, evt = null) {
         // 入力欄の変更時にマーカーを更新
         answerInput.addEventListener('input', updateMarkerFromInput);
         answerInput.addEventListener('blur', updateMarkerFromInput);
+      }).catch((err) => {
+        console.error(err);
+        if (mapDiv) {
+          mapDiv.innerHTML = '<p style="padding: 20px; text-align: center; color: #c00;">地図を読み込めませんでした。ページを再読み込みしてください。</p>';
+        }
       });
     }, 100);
   } else {
