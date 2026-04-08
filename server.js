@@ -10,7 +10,7 @@ const { Server } = require("socket.io");
 const { router: sadRouter, setSocketIO } = require("./server-sad");
 const crypto = require("crypto");
 const multer = require("multer");
-const { exec, spawn } = require("child_process");
+const { exec, spawn, spawnSync } = require("child_process");
 const { promisify } = require("util");
 const execAsync = promisify(exec);
 
@@ -1574,6 +1574,128 @@ app.get("/api/user-icon/:userid", (req, res) => {
   });
 });
 
+// --- コード実行: Docker サンドボックス（ホスト上の任意コード実行を防ぐ） ---
+let dockerDaemonOk = null;
+function isDockerDaemonAvailable() {
+  if (dockerDaemonOk !== null) return dockerDaemonOk;
+  try {
+    const r = spawnSync("docker", ["info"], {
+      encoding: "utf8",
+      timeout: 8000,
+      windowsHide: true,
+      stdio: ["ignore", "ignore", "pipe"],
+    });
+    dockerDaemonOk = r.status === 0;
+  } catch {
+    dockerDaemonOk = false;
+  }
+  return dockerDaemonOk;
+}
+
+function dockerVolumePathForMount(absDir) {
+  return path.resolve(absDir).replace(/\\/g, "/");
+}
+
+/** @returns {{ spawnCmd: string, spawnArgs: string[], useShell: boolean, cwd?: string } | null} */
+function buildCodeExecutionSpawn(tempDir, language) {
+  //1:Docker,0:ホスト実行
+  const insecure = process.env.CODE_EXEC_INSECURE_HOST === "0";
+
+  let filename;
+  switch (language) {
+    case "python":
+      filename = "main.py";
+      break;
+    case "c":
+      filename = "main.c";
+      break;
+    case "cpp":
+      filename = "main.cpp";
+      break;
+    case "java":
+      filename = "Main.java";
+      break;
+    default:
+      return null;
+  }
+
+  if (!insecure && isDockerDaemonAvailable()) {
+    const mount = dockerVolumePathForMount(tempDir);
+    const common = [
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--memory",
+      "256m",
+      "--cpus",
+      "0.5",
+      "--pids-limit",
+      "128",
+      "--security-opt",
+      "no-new-privileges",
+      "-v",
+      `${mount}:/work`,
+      "-w",
+      "/work",
+    ];
+    let image;
+    let inner;
+    switch (language) {
+      case "python":
+        image = process.env.CODE_DOCKER_IMAGE_PYTHON || "python:3.12-alpine";
+        inner = "python3 main.py";
+        break;
+      case "c":
+        image = process.env.CODE_DOCKER_IMAGE_C || "gcc:12-bookworm";
+        inner = "gcc main.c -o main && ./main";
+        break;
+      case "cpp":
+        image = process.env.CODE_DOCKER_IMAGE_CPP || "gcc:12-bookworm";
+        inner = "g++ main.cpp -o main && ./main";
+        break;
+      case "java":
+        image = process.env.CODE_DOCKER_IMAGE_JAVA || "eclipse-temurin:17-jdk";
+        inner = "javac Main.java && java Main";
+        break;
+      default:
+        return null;
+    }
+    return {
+      spawnCmd: "docker",
+      spawnArgs: [...common, image, "sh", "-c", inner],
+      useShell: false,
+    };
+  }
+
+  if (!insecure) {
+    return null;
+  }
+
+  let command;
+  switch (language) {
+    case "python":
+      command = `python "${path.join(tempDir, filename)}"`;
+      break;
+    case "c": {
+      const cExe = path.join(tempDir, "main.exe");
+      command = `gcc "${path.join(tempDir, filename)}" -o "${cExe}" && "${cExe}"`;
+      break;
+    }
+    case "cpp": {
+      const cppExe = path.join(tempDir, "main.exe");
+      command = `g++ "${path.join(tempDir, filename)}" -o "${cppExe}" && "${cppExe}"`;
+      break;
+    }
+    case "java":
+      command = `cd "${tempDir}" && javac "${filename}" && java Main`;
+      break;
+    default:
+      return null;
+  }
+  return { spawnCmd: command, spawnArgs: [], useShell: true, cwd: tempDir };
+}
+
 // コード実行API
 app.post("/api/execute-code", (req, res) => {
   // セキュリティ: 認証チェック
@@ -1605,30 +1727,22 @@ app.post("/api/execute-code", (req, res) => {
   }
   fs.mkdirSync(tempDir, { recursive: true });
 
-  // 実行時間制限（10秒）
-  const TIMEOUT = 10000;
+  // 実行時間制限（100秒）
+  const TIMEOUT = 100000;
 
-  let command;
   let filename;
-
   switch (language) {
     case 'python':
       filename = 'main.py';
-      command = `python "${path.join(tempDir, filename)}"`;
       break;
     case 'c':
       filename = 'main.c';
-      const cExe = path.join(tempDir, 'main.exe');
-      command = `gcc "${path.join(tempDir, filename)}" -o "${cExe}" && "${cExe}"`;
       break;
     case 'cpp':
       filename = 'main.cpp';
-      const cppExe = path.join(tempDir, 'main.exe');
-      command = `g++ "${path.join(tempDir, filename)}" -o "${cppExe}" && "${cppExe}"`;
       break;
     case 'java':
       filename = 'Main.java';
-      command = `cd "${tempDir}" && javac "${filename}" && java Main`;
       break;
     default:
       cleanup(tempDir);
@@ -1639,14 +1753,29 @@ app.post("/api/execute-code", (req, res) => {
   const filePath = path.join(tempDir, filename);
   fs.writeFileSync(filePath, code, 'utf8');
 
+  const spec = buildCodeExecutionSpawn(tempDir, language);
+  if (!spec) {
+    cleanup(tempDir);
+    return res.status(503).json({
+      success: false,
+      message:
+        "サーバー側のコード実行はサンドボックス（Docker）が利用できないため無効です。Docker を起動するか、開発時のみ CODE_EXEC_INSECURE_HOST=1 でホスト実行を有効にできます（非推奨）。",
+    });
+  }
+
   // コード実行
   const startTime = Date.now();
-  const childProcess = spawn(command, {
-    shell: true,
-    cwd: tempDir,
-    stdio: ['ignore', 'pipe', 'pipe'],
-    timeout: TIMEOUT
-  });
+  const childProcess = spec.useShell
+    ? spawn(spec.spawnCmd, {
+        shell: true,
+        cwd: spec.cwd,
+        stdio: ['ignore', 'pipe', 'pipe'],
+        timeout: TIMEOUT,
+      })
+    : spawn(spec.spawnCmd, spec.spawnArgs, {
+        stdio: ['ignore', 'pipe', 'pipe'],
+        timeout: TIMEOUT,
+      });
 
   let stdout = '';
   let stderr = '';
@@ -1666,7 +1795,7 @@ app.post("/api/execute-code", (req, res) => {
     childProcess.kill();
   }, TIMEOUT);
 
-  childProcess.on('close', (code) => {
+  childProcess.on('close', (exitCode) => {
     clearTimeout(timeoutId);
     
     // 一時ファイルの削除
@@ -1682,11 +1811,11 @@ app.post("/api/execute-code", (req, res) => {
       });
     }
 
-    if (code !== 0 || stderr) {
+    if (exitCode !== 0 || stderr) {
       return res.json({
         success: false,
         output: stdout,
-        error: stderr || `プロセスが終了コード ${code} で終了しました`
+        error: stderr || `プロセスが終了コード ${exitCode} で終了しました`
       });
     }
 
