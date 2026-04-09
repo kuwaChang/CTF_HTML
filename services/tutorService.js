@@ -53,7 +53,7 @@ class TutorService {
       this.llm = new ChatOllama({
         baseUrl: ollamaBaseUrl,
         model: ollamaModel,
-        temperature: 0.7,
+        temperature: 0.2,
         numPredict: 1024,
       });
       console.log(`✅ ローカルLLM（Ollama）を初期化しました: ${ollamaModel} at ${ollamaBaseUrl}`);
