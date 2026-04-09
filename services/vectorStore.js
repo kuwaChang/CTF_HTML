@@ -7,7 +7,7 @@ const path = require("path");
  * 簡易テキストスプリッター（@langchain/community の ESM/dist 問題を避けるため自前実装）
  * chunkSize / chunkOverlap で RecursiveCharacterTextSplitter と同様に分割する
  */
-function splitTextIntoChunks(text, chunkSize = 1000, chunkOverlap = 200) {
+function splitTextIntoChunks(text, chunkSize = 500, chunkOverlap = 50) {
   const chunks = [];
   let start = 0;
   while (start < text.length) {
