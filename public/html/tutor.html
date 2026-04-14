@@ -111,11 +111,26 @@
     .message .message-body {
       display: block;
       line-height: 1.6;
-      white-space: pre-wrap;
+      white-space: normal;
       word-break: break-word;
     }
     .message .message-body strong {
       font-weight: 700;
+    }
+    .message .message-body h3 {
+      margin: 0.4em 0 0.3em;
+      font-size: 1.05em;
+      color: #8ec1ff;
+    }
+    .message .message-body p {
+      margin: 0.25em 0;
+    }
+    .message .message-body ul {
+      margin: 0.3em 0 0.5em 1.2em;
+      padding: 0;
+    }
+    .message .message-body li {
+      margin: 0.15em 0;
     }
     .message .sources {
       margin-top: 10px;
@@ -454,10 +469,55 @@
       return div.innerHTML;
     }
 
+    function formatInlineMarkdown(text) {
+      return text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
     function formatAnswerText(content) {
-      const escaped = escapeHtml(content);
-      const withBreaks = escaped.replace(/\n/g, '<br>');
-      return withBreaks.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      const escaped = escapeHtml(content || '');
+      const lines = escaped.split('\n');
+      const htmlParts = [];
+      let inList = false;
+
+      const closeListIfNeeded = () => {
+        if (inList) {
+          htmlParts.push('</ul>');
+          inList = false;
+        }
+      };
+
+      for (const line of lines) {
+        const heading = line.match(/^###\s+(.+)$/);
+        const bullet = line.match(/^(?:-|\*)\s+(.+)$/);
+
+        if (heading) {
+          closeListIfNeeded();
+          htmlParts.push(`<h3>${formatInlineMarkdown(heading[1])}</h3>`);
+          continue;
+        }
+
+        if (bullet) {
+          if (!inList) {
+            htmlParts.push('<ul>');
+            inList = true;
+          }
+          htmlParts.push(`<li>${formatInlineMarkdown(bullet[1])}</li>`);
+          continue;
+        }
+
+        closeListIfNeeded();
+        if (!line.trim()) {
+          htmlParts.push('<br>');
+        } else {
+          htmlParts.push(`<p>${formatInlineMarkdown(line)}</p>`);
+        }
+      }
+
+      closeListIfNeeded();
+      return htmlParts.join('');
     }
 
     function addMessage(role, content, sources = []) {

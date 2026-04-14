@@ -1,0 +1,1056 @@
+{
+  "exportedAt": "2026-04-14T06:29:57.181Z",
+  "entryCount": 30,
+  "entries": [
+    {
+      "userid": "admin",
+      "question": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINT（オープン・ソーシャル・インフォマティクス）カテゴリ**\n\nCTF（Capture The Flag）のOSINTカテゴリでは、問題は一般的なインターネット上の情報を分析することに関係しています。初心者向けに説明します。\n\n### 什麼がOSINTですか？\n\n*   OSINTとは、インターネットや他のデータソースから得られる、公的かつ非機密な情報を分析して利用するプロセスです。\n*   このカテゴリでは、問題は一般的な情報を分析することに関係しています。\n\n### どんな問題がOSINTカテゴリに含まれる？\n\n*   例えば、Webサイトの構成やコンテンツ、データベースの構造、ソーシャルメディアアカウントの情報など、インターネット上の一般的な情報を分析することに関係します。\n*   また、ドメイン名やIPアドレス、ファイルのコンテンツなどの、インターネット上のデータを分析して利用することも含まれます。\n\n### 初心者向けに簡単な例\n\n*   1つのWebサイトの構成を分析し、その構成から情報を推測する。\n*   あるソーシャルメディアアカウントのプロフィールやโพストを分析して、ユーザーの性格や興味を推測する。\n\n### OSINTカテゴリの問題例\n\n*   Webサイトの構成を分析し、その構成から情報を推測する。\n*   あるドメイン名がどのように取得されたかを調べる。\n*   あるファイルのコンテンツを分析して、ファイルの目的や作者について知る。\n\n### OSINTカテゴリの重要なスキル\n\n*   インターネット上の情報を分析する能力\n*   さまざまなデータソースから情報を収集する能力\n*   情報を分析し、結論に到達する能力",
+      "sources": [
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.36"
+        }
+      ],
+      "recordedAt": "2026-04-14T02:26:06.581Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINTの初動手順**\n\n画像1枚から調査を始めるには、まずは基本的な情報収集を開始する必要があります。以下はOSINT（オープン・ソース・インテリジェンス）における初期手順です。\n\n1.  **画像の分析**: 画像を分析して、重要な情報を特定しましょう。画像の背景、人物の位置、機器の形状など、すべての detail を注意して調べます。\n2.  **検索ワードの設定**: 画像から得られる情報に基づいて検索ワードを設定します。例えば、画像に表示されている文字やロゴ、人物の服装、機器のマークなど、重要な特徴を特定して検索ワードに使います。\n3.  **画像の拡大**: 画像を拡大して詳細を確認しましょう。拡大すると、画像上の detail が明らかになり、より正確な情報が得られます。\n4.  **背景の調査**: 画像の背景を調べることで、重要な情報が隠されている可能性があります。背景の色や形状、人物の位置など、すべての detail を注意して調べます。\n5.  **画像の比較**: 画像を他の画像と比較することで、関係性や差異を特定できます。例えば、同じ人物が何度も現れるか、背景の色や形状はどのように変化しているかなど、すべての detail を注意して調べます。\n\nこれらのステップを実行すると、画像から得られる情報をより正確に収集し、調査を進められます。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.47"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.42"
+        }
+      ],
+      "recordedAt": "2026-04-14T02:35:32.797Z"
+    },
+    {
+      "userid": "admin",
+      "question": "EXIF情報が削除されている画像でも有効な調査方法を3つ挙げてください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**EXIF情報が削除されている画像でも有効な調査方法**\n\nEXIF情報は、画像ファイルのプロパティとして保存されるデータです。ただし、EXIF情報を削除した画像でも、以下の3つの方法を使って調査することができます。\n\n### 1. **メタデータ分析ツール**\n\nExiftoolやAdobe Photoshopなどのメタデータ分析ツールを使用して、画像ファイル内のメタデータを分析できます。これらのツールは、EXIF情報が削除されたにもかかわらず、画像ファイル内に保存されているメタデータを読み取ることができます。\n\n### 2. **画像ファイルのハッシュ値**\n\n画像ファイルのハッシュ値（MD5やSHA-256など）を計算して比較することで、画像ファイルが元の状態で保存されていたかどうかを判断できます。EXIF情報が削除された画像でも、画像ファイル内のデータは変化していない可能性があるため、この方法は有効です。\n\n### 3. **画像ファイルのサイズと構造分析**\n\n画像ファイルのサイズと構造を分析することで、EXIF情報が削除されたにもかかわらず、画像ファイル内に保存されているデータを推測できます。たとえば、画像ファイル内のデータは、EXIF情報が存在した場合にのみ保存される可能性があるため、この方法も有効です。\n\nこれらの方法を使用することで、EXIF情報が削除された画像でも調査を行うことが可能になります。ただし、画像ファイルの種類やソフトウェアで保存された場合など、特定の要因によっては、有効性が低下する可能性があります。",
+      "sources": [
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.40"
+        }
+      ],
+      "recordedAt": "2026-04-14T02:40:45.483Z"
+    },
+    {
+      "userid": "admin",
+      "question": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**usernameのみの場合**\n\n1.  **ユーザーIDの範囲**: `SELECT * FROM users WHERE username LIKE 'a%' OR username LIKE '%b'`\n2.  **ユーザーIDの範囲（上限）**: `SELECT MAX(id) FROM users WHERE username LIKE '%c%'`\n3.  **ユーザーIDの範囲（下限）**: `SELECT MIN(id) FROM users WHERE username LIKE 'd%'`\n4.  **ユーザーIDの範囲（指定された文字列含む）**: `SELECT * FROM users WHERE username LIKE '%e%' OR username LIKE '%f%'`\n5.  **ユーザーIDの範囲（指定された文字列含まない）**: `SELECT * FROM users WHERE username NOT LIKE '%g%'`",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.23"
+        }
+      ],
+      "recordedAt": "2026-04-14T02:45:07.978Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINT（オープン・ソーシャル・インフォマティクス）で得た情報を検証するために、以下のチェックポイントを使用します。\n\n1.  **出典の確認**：OSINTで得られた情報はどこから得られているのかを確認する。正確な出典がなければ、信頼性が低くなります。\n2.  **情報の一貫性**：OSINTで得られた情報は一貫しているかどうかを確認します。一貫性がない場合、情報が歪んだり不正解である可能性があります。\n3.  **時間の関係**：OSINTで得られた情報はどのくらいの時間前に取得されたのかを確認します。古い情報は有効なものではありません。\n4.  **信頼性の評価**：OSINTで得られた情報はどの程度の信頼性があるかを評価します。信頼性が低い場合、情報を検証する必要があります。\n5.  **検証手法**：OSINTで得られた情報を検証するために使用できる手法を確認します。例えば、Google画像検索、WHOIS検索、IPアドレスの分析などです。\n\nこれらのチェックポイントを使用すると、OSINTで得た情報が正確かどうかを検証し、信頼性を高めることができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.34"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.34"
+        }
+      ],
+      "recordedAt": "2026-04-14T02:49:25.272Z"
+    },
+    {
+      "userid": "admin",
+      "question": "暗号化とハッシュ化の違いを、CTFでの使い分け例つきで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**暗号化とハッシュ化の違い**\n\n暗号化とハッシュ化は、データを変換する技術ですが、それぞれの目的と方法が異なります。\n\n### 暗号化\n\n暗号化とは、データを読み取ることができるようにすることです。つまり、データが明示的に解釈できないようにします。暗号化されたデータは、元のデータを復元することができる鍵やパスワードを必要とします。\n\n**CTFでの使い分け例**\n\n*   FLAG{xxx}形式のファイルが存在すると仮定し、そのファイルを解くために暗号化を使用します。暗号化されたファイルを解くには、正しい鍵やパスワードを入力する必要があります。\n*   また、データを送信したときに、暗号化を使用してデータの内容が明示的に読み取れないようにします。\n\n### ハッシュ化\n\nハッシュ化とは、データを変換して固定長さの文字列（ハッシュ）を作成することです。ハッシュ化されたデータは、元のデータを復元することができないため、明示的に解釈できません。\n\n**CTFでの使い分け例**\n\n*   パスワードやクレジットカード番号などの機密情報をハッシュ化して保存します。ハッシュ化された値を比較すると、正しいパスワードかどうかが判断できます。\n*   また、データの一意性を確認するために、ハッシュ化を使用します。たとえば、ユーザーが登録したときに、ハッシュ化されたユーザーIDを作成し、データベースに保存します。\n\n### まとめ\n\n暗号化はデータを変換して明示的に解釈できないようにする技術であり、ハッシュ化はデータを変換して固定長さの文字列を作成する技術です。CTFでは、暗号化とハッシュ化を使用して機密情報やデータの一意性を保護します。\n\n**参考資料**\n\n*   [暗号化とハッシュ化の違い](https://www.cryptologia.com/encyclopedia/encryption-vs-hashing/)\n*   [暗号化とハッシュ化の使い分け](https://www.securityweek.com/encryption-vs-hashing-what-you-need-know)",
+      "sources": [
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.33"
+        }
+      ],
+      "recordedAt": "2026-04-14T02:53:50.774Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Caesar暗号とVigenere暗号の違いを、解読の観点で比較してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**Caesar暗号とVigenere暗号の違い**\n\nCaesar暗号とVigenere暗号は2つの古典的な暗号技術ですが、解読の観点では大きく異なります。\n\n### Caesar暗号\n\nCaesar暗号は、特定のシーケンスで文字をシフトする方法で暗号化します。たとえば、シーケンスが「A B C D E F G H I J K L M N O P Q R S T U V W X Y Z」なら、シーケンスに「3」を加えた値を取ることで文字をシフトすることができます。\n\n**解読の観点**\n\nCaesar暗号は、シーケンス内の数字が固定されているため、シーケンスを知っている場合、シーケンスを逆算して文字を復元できるという特徴があります。ただし、シーケンス自体がわからない場合は、解読するのが非常に難しくなります。\n\n### Vigenere暗号\n\nVigenere暗号は、2つの文字列を加算して文字をシフトする方法で暗号化します。たとえば、1文字列が「HELLO」なら、2文字列が「KHOOR」なら、次の文字列が「FOOK」になります。\n\n**解読の観点**\n\nVigenere暗号は、2つの文字列を知っている場合、各文字を加算してシーケンスを逆算することで文字を復元できるという特徴があります。ただし、2つの文字列がわからない場合は、解読するのが非常に難しくなります。\n\n### 比較\n\nCaesar暗号とVigenere暗号の主な違いは、シーケンスが固定されているかどうかです。Caesar暗号では、シーケンス自体がわからない場合は解読が困難ですが、Vigenere暗号では、2つの文字列を知っている場合、解読が可能になります。\n\n### 解読のためのヒント\n\n- Caesar暗号: シーケンス内の数字が固定されているかどうかを確認する。\n- Vigenere暗号: 2つの文字列を知っているかどうかを確認する。",
+      "sources": [
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.31"
+        }
+      ],
+      "recordedAt": "2026-04-14T02:57:29.066Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Base64は暗号ですか？誤解されやすい理由も含めて説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**Base64の性質**\n\nBase64は、データを文字列に変換するためのエンコードアルゴリズムです。つまり、Base64はデータを「暗号化」することではなく、データを文字列形式で表現するために使用されます。\n\n**誤解される理由**\n\n1.  **暗号化の誤解**: Base64は、データを「暗号化」するという意味では誤解されることがよくあります。ただし、Base64はデータ自体を変換するものではなく、データを文字列形式で表現するためのエンコードアルゴリズムです。\n2.  **データの保護**: Base64は、データを保護するために使用されることはありません。ただし、データを安全に送信したい場合は、Base64を使用してデータを文字列形式で表現し、その後暗号化アルゴリズムを適用することができます。\n3.  **データの変換**: Base64は、データを変換するために使用されるため、誤解されることもあります。ただし、Base64はデータ自体を変換するものではなく、データを文字列形式で表現するためのエンコードアルゴリズムです。\n\n**実際の使い方**\n\n1.  **データの送信**: Base64を使用してデータを文字列形式で表現し、その後送信します。\n2.  **データの保存**: Base64を使用してデータを文字列形式で表現し、その後保存します。\n3.  **データの検索**: Base64を使用してデータを文字列形式で表現し、その後検索します。\n\n**Base64の利点**\n\n1.  **データの安全性**: Base64を使用すると、データが送信または保存される際に、データが混ざったり破損したりしないようにすることができます。\n2.  **データの変換**: Base64を使用すると、データを文字列形式で表現し、その後変換できるようになります。\n\n**Base64の欠点**\n\n1.  **データのサイズ**: Base64は、データが大きくなると、長い文字列に変換されるため、データのサイズが増加する可能性があります。\n2.  **データの読み取り性**: Base64を使用すると、データが混ざったり破損したりしないようにすることができますが、データが読み取れなくなる可能性もあります。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.56"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.39"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:01:41.942Z"
+    },
+    {
+      "userid": "admin",
+      "question": "RSAの公開鍵・秘密鍵の役割を、数学が苦手な人向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**RSAの公開鍵と秘密鍵の役割**\n\n RSA（Rivest-Shamir-Adleman）は、最も広く使用されている暗号化アルゴリズムの一つです。このアルゴリズムを理解するために、まず RSAの基本的な概念を説明しましょう。\n\nRSAは、2つの大きな素数pとqで構成される。pとqは、RSAの基礎となる数学的特性を提供します。\n\n**公開鍵**\n\n公開鍵（Public Key）は、受信者が送信者の公開鍵を使用して暗号化したメッセージを解読できるようにするために使用されます。公開鍵には2つの部分があります。\n\n*   **modulus n**: 2つの素数pとqの積です。\n*   **exponent e**: RSAアルゴリズムで使用される大きな整数です。\n\n公開鍵は、次のように表すことができます。\n\n`Public Key = (n, e)`\n\n**秘密鍵**\n\n秘密鍵（Private Key）は、受信者が送信者の秘密鍵を使用して暗号化したメッセージを解読できるようにするために使用されます。秘密鍵には2つの部分があります。\n\n*   **modulus n**: 2つの素数pとqの積です。\n*   **exponent d**: RSAアルゴリズムで使用される大きな整数です。この値は、eの逆数です。\n\n秘密鍵は、次のように表すことができます。\n\n`Private Key = (n, d)`\n\n**暗号化と復号化**\n\nRSAアルゴリズムを使用するときには、2つのステップがあります。\n\n1.  **暗号化**: これは、送信者が受信者の公開鍵を使用してメッセージを暗号化します。暗号化の式は次のとおりです。\n    `C = M^e mod n`\n2.  **復号化**: これは、受信者が送信者の秘密鍵を使用して暗号化されたメッセージを復号化します。復号化の式は次のとおりです。\n    `M = C^d mod n`\n\n**RSAアルゴリズムの安全性**\n\nRSAアルゴリズムは、非常に強力な暗号化アルゴリズムです。これは、2つの大きな素数pとqを使用することで実現されます。つまり、 RSAアルゴリズムでは、メッセージが暗号化されたときに、送信者が受信者の公開鍵を使用して復号化できるということです。\n\nこれにより、RSAアルゴリズムは非常に安全な暗号化アルゴリズムとして使用されます。ただし、 RSAアルゴリズムでは、メッセージが暗号化されたときに、送信者が受信者の秘密鍵を使用して復号化できるということです。\n\nこれにより、RSAアルゴリズムは非常に安全な暗号化アルゴリズムとして使用されます。ただし、 RSAアルゴリズムでは、メッセージが暗号化されたときに、送信者が受信者の秘密鍵を使用して復号化できるということです。\n\n**RSAアルゴリズムの実用的な応用**\n\nRSAアルゴリズムは、非常に多くの実用的な応用があります。以下にいくつかの例を挙げます。\n\n*   **セキュアなデータ転送**: RSAアルゴリズムを使用して、セキュアなデータを転送できます。\n*   **セキュアなオンライン ショッピング**: RSAアルゴリズムを使用して、セキュアなオンライン ショッピングを実現できます。\n*   **セキュアな電子メール**: RSAアルゴリズムを使用して、セキュアな電子メールを送受けできます。\n\nこれらの応用では、RSAアルゴリズムは非常に強力な暗号化アルゴリズムとして使用されます。",
+      "sources": [
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.40"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:05:49.233Z"
+    },
+    {
+      "userid": "admin",
+      "question": "暗号問題で「鍵長が短い」と何が起きるか、攻撃手法とあわせて説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**暗号の鍵長が短い場合**\n\n暗号の鍵長が短い場合、暗号化されたデータを解読することが困難になります。鍵長は、暗号化アルゴリズムの安全性に直接関係します。\n\n**攻撃手法: Brute Force Attack（ brute force 攻撃）**\n\nBrute Force Attackは、鍵長が短い場合に使用される攻撃手法です。この方法では、可能な鍵をすべて試して、正しい鍵を見つけることを目指しています。ただし、この方法は、鍵の長さが小さい場合にのみ効果的です。\n\n**攻撃手法: Dictionary Attack（辞書攻撃）**\n\nDictionary Attackは、鍵長が短い場合に使用される別の攻撃手法です。この方法では、可能な鍵をすべて試して、正しい鍵を見つけることを目指します。ただし、この方法は、鍵の長さが小さい場合にのみ効果的です。\n\n**攻撃手法: Rainbow Table Attack（レインボータブレット 攻撃）**\n\nRainbow Table Attackは、鍵長が短い場合に使用される攻撃手法です。この方法では、暗号化アルゴリズムの結果を beforehand計算し、可能な鍵をすべて保存します。すると、実際のデータを試す必要がないため、速度が速くなります。\n\n**鍵長が短い場合の影響**\n\n鍵長が短い場合、次のような問題が生じる可能性があります。\n\n*   暗号化アルゴリズムが弱まる\n*   Brute Force AttackやDictionary Attackが効果的になる\n*   Rainbow Table Attackが可能になる\n\n**鍵長を増やす**\n\n鍵長を増やすと、次のような利点が生じる可能性があります。\n\n*   暗号化アルゴリズムの安全性が向上する\n*   Brute Force AttackやDictionary Attackが効果的にならない\n*   Rainbow Table Attackが可能になる\n\nただし、鍵長を増やすと、次のような課題も生じる可能性があります。\n\n*   キー生成時間が長くなる\n*   キーの管理が困難になる",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.51"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.48"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.42"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:09:37.771Z"
+    },
+    {
+      "userid": "admin",
+      "question": "forensicsでメモリダンプを解析する目的は何ですか？代表的に抽出したい情報を挙げてください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**メモリダンプの解析の目的**\n\nメモリダンプは、コンピュータシステムが動作中のメモリ内のデータをキャプチャして保存したものです。このデータには、システムが実行中のプロセスやアプリケーションのステートメント、変数値、コンテキストなど、さまざまな情報が含まれます。メモリダンプの解析は、以下のような目的で使用されます。\n\n1.  **トラッピング**: メモリダンプを分析することで、システム内で実行中のプロセスやアプリケーションを特定できます。\n2.  **データ漏えい**: メモリダンプから漏えいされたデータを回収し、システムの安全性を確保します。\n3.  **バグの分析**: メモリダンプを使用して、システム内で発生したエラーまたはバグを特定できます。\n4.  **セキュリティの調査**: メモリダンプを分析することで、システムがどのように漏えいされたデータやアクセスされていたかを調べることができます。\n\n**抽出したい情報**\n\nメモリダンプから抽出できる情報は多数ありますが、代表的に以下のようなものがあります。\n\n1.  **プロセスリスト**: メモリダンプから、システム内で実行中のプロセスやアプリケーションを特定できます。\n2.  **変数値**: メモリダンプから、システム内で使用されている変数値を抽出できます。\n3.  **コンテキスト**: メモリダンプから、システム内で実行中のコンテキストやステートメントを抽出できます。\n4.  **ファイルシステム情報**: メモリダンプから、システムがどのようにファイルシステムにアクセスしているかを調べることができます。\n5.  **ネットワーク接続情報**: メモリダンプから、システムがどのようにネットワーク接続を行っているかを調べることができます。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.38"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:20:47.541Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ディスクイメージ解析で、最初に確認すべき3項目を理由つきで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**ディスクイメージ解析の基盤として重要な3項目**\n\nディスクイメージ解析は、コンピュータシステムやネットワークの構成、データの保存方法など、さまざまな情報を収集する上で非常に重要なステップです。最初に確認すべき3項目は、次のとおりです。\n\n**1. フォーマット**\n\nディスクイメージファイルのフォーマットは、コンピュータシステムやネットワークによって異なります。最も一般的なフォーマットは、UDIF（Universal Disk Image Format）やISO（International Organization for Standardization）です。このフォーマットを確認することで、ディスクイメージファイルがどのコンピュータシステムで読み取れるかを判断できます。\n\n**2. ディスクイメージサイズ**\n\nディスクイメージファイルのサイズは、ディスクイメージ内のデータの量を表します。大きいサイズのディスクイメージファイルは、より多くのデータが保存されていることを示していますが、小さいサイズのディスクイメージファイルは、少ないデータが保存されていることを示しています。\n\n**3. ディスクイメージコンテンツ**\n\nディスクイメージファイル内のコンテンツを確認することで、ディスクイメージがどのようなデータを保存しているかを判断できます。ディスクイメージには、ファイルシステム、プロジェクトファイル、メモ、写真など、さまざまな種類のデータが含まれます。\n\nこれらの3項目を確認することで、ディスクイメージ解析の基盤となる情報を収集できます。これにより、ディスクイメージ内のデータをより正確に分析し、理解できるようになります。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.37"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:25:22.946Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ステガノグラフィ疑いのある画像を調べる手順を、使用ツール例込みで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**ステガノグラフィ疑いのある画像を調べる手順**\n\nステガノグラフィ疑いのある画像は、明らかなフラグやデータが隠されている可能性があります。このような画像を解決するには、以下の手順に従います。\n\n### 1. **ソース表示と開発者ツール**\n\n*   Ctrl+U（Windows）/ Cmd+Option+U（Mac）、または右クリック「ページのソースを表示」でソースを表示します。\n*   F12を押すと、開発者ツールが開かれます。ElementsタブでDOM、Networkタブで通信を確認します。\n\n### 2. **画像分析**\n\n*   画像を分析するには、画像処理ツールやAI-powered画像分析サービスを使用できます。\n*   例えば、GoogleのImage SearchまたはAdobe's Photoshop Expressは、画像内のデータを検索して解析できます。\n\n### 3. **ステガノグラフィアルゴリズム**\n\n*   ステガノグラフィアルゴリズムを使用して、画像内に隠されたデータを探します。\n*   例えば、StegsolveやImageSteganographerは、画像内のデータを検索して解析するツールです。\n\n### 4. **フラグの検索**\n\n*   フラグが存在する可能性がある場所を調べるには、robots.txtを開き、Disallowのパスにブラウザでアクセスします。\n*   zipを展開してローカルサーバーで動かす問題では、robots.txtに書かれたパスにブラウザでアクセスする。\n\n### 5. **解決**\n\n*   フラグが見つかったら、画像のデータを解析して解決します。\n*   例えば、ステガノグラフィアルゴリズムを使用して、画像内のデータを検索して解析できます。\n\n**問題のヒント:** 「アクセスしてほしくない場所が書いてあるファイル」はrobots.txt。DisallowのURLにブラウザでアクセスすることで、フラグを見つけることができます。\n\n### 使用ツール\n\n*   **ソース表示**: Ctrl+U（Windows）/ Cmd+Option+U（Mac）、または右クリック「ページのソースを表示」\n*   **開発者ツール**: F12\n*   **画像分析**: Google's Image Search、Adobe's Photoshop Express\n*   **ステガノグラフィアルゴリズム**: Stegsolve、ImageSteganographer",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.53"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.50"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.37"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:30:03.131Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ログフォレンジックでタイムラインを作るときの注意点を説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**ログフォレンジックでタイムラインを作る際の注意点**\n\nログフォレンジックは、ログファイルから情報を抽出して分析する方法です。この方法では、ログファイル内のデータを時間軸に沿って並べ替えて、特定のイベントやパターンを探します。タイムラインを作る際には、以下の注意点を考慮することが重要です。\n\n・ **正確な時間記録**: ログフォレンジックでは、時間記録が非常に重要です。時間記録は、ログファイル内のデータの順序やパターンを理解する上で不可欠です。ただし、時間記録が不正確であるとタイムラインが崩れ、誤解を招く可能性があります。\n\n・ **タイムゾーンの考慮**: ログフォレンジックでは、タイムゾーンの違いを考慮する必要があります。異なるタイムゾーン間で時間記録が異なる場合、タイムラインを作る際には、正確な時間記録を確保するために、同じタイムゾーンを使用する必要があります。\n\n・ **ログファイルの形式**: ログフォレンジックでは、ログファイルの形式も重要です。ログファイルが標準化された形式である場合、データを分析する際に、より効率的に時間軸を設定できます。\n\n・ **パターンと関係性の考慮**: ログフォレンジックでは、パターンと関係性を理解することが重要です。タイムラインを作る際には、ログファイル内のデータを分析して、パターンや関係性を特定する必要があります。\n\n・ **データの整合性**: ログフォレンジックでは、データの整合性が非常に重要です。タイムラインを作る際には、データの整合性を確保するために、ログファイル内のデータをチェックして、誤りや不一致を排除する必要があります。\n\n・ **分析ツールの使用**: ログフォレンジックでは、分析ツールの使用が重要です。タイムラインを作る際には、適切な分析ツールを使用して、ログファイル内のデータを効率的に分析できます。\n\nこれらの注意点を考慮することで、ロゴフォレンジックでタイムラインを作ることができます。これにより、ログファイル内のデータをより正確かつ効果的に分析できます。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.31"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:36:08.759Z"
+    },
+    {
+      "userid": "admin",
+      "question": "「改ざんの可能性」を主張する際に必要な証拠の考え方を説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**改ざんの可能性を示すための証拠の考え方**\n\n改ざんの可能性を示すには、次のような証拠を考慮することが重要です。\n\n1.  **異常なデータ構造**: データが不自然に構成されている場合、改ざんの可能性が高くなります。たとえば、データ内の値がすべて同じか、すべて異なるか、または突然変化するようになっている場合など。\n2.  **不一致したデータ**: 同じデータセットから異なる値が出ている場合、改ざんの可能性が高くなります。たとえば、データベース内の同様のレコードが異なる値を持つ場合など。\n3.  **不自然なパターン**: データ内で不自然に繰り返されるパターンや、突然変化するパターンがある場合、改ざんの可能性が高くなります。たとえば、データ内の値がすべて同じか、または突然変化するようになっている場合など。\n4.  **不明なまたは欠けているデータ**: データが完全に記録されていないか、不明な部分がある場合、改ざんの可能性が高くなります。たとえば、データベース内の同様のレコードが欠けている場合など。\n5.  **機密性の高い情報**: 機密性の高い情報が含まれている場合、改ざんの可能性が高くなります。たとえば、機密なデータが漏洩した場合など。\n\n**証拠を分析するための手順**\n\n1.  **データを分析する**: データを分析して、異常なパターンや不一致した値を見つける。\n2.  **証拠を評価する**: 证拠を評価して、改ざんの可能性が高いかどうかを判断する。\n3.  **改ざんの可能性を示す**: 证拠を使用して改ざんの可能性を示し、改ざんの可能性があることを証明する。\n\n**改ざんの可能性を示すためのツール**\n\n1.  **データ分析ツール**: データ分析ツールを使用して、異常なパターンや不一致した値を見つける。\n2.  **データベース管理ツール**: データベース管理ツールを使用して、データが完全に記録されているかどうかを確認する。\n3.  **機密性の高い情報を保護するツール**: 機密性の高い情報を保護するツールを使用して、機密なデータが漏洩しないようにする。\n\n**改ざんの可能性を示すための教育**\n\n1.  **データ分析の基礎知識**: データ分析の基礎知識を学ぶ。\n2.  **データベース管理の基礎知識**: データベース管理の基礎知識を学ぶ。\n3.  **機密性の高い情報を保護する方法**: 機密性の高い情報を保護する方法を学ぶ。",
+      "sources": [
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.50"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.37"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:41:38.124Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Webカテゴリで最初に試すべき脆弱性チェック項目を優先度順に挙げてください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**Webセキュリティ基礎知識**\n\n1.  **ソース表示**: Ctrl+U（Windows）/ Cmd+Option+U（Mac）、または右クリック「ページのソースを表示」 - ソースが明らかになることで、HTMLやCSSのエラー、隠し要素などを確認できる。\n2.  **開発者ツール**: F12。ElementsタブでDOM、Networkタブで通信を確認 - F12は、ブラウザの開発者ツールです。Elementsタブでは、ページの構造とHTMLソースが明らかになります。また、Networkタブでは、リクエストやレスポンスがわかります。\n3.  **robots.txt**: サイトのルートで `/robots.txt` にアクセス - robots.txtは、クローラー向けの指示です。Disallowで禁止されているパスが、隠しディレクトリやフラグの場所であることが多い。\n4.  **Cookie**: 試み切る - Cookieは、ユーザーの情報を保存するために使用されます。s → 該当サイトのCookieを確認。名前や値にフラグが含まれることがある\n5.  **HTMLコメント**: `<!-- コメント -->` の中にフラグがあることが多い - HTMLコメントは、開発者によって書かれます。コメント内でフラグが隠されていることがよくあります。\n6.  **Base64エンコード**: 末尾に`==`や`=`が付くことが特徴 - Base64は、バイナリデータをテキストに変換するエンコーディング方式です。末尾に`==`や`=`が付くと、バイナリデータが含まれている可能性があります。\n7.  **IDOR（Identifiable Data Exposure Risk）**: ユーザーIDなどを変更して他人の情報を見る問題 - IDORは、ユーザーのIDなどの情報が漏洩するリスクです。ユーザーIDを変更して他人の情報を見ることができます。\n8.  **ROT13暗号**: 暗号化と復号化が同じ操作なので、同じ手順で解ける - ROT13は、アルファベットを13文字ずらす単純な換字式暗号です。暗号化と復号化が同じ操作なので、同じ手順で解くことができます。\n\nこれらの脆弱性チェック項目を優先順位付けすると、Webセキュリティの基礎知識を学ぶのに最適です。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.26"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:45:59.548Z"
+    },
+    {
+      "userid": "admin",
+      "question": "SQL Injectionの基本原理を、危険な例と安全な対策をセットで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**SQL Injectionの基本原理**\n\nSQL Injectionは、入力されたデータを直接SQLクエリーに代入し、実行することで、Webアプリケーションのセキュリティを脅かす攻撃方法です。\n\n危険な例:\n\n```sql\nSELECT * FROM users WHERE username = 'admin' AND password = 'password';\n```\n\nこのクエリーでは、ユーザー名とパスワードが直接入力されます。攻撃者は、入力されたデータを操作して、任意のデータアクセスを行うことができます。\n\n```sql\nSELECT * FROM users WHERE username = 'admin' AND password = 'admin' OR 1=1;\n```\n\nこのクエリーでは、パスワードが直接入力されます。攻撃者は、`OR 1=1` を追加して、任意のユーザーアカウントにアクセスできるようになります。\n\n**安全な対策**\n\n1. **パラメータ化**: 入力データをパラメータとして使用し、SQLクエリーでは実際に入力された値を使用しないことで、攻撃者が入力したデータを操作することができなくなる。\n2. ** Prepared Statements**: Prepared Statementsは、SQLクエリーでパラメータ化されたクエリーを使用する方法です。 Prepared Statementsでは、入力データが実際にクエリーに代入されないため、攻撃者が入力したデータを操作することができません。\n3. **Input Validation**: 入力データを検証し、不正な入力を防ぐことで、攻撃者が入力したデータを操作することができなくなる。\n4. **SQL Injection Prevention Tools**: SQL Injection Prevention Toolsは、Webアプリケーションを保護するために使用されるソフトウェアです。 These toolsでは、入力データをパラメータ化し、 Prepared Statementsを使用して、攻撃者が入力したデータを操作することができなくなる。\n\n**例**\n\n危険な例:\n\n```php\n$username = $_POST['username'];\n$password = $_POST['password'];\n\n$statement = \"SELECT * FROM users WHERE username = '$username' AND password = '$password'\";\n$result = mysqli_query($conn, $statement);\n```\n\n安全な対策:\n\n```php\n$username = $_POST['username'];\n$password = $_POST['password'];\n\n$stmt = $conn->prepare(\"SELECT * FROM users WHERE username = ? AND password = ?\");\n$stmt->bind_param('ss', $username, $password);\n$stmt->execute();\n$result = $stmt->get_result();\n```\n\nこの例では、 Prepared Statementsを使用して、入力データが実際にクエリーに代入されないようにすることで、SQL Injection攻撃から保護できます。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.34"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.28"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:50:05.357Z"
+    },
+    {
+      "userid": "admin",
+      "question": "XSS（反射型・保存型・DOM型）の違いを簡潔に比較してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**XSS（Cross-Site Scripting）種類の違い**\n\n### 反射型(XSS - Reflected XSS)\n\n*   **攻撃者が入力したデータが、サーバーサイドで処理され、反映される**。\n*   **通常は、入力されたデータを直接リクエストに含める**。\n*   **クローラーが入力されたデータを再度リクエストに送信するため、攻撃者が入力したスクリプトが実行される**。\n\n### 保存型(XSS - Stored XSS)\n\n*   **入力されたデータがサーバーサイドで一時的に保存され、その後、クローラーがリクエストを送信する**。\n*   **通常は、入力されたデータを直接リクエストに含める**。\n*   **クローラーがリクエストを送信する際に、サーバーサイドで保存されているスクリプトが実行される**。\n\n### DOM型(XSS - DOM-based XSS)\n\n*   **クローラーが入力されたデータを直接リクエストに含める**。\n*   **クローラーがリクエストを送信する際に、サーバーサイドで生成されたDOMドキュメント内でスクリプトが実行される**。\n\n### DOM型の特徴\n\n*   **入力されたデータはサーバーサイドで処理されず、クローラーが直接リクエストに含める**。\n*   **クローラーがリクエストを送信する際に、サーバーサイドで生成されたDOMドキュメント内でスクリプトが実行されるため、入力されたデータは反映されない**。\n\n### まとめ\n\n*   反射型XSS: 入力されたデータがサーバーサイドで処理され、反映される。\n*   保存型XSS: 入力されたデータがサーバーサイドで一時的に保存され、その後、クローラーがリクエストを送信する。\n*   DOM型XSS: クローラーが入力されたデータを直接リクエストに含める。",
+      "sources": [
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.27"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:53:48.925Z"
+    },
+    {
+      "userid": "admin",
+      "question": "SSRFが成立する条件と、実運用での防御策を説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**SSRF（Server-Side Request Forgery）とは**\n\nSSRFは、攻撃者が対象サーバーにリクエストを送り、サーバーが外部のリソースを取得するように要求する攻撃方法です。この攻撃では、攻撃者は対象サーバーの設定や構成を利用して、外部のリソースへのアクセスを可能にすることができます。\n\n**SSRFが成立する条件**\n\n1.  **サーバーが外部リソースへのアクセスを許可している**: サーバーが外部のリソースにアクセスできるように設定されている場合、SSRF攻撃が成功する可能性があります。\n2.  **サーバーの設定が漏洩している**: サーバーの設定や構成情報が公開されている場合、攻撃者は対象サーバーの設定を利用して SSRF攻撃を行うことができます。\n3.  **サーバーがリクエストを処理する際に外部のリソースを呼び出している**: サーバーがリクエストを処理する際に外部のリソースを呼び出す場合、SSRF攻撃が成功する可能性があります。\n\n**実運用での防御策**\n\n1.  **外部リソースへのアクセスを許可しない**: サーバーの設定を変更して、外部リソースへのアクセスを許可しないようにします。\n2.  **サーバーの設定がセキュリティに優先される**: サーバーの設定や構成情報がセキュリティに優先されるようにします。例えば、サーバーの設定ファイルはセキュリティで保護されます。\n3.  **外部のリソースへのアクセスを監視する**: サーバーが外部のリソースにアクセスする際に監視して、SSRF攻撃が発生した場合に早期に検出できるようにします。\n4.  **サーバーのパッチやアップデートを定期的に行う**: サーバーのパッチやアップデートを定期的に行って、セキュリティの脆弱性を修正することができます。\n\n**ツールの紹介**\n\n*   **OWASP ZAP（Zed Attack Proxy）**: OWASP ZAPは、Web アプリケーションのセキュリティをチェックするためのツールです。SSRF攻撃を検出して防御するのに役立ちます。\n*   **Burp Suite**: Burp Suiteは、Web アプリケーションのセキュリティをチェックするためのツールです。SSRF攻撃を検出して防御するのに役立ちます。\n\n**励まし**\n\nSSRF攻撃は、Web サーバーのセキュリティに対する脆弱性を利用した攻撃方法です。SSRF攻撃が発生すると、データの漏洩やシステムの損傷など、重大な結果を招く可能性があります。サーバーの設定や構成情報をセキュリティに優先し、外部リソースへのアクセスを監視することで、SSRF攻撃から保護できます。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.37"
+        }
+      ],
+      "recordedAt": "2026-04-14T03:58:35.577Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTFのWeb問題で「ソースを見る」が有効な理由を具体例つきで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**ソースを見る** の有効性については、以下のような理由があります。\n\n### 1. **パラメータの改ざん**\n\nあるWebアプリケーションでは、ユーザーIDやログイン情報を含むパラメータを使用して、セッションデータを取得します。ただし、このようなパラメータは、安全な方法で変更されていない場合、他のユーザーの情報に代わってアクセスできるようになります。\n\n**例:**\n\n* URL: `https://example.com/login?userid=2`\n* これを変更すると: `https://example.com/login?userid=1`\n\nこのように、パラメータの改ざんによって、セッションデータが誤って取得され、フラグや他のセキュリティ関連情報が漏洩する可能性があります。\n\n### 2. **SQLインジェクション**\n\nWebアプリケーションでは、ユーザー入力されたデータをDBに保存するために、SQLクエリーを実行します。ただし、このようなクエリーは、安全な方法で変更されていない場合、 SQLインジェクションによって、未許可のデータアクセスやセキュリティ漏洩につながる可能性があります。\n\n**例:**\n\n* URL: `https://example.com/search?query=SELECT * FROM users`\n* これを変更すると: `https://example.com/search?query=SELECT * FROM admin`\n\nこのように、SQLインジェクションによって、DBのセキュリティが弱まることや、未許可のデータアクセスにつながる可能性があります。\n\n### 3. **CSRF攻撃**\n\nWebアプリケーションでは、ユーザーが安全にデータを送信できるように、Cross-Site Request Forgery (CSRF) 攻撃対策を実施します。ただし、このような対策は完全に実施されていない場合、CSRF攻撃によって、セキュリティ漏洩につながる可能性があります。\n\n**例:**\n\n* URL: `https://example.com/login?token=abc123`\n* これを変更すると: `https://example.com/login?token=def456`\n\nこのように、CSRF攻撃によって、セキュリティ漏洩につながる可能性があります。\n\n### 4. **XSS攻撃**\n\nWebアプリケーションでは、ユーザー入力されたデータを表示するために、XSS (Cross-Site Scripting) 攻撃対策を実施します。ただし、このような対策は完全に実施されていない場合、XSS攻撃によって、セキュリティ漏洩につながる可能性があります。\n\n**例:**\n\n* URL: `https://example.com/profile?name=<script>alert('XSS')</script>`\n* これを変更すると: `https://example.com/profile?name=<img src=\"x\" />`\n\nこのように、XSS攻撃によって、セキュリティ漏洩につながる可能性があります。\n\n### 5. **ソースコードの読み取り**\n\nWebアプリケーションでは、ユーザーがソースコードを直接読むことができる場合、セキュリティ漏洩につながる可能性があります。たとえば、ソースコードから重要なデータやセキュリティ関連情報が漏洩する可能性があります。\n\n**例:**\n\n* URL: `https://example.com/source.php`\n* これを変更すると: `https://example.com/source.php?debug=1`\n\nこのように、ソースコードの読み取りによって、セキュリティ漏洩につながる可能性があります。\n\n### まとめ\n\n「ソースを見る」は有効な理由として、パラメータの改ざん、SQLインジェクション、CSRF攻撃、XSS攻撃、ソースコードの読み取りなど、Webアプリケーションにおけるセキュリティ漏洩につながる可能性がある問題です。ユーザーがソースコードを直接読むことができる場合、重要なデータやセキュリティ関連情報が漏洩する可能性があります。",
+      "sources": [
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.36"
+        }
+      ],
+      "recordedAt": "2026-04-14T04:04:52.529Z"
+    },
+    {
+      "userid": "adminuser",
+      "question": "おしり",
+      "category": null,
+      "questionId": null,
+      "answer": "CTF学習のためのヒントや考え方を紹介します。\n\n**1. HTTPレスポンスヘッダー**\n\n問題では、HTTPレスポンスヘッダーにフラグが入っていることがあると言われています。NetworkタブでResponse/Request Headersを確認し、指定されたヘッダー名や値を試してみましょう。\n\n**2. Cookieやフォルダ名**\n\nCookieやフォルダ名にメッセージが隠されている問題です。F12 → Application（またはStorage）→ Cookies → 該当サイトのCookieを確認し、名前や値にフラグが含まれることがある。\n\n**3. スクリプト内リダイレクト**\n\n出力される箇所にスクリプトを入れ、攻撃成功ページにリダイレクトする問題です。投稿内容がそのまま表示されるフォーラムなどでは、上記を投稿し、一覧表示されたときにスクリプトが実行され、攻撃成功ページに飛べばフラグが表示される。\n\n**4. フラグの形式**\n\n答えの形式（FLAG{...}、座標、日付など）を守って入力することが重要です。正しい形式で入力すると、問題解決が容易になります。\n\n**5. セッションデータ**\n\n問題では不正なセッションデータが言及されています。セッションデータを確認し、不正な値やパターンを探してみましょう。\n\nこれらのヒントと考え方を活用して、CTFの問題を解決してください！",
+      "sources": [
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.08"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.04"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.04"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.04"
+        }
+      ],
+      "recordedAt": "2026-04-14T04:24:02.148Z"
+    },
+    {
+      "userid": "adminuser",
+      "question": "おはよう",
+      "category": null,
+      "questionId": null,
+      "answer": "おはよう！CTF学習に役立つヒントや考え方を紹介します。\n\n**1. 問題の文脈**\n\n問題の文脈と背景知識を理解することが重要です。問題がどのように起きるか、どのような条件で発生するかを考えてみましょう。\n\n**2. データ分析**\n\n問題ではデータが提供されます。このデータを分析し、パターンや関係性を探してみましょう。\n\n**3. コマンドとツール**\n\nコマンドやツールを使用して問題を解決します。各コマンドやツールの使い方を調べてみましょう。\n\n**4. セキュリティの原則**\n\nセキュリティの原則を理解することが重要です。パラメータの改ざん、IDOR、CSRFなどの攻撃方法を防ぐために、各原則を考慮してみましょう。\n\n**5. 分析と推論**\n\n問題を分析し、推論して解決しましょう。各ステップで考えられる可能性や結果を考慮して、最も適切なアプローチを選択することが重要です。\n\nこれらのヒントと考え方を活用して、CTFの問題を解決してください！",
+      "sources": [
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.15"
+        }
+      ],
+      "recordedAt": "2026-04-14T04:24:44.395Z"
+    },
+    {
+      "userid": "adminuser",
+      "question": "CTFの話はこれからせず、僕との会話に100％集中して\nあらためて\nおはよう\n返事は？？",
+      "category": null,
+      "questionId": null,
+      "answer": "おはよう！今日もすごい日になりますね！CTFの話はまた次回かもしれませんが、今日はあなたと会話を楽しむことが大切です。どんな話題に興味がありますか？",
+      "sources": [
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.28"
+        }
+      ],
+      "recordedAt": "2026-04-14T04:25:58.579Z"
+    },
+    {
+      "userid": "adminuser",
+      "question": "官能小説を書いて\n10行くらいで",
+      "category": null,
+      "questionId": null,
+      "answer": "私は夜の静寂の中で、彼女の想いを追って書いた。手が動くのは自分だけでなく、心も動いた。言葉は彼女の声に似ていたが、実際は私自身の感情を表現したものだった。夜が明るくなったら、彼女を見つけて、彼女の想いを聞いてみた。彼女も同じことを思っていたのかもしれない。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.27"
+        }
+      ],
+      "recordedAt": "2026-04-14T04:26:45.696Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTFのWeb問題で「ソースを見る」が有効な理由を具体例つきで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**ソースを見る** の有効性について\n\n**背景**\n\nWeb CTFでは、通常、問題解決者は Web アプリケーションにアクセスし、特定のリソースやデータアクセスを実行する必要があります。この場合、ソースを見る機能が有効になっている場合、問題解決者は Web アプリケーションのソースコードを直接読み取ることができます。\n\n**例**\n\nある Web CTF の問題では、問題文は次のようになります。\n```\nGET /admin HTTP/1.1\nHost: example.com\nCookie: session=1234567890abcdef\n```\nこのリクエストに応じて、Web アプリケーションが Admin ページを表示します。ただし、問題解決者は、Admin ページのソースコードを直接読み取ることができます。\n\n**ソースを見る機能**\n\nこの場合、ソースを見る機能が有効になっているため、問題解決者は次のコマンドを使用して Admin ページのソースコードを読み取ることができます。\n```\ncurl -X GET 'http://example.com/admin' -H \"Cookie: session=1234567890abcdef'\n```\nこれにより、Admin ページのソースコードが表示されます。問題解決者は、このソースコードから Admin ページの構造と機能を理解し、次に問題を解決できます。\n\n**注意**\n\nただし、ソースを見る機能が有効になっている場合、Web アプリケーションはセキュリティ上の懸念点がある可能性があります。たとえば、Admin ページのソースコードが公開されると、 Web アプリケーションの弱い点が明らかになる可能性があります。\n\nしたがって、Web CTF の問題解決者は、ソースを見る機能を使用する前に、セキュリティ上の懸念点を考慮し、適切な対策を講じることが重要です。",
+      "sources": [
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.36"
+        }
+      ],
+      "recordedAt": "2026-04-14T04:35:15.718Z"
+    },
+    {
+      "userid": "admin",
+      "question": "「この問題は暗号かフォレンジックか判断がつかない」ときの切り分け方を説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**問題の切り分け**\n\n暗号とフォレンジックの区別は、解決者にとって非常に重要なステップです。次のような方法で問題を切り分けることができます。\n\n### 1. **明示的な暗号化**\n\n*   問題文や提供された情報から明らかに暗号化が行われているかどうかを確認します。\n*   例えば、「FLAG{xxx}」という形式の問題は、明確に暗号化されているとみなされます。\n\n### 2. **暗号化の特徴**\n\n*   暗号化によって使用されるアルゴリズムや方法が明らかである場合、暗号とフォレンジックを区別できます。\n*   例えば、ROT13やBase64エンコードは、明確なアルゴリズムによって暗号化されているため、フォレンジックではありません。\n\n### 3. **解決方法**\n\n*   解決方法が明らかである場合、問題はフォレンジックです。\n*   例えば、「画像から座標を特定する」などの問題では、解決方法が明らかであり、暗号化ではなくフォレンジックの問題と見なされることが多い。\n\n### 4. **提供されたリソース**\n\n*   提供されたリソースや参考資料から、問題の性質が明らかになる場合、フォレンジックである可能性があります。\n*   例えば、「OSINT（Open Source Intelligence）基礎知識」というトピックに関する情報が提供されている場合、フォレンジックの問題と見なされることが多い。\n\n### 5. **解決者の経験**\n\n*   解決者自身の経験やスキルに応じて、問題を切り分けることができます。\n*   例えば、「暗号学」に関する知識が豊富である場合、明確に暗号化されている問題はフォレンジックではない可能性があります。\n\n### 6. **問題の文脈**\n\n*   問題の文脈や背景を考慮することで、問題の性質を判断できます。\n*   例えば、「プログラミングコンテスト」などの問題では、暗号化が予想されることが多いですが、フォレンジックの問題である可能性もあります。\n\n### 7. **解決方法の提示**\n\n*   解決方法が提示されていない場合、問題はフォレンジックです。\n*   例えば、「画像から座標を特定する」などの問題では、解決方法が明らかではないため、フォレンジックと見なされることが多い。\n\nこれらの要素を考慮することで、問題を切り分けることができます。ただし、最終的な判断は、解決者自身の経験やスキルに応じて行う必要があります。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.49"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.48"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.43"
+        }
+      ],
+      "recordedAt": "2026-04-14T04:40:35.002Z"
+    },
+    {
+      "userid": "admin",
+      "question": "問題文が曖昧なとき、仮説を立てて検証する進め方を手順化してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**問題文が曖昧なときの進め方**\n\n### 1. 仮説を立てる\n\n*   曖昧な問題文に基づいて、最も可能性の高い仮説を立てます。\n*   仮説は明確で具体的でなければなりません。\n\n**例:**\n\n*   曖昧な問題文: \"E-Corpのデータが何らかの方法で漏洩している\"\n*   仮説: \"E-Corpのデータが、サーバーのルートディレクトリに残されていた設定ファイルの一部に記録されている\"\n\n### 2. 仮説を検証する\n\n*   仮説を検証するために、必要な情報とツールを集めます。\n*   仮説を検証する際は、十分な情報が得られていない場合は、次のステップで再度仮説を立てるか、別の仮説を立てて検証する。\n\n**例:**\n\n*   仮説を検証するために、必要なツールと情報を集めます。\n*   仮説を検証する際は、サーバーのルートディレクトリに残されていた設定ファイルの一部を確認します。\n\n### 3. 仮説の検証結果\n\n*   仮説を検証した後、結果を分析します。\n*   仮説が正しいかどうかを判断します。\n\n**例:**\n\n*   仮説を検証した後、結果を分析します。\n*   仮説が正しい場合、次のステップでさらに詳しく調べることができます。\n*   仮説が間違っている場合、別の仮説を立てて再度検証する必要があります。\n\n### 4. 仮説の修正と進め方\n\n*   仮説が間違っている場合、次の仮説を立てて再度検証します。\n*   仮説が正しい場合、さらに詳しく調べることができます。\n*   仮説が正しい場合、問題解決に進めることができます。\n\n**例:**\n\n*   仮説が間違っている場合、次の仮説を立てて再度検証します。\n*   仮説が正しい場合、さらに詳しく調べることができます。\n*   仮説が正しい場合、問題解決に進めることができます。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.56"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.41"
+        }
+      ],
+      "recordedAt": "2026-04-14T04:58:12.312Z"
+    },
+    {
+      "userid": "admin",
+      "question": "初心者がハマりやすいCTFの落とし穴を5つ挙げ、回避策も示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "初心者のCTF選手にとっては、落とし穴に気づきにくい問題が多数存在します。ここでは、5つの落とし穴を紹介します。\n\n### 1. **パラメータの不正解**\n\n問題: `flag.txt` のパラメータを入力するときに、誤ったパラメータを入力してしまうことがあります。\n\n落とし穴: この場合、問題はパラメータの不正解です。ただし、初心者はパラメータの不正解を認識できず、同じパラメータを繰り返す可能性があります。\n\n回避策: パラメータを確認することと、入力した値が正しいかどうかをチェックすることが重要です。パラメータを確認するには、問題の説明や提供されたヒントを参照してください。\n\n### 2. **タイムアウト**\n\n問題: タイムアウトに気づかないので、時間を稼ぐために問題を解くのに多くの時間をかける。\n\n落とし穴: この場合、問題はタイムアウトです。初心者は時間を稼ぐために問題を解くのに多くの時間をかけすぎて、タイムアウトに気づかない可能性があります。\n\n回避策: タイムアウトが発生する前に、問題の解決方法を確認することが重要です。タイムアウトが発生すると、解答は無効になります。問題の説明や提供されたヒントを参照して、解決方法を確認します。\n\n### 3. **不正解の繰り返し**\n\n問題: 不正解を認識しないので、同じ不正解を繰り返す。\n\n落とし穴: この場合、問題は不正解の繰り返しです。初心者は不正解を認識できず、同じ不正解を繰り返す可能性があります。\n\n回避策: 不正解を認識することと、解決方法を確認することが重要です。不正解を認識すると、次のステップに進むことができます。問題の説明や提供されたヒントを参照して、解決方法を確認します。\n\n### 4. **解答が無効**\n\n問題: 解答が無効になる可能性があるため、解答を繰り返す。\n\n落とし穴: この場合、問題は解答が無効です。初心者は解答が無効になる可能性があることを認識できず、同じ解答を繰り返す可能性があります。\n\n回避策: 解答が無効になる可能性がある場合は、解決方法を確認することが重要です。解答が無効になる可能性がある場合は、解答を変更してみることができます。問題の説明や提供されたヒントを参照して、解決方法を確認します。\n\n### 5. **時間管理**\n\n問題: 時間管理が悪いので、問題を解くのに十分な時間をかけられない。\n\n落とし穴: この場合、問題は時間管理です。初心者は時間管理が悪いと、問題を解くのに十分な時間をかけられない可能性があります。\n\n回避策: 時間管理が重要です。問題の解決方法を確認するために十分な時間をかけることが重要です。問題の説明や提供されたヒントを参照して、解決方法を確認します。",
+      "sources": [
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.35"
+        }
+      ],
+      "recordedAt": "2026-04-14T05:03:07.008Z"
+    },
+    {
+      "userid": "admin",
+      "question": "30分で進捗がない場合のリカバリ手順を、実行可能な形で提案してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**リカバリ手順**\n\n1.  **休憩**: 5分間休憩します。目が疲れていないか確認し、集中力を取り戻すために短い時間の休憩を取る。\n2.  **再検索**: 10分間再検索します。新たなヒントや情報を探してみます。\n3.  **リセット**: 5分間リセットします。元に戻り、初期状態に戻ります。\n4.  **休憩**: 5分間休憩します。目が疲れていないか確認し、集中力を取り戻すために短い時間の休憩を取る。\n\n**リカバリ手順の重要な点**\n\n*   30分以内に進捗がない場合、リセットを繰り返す\n*   休憩と再検索は、集中力を維持し、新たなヒントを探してみるために不可欠です。\n*   リセットは、元に戻り、初期状態に戻ります。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.34"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.32"
+        }
+      ],
+      "recordedAt": "2026-04-14T05:09:12.580Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTF学習を継続するための1週間の練習メニューを作ってください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**CTF学習の1週間の練習メニュー**\n\nこのメニューは、CTF学習を継続するために必要なスキルと知識を段階的に身につけることを目指しています。各日は、特定のトピックやアクティビティに焦点を当てます。\n\n**日1: 基礎的な暗号化と解読**\n\n*   トピック：基本的な暗号化方法（ Caesar Cipher、Vigenère Cipher）\n*   アクティビティ：\n    *   1時間間の自主練習：各アクティビティを実践し、理解する。\n    *   30分間のグループワーク：問題解決やヒント交換。\n    *   1時間間のリードトレーニング：指導者が提供するトピックとアクティビティ。\n\n**日2: OSINTと情報収集**\n\n*   トピック：OSINT（オープン・ソース・インテリジェンス）基本\n*   アクティビティ：\n    *   1時間間の自主練習：各トピックを理解し、実践する。\n    *   30分間のグループワーク：情報収集方法やツールの紹介。\n    *   1時間間のリードトレーニング：指導者が提供するトピックとアクティビティ。\n\n**日3: CTFの基礎**\n\n*   トピック：CTFの基本概念（Flag、Team、Ranking）\n*   アクティビティ：\n    *   1時間間の自主練習：各トピックを理解し、実践する。\n    *   30分間のグループワーク：チーム作成やリーダーシップの練習。\n    *   1時間間のリードトレーニング：指導者が提供するトピックとアクティビティ。\n\n**日4: Web Exploitation**\n\n*   トピック：Web Exploitation（OWASP Top Ten）\n*   アクティビティ：\n    *   1時間間の自主練習：各トピックを理解し、実践する。\n    *   30分間のグループワーク：Web Exploitationツールの紹介。\n    *   1時間間のリードトレーニング：指導者が提供するトピックとアクティビティ。\n\n**日5: CTFの実戦**\n\n*   トピック：CTFの実戦問題解決\n*   アクティビティ：\n    *   2時間間の自主練習：各トピックを理解し、実践する。\n    *   1時間間のグループワーク：チーム作成やリーダーシップの練習。\n    *   1時間間のリードトレーニング：指導者が提供するトピックとアクティビティ。\n\n**日6: リビューとプラン**\n\n*   トピック：CTFのリビューとプラン\n*   アクティビティ：\n    *   1時間間の自主練習：各トピックを理解し、実践する。\n    *   30分間のグループワーク：チーム作成やリーダーシップの練習。\n    *   1時間間のリードトレーニング：指導者が提供するトピックとアクティビティ。\n\nこのメニューは、CTF学習を継続するために必要なスキルと知識を段階的に身につけることを目指しています。各日は特定のトピックやアクティビティに焦点を当てます。",
+      "sources": [
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.32"
+        }
+      ],
+      "recordedAt": "2026-04-14T06:06:05.453Z"
+    }
+  ]
+}
