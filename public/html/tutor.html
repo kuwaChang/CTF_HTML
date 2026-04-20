@@ -117,6 +117,39 @@
     .message .message-body strong {
       font-weight: 700;
     }
+    .message .message-body code {
+      display: inline-block;
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      background-color: #262626;
+      color: #ffd68a;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.92em;
+    }
+    .message .message-body pre {
+      margin: 0.45em 0 0.75em;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background-color: #1f1f1f;
+      border: 1px solid #4b4b4b;
+      overflow-x: auto;
+    }
+    .message .message-body pre code {
+      display: block;
+      padding: 0;
+      border-radius: 0;
+      background-color: transparent;
+      color: #e8e8e8;
+      white-space: pre;
+    }
+    .message .message-body .code-lang {
+      margin-bottom: 6px;
+      font-size: 0.76em;
+      color: #9ebfff;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
     .message .message-body h3 {
       margin: 0.4em 0 0.3em;
       font-size: 1.05em;
@@ -478,7 +511,17 @@
 
     function formatAnswerText(content) {
       const escaped = escapeHtml(content || '');
-      const lines = escaped.split('\n');
+      const codePlaceholders = [];
+      const textWithPlaceholders = escaped.replace(/```([a-zA-Z0-9_-]+)?\n([\s\S]*?)```/g, (_, lang, codeBody) => {
+        const placeholder = `__CODE_BLOCK_${codePlaceholders.length}__`;
+        const safeLang = lang ? escapeHtml(lang) : '';
+        const cleanedCode = codeBody.replace(/\n$/, '');
+        const codeHtml = `<pre>${safeLang ? `<div class="code-lang">${safeLang}</div>` : ''}<code>${cleanedCode}</code></pre>`;
+        codePlaceholders.push({ placeholder, codeHtml });
+        return placeholder;
+      });
+
+      const lines = textWithPlaceholders.split('\n');
       const htmlParts = [];
       let inList = false;
 
@@ -517,7 +560,11 @@
       }
 
       closeListIfNeeded();
-      return htmlParts.join('');
+      let formatted = htmlParts.join('');
+      for (const block of codePlaceholders) {
+        formatted = formatted.replace(block.placeholder, block.codeHtml);
+      }
+      return formatted;
     }
 
     function addMessage(role, content, sources = []) {
