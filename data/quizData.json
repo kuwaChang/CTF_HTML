@@ -1,4 +1,16 @@
 {
+  "OpenCampus": {
+    "beginner": {
+      "answer": "FLAG{welcome}",
+      "title": "XSS攻撃をしてみよう",
+      "desc": "以下のURLはXSS攻撃を試すためのページです。XSS攻撃をしてみよう。",
+      "hint": [
+
+      ],
+      "point": 10,
+      "url": "http://localhost:3333/html/xss_index.html"
+    }
+  },
   "Easy1": {
     "beginner": {
       "answer": "FLAG{welcome}",

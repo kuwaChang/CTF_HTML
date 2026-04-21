@@ -4,6 +4,139 @@ let currentCategory = null;
 let currentQid = null;
 let currentPoint = 0;
 
+/** 難易度別タブに出すストレージキー（ストーリー／サブシステム単位）。WEB 等のジャンル専用ブロックは含めない */
+const DIFFICULTY_SECTION_ORDER = [
+  "OpenCampus",
+  "Easy1",
+  "Easy2",
+  "Medium1",
+  "Medium2",
+  "Hard1",
+  "Hard2",
+];
+
+const DIFFICULTY_SECTION_TITLES = {
+  OpenCampus: "OpenCampus",
+  Easy1: "Easy 1",
+  Easy2: "Easy 2",
+  Medium1: "Medium 1",
+  Medium2: "Medium 2",
+  Hard1: "Hard 1",
+  Hard2: "Hard 2",
+};
+
+const CATEGORY_TAB_LABELS = {
+  crypto: "Crypto",
+  osint: "OSINT",
+  forensics: "Forensics",
+  web: "WEB",
+  "sad server": "Sad Server"
+};
+
+const CATEGORY_GROUP_ORDER = ["Crypto", "Forensics", "WEB", "OSINT", "Sad Server", "その他"];
+
+function normalizeCategoryIdKey(raw) {
+  if (raw == null || raw === "") return "";
+  const s = String(raw).trim();
+  if (s.toLowerCase() === "sad server") return "sad server";
+  return s.toLowerCase();
+}
+
+function categoryTabLabelForQuestion(q, storageCategory) {
+  const fromQ = q.categoryId != null ? q.categoryId : storageCategory;
+  const key = normalizeCategoryIdKey(fromQ);
+  if (CATEGORY_TAB_LABELS[key]) return CATEGORY_TAB_LABELS[key];
+  const st = String(storageCategory);
+  if (/^(WEB|Forensics|Crypto|OSINT)$/i.test(st)) {
+    if (st.toUpperCase() === "WEB") return "WEB";
+    return st.charAt(0).toUpperCase() + st.slice(1).toLowerCase();
+  }
+  return "その他";
+}
+
+function createChallengeTile(storageCategory, qid, q, solvedSet) {
+  const div = document.createElement("div");
+  div.className = "challenge";
+
+  const titleDiv = document.createElement("div");
+  titleDiv.textContent = q.title;
+  div.appendChild(titleDiv);
+
+  const pointsDiv = document.createElement("div");
+  pointsDiv.className = "points";
+  pointsDiv.textContent = `${q.point}点`;
+  div.appendChild(pointsDiv);
+
+  const key = `${storageCategory}:${qid}`;
+  if (solvedSet.has(key)) {
+    div.classList.add("solved");
+  } else {
+    div.classList.add("unsolved");
+  }
+
+  div.onclick = (evt) => openModal(storageCategory, qid, evt);
+  return div;
+}
+
+function renderGroupedChallenges(container, groups, solvedSet) {
+  container.innerHTML = "";
+  for (const group of groups) {
+    if (!group.items.length) continue;
+    const h1 = document.createElement("h1");
+    h1.textContent = group.title;
+    container.appendChild(h1);
+
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    for (const { storageCategory, qid, q } of group.items) {
+      grid.appendChild(createChallengeTile(storageCategory, qid, q, solvedSet));
+    }
+    container.appendChild(grid);
+  }
+}
+
+function buildDifficultyGroups(data) {
+  const groups = [];
+  for (const storageKey of DIFFICULTY_SECTION_ORDER) {
+    const questions = data[storageKey];
+    if (!questions || typeof questions !== "object") continue;
+    const title = DIFFICULTY_SECTION_TITLES[storageKey] || storageKey;
+    const items = Object.entries(questions).map(([qid, q]) => ({
+      storageCategory: storageKey,
+      qid,
+      q
+    }));
+    groups.push({ title, items });
+  }
+  return groups;
+}
+
+function buildCategoryGroups(data) {
+  const bucket = new Map();
+  for (const [storageCategory, questions] of Object.entries(data)) {
+    // 難易度別タブで表示するセクションは、カテゴリー別タブでは除外する（重複防止）
+    if (DIFFICULTY_SECTION_ORDER.includes(storageCategory)) continue;
+    if (!questions || typeof questions !== "object") continue;
+    for (const [qid, q] of Object.entries(questions)) {
+      const label = categoryTabLabelForQuestion(q, storageCategory);
+      if (!bucket.has(label)) bucket.set(label, []);
+      bucket.get(label).push({ storageCategory, qid, q });
+    }
+  }
+
+  const titles = [...bucket.keys()];
+  const ordered = [];
+  for (const p of CATEGORY_GROUP_ORDER) {
+    if (titles.includes(p)) ordered.push(p);
+  }
+  const rest = titles
+    .filter((t) => !ordered.includes(t))
+    .sort((a, b) => a.localeCompare(b, "ja"));
+  const sortedTitles = [...ordered, ...rest];
+
+  return sortedTitles.map((title) => ({ title, items: bucket.get(title) }));
+}
+
 // Sad Server用のグローバル変数
 let currentSadInstanceId = null;
 let currentSadSocket = null;
@@ -18,8 +151,8 @@ export async function loadQuizData() {
   }
   quizData = await res.json();
   //console.log("📦 取得したデータ:", quizData);
-  const container = document.getElementById("quizContainer");
-  container.innerHTML = "";
+  const difficultyContainer = document.getElementById("quizContainer");
+  const categoryContainer = document.getElementById("categoryQuizContainer");
 
   // ✅ 解いた問題リストを先に取得
   const solvedRes = await fetch("/quiz/solvedList", { credentials: "include" });
@@ -28,40 +161,9 @@ export async function loadQuizData() {
   solvedList = await solvedRes.json();
   const solvedSet = new Set(solvedList.map(s => `${s.category}:${s.qid}`));
 
-  for (const [category, questions] of Object.entries(quizData)) {
-    const h1 = document.createElement("h1");
-    h1.textContent = category;
-    container.appendChild(h1);
-
-    const grid = document.createElement("div");
-    grid.className = "grid";
-
-    for (const [qid, q] of Object.entries(questions)) {
-      const div = document.createElement("div");
-      div.className = "challenge";
-      
-      // XSS対策: innerHTMLの代わりに安全なDOM操作を使用
-      const titleDiv = document.createElement("div");
-      titleDiv.textContent = q.title;
-      div.appendChild(titleDiv);
-      
-      const pointsDiv = document.createElement("div");
-      pointsDiv.className = "points";
-      pointsDiv.textContent = `${q.point}点`;
-      div.appendChild(pointsDiv);
-
-      // ✅ ここで解いた問題を色分け
-      const key = `${category}:${qid}`;
-      if (solvedSet.has(key)) {
-        div.classList.add("solved");  // 既に解いた
-      } else {
-        div.classList.add("unsolved");   // 未解答
-      }
-
-      div.onclick = (evt) => openModal(category, qid, evt);
-      grid.appendChild(div);
-    }
-    container.appendChild(grid);
+  renderGroupedChallenges(difficultyContainer, buildDifficultyGroups(quizData), solvedSet);
+  if (categoryContainer) {
+    renderGroupedChallenges(categoryContainer, buildCategoryGroups(quizData), solvedSet);
   }
   
   // Promiseを返す（DOMの再構築が完了したことを示す）
@@ -506,36 +608,12 @@ function openModal(category, qid, evt = null) {
     }
   }
   modalContent.classList.remove("visible");
-  modal.style.display = "block";
+  modalContent.style.top = "";
+  modal.style.display = "flex";
 
-  const positionModal = () => {
-    const activeTab = document.querySelector(".tab-content.active");
-    let desiredTop = 20;
-
-    if (activeTab) {
-      const modalHeight = modalContent.offsetHeight;
-
-      if (evt) {
-        const tabRect = activeTab.getBoundingClientRect();
-        const clickYWithinTab = evt.clientY - tabRect.top;
-        desiredTop = clickYWithinTab - modalHeight / 2;
-      } else {
-        desiredTop = (activeTab.clientHeight - modalHeight) / 2;
-      }
-
-      const minTop = 20;
-      const maxTop = Math.max(minTop, activeTab.clientHeight - modalHeight - 20);
-      desiredTop = Math.min(Math.max(desiredTop, minTop), maxTop);
-    }
-
-    modalContent.style.top = desiredTop + "px";
-
-    requestAnimationFrame(() => {
-      modalContent.classList.add("visible");
-    });
-  };
-
-  requestAnimationFrame(positionModal);
+  requestAnimationFrame(() => {
+    modalContent.classList.add("visible");
+  });
 
   //console.log(`📝 openModal: ${category} - ${qid}`);
 }
