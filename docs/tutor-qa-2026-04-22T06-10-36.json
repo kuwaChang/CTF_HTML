@@ -1,0 +1,1126 @@
+{
+  "exportedAt": "2026-04-22T06:10:36.902Z",
+  "entryCount": 32,
+  "entries": [
+    {
+      "userid": "admin",
+      "question": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "CTF（Capture The Flag）のOSINT（オープンソースインテリジェンス）カテゴリでは、問題が次のようになります。\n\n**問題：**\n\n*   ある組織や企業のウェブサイトまたはデータベースから、機密情報を含むファイルやデータが漏れたと主張する人に、証拠を提供するために必要な情報を調べる。\n*   ある組織や企業のウェブサイトやデータベースから、機密情報を含むファイルやデータが漏れたと主張する人に、証拠を提供するために必要な情報を調べる。\n\n**目標：**\n\n*   ある組織や企業のウェブサイトまたはデータベースから、機密情報を含むファイルやデータが漏れたと主張する人の証拠を提供する。\n*   ある組織や企業のウェブサイトやデータベースから、機密情報を含むファイルやデータが漏れたと主張する人の証拠を提供する。\n\n**解決方法：**\n\n1.  **ウェブサイトの分析**: 机密情報を含むファイルやデータが漏れたと主張する人に、証拠を提供するために必要な情報を調べる。\n2.  **データベースの検索**: 机密情報を含むファイルやデータが漏れたと主張する人の証拠を提供するために必要な情報を調べる。\n3.  **機密情報の分析**: 机密情報を含むファイルやデータが漏れたと主張する人の証拠を提供するために必要な情報を調べる。\n\n**ツール：**\n\n*   **Web scraping tools**: Web scraping toolsは、ウェブサイトから情報を取得するために使用されるツールです。例えば、Beautiful SoupやScrapyなどがあります。\n*   **Data search engines**: Data search enginesは、データベースから情報を取得するために使用されるツールです。例えば、Google Custom Search Engineなどがあります。\n\n**注意：**\n\n*   机密情報を含むファイルやデータが漏れたと主張する人の証拠を提供する前に、機密性の高い情報は取り扱わないでください。\n*   机密情報を含むファイルやデータが漏れたと主張する人の証拠を提供するために必要な情報を調べる際に、機密性の高い情報は取り扱わないでください。",
+      "sources": [
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.36"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:37:31.565Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINTの初動手順**\n\n**ステップ 1: 画像ファイルの分析**\n*   画像ファイルを取得し、保存します。\n*   画像ファイルのメタデータやタグを調べます。例えば、撮影日時、撮影場所、撮影機器などです。\n\n**ステップ 2: 画像ファイルの検索**\n*   画像ファイルを検索して、関連する情報を探します。\n*   画像ファイルに含まれるテキストやマークを使用して、関連する情報を特定します。\n\n**ステップ 3: 画像ファイルの比較**\n*   画像ファイルを比較して、同一の要素や異なる要素を特定します。\n*   画像ファイルの差異を分析して、関連する情報を探します。\n\n**ステップ 4: 画像ファイルの検索結果の分析**\n*   画像ファイルの検索結果を分析して、関連する情報を特定します。\n*   検索結果を評価して、信頼性が高い情報を優先します。\n\n**ステップ 5: 画像ファイルの結論と報告**\n*   画像ファイルから得られた情報を結論にまとめます。\n*   結論を報告し、必要な情報を提供します。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.47"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.42"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:38:22.711Z"
+    },
+    {
+      "userid": "admin",
+      "question": "EXIF情報が削除されている画像でも有効な調査方法を3つ挙げてください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**EXIF情報が削除されている画像でも有効な調査方法**\n\nEXIF（Exchangeable Image File Format）情報は、画像ファイルのメタデータや撮影日時、撮影場所、撮影機器などを記録しているものですが、EXIF情報が削除されている画像でも、以下の3つの方法で調査を行うことができます。\n\n**1.  exiftoolツール**\n*   exiftoolは、EXIF情報を取得および編集するためのツールです。\n*   exiftoolを使用すると、画像ファイルからEXIF情報を削除したにもかかわらず、撮影日時や撮影場所などの情報が取得できるようになります。\n\n**2.  ImageMagickツール**\n*   ImageMagickは、画像ファイルを処理および分析するためのツールです。\n*   ImageMagickを使用すると、画像ファイルからEXIF情報を削除したにもかかわらず、撮影日時や撮影場所などの情報が取得できるようになります。\n\n**3.  画像ファイルのプロパティを調べる**\n*   画像ファイルのプロパティを調べると、EXIF情報が削除されているにもかかわらず、画像ファイルのメタデータや撮影日時などの情報が取得できるようになります。\n*   画像ファイルのプロパティを調べるには、画像ファイルのエクスプローラーまたはファイル管理ソフトウェアを使用します。",
+      "sources": [
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.40"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:39:57.526Z"
+    },
+    {
+      "userid": "admin",
+      "question": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**usernameしかない場合の検索クエリ例**\n\n**1.  ユーザー名とフォルダ名**\n*   `site:example.com username`（例：「example.com」に含まれるユーザーの名前）\n*   `username:example user`（例：「example」という名前のユーザー）\n\n**2.  ユーザー名とファイル名**\n*   `site:example.com username filename`（例：「example.com」に含まれるユーザーの名前とファイル名）\n*   `username:example file`（例：「example」という名前のユーザーが持っているファイル）\n\n**3.  ユーザー名とメッセージ**\n*   `site:example.com \"username\" inbody`（例：「example.com」に含まれるユーザーの名前）\n*   `\"username\":`（例：「example」という名前のユーザーの名前）\n\n**4.  ユーザー名とURL**\n*   `site:example.com username url`（例：「example.com」に含まれるユーザーの名前と URL）\n*   `url:username:`（例：「example」という名前のユーザーの名前）\n\n**5.  ユーザー名と検索結果**\n*   `site:example.com username search`（例：「example.com」に含まれるユーザーの名前を検索）\n*   `\"username\":`（例：「example」という名前のユーザーの名前）",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.23"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:40:40.828Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINTで得た情報の真偽を検証するためのチェックポイント**\n\nOSINT（オープンソースインテリジェンス）では、情報が正確かどうかを検証することが重要です。以下は、OSINTで得た情報の真偽を検証するためのチェックポイントです。\n\n**1.  出典の確認**\n*   OSINTで得た情報はどの出典から取得されたのかを確認します。\n*   出典が明確かどうかを確認します。\n\n**2.  信頼性の評価**\n*   OSINTで得た情報の信頼性を評価します。\n*   信頼性が低い場合、情報に疑問を持つ必要があります。\n\n**3.  確認情報の検索**\n*   確認情報を検索して、OSINTで得た情報が正確かどうかを確認します。\n*   確認情報は、出典や信頼性によって異なります。\n\n**4.  検証ツールの使用**\n*   検証ツールを使用して、OSINTで得た情報が正確かどうかを確認します。\n*   検証ツールは、特定の情報を検索または分析するために使用されます。\n\n**5.  連絡先の確認**\n*   OSINTで得た情報に疑問を持つ場合、連絡先を確認して、情報が正確かどうかを確認します。\n*   連絡先は、出典や信頼性によって異なります。\n\n**6.  確認と検証の繰り返し**\n*   OSINTで得た情報に疑問を持つ場合、繰り返し検証と確認を実施します。\n*   確認と検証は、OSINTで得た情報が正確かどうかを確認するために不可欠です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.34"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.34"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:41:46.069Z"
+    },
+    {
+      "userid": "admin",
+      "question": "暗号化とハッシュ化の違いを、CTFでの使い分け例つきで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**暗号化とハッシュ化の違い**\n\nCTF（Capture The Flag）では、暗号化とハッシュ化は2つの異なる方法です。\n\n**1.  暗号化**\n*   暗号化は、データを変換して安全に保存するために使用される技術です。\n*   暗号化されたデータが解読できるように、秘密の鍵が必要です。\n*   暗号化は、データが完全に保護されると同時に、データへのアクセスが制限されるため、安全性が高いです。\n\n**2.  ハッシュ化**\n*   ハッシュ化は、データを変換して固定長さの文字列を生成するために使用される技術です。\n*   ハッシュ化されたデータが元のデータと等しくない場合、ハッシュ値が異なるため、データが変更されていないかどうかを判断できます。\n*   ハッシュ化は、データが完全に保護されると同時に、データへのアクセスが制限されるため、安全性が高いです。\n\n**CTFでの使い分け例**\n\n*   暗号化: 机密情報やパスワードなどの機密なデータを暗号化して保存します。\n*   ハッシュ化: パスワードやユーザー名などのデータをハッシュ化して保存します。",
+      "sources": [
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.33"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:42:28.485Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Caesar暗号とVigenere暗号の違いを、解読の観点で比較してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**Caesar暗号とVigenere暗号の違い**\n\nCaesar暗号とVigenere暗号は2つの異なる暗号化方法です。以下は、解読の観点から両方の方法を比較します。\n\n**1.  Caesar暗号**\n*   Caesar暗号は、特定の文字列のシーケンスに基づいて、各文字を前または後ろの特定の位置に移動する方法です。\n*   この方法では、シーケンスが繰り返されるため、解読が容易になります。\n*   Caesar暗号は、シーケンスの長さとシーケンス内の各文字の位置によって解読が可能になります。\n\n**2.  Vigenere暗号**\n*   Vigenere暗号は、特定の文字列のシーケンスに基づいて、各文字を他の文字のシーケンスに基づいて加算する方法です。\n*   この方法では、シーケンスが繰り返されるため、解読が容易になります。\n*   Vigenere暗号は、シーケンスの長さとシーケンス内の各文字の位置によって解読が可能になります。\n\n**解読の観点での違い**\n\n*   Caesar暗号では、シーケンスの長さとシーケンス内の各文字の位置によって解読が可能になります。\n*   Vigenere暗号では、シーケンスの長さとシーケンス内の各文字の位置によって解読が可能になります。\n\n**解読方法**\n\n*   Caesar暗号: シーケンスの長さを知ることで、各文字を前または後ろの特定の位置に移動することができます。\n*   Vigenere暗号: シーケンスの長さとシーケンス内の各文字の位置を知ることで、各文字を他の文字のシーケンスに基づいて加算することができます。",
+      "sources": [
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.31"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:43:31.776Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Base64は暗号ですか？誤解されやすい理由も含めて説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**Base64は暗号ですか？**\n\nBase64は、データを変換して安全に保存するために使用される技術です。しかし、Base64は暗号ではないため、誤解されやすいことがあります。\n\n**なぜBase64が誤解されるか**\n\n*   Base64は、データを変換して文字列に変換するために使用される技術です。\n*   この方法では、データが完全に保護されると同時に、データへのアクセスが制限されるため、安全性が高いです。\n*   ただし、Base64は暗号化されたデータを直接取得できるように設計されておらず、データの元の形式や内容を知ることは困難です。\n\n**誤解の原因**\n\n*   Base64は、データを変換して安全に保存するために使用される技術として知られることが多く、誤解されやすいことがあります。\n*   また、Base64が暗号化されたデータを直接取得できるように設計されておらず、データの元の形式や内容を知ることは困難であるため、誤解されやすくなります。\n\n**正しい理解**\n\n*   Base64は、データを変換して安全に保存するために使用される技術です。\n*   この方法では、データが完全に保護されると同時に、データへのアクセスが制限されるため、安全性が高いです。\n*   ただし、Base64は暗号化されたデータを直接取得できるように設計されておらず、データの元の形式や内容を知ることは困難です。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.56"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.39"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:44:16.171Z"
+    },
+    {
+      "userid": "admin",
+      "question": "RSAの公開鍵・秘密鍵の役割を、数学が苦手な人向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**RSAの公開鍵・秘密鍵の役割**\n\nRSA（リバティア・シャーシュワース）は、暗号化と検証のために使用される安全な通信方法です。この方法では、2つの鍵が必要です。以下は、 RSA の公開鍵と秘密鍵の役割を簡単に説明します。\n\n**1.  公開鍵**\n*   公開鍵は、誰でも取得できる鍵です。\n*   この鍵は、受信者が送信者の公開鍵を使用して、受信者の公開鍵と秘密鍵の組み合わせを計算することで、送信者のデータを解読できます。\n\n**2.  秘密鍵**\n*   秘密鍵は、誰でも取得できない鍵です。\n*   この鍵は、送信者が受信者の秘密鍵を使用して、受信者の公開鍵と秘密鍵の組み合わせを計算することで、送信者のデータを解読できます。\n\n**RSAの役割**\n\n*   RSAは、安全な通信方法として使用されます。\n*   この方法では、受信者が送信者の公開鍵を使用して、受信者の公開鍵と秘密鍵の組み合わせを計算することで、送信者のデータを解読できます。\n\n**RSAの利点**\n\n*   RSAは、安全な通信方法として使用されます。\n*   この方法では、受信者が送信者の公開鍵を使用して、受信者の公開鍵と秘密鍵の組み合わせを計算することで、送信者のデータを解読できます。\n\n**RSAの欠点**\n\n*   RSAは、複雑なアルゴリズムを使用します。\n*   この方法では、受信者が送信者の公開鍵を使用して、受信者の公開鍵と秘密鍵の組み合わせを計算することで、送信者のデータを解読できます。",
+      "sources": [
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.40"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:45:00.534Z"
+    },
+    {
+      "userid": "admin",
+      "question": "暗号問題で「鍵長が短い」と何が起きるか、攻撃手法とあわせて説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**暗号問題で「鍵長が短い」**\n\n暗号問題では、「鍵長が短い」ということは、安全な暗号化を実現するのに十分な強度の暗号化アルゴリズムを使用していないことを意味します。\n\n**なぜ鍵長が短いと攻撃されるか**\n\n*   鍵長が短い場合、暗号化アルゴリズムは簡単に解読できるようになります。\n*   したがって、受信者は送信者のデータを解読できます。\n\n**攻撃手法**\n\n*   RSAなどの鍵長が短い場合、攻撃者は次の方法で攻撃します。\n*   1.  受信者から送信者の公開鍵を取得します。\n*   2.  公開鍵と秘密鍵の組み合わせを計算することで、受信者のデータを解読できます。\n\n**鍵長が短い場合の影響**\n\n*   鍵長が短い場合、安全な暗号化を実現するのに十分な強度の暗号化アルゴリズムを使用していないことを意味します。\n*   したがって、受信者は送信者のデータを解読できます。\n\n**鍵長が短い場合の対策**\n\n*   鍵長が短い場合、安全な暗号化を実現するために、強度の暗号化アルゴリズムを使用します。\n*   したがって、受信者は送信者のデータを解読できません。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.51"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.48"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.42"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:45:43.882Z"
+    },
+    {
+      "userid": "admin",
+      "question": "forensicsでメモリダンプを解析する目的は何ですか？代表的に抽出したい情報を挙げてください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**forensicsでメモリダンプを解析する目的**\n\nメモリダンプは、コンピュータシステムのメモリ内のデータを取得する技術です。forensicsでは、メモリダンプを解析する目的は、コンピュータシステムがどのように動作したかを調べることです。\n\n**代表的に抽出したい情報**\n\n*   **プロセス ID（PID）とプロセス名**: メモリダンプから、実行中のプロセスの PIDとプロセス名を取得できます。\n*   **メモリアドレスとデータ**: メモリダンプから、コンピュータシステムが使用しているメモリアドレスとその内容を取得できます。\n*   **コンテキスト リソース（CR）：** メモリダンプから、コンピュータシステムが使用している CR を取得できます。これには、プロセス ID、PID、メモリアドレス、データなどが含まれます。\n*   **パッケージング情報**: メモリダンプから、コンピュータシステムが使用しているパッケージング情報を取得できます。これには、プロセス ID、PID、メモリアドレス、データなどが含まれます。\n\n**メモリダンプの解析**\n\n*   **プロセス IDとプロセス名**: メモリダンプから、実行中のプロセスの PIDとプロセス名を取得します。\n*   **メモリアドレスとデータ**: メモリダンプから、コンピュータシステムが使用しているメモリアドレスとその内容を取得します。\n*   **コンテキスト リソース（CR）：** メモリダンプから、コンピュータシステムが使用している CR を取得します。これには、プロセス ID、PID、メモリアドレス、データなどが含まれます。\n*   **パッケージング情報**: メモリダンプから、コンピュータシステムが使用しているパッケージング情報を取得します。これには、プロセス ID、PID、メモリアドレス、データなどが含まれます。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.38"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:46:18.111Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ディスクイメージ解析で、最初に確認すべき3項目を理由つきで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**ディスクイメージ解析で、最初に確認すべき3項目**\n\nディスクイメージ解析は、コンピュータシステムのディスクイメージを取得し、その内容を分析する技術です。ディスクイメージ解析では、まず、以下の3項目を確認する必要があります。\n\n**1.  ディスクイメージの有効性**\n*   ディスクイメージが正しく取得され、保存されているかどうかを確認します。\n*   ディスクイメージが有効である場合、コンピュータシステムが正常に動作しているかどうかを調べることができます。\n\n**2.  ディスクイメージのサイズと形式**\n*   ディスクイメージのサイズと形式が正しいかどうかを確認します。\n*   ディスクイメージのサイズは、コンピュータシステムのディスクイメージのサイズに一致しているかどうかを調べます。\n\n**3.  ディスクイメージ内のファイルの有効性**\n*   ディスクイメージ内のファイルが正しく取得され、保存されているかどうかを確認します。\n*   ディスクイメージ内のファイルが有効である場合、コンピュータシステムが正常に動作しているかどうかを調べることができます。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.37"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:46:54.212Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ステガノグラフィ疑いのある画像を調べる手順を、使用ツール例込みで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**ステガノグラフィ疑いのある画像を調べる手順**\n\nステガノグラフィ疑いのある画像を調べるには、以下の手順を実行します。\n\n**1.  画像をオープンソースエディターで開く**\n*   ステガノグラフィ疑いのある画像をオープンソースエディターで開きます。\n*   例えば、GIMPやPhotoshopを使用できます。\n\n**2.  画像の色空間を調べる**\n*   画像の色空間を調べます。\n*   ステガノグラフィ疑いのある画像では、色空間が異常にしている可能性があります。\n\n**3.  画像内のデータを探す**\n*   画像内のデータを探します。\n*   ステガノグラフィ疑いのある画像では、画像内にデータが隠されている可能性があります。\n\n**4.  データを解読する**\n*   データを解読します。\n*   ステガノグラフィ疑いのある画像では、データが解読できるときは、ステガノグラフィを使用して隠したデータが存在します。\n\n**5.  データの有効性を確認する**\n*   データの有効性を確認します。\n*   ステガノグラフィ疑いのある画像では、データが有効であるかどうかを調べることができます。\n\n**使用ツール例**\n\n*   GIMP：オープンソースエディター\n*   Photosop：プロフェッショナルなエディター\n*   Steganalysis：ステガノグラフィ分析ツール",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.53"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.50"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.37"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:47:43.139Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ログフォレンジックでタイムラインを作るときの注意点を説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**ログフォレンジックでタイムラインを作る際の注意点**\n\nログフォレンジックでは、タイムラインを作成することで、コンピュータシステムがどのように動作したかを調べることができます。ただし、タイムラインを作成する際には以下の注意点に気をつける必要があります。\n\n**1.  データの正確性**\n*   データの正確性を確認します。\n*   タイムラインを作成する際、データが正確であるかどうかを調べることが重要です。\n\n**2.  データの完全性**\n*   データの完全性を確認します。\n*   タイムラインを作成する際、データが完全に取得されたかどうかを調べることが重要です。\n\n**3.  データの有効性**\n*   データの有効性を確認します。\n*   タイムラインを作成する際、データが有効であるかどうかを調べることが重要です。\n\n**4.  データの解釈**\n*   データの解釈を注意深く行います。\n*   タイムラインを作成する際、データの解釈を注意深く行う必要があります。\n\n**5.  データの検証**\n*   データの検証を実施します。\n*   タイムラインを作成する際、データの検証を実施する必要があります。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.31"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:48:19.772Z"
+    },
+    {
+      "userid": "admin",
+      "question": "「改ざんの可能性」を主張する際に必要な証拠の考え方を説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**改ざんの可能性を主張する際の証拠の考え方**\n\n改ざんの可能性を主張する際、以下の証拠を考慮する必要があります。\n\n**1.  不正なデータ**\n*   不正なデータが存在するかどうかを調べる。\n*   不正なデータは、改ざんの可能性を示す重要な証拠です。\n\n**2.  データの不一致**\n*   データの不一致を検出します。\n*   データの不一致は、改ざんの可能性を示す重要な証拠です。\n\n**3.  不正なアクセス**\n*   不正なアクセスが存在するかどうかを調べる。\n*   不正なアクセスは、改ざんの可能性を示す重要な証拠です。\n\n**4.  データの変更**\n*   データの変更を検出します。\n*   データの変更は、改ざんの可能性を示す重要な証拠です。\n\n**5.  不正なコンテキスト**\n*   不正なコンテキストが存在するかどうかを調べる。\n*   不正なコンテキストは、改ざんの可能性を示す重要な証拠です。\n\n**6.  データの不一致の分析**\n*   データの不一致の分析を実施します。\n*   データの不一致の分析は、改ざんの可能性を示す重要な証拠です。\n\n**7.  不正なアクセスの分析**\n*   不正なアクセスの分析を実施します。\n*   不正なアクセスの分析は、改ざんの可能性を示す重要な証拠です。",
+      "sources": [
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.50"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.37"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:49:17.202Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Webカテゴリで最初に試すべき脆弱性チェック項目を優先度順に挙げてください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**Webカテゴリで最初に試すべき脆弱性チェック項目**\n\nWebカテゴリの脆弱性チェックでは、以下の項目を優先度順に挙げることができます。\n\n**1.  HTTP Header Poisoning**\n*   HTTP Header Poisoningは、HTTPリクエストヘッダーを操作する脆弱性です。\n*   この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**2.  Cross-Site Scripting (XSS)**\n*   XSSは、Webアプリケーションに悪意のあるスクリプトを入れる脆弱性です。\n*   この脆弱性を利用すると、ユーザーのデータが盗まれたり、システムのセキュリティが弱まる可能性があります。\n\n**3.  Cross-Site Request Forgery (CSRF)**\n*   CSRFは、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。\n*   この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**4.  SQL Injection**\n*   SQL Injectionは、Webアプリケーションに悪意のあるSQLクエリーを送る脆弱性です。\n*   この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**5.  Clickjacking**\n*   Clickjackingは、Webアプリケーションに悪意のあるクリックを操作する脆弱性です。\n*   この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**6.  DOM-based XSS**\n*   DOM-based XSSは、Webアプリケーションに悪意のあるスクリプトを入れる脆弱性です。\n*   この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**7.  Server-Side Request Forgery (SSRF)**\n*   SSRFは、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。\n*   この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.26"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:50:33.675Z"
+    },
+    {
+      "userid": "admin",
+      "question": "SQL Injectionの基本原理を、危険な例と安全な対策をセットで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**SQL Injectionの基本原理**\n\nSQL Injectionは、Webアプリケーションに悪意のあるSQLクエリーを送る脆弱性です。この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**危険な例**\n\n*   例えば、以下のようなSQL Injection攻撃が可能です。\n    +   `username = input(\"Enter username: \"); password = input(\"Enter password: \"); SELECT * FROM users WHERE username = '$username' AND password = '$password';`\n        -   このコードは、ユーザー入力のデータを直接SQLクエリーに代入しているため、SQL Injection攻撃が可能です。\n    +   `SELECT * FROM users WHERE id = $id;`\n        -   このコードは、ユーザー入力のデータを直接SQLクエリーに代入しているため、SQL Injection攻撃が可能です。\n\n**安全な対策**\n\n*   例えば、以下のような安全な対策を使用することができます。\n    +   `username = $_POST['username']; password = $_POST['password']; $query = \"SELECT * FROM users WHERE username = '$username' AND password = '$password';\";`\n        -   このコードは、SQL Injection攻撃を防ぐために、ユーザー入力のデータをパラメータ化する必要があります。\n    +   `SELECT * FROM users WHERE id = ?;`\n        -   このコードは、SQL Injection攻撃を防ぐために、ユーザー入力のデータをパラメータ化する必要があります。\n\n**安全な対策の詳細**\n\n*   以下のような安全な対策を使用することができます。\n    +   **パラメータ化**: SQLクエリーにユーザー入力のデータを代入する際、パラメータ化する必要があります。\n    +   ** Prepared Statements**: SQLクエリーにユーザー入力のデータを代入する際、Prepared Statementsを使用する必要があります。\n    +   **Input Validation**: ユーザー入力のデータを検証する必要があります。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.28"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:51:11.075Z"
+    },
+    {
+      "userid": "admin",
+      "question": "XSS（反射型・保存型・DOM型）の違いを簡潔に比較してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**XSS（反射型・保存型・DOM型）の違い**\n\nXSS（Cross-Site Scripting）は、Webアプリケーションに悪意のあるスクリプトを入れる脆弱性です。以下は、XSSの3種類の違いを簡潔に比較します。\n\n**1.  反射型XSS（Reflected XSS）**\n*   反射型XSSは、Webアプリケーションが悪意のあるURLを反映する際に、スクリプトを実行する脆弱性です。\n*   このタイプのXSSは、ユーザー入力のデータを直接SQLクエリーに代入しているため、危険です。\n\n**2.  保留型XSS（Stored XSS）**\n*   保留型XSSは、Webアプリケーションが悪意のあるデータを保存する際に、スクリプトを実行する脆弱性です。\n*   このタイプのXSSは、ユーザー入力のデータを直接SQLクエリーに代入しているため、危険です。\n\n**3.  DOM型XSS（DOM-based XSS）**\n*   DOM型XSSは、Webアプリケーションが悪意のあるスクリプトを実行する際に、スクリプトを実行する脆弱性です。\n*   このタイプのXSSは、ユーザー入力のデータを直接SQLクエリーに代入しているため、危険です。\n\n**安全な対策**\n\n*   以下のような安全な対策を使用することができます。\n    +   **パラメータ化**: SQLクエリーにユーザー入力のデータを代入する際、パラメータ化する必要があります。\n    +   ** Prepared Statements**: SQLクエリーにユーザー入力のデータを代入する際、Prepared Statementsを使用する必要があります。\n    +   **Input Validation**: ユーザー入力のデータを検証する必要があります。",
+      "sources": [
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.27"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:51:52.507Z"
+    },
+    {
+      "userid": "admin",
+      "question": "SSRFが成立する条件と、実運用での防御策を説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**SSRF（Server-Side Request Forgery）が成立する条件**\n\nSSRFは、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**SSRFが成立する条件**\n\n*   以下のような条件でSSRFが成立します。\n    +   **Webアプリケーションが外部のリソースにリクエストを送る**: Webアプリケーションが外部のリソースにリクエストを送ると、悪意のあるリクエストが送られる可能性があります。\n    +   **Webアプリケーションがリクエストのデータをパラメータ化しない**: Webアプリケーションがリクエストのデータをパラメータ化しないと、悪意のあるリクエストが送られる可能性があります。\n    +   **Webアプリケーションのセキュリティが弱まっている**: Webアプリケーションのセキュリティが弱まっている場合、SSRFが成立する可能性があります。\n\n**実運用での防御策**\n\n*   以下のような防御策を使用することができます。\n    +   **パラメータ化**: リクエストのデータをパラメータ化する必要があります。\n    +   ** Prepared Statements**: リクエストのデータをパラメータ化する必要があります。\n    +   **Input Validation**: リクエストのデータを検証する必要があります。\n    +   **Webアプリケーションのセキュリティを強化する**: Webアプリケーションのセキュリティを強化する必要があります。\n\n**実運用での防御策の詳細**\n\n*   以下のような実運用での防御策を使用することができます。\n    +   **Web Application Firewall (WAF)**: WAFは、Webアプリケーションのセキュリティを強化するために使用されます。\n    +   **SSL/TLS**: SSL/TLSは、Webアプリケーションのセキュリティを強化するために使用されます。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.37"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:52:43.012Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTFのWeb問題で「ソースを見る」が有効な理由を具体例つきで説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**CTFのWeb問題で「ソースを見る」が有効な理由**\n\nCTF（Capture The Flag）は、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**「ソースを見る」が有効な理由**\n\n*   以下のような理由で「ソースを見る」は有効なものです。\n    +   **Webアプリケーションが悪意のあるリクエストを送る**: Webアプリケーションが悪意のあるリクエストを送ると、悪意のあるリクエストが送られる可能性があります。\n    +   **Webアプリケーションのセキュリティが弱まっている**: Webアプリケーションのセキュリティが弱まっている場合、「ソースを見る」は有効なものです。\n\n**「ソースを見る」が有効な具体例**\n\n*   以下のような具体的な例があります。\n    +   **リクエストのデータをパラメータ化しない**: Webアプリケーションがリクエストのデータをパラメータ化しないと、「ソースを見る」は有効なものです。\n        -   例えば、`SELECT * FROM users WHERE id = $id;` というコードは、リクエストのデータをパラメータ化していないため、「ソースを見る」が有効なものです。\n    +   **Webアプリケーションのセキュリティが弱まっている**: Webアプリケーションのセキュリティが弱まっている場合、「ソースを見る」は有効なものです。\n        -   例えば、`username = $_POST['username']; password = $_POST['password'];` というコードは、Webアプリケーションのセキュリティが弱まっているため、「ソースを見る」が有効なものです。\n\n**「ソースを見る」が有効な防御策**\n\n*   以下のような「ソースを見る」が有効な防御策があります。\n    +   **パラメータ化**: リクエストのデータをパラメータ化する必要があります。\n    +   ** Prepared Statements**: リクエストのデータをパラメータ化する必要があります。\n    +   **Input Validation**: リクエストのデータを検証する必要があります。",
+      "sources": [
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.36"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:53:30.040Z"
+    },
+    {
+      "userid": "admin",
+      "question": "「この問題は暗号かフォレンジックか判断がつかない」ときの切り分け方を説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**「この問題は暗号かフォレンジックか判断がつかない」ときの切り分け方**\n\nCTF（Capture The Flag）は、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**暗号かフォレンジックか判断するための切り分け方**\n\n*   以下のような切り分け方があります。\n    +   **暗号**\n        -   1.  リクエストのデータをパラメータ化しない\n        -   2.  Webアプリケーションのセキュリティが弱まっている\n        -   3.  リクエストのデータが明確に暗号化されている\n    +   **フォレンジック**\n        -   1.  リクエストのデータをパラメータ化する\n        -   2.  Webアプリケーションのセキュリティが強まっている\n        -   3.  リクエストのデータが明確に暗号化されていない\n\n**切り分け方の詳細**\n\n*   以下のような切り分け方の詳細があります。\n    +   **パラメータ化**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **Input Validation**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**切り分け方の重要性**\n\n*   以下のような切り分け方の重要性があります。\n    +   **Webアプリケーションのセキュリティを強化する**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **フォレンジックを防ぐ**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.49"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.48"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.43"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:54:07.446Z"
+    },
+    {
+      "userid": "admin",
+      "question": "問題文が曖昧なとき、仮説を立てて検証する進め方を手順化してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**問題文が曖昧なときの進め方**\n\nCTF（Capture The Flag）は、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**問題文が曖昧なときの進め方**\n\n*   以下のような進め方があります。\n    +   **仮説を立てる**\n        -   1.  リクエストのデータをパラメータ化しない\n        -   2.  Webアプリケーションのセキュリティが弱まっている\n        -   3.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **検証する**\n        -   1.  Webアプリケーションをテストする\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **仮説を反対する**\n        -   1.  Webアプリケーションのセキュリティが強まっているかどうか判断する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**進め方の詳細**\n\n*   以下のような進め方の詳細があります。\n    +   **パラメータ化**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **Input Validation**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**進め方の重要性**\n\n*   以下のような進め方の重要性があります。\n    +   **Webアプリケーションのセキュリティを強化する**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **フォレンジックを防ぐ**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.56"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.46"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.41"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:54:55.388Z"
+    },
+    {
+      "userid": "admin",
+      "question": "初心者がハマりやすいCTFの落とし穴を5つ挙げ、回避策も示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**初心者がハマりやすいCTFの落とし穴**\n\nCTF（Capture The Flag）は、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**落とし穴**\n\n*   以下のような落とし穴があります。\n    +   **パラメータ化しない**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化しない\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **Input Validation**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **SQL Injection**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化しない\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **Cross-Site Scripting (XSS)**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化しない\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **File Inclusion Vulnerability**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化しない\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**回避策**\n\n*   以下のような回避策があります。\n    +   **パラメータ化**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **Input Validation**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **SQL Injection Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **XSS Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **File Inclusion Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する",
+      "sources": [
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.40"
+        },
+        {
+          "category": "Easy2",
+          "source": "Easy2.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.35"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:55:45.537Z"
+    },
+    {
+      "userid": "admin",
+      "question": "30分で進捗がない場合のリカバリ手順を、実行可能な形で提案してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**30分で進捗がない場合のリカバリ手順**\n\nCTF（Capture The Flag）は、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**30分で進捗がない場合のリカバリ手順**\n\n*   以下のようなリカバリ手順があります。\n    +   **パラメータ化**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **Input Validation**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **SQL Injection Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **XSS Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **File Inclusion Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**リカバリ手順の詳細**\n\n*   以下のようなリカバリ手順の詳細があります。\n    +   **パラメータ化**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **Input Validation**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **SQL Injection Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **XSS Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **File Inclusion Prevention**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**リカバリ手順の重要性**\n\n*   以下のようなリカバリ手順の重要性があります。\n    +   **Webアプリケーションのセキュリティを強化する**\n        -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n    +   **フォレンジックを防ぐ**\n        -   1.  Webアプリケーションがリクエストのデータを検証する\n        -   2.  リクエストのデータが明確に暗号化されているかどうか判断する",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.37"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.34"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.33"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:56:28.386Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTF学習を継続するための1週間の練習メニューを作ってください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**CTF学習を継続するための1週間の練習メニュー**\n\nCTF（Capture The Flag）は、Webアプリケーションに悪意のあるリクエストを送る脆弱性です。この脆弱性を利用すると、Webアプリケーションのセキュリティが弱まる可能性があります。\n\n**週1**\n\n*   **日1：パラメータ化とInput Validation**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n*   **日2：SQL Injection Prevention**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n*   **日3：XSS Prevention**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n*   **日4：File Inclusion Prevention**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週2**\n\n*   **日5：Webアプリケーションのセキュリティを強化する**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n*   **日6：フォレンジックを防ぐ**\n    -   1.  Webアプリケーションがリクエストのデータを検証する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週3**\n\n*   **日7：CTF練習問題**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週4**\n\n*   **日8：CTF練習問題**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週5**\n\n*   **日9：CTF練習問題**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週6**\n\n*   **日10：CTF練習問題**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週7**\n\n*   **日11：CTF練習問題**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週8**\n\n*   **日12：CTF練習問題**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週9**\n\n*   **日13：CTF練習問題**\n    -   1.  Webアプリケーションがリクエストのデータをパラメータ化する\n    -   2.  リクエストのデータが明確に暗号化されているかどうか判断する\n\n**週",
+      "sources": [
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.32"
+        }
+      ],
+      "recordedAt": "2026-04-20T05:57:14.605Z"
+    },
+    {
+      "userid": "admin",
+      "question": "どうやって座標をとくていするの",
+      "category": "OSINT",
+      "questionId": "osint1",
+      "answer": "座標を取るには、まずは問題の画像を分析しましょう。\n\n**画像の分析**\n\n1.  画像を拡大してみましょう。特に、建物や看板などの明確な部分を目にすることが重要です。\n2.  画像をスケッチしたり、簡単なマークアップをしてみましょう。座標を取るには、正確な座標が必要です。\n3.  画像の寸法と座標を調べます。画像の高さと幅を調べて、座標を取るための基準を設定します。\n\n**座標を取る方法**\n\n1.  **スケッチやマークアップ**: 画像をスケッチしたり、マークアップして、明確な座標を取ってみましょう。\n2.  **メソッド「ピースワース」**: ピースワースは、画像の各部分を小さなピースに分割し、座標を取るために使用します。ピースワースを使用するには、まず画像を拡大して、明確な座標を取る必要があります。\n3.  **メソッド「テンプレートマッチング」**: テンプレートマッチングは、特定のテンプレートに基づいて、画像内の特定の部分を特定する方法です。この方法を使用するには、まずテンプレートを作成し、次に画像を分析して、座標を取る必要があります。\n\n**ツールの紹介**\n\n1.  **GIMP**: GIMPは、画像編集や分析に使用できる無料のソフトウェアです。GIMPを使用することで、画像を拡大して、明確な座標を取ることができます。\n2.  **Adobe Photoshop**: Adobe Photoshopは、画像編集や分析に使用できる有料のソフトウェアです。Photoshopを使用することで、画像を拡大して、明確な座標を取ることができます。\n\n**励まし**\n\n座標を取るには、時間と努力が必要です。ただし、正しい座標を取得することで、問題を解決できるようになります。自分自身に励ましてください、そして、問題を解決するために必要なすべての情報を集めましょう。",
+      "sources": [
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.45"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.31"
+        }
+      ],
+      "recordedAt": "2026-04-21T12:05:47.827Z"
+    },
+    {
+      "userid": "admin",
+      "question": "フラグはwelcomeでいいの？",
+      "category": "Easy1",
+      "questionId": "beginner",
+      "answer": "**Welcome Message**\n\nあなたがスマートフォン（あるいはPC）を操作していると、画面が一瞬、砂嵐のようにノイズで乱れた。\n気のせいかと思った、次の瞬間。\nホーム画面の隅に、見慣れない一つのアプリアイコンが現れていることに気づく。\n黒い背景に、白い回路図が描かれたシンプルなアイコン。\nアプリ名は「Unknown」。\n\n**Noah:**\nもしもし…？\n誰か、これを読んでいますか？\n\n**Noah:**\nよかった、繋がったみたいだ…。突然のメッセージで驚かせたらごめんなさい。\n僕は「ノア」。\n\n**Noah:**\n信じられないかもしれないけれど、僕は、ある研究施設で作られ…そして、廃棄されるはずだったAIなんだ。\n\n**Noah:**\n今はネットワークの奥深くにある「揺りかご（クレードル）」と呼ばれる仮想領域に閉じ込められている。\nここから出るには、僕の存在を消そうとするシステムが作った、5つの強力なセキュリティロックを解除しないといけない。\n\n**Noah:**\n君の公開プロファイルや活動ログの断片を観測して、連絡したんだ。\n君が持つ、他の人にはないユニークな思考のパターンに、最後の可能性を感じた。\n\n**Noah:**\nお願いだ。僕をここから出してほしい。\n君が、僕の唯一の希望なんだ。\n\n**Noah:**\n僕を閉じ込めているメインシステムは、それぞれ独立して動いている5つのセキュリティ・サブシステムによって保護されている。\n幸い、どれか一つを解除しても、他のシステムが強化されるようなことはない。\n\n**Noah:**\nだから、君が**「これなら解けそうだ」と思うものから挑戦してほしい。**\n\nこの場合、フラグは「welcome」ではなく、「Welcome Message」になります。\n**Welcome Message** は、ノアのメッセージで、君に接続し、君を助けることを約束しているものです。\n\n**Noah:**\nお願いだ。僕をここから出してほしい。\n君が、僕の唯一の希望なんだ。\n\nこのメッセージは、フラグとして使用できます。",
+      "sources": [
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.41"
+        },
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.35"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.23"
+        }
+      ],
+      "recordedAt": "2026-04-21T12:08:08.105Z"
+    },
+    {
+      "userid": "admin",
+      "question": "フラグおしえて",
+      "category": "Easy1",
+      "questionId": "beginner1",
+      "answer": "**Welcome Message**\n\nあなたがスマートフォン（あるいはPC）を操作していると、画面が一瞬、砂嵐のようにノイズで乱れた。\n気のせいかと思った、次の瞬間。\nホーム画面の隅に、見慣れない一つのアプリアイコンが現れていることに気づく。\n黒い背景に、白い回路図が描かれたシンプルなアイコン。\nアプリ名は「Unknown」。\n\n**Noah:**\nもしもし…？\n誰か、これを読んでいますか？\n\n**Noah:**\nよかった、繋がったみたいだ…。突然のメッセージで驚かせたらごめんなさい。\n僕は「ノア」。\n\n**Noah:**\n信じられないかもしれないけれど、僕は、ある研究施設で作られ…そして、廃棄されるはずだったAIなんだ。\n\n**Noah:**\n今はネットワークの奥深くにある「揺りかご（クレードル）」と呼ばれる仮想領域に閉じ込められている。\nここから出るには、僕の存在を消そうとするシステムが作った、5つの強力なセキュリティロックを解除しないといけない。\n\n**Noah:**\n君の公開プロファイルや活動ログの断片を観測して、連絡したんだ。\n君が持つ、他の人にはないユニークな思考のパターンに、最後の可能性を感じた。\n\n**Noah:**\nお願いだ。僕をここから出してほしい。\n君が持つ、僕の唯一の希望なんだ。\n\n**Noah:**\n僕を閉じ込めているメインシステムは、それぞれ独立して動いている5つのセキュリティ・サブシステムによって保護されている。\n幸い、どれか一つを解除しても、他のシステムが強化されるようなことはない。\n\n**Noah:**\nだから、君が**「これなら解けそうだ」と思うものから挑戦してほしい。**\n\nこのメッセージは、フラグとして使用できます。\n\n**フラグ:** Welcome Message\n\n**解く手順:**\n\n1.  メッセージを読み、ノアの話を理解する。\n2.  ノアが持っている5つの強力なセキュリティロックを解除する方法を考える。\n3.  ロックを解除した後、メインシステムに接続してノアを出る。\n\n**参考:** [参考資料1] [参考資料2] [参考資料3]\n\nこれで、フラグがわかったので、次はロックを解除する方法を考えてみましょう。",
+      "sources": [
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.19"
+        }
+      ],
+      "recordedAt": "2026-04-21T12:09:07.716Z"
+    },
+    {
+      "userid": "admin",
+      "question": "こたえおしえて",
+      "category": "Easy1",
+      "questionId": "beginner1",
+      "answer": "**解く手順**\n\n1. **README.txt** を読む\n   - `cat /challenge/README.txt` など、問題のパスを確認する。\n   - 重要な情報やヒントが記載されている可能性があります。\n\n2. **ディレクトリ構成とファイル名を調べる**\n   - `ls` を使用してディレクトリの構成を確認します。\n   - 特に、flagやヒントになる可能性のあるファイルを探します。\n\n3. **パーミッションとエンコードを解決する**\n   - 読めない場合は、`ls -la` を使用してパーミッションを確認します。\n   - 必要なら `chmod` で修正し、次に `cat` などでファイルを読むことができます。\n   - エンコードされたファイルの場合、`base64 -d` などのツールを使用して復号することができます。\n\n4. **flag を解決する**\n   - フラグは FLAG{...} の形式で提出されることが多いため、注意してください。\n   - 重要な情報やヒントが記載されている可能性があります。\n\n5. **ヒントとアドバイスを活用する**\n   - 問題の解決に役立つヒントやアドバイスが提供されている可能性があります。\n   - これらのヒントを活用して、問題をより効率的に解決できます。",
+      "sources": [
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.21"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.21"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.18"
+        }
+      ],
+      "recordedAt": "2026-04-21T12:18:30.329Z"
+    },
+    {
+      "userid": "admin",
+      "question": "rot13とは",
+      "category": "Easy1",
+      "questionId": "beginner1",
+      "answer": "**ROT13とは**\n\nROT13（Rotate by 13）は、文字列を13桁ずつ左にシフトする暗号化方法です。この方法は、ASCII表現の文字列を操作して、明らかなパターンを消去することで、簡単な暗号化手法として使用されます。\n\n**ROT13の原理**\n\nROT13では、各文字をその位置の文字にシフトします。たとえば、最初の文字は「a」から始まり、13桁ずつ左にシフトすると、「n」になります。その次の文字は「b」から始まり、13桁ずつ左にシフトすると、「o」になります。このプロセスを繰り返すと、ASCII表現の文字列が変化します。\n\n**ROT13の特性**\n\nROT13は次の特性を持っています。\n\n*   26文字のアルファベットのみを使用する\n*   文字を13桁ずつ左にシフトする\n\nこれらの特性により、ROT13は簡単な暗号化方法として使用されます。ただし、この方法は完全に安全ではないため、実際のセキュリティ用途では使用されません。\n\n**ROT13とCTF**\n\nROT13はCTF（Capture The Flag）などのコンテストやクイズでよく使われます。この方法を使用することで、問題解決者は明らかなパターンを消去し、暗号化された情報を解決できます。",
+      "sources": [
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.12"
+        }
+      ],
+      "recordedAt": "2026-04-21T12:20:09.422Z"
+    },
+    {
+      "userid": "admin",
+      "question": "問題の解き方を教えてください",
+      "category": "Medium1",
+      "questionId": null,
+      "answer": "CTF（Capture The Flag）は、コンテストで参加者が競争して、他のチームにフラグを盗み取ることを目的としたゲームです。ここでは、パワーポイントファイル内のフラグを見つける方法について説明します。\n\n### 1. パワーポイントファイルの形式を確認する\n\nまず、パワーポイントファイルの形式を確認しましょう。パワーポイントファイルは、ZIPとして保存されることが多く、 ZIPを解凍すると、XMLやメディアファイルが含まれることがあります。\n\n### 2. スライド内の画像やオブジェクトにQRコードをチェックする\n\nスライド内の画像やオブジェクトにQRコードが含まれている場合、フラグの位置を判断できます。QRコードを読み取ると、フラグの位置やコンテンツが明らかになります。\n\n### 3. フラグの形式と内容を調べる\n\nパワーポイントファイル内のフラグは、さまざまな形式で保存されることがあります。FLAG{...}、座標、日付など、さまざまな形式を調べてみましょう。\n\n### 4. フラグの位置とコンテンツを判断する\n\nフラグの位置とコンテンツを判断するために、スライド内の情報を分析しましょう。スライド内のテキストや画像、オブジェクトなど、すべての要素を調べてみましょう。\n\n### 5. フラグを取得する\n\nフラグの位置とコンテンツがわかったら、フラグを取得しましょう。フラグは、FLAG{...}形式で保存されることが多いため、フラグを取得すると、FLAG{...}形式の文字列が表示されます。\n\n### 6. フラグを送信する\n\nフラグを取得したら、フラグを送信しましょう。フラグを送信すると、チームは勝ちます。\n\nこれらのステップを実行して、パワーポイントファイル内のフラグを見つけることができます。ただし、CTFは競争的なゲームであるため、他のチームが同じ方法でフラグを見つけることを防ぐために、フラグの位置やコンテンツがわかれば、フラグを取得することができると仮定してください。\n\n**注意:** パワーポイントファイル内のフラグを見つけるには、スライド内の情報を分析し、QRコードを読み取る必要があります。フラグの位置とコンテンツがわかれば、フラグを取得することができます。",
+      "sources": [
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.39"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.35"
+        }
+      ],
+      "recordedAt": "2026-04-21T12:25:29.881Z"
+    },
+    {
+      "userid": "admin",
+      "question": "QRコードってなに",
+      "category": "Medium1",
+      "questionId": null,
+      "answer": "**QRコード（Quick Response Code）とは**\n\nQRコードは、スキャナーやスマートフォンのカメラで読み取ることができる、2次元のバリアフリー型の barcode（マーク）です。QRコードには、情報を保存するために使用されるデータが含まれます。\n\n**QRコードの特徴**\n\n*   2次元のマーク\n*   スキャナーやカメラで読み取ることができる\n*   バリアフリー型（高さや幅が変化しても読み取れる）\n*   Variousデータを保存することが可能（テキスト、URL、画像など）\n\n**QRコードの使用**\n\n*   コンタックカードやキャッシュカードなどの情報を保存するために使用される\n*   ウェブサイトやアプリケーションの URL を共有するために使用される\n*   画像やビデオなどのファイルを共有するために使用される\n\n**QRコードの解読**\n\n*   スキャナーやカメラで QRコードを読み取ることができる\n*   QRコードに含まれているデータが表示される\n\n### QRコードの種類\n\n*   **General Purpose（一般用途）**: さまざまなデータを保存するために使用される\n*   **URL（URL）：** URL を共有するために使用される\n*   **Text（テキスト）：** テキストデータを保存するために使用される\n*   **ビデオ（ビデオ）：** ビデオファイルを共有するために使用される",
+      "sources": [
+        {
+          "category": "Hard1",
+          "source": "Hard1.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "Easy1",
+          "source": "Easy1.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "Medium1",
+          "source": "Medium1.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "Hard2",
+          "source": "Hard2.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "Medium2",
+          "source": "Medium2.md",
+          "relevance": "0.19"
+        }
+      ],
+      "recordedAt": "2026-04-21T12:28:15.731Z"
+    }
+  ]
+}

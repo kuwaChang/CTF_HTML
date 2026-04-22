@@ -1861,18 +1861,18 @@ function cleanup(dir) {
 }
 
 // 各ルート登録
-console.log("📦 ルートモジュールを読み込み中...");
+//console.log("📦 ルートモジュールを読み込み中...");
 try {
   const authRoutes = require("./routes/auth");
-  console.log("✅ authルート読み込み完了");
+  //console.log("✅ authルート読み込み完了");
   const quizRoutes = require("./routes/quiz");
-  console.log("✅ quizルート読み込み完了");
+  //console.log("✅ quizルート読み込み完了");
   const adminRoutes = require("./routes/admin");
-  console.log("✅ adminルート読み込み完了");
+  //console.log("✅ adminルート読み込み完了");
   const { router: achievementRoutes, checkAchievements } = require("./routes/achievements");
-  console.log("✅ achievementsルート読み込み完了");
+  //console.log("✅ achievementsルート読み込み完了");
   const tutorRoutes = require("./routes/tutor");
-  console.log("✅ tutorルート読み込み完了");
+  //console.log("✅ tutorルート読み込み完了");
 
   app.use("/auth", authRoutes);
   app.use("/quiz", quizRoutes);
@@ -1880,7 +1880,7 @@ try {
   app.use("/achievements", achievementRoutes);
   app.use("/tutor", tutorRoutes);
   app.use("/sad", sadRouter);
-  console.log("✅ すべてのルートを登録しました");
+  //console.log("✅ すべてのルートを登録しました");
 } catch (error) {
   console.error("❌ ルートモジュール読み込みエラー:", error);
   console.error("   スタックトレース:", error.stack);

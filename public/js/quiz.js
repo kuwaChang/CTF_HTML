@@ -532,6 +532,9 @@ function openModal(category, qid, evt = null) {
 
   modalContent.style.backgroundColor = "#5b5b5bff";
   modalContent.style.color = "white";
+  modalContent.style.borderWidth = "2px";
+  modalContent.style.borderStyle = "solid";
+  modalContent.style.borderColor = "rgb(242 242 242 / 30%)";
 
   // 解説リンクの初期化
   const explanationLink = document.getElementById("explanation-link");
@@ -599,7 +602,7 @@ function openModal(category, qid, evt = null) {
   // ✅ すでに解いたか確認
   const solved = solvedList.some(s => s.category === category && s.qid === qid);
   if (solved) {
-    modalContent.style.backgroundColor = "#6cd463ff";
+    modalContent.style.borderColor = "#6cd463";
     // 解説がある場合はリンクを表示
     if (q.explanation) {
       const explanationAnchor = document.getElementById("explanation-link-anchor");
@@ -787,7 +790,7 @@ console.log("📡 /checkAnswer応答:", res.status);
     resultEl.innerText = "";
     resultEl.style.color = "limegreen";
     solvedList.push({ category: currentCategory, qid: currentQid });
-    modalContent.style.backgroundColor = "#6cd463ff";
+    modalContent.style.borderColor = "#6cd463";
     
     // 解説がある場合はリンクを表示
     const q = quizData[currentCategory][currentQid];

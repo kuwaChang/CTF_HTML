@@ -373,7 +373,10 @@
       "hint": [
         "pptxはパワーポイントです。パワーポイントは実は、他の形式でもあるのです "
       ],
-      "point": 50
+      "point": 50,
+      "files": [
+        "findme.pptx"
+      ]
     },
     "hard5": {
       "answer": "FLAG{hard6}",

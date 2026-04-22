@@ -219,11 +219,29 @@
     .btn-secondary:hover {
       background-color: #666;
     }
-    .quick-actions {
+    .problem-selector {
+      background-color: #2d2d2d;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+    .problem-selector h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      color: #8ec1ff;
+    }
+    .problem-selector .selector-row {
       display: flex;
       gap: 10px;
-      margin-bottom: 20px;
       flex-wrap: wrap;
+    }
+    .problem-selector select {
+      min-width: 220px;
+      padding: 10px;
+      border: 1px solid #555;
+      border-radius: 6px;
+      background-color: #2d2d2d;
+      color: #e0e0e0;
     }
     .quick-action-btn {
       padding: 8px 16px;
@@ -275,16 +293,16 @@
 
     <div id="errorMessage" class="error-message hidden"></div>
 
-    <div class="quick-actions">
-      <button class="quick-action-btn" onclick="askQuickQuestion('問題の解き方を教えてください')">
-        💡 解き方を聞く
-      </button>
-      <button class="quick-action-btn" onclick="askQuickQuestion('使用すべきツールを教えてください')">
-        🛠️ ツールを聞く
-      </button>
-      <button class="quick-action-btn" onclick="askQuickQuestion('このカテゴリーの基礎知識を教えてください')">
-        📚 基礎知識を聞く
-      </button>
+    <div class="problem-selector">
+      <h3>🎯 AI先生に質問する対象問題</h3>
+      <div class="selector-row">
+        <select id="categorySelect">
+          <option value="">問題を指定しない（全体向け）</option>
+        </select>
+        <select id="questionSelect" disabled>
+          <option value="">先にカテゴリを選択してください</option>
+        </select>
+      </div>
     </div>
 
     <div class="chat-container" id="chatContainer">
@@ -308,12 +326,14 @@
     let currentCategory = null;
     let currentQuestionId = null;
     let statusPollTimer = null;
+    let quizDataCache = null;
 
     // ページ読み込み時にステータスを確認し、準備完了までポーリング
     window.addEventListener('DOMContentLoaded', async () => {
       const urlParams = new URLSearchParams(window.location.search);
       currentCategory = urlParams.get('category');
       currentQuestionId = urlParams.get('questionId');
+      await initializeProblemSelector();
       await checkStatusAndPoll();
     });
 
@@ -408,6 +428,91 @@
       sourcesEl.style.display = 'block';
       sourcesEl.innerHTML = '<strong>参考資料:</strong> ' +
         sources.map(s => escapeHtml(`${s.category} (関連度: ${s.relevance})`)).join(', ');
+    }
+
+    async function initializeProblemSelector() {
+      const categorySelect = document.getElementById('categorySelect');
+      const questionSelect = document.getElementById('questionSelect');
+
+      categorySelect.addEventListener('change', () => {
+        currentCategory = categorySelect.value || null;
+        updateQuestionOptions(currentCategory);
+      });
+
+      questionSelect.addEventListener('change', () => {
+        currentQuestionId = questionSelect.value || null;
+      });
+
+      try {
+        const response = await fetch('/api/quizData', { credentials: 'include' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        quizDataCache = await response.json();
+        populateCategoryOptions();
+        applyInitialSelection();
+      } catch (error) {
+        console.error('問題一覧の取得に失敗:', error);
+      }
+    }
+
+    function populateCategoryOptions() {
+      const categorySelect = document.getElementById('categorySelect');
+      if (!quizDataCache) return;
+
+      const categories = Object.keys(quizDataCache).sort((a, b) => a.localeCompare(b, 'ja'));
+      for (const category of categories) {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        categorySelect.appendChild(option);
+      }
+    }
+
+    function updateQuestionOptions(category) {
+      const questionSelect = document.getElementById('questionSelect');
+      questionSelect.innerHTML = '';
+
+      if (!category || !quizDataCache || !quizDataCache[category]) {
+        questionSelect.disabled = true;
+        questionSelect.innerHTML = '<option value="">先にカテゴリを選択してください</option>';
+        currentQuestionId = null;
+        return;
+      }
+
+      questionSelect.disabled = false;
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = '問題を指定しない（カテゴリ全体）';
+      questionSelect.appendChild(placeholder);
+
+      const questions = Object.entries(quizDataCache[category]);
+      for (const [questionId, questionData] of questions) {
+        const option = document.createElement('option');
+        option.value = questionId;
+        option.textContent = `${questionId}: ${questionData.title || '(タイトルなし)'}`;
+        questionSelect.appendChild(option);
+      }
+
+      if (currentQuestionId && quizDataCache[category][currentQuestionId]) {
+        questionSelect.value = currentQuestionId;
+      } else {
+        questionSelect.value = '';
+        currentQuestionId = null;
+      }
+    }
+
+    function applyInitialSelection() {
+      const categorySelect = document.getElementById('categorySelect');
+
+      if (currentCategory && quizDataCache && quizDataCache[currentCategory]) {
+        categorySelect.value = currentCategory;
+        updateQuestionOptions(currentCategory);
+      } else {
+        currentCategory = null;
+        currentQuestionId = null;
+        updateQuestionOptions(null);
+      }
     }
 
     async function sendQuestion() {
@@ -588,11 +693,6 @@
       messageDiv.innerHTML = html;
       container.appendChild(messageDiv);
       container.scrollTop = container.scrollHeight;
-    }
-
-    function askQuickQuestion(question) {
-      document.getElementById('questionInput').value = question;
-      sendQuestion();
     }
 
     async function clearHistory() {
