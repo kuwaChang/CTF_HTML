@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTF RPG 戦闘</title>
+  <link rel="stylesheet" href="../css/game.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>CTF RPG 戦闘ページ</h1>
+      <p>敵を倒してGPを稼ごう。装備や強化はトップページで行えます。</p>
+      <div class="actions">
+        <a class="link-btn" href="/html/game.html">RPGトップへ戻る</a>
+        <a class="link-btn" href="/html/index.html">サイトトップへ戻る</a>
+      </div>
+    </header>
+
+    <section class="panel">
+      <h2>現在のステージ</h2>
+      <p id="currentStageInfo">-</p>
+    </section>
+
+    <section class="panel">
+      <h2>プレイヤー情報</h2>
+      <div id="playerSummary" class="summary-grid"></div>
+    </section>
+
+    <section class="panel battle-screen">
+      <h2>戦闘</h2>
+      <div id="enemyArea"></div>
+      <div class="battle-actions">
+        <button id="attackBtn">攻撃</button>
+        <button id="guardBtn">防御</button>
+        <button id="nextEnemyBtn">次の敵へ</button>
+      </div>
+      <div class="battle-bottom">
+        <div class="player-hp-wrap">
+          <div class="player-hp-label">プレイヤーHP</div>
+          <div class="player-hp-bar">
+            <div id="playerHpFill" class="player-hp-fill"></div>
+          </div>
+          <div id="playerHpText" class="player-hp-text">-</div>
+        </div>
+        <div id="battleLog" class="battle-log"></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../js/game.js"></script>
+</body>
+</html>

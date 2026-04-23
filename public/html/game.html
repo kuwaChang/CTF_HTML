@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTF RPGモード</title>
+  <link rel="stylesheet" href="../css/game.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>CTF RPGモード</h1>
+      <p>CTFで稼いだ得点を使ってキャラを強化し、敵を倒そう。</p>
+      <div class="actions">
+        <button id="syncScoreBtn">CTF解答を同期（GP反映）</button>
+        <a class="link-btn" href="/html/index.html">トップへ戻る</a>
+      </div>
+      <p id="syncMessage" class="message"></p>
+    </header>
+
+    <section class="panel">
+      <h2>プレイヤー情報</h2>
+      <div id="playerSummary" class="summary-grid"></div>
+    </section>
+
+    <section class="panel">
+      <h2>ステータス強化</h2>
+      <div class="upgrade-grid">
+        <button data-upgrade="maxHp">HP強化 (50 GP)</button>
+        <button data-upgrade="atk">ATK強化 (60 GP)</button>
+        <button data-upgrade="def">DEF強化 (60 GP)</button>
+        <button data-upgrade="spd">SPD強化 (70 GP)</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>装備ショップ</h2>
+      <div id="shopList" class="shop-list"></div>
+    </section>
+
+    <section class="panel">
+      <h2>ステージ選択</h2>
+      <p>前のステージを全てクリアすると次のステージが解放されます。</p>
+      <div id="stageSelection" class="stage-grid"></div>
+    </section>
+
+    <section class="panel">
+      <h2>冒険に出る</h2>
+      <p>ステージカードの「このステージに挑戦」から戦闘ページへ移動してください。</p>
+      <div class="actions">
+        <a class="link-btn" href="/html/game-battle.html">戦闘ページへ</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+{
+  "stages": [
+    {
+      "id": 1,
+      "name": "Stage 1: Entry Lab",
+      "description": "基礎ステージ。まずは2体撃破を目指す。",
+      "enemies": [
+        {
+          "key": "s1_e1",
+          "name": "スクリプトスライム",
+          "maxHp": 90,
+          "atk": 16,
+          "def": 8,
+          "spd": 8,
+          "actionInterval": 2,
+          "reward": 60,
+          "image": "/images/script_slime.png"
+        },
+        {
+          "key": "s1_e2",
+          "name": "ログハウンド",
+          "maxHp": 110,
+          "atk": 19,
+          "def": 10,
+          "spd": 9,
+          "actionInterval": 2,
+          "reward": 70,
+          "image": "/images/log_hound.png"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Stage 2: Analysis Pit",
+      "description": "中級ステージ。Stage 1全クリアで解放。",
+      "enemies": [
+        {
+          "key": "s2_e1",
+          "name": "フォレンジックゴーレム",
+          "maxHp": 145,
+          "atk": 22,
+          "def": 13,
+          "spd": 7,
+          "actionInterval": 2,
+          "reward": 95,
+          "image": ""
+        },
+        {
+          "key": "s2_e2",
+          "name": "サイファーナイト",
+          "maxHp": 165,
+          "atk": 25,
+          "def": 15,
+          "spd": 10,
+          "actionInterval": 2,
+          "reward": 110,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Stage 3: Final Gateway",
+      "description": "最終ステージ。Stage 2全クリアで解放。",
+      "enemies": [
+        {
+          "key": "s3_e1",
+          "name": "Webワイバーン",
+          "maxHp": 190,
+          "atk": 28,
+          "def": 17,
+          "spd": 12,
+          "actionInterval": 2,
+          "reward": 135,
+          "image": ""
+        },
+        {
+          "key": "s3_e2",
+          "name": "ゼロデイ・ドラゴン",
+          "maxHp": 230,
+          "atk": 33,
+          "def": 20,
+          "spd": 13,
+          "actionInterval": 2,
+          "reward": 180,
+          "image": ""
+        }
+      ]
+    }
+  ],
+  "shopItems": [
+    {
+      "id": "bronze_sword",
+      "slot": "weapon",
+      "name": "ブロンズソード",
+      "atk": 7,
+      "def": 0,
+      "spd": 0,
+      "cost": 120
+    },
+    {
+      "id": "steel_armor",
+      "slot": "armor",
+      "name": "スチールアーマー",
+      "atk": 0,
+      "def": 8,
+      "spd": -1,
+      "cost": 150
+    },
+    {
+      "id": "swift_ring",
+      "slot": "accessory",
+      "name": "スイフトリング",
+      "atk": 0,
+      "def": 0,
+      "spd": 4,
+      "cost": 130
+    }
+  ]
+}
