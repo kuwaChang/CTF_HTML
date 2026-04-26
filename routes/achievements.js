@@ -330,6 +330,18 @@ async function checkAchievements(userid, eventType, eventData) {
             }
           }
           break;
+
+        case "rpg_cheat":
+          // RPGの改ざん検知（1回で解除）
+          if (eventData.cheat_detected) {
+            progress = 1;
+            maxProgress = achievement.condition?.count || 1;
+            const result = await updateAchievementProgress(userid, achievementId, progress, maxProgress);
+            if (result.unlocked) {
+              unlockedAchievements.push(achievement);
+            }
+          }
+          break;
       }
     } catch (err) {
       console.error(`実績チェックエラー (${achievementId}):`, err);
@@ -528,6 +540,11 @@ router.get("/list", requireLogin, async (req, res) => {
             progress = 0;
             maxProgress = achievement.condition.count;
           }
+          break;
+
+        case "rpg_cheat":
+          progress = userAchievements[id]?.progress || 0;
+          maxProgress = achievement.condition?.count || 1;
           break;
       }
       

@@ -158,6 +158,19 @@
     },
     "points": 80,
     "hidden": true
+  },
+  "rpg_cheat": {
+    "id": "rpg_cheat",
+    "title": "チートコード",
+    "description": "RPGセーブデータの改ざんを検知された",
+    "icon": "🕶️",
+    "category": "other",
+    "type": "rpg_cheat",
+    "condition": {
+      "count": 1
+    },
+    "points": 5,
+    "hidden": true
   }
 }
 
