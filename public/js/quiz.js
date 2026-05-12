@@ -540,6 +540,13 @@ function openModal(category, qid, evt = null) {
   const explanationLink = document.getElementById("explanation-link");
   explanationLink.style.display = "none";
 
+  // 解答フィードバック（正解/不正解表示）をリセット
+  const resultFeedback = document.getElementById("result");
+  if (resultFeedback) {
+    resultFeedback.textContent = "";
+    resultFeedback.className = "";
+  }
+
   // 座標入力用の地図の表示/非表示
   const mapContainer = document.getElementById("map-container");
   const answerInput = document.getElementById("answer");
@@ -784,11 +791,12 @@ console.log("📡 /checkAnswer応答:", res.status);
   const modalContent = modal.querySelector(".modal-content");
 
   if (data.alreadySolved) {
-    resultEl.innerText = "この問題はすでに解いています！";
-    resultEl.style.color = "orange";
+    resultEl.className = "warn";
+    resultEl.textContent = "この問題はすでに解いています！";
   } else if (data.correct) {
-    resultEl.innerText = "";
-    resultEl.style.color = "limegreen";
+    const msg = (data.message && String(data.message).trim()) || "正解！";
+    resultEl.className = "success result-correct-bounce";
+    resultEl.textContent = `〇 ${msg}`;
     solvedList.push({ category: currentCategory, qid: currentQid });
     modalContent.style.borderColor = "#6cd463";
     
@@ -825,8 +833,8 @@ console.log("📡 /checkAnswer応答:", res.status);
       }
     }, 500);
   } else {
-    resultEl.innerText = "不正解...";
-    resultEl.style.color = "red";
+    resultEl.className = "error";
+    resultEl.textContent = "不正解...";
   }
 });
 
