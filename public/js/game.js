@@ -1,6 +1,7 @@
 const SAVE_KEY = "ctfRpgSaveV1";
+const SAVE_SIGNATURE_KEY = "ctfRpgSaveSigV1";
 const GAME_DATA_URL = "/data/game-data.json";
-const GAME_SAVE_API_URL = "/api/game-save";
+const CHEAT_ACHIEVEMENT_ID = "rpg_cheat";
 
 let stageTable = [];
 let shopItems = [];
@@ -36,7 +37,12 @@ function createDefaultState() {
     stageClears,
     enemyHp: firstEnemyHp,
     enemyActionCount: getEnemyActionInterval(firstEnemy),
-    log: ["RPGモードへようこそ。CTF得点を同期して育成を始めよう。"]
+    log: ["RPGモードへようこそ。CTF得点を同期して育成を始めよう。"],
+    cheatFlags: {
+      detected: false,
+      reported: false,
+      reasons: []
+    }
   };
 }
 
@@ -172,6 +178,11 @@ async function syncGpFromSolvedProblems() {
 }
 
 function onAttack() {
+  if (isStageCleared(state.selectedStage)) {
+    pushLog("このステージは全クリア済みです。未クリアのステージを選択してください。");
+    render();
+    return;
+  }
   if (state.player.hp <= 0) {
     pushLog("あなたは戦闘不能です。次の敵へ進んで再挑戦してください。");
     render();
@@ -186,6 +197,11 @@ function onAttack() {
 }
 
 function onGuard() {
+  if (isStageCleared(state.selectedStage)) {
+    pushLog("このステージは全クリア済みです。未クリアのステージを選択してください。");
+    render();
+    return;
+  }
   if (state.player.hp <= 0 || state.enemyHp <= 0) {
     pushLog("今は防御できません。");
     render();
@@ -303,8 +319,7 @@ function upgradeStat(kind) {
   } else {
     state.player[kind] += 2;
   }
-  state.player.level += 1;
-  pushLog(`${kind} を強化。Lv ${state.player.level} になった。`);
+  pushLog(`${kind} を強化した。`);
   saveState();
   render();
 }
@@ -468,17 +483,13 @@ function pushLog(text) {
 async function loadState() {
   const defaultState = createDefaultState();
   try {
-    const remoteState = await loadRemoteState();
-    if (remoteState) {
-      const mergedRemote = mergeStateWithDefaults(remoteState, defaultState);
-      localStorage.setItem(SAVE_KEY, JSON.stringify(mergedRemote));
-      return mergedRemote;
-    }
-
-    const localState = loadStateFromLocalStorage();
+    const { state: localState, tampered } = loadStateFromLocalStorage();
     if (localState) {
       const mergedLocal = mergeStateWithDefaults(localState, defaultState);
-      saveRemoteState(mergedLocal);
+      if (tampered) {
+        await recordCheatDetected("save_signature_mismatch", mergedLocal);
+      }
+      writeStateToLocal(mergedLocal);
       return mergedLocal;
     }
 
@@ -489,43 +500,79 @@ async function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem(SAVE_KEY, JSON.stringify(state));
-  saveRemoteState(state);
+  writeStateToLocal(state);
 }
 
 function loadStateFromLocalStorage() {
   const raw = localStorage.getItem(SAVE_KEY);
-  if (!raw) return null;
-  return JSON.parse(raw);
-}
-
-async function loadRemoteState() {
+  if (!raw) return { state: null, tampered: false };
   try {
-    const res = await fetch(GAME_SAVE_API_URL, { credentials: "include" });
-    if (res.status === 401) return null;
-    if (!res.ok) {
-      throw new Error("server save load failed");
-    }
-    const data = await res.json();
-    if (!data?.success) return null;
-    if (!data.state || typeof data.state !== "object") return null;
-    return data.state;
-  } catch (err) {
-    console.warn("remote save load failed", err);
-    return null;
+    const parsed = JSON.parse(raw);
+    const savedSig = localStorage.getItem(SAVE_SIGNATURE_KEY);
+    const currentSig = hashString(raw);
+    const tampered = Boolean(savedSig) && savedSig !== currentSig;
+    return { state: parsed, tampered };
+  } catch {
+    return { state: null, tampered: true };
   }
 }
 
-async function saveRemoteState(nextState) {
+function writeStateToLocal(nextState) {
+  const raw = JSON.stringify(nextState);
+  localStorage.setItem(SAVE_KEY, raw);
+  localStorage.setItem(SAVE_SIGNATURE_KEY, hashString(raw));
+}
+
+function hashString(input) {
+  let hash = 2166136261;
+  for (let i = 0; i < input.length; i++) {
+    hash ^= input.charCodeAt(i);
+    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+  }
+  return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
+async function recordCheatDetected(reason, targetState = state) {
+  if (!targetState?.cheatFlags) return;
+  if (!targetState.cheatFlags.reasons.includes(reason)) {
+    targetState.cheatFlags.reasons.push(reason);
+  }
+  targetState.cheatFlags.detected = true;
+  targetState.log.push("不正改ざんの痕跡を検知。隠し実績を判定します。");
+
+  if (targetState.cheatFlags.reported) return;
   try {
-    await fetch(GAME_SAVE_API_URL, {
-      method: "PUT",
+    const res = await fetch("/achievements/check", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ state: nextState })
+      body: JSON.stringify({
+        eventType: "rpg_cheat",
+        eventData: { cheat_detected: true, reason }
+      })
     });
+    if (!res.ok) return;
+    const data = await res.json();
+    const unlocked = Array.isArray(data?.unlocked) ? data.unlocked : [];
+    if (unlocked.includes(CHEAT_ACHIEVEMENT_ID)) {
+      targetState.log.push("🏆 隠し実績解除: チートコード（改ざんを検知）");
+      try {
+        const listRes = await fetch("/achievements/list", { credentials: "include" });
+        if (listRes.ok) {
+          const achievements = await listRes.json();
+          const cheatAchievement = achievements?.[CHEAT_ACHIEVEMENT_ID];
+          if (cheatAchievement?.unlocked) {
+            const { showAchievementUnlocked } = await import("./achievements.js");
+            showAchievementUnlocked(cheatAchievement);
+          }
+        }
+      } catch (notifyErr) {
+        console.warn("cheat achievement notification failed", notifyErr);
+      }
+    }
+    targetState.cheatFlags.reported = true;
   } catch (err) {
-    console.warn("remote save failed", err);
+    console.warn("cheat achievement report failed", err);
   }
 }
 
@@ -537,7 +584,11 @@ function mergeStateWithDefaults(parsed, defaultState) {
     equipment: { ...structuredClone(defaultState).equipment, ...(parsed.equipment || {}) },
     inventory: Array.isArray(parsed.inventory) ? parsed.inventory : [],
     stageClears: normalizeStageClears(parsed.stageClears),
-    log: Array.isArray(parsed.log) && parsed.log.length > 0 ? parsed.log : structuredClone(defaultState).log
+    log: Array.isArray(parsed.log) && parsed.log.length > 0 ? parsed.log : structuredClone(defaultState).log,
+    cheatFlags: {
+      ...structuredClone(defaultState).cheatFlags,
+      ...(parsed.cheatFlags || {})
+    }
   };
   if (!isStageUnlocked(merged.selectedStage, merged.stageClears)) {
     merged.selectedStage = 1;
@@ -561,8 +612,13 @@ function signed(n) {
 }
 
 function calcProblemGp(point) {
-  if (!Number.isFinite(point) || point <= 0) return 20;
-  return Math.max(20, Math.floor(point * 0.8));
+  let normalized = Number(point);
+  if (!Number.isFinite(normalized)) {
+    const extracted = String(point ?? "").match(/-?\d+(\.\d+)?/);
+    normalized = extracted ? Number(extracted[0]) : NaN;
+  }
+  if (!Number.isFinite(normalized) || normalized <= 0) return 0;
+  return Math.floor(normalized);
 }
 
 function normalizeStageClears(input) {
@@ -585,6 +641,11 @@ function onStageSelectionClick(event) {
   const stageId = Number((selectBtn || battleBtn).dataset[selectBtn ? "selectStage" : "battleStage"]);
   if (!isStageUnlocked(stageId)) {
     pushLog(`Stage ${stageId} はロック中です。前ステージを全クリアしてください。`);
+    render();
+    return;
+  }
+  if (battleBtn && isStageCleared(stageId)) {
+    pushLog(`Stage ${stageId} は全クリア済みのため再戦できません。`);
     render();
     return;
   }
@@ -631,7 +692,7 @@ function renderStageSelection() {
         <p class="stage-count">${cleared}/${total} 体撃破</p>
         <div class="stage-card-actions">
           <button data-select-stage="${stage.id}" ${unlocked ? "" : "disabled"}>選択</button>
-          <button data-battle-stage="${stage.id}" ${unlocked ? "" : "disabled"}>このステージに挑戦</button>
+          <button data-battle-stage="${stage.id}" ${(unlocked && !clearedAll) ? "" : "disabled"}>このステージに挑戦</button>
         </div>
         ${clearedAll ? `<div class="stage-clear-aura" aria-hidden="true"></div>` : ""}
       </article>

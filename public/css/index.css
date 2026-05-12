@@ -340,6 +340,14 @@
         font-size: 26px;
       }
 
+      .modal-category-id {
+        font-size: 11px;
+        line-height: 1.4;
+        margin: -8px 0 12px;
+        opacity: 0.75;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
       .modal-content p {
         color: #ffffff;
         margin-bottom: 10px;

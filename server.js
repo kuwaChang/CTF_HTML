@@ -117,10 +117,6 @@ const dbDir = path.join(__dirname, "db");
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
-const gameSaveDir = path.join(__dirname, "data", "game-saves");
-if (!fs.existsSync(gameSaveDir)) {
-  fs.mkdirSync(gameSaveDir, { recursive: true });
-}
 
 // ユーザーアイコン用のディレクトリを作成
 const iconsDir = path.join(__dirname, "public", "icons");
@@ -135,14 +131,6 @@ function sanitizeFilename(filename) {
     .replace(/\.\./g, '')
     .replace(/^\.+/, '')
     .substring(0, 255);
-}
-
-function getGameSaveFilePath(userid) {
-  const safeUserId = sanitizeFilename(String(userid || ""));
-  if (!safeUserId) {
-    return null;
-  }
-  return path.join(gameSaveDir, `${safeUserId}.json`);
 }
 
 // アイコンアップロード用のmulter設定
@@ -1394,55 +1382,6 @@ app.get("/getScore", (req, res) => {
   });
 });
 
-app.get("/api/game-save", (req, res) => {
-  if (!req.session.userid) {
-    return res.status(401).json({ success: false, message: "ログインが必要です" });
-  }
-  const saveFile = getGameSaveFilePath(req.session.userid);
-  if (!saveFile) {
-    return res.status(400).json({ success: false, message: "ユーザーIDが不正です" });
-  }
-
-  fs.readFile(saveFile, "utf8", (err, data) => {
-    if (err) {
-      if (err.code === "ENOENT") {
-        return res.json({ success: true, state: null });
-      }
-      console.error("ゲームセーブ読み込みエラー:", err);
-      return res.status(500).json({ success: false, message: "セーブデータの読み込みに失敗しました" });
-    }
-    try {
-      const parsed = JSON.parse(data);
-      return res.json({ success: true, state: parsed });
-    } catch (parseErr) {
-      console.error("ゲームセーブJSON解析エラー:", parseErr);
-      return res.status(500).json({ success: false, message: "セーブデータ形式が不正です" });
-    }
-  });
-});
-
-app.put("/api/game-save", (req, res) => {
-  if (!req.session.userid) {
-    return res.status(401).json({ success: false, message: "ログインが必要です" });
-  }
-  const saveFile = getGameSaveFilePath(req.session.userid);
-  if (!saveFile) {
-    return res.status(400).json({ success: false, message: "ユーザーIDが不正です" });
-  }
-  const incomingState = req.body?.state;
-  if (!incomingState || typeof incomingState !== "object" || Array.isArray(incomingState)) {
-    return res.status(400).json({ success: false, message: "保存データ形式が不正です" });
-  }
-
-  const payload = JSON.stringify(incomingState, null, 2);
-  fs.writeFile(saveFile, payload, "utf8", (err) => {
-    if (err) {
-      console.error("ゲームセーブ保存エラー:", err);
-      return res.status(500).json({ success: false, message: "セーブデータの保存に失敗しました" });
-    }
-    return res.json({ success: true });
-  });
-});
 //データベースへのアクセス
 app.get("/ranking", (req, res) => {
   // セキュリティ: SQLインジェクション対策（既にパラメータ化クエリを使用）
