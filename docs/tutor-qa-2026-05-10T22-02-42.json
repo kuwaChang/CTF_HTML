@@ -1,0 +1,146 @@
+{
+  "exportedAt": "2026-05-10T22:02:42.078Z",
+  "entryCount": 4,
+  "entries": [
+    {
+      "userid": "admin",
+      "question": "SQLインジェクションって何",
+      "category": null,
+      "questionId": null,
+      "answer": "**SQLインジェクション（SQL Injection）とは**\n\nSQLインジェクションは、Webアプリケーションで使用されるSQLクエリに悪意のあるデータを入力する技術です。この技術により、攻撃者はWebサイトが正常に機能しないように操作し、データベースへのアクセスやデータの削除を行うことができます。\n\n**SQLインジェクションの原理**\n\n通常、Webアプリケーションでは、ユーザー入力されたデータをSQLクエリに代入するために、 Prepared Statement またはParameterized Query を使用します。これにより、SQLクエリ内のパラメータは固定され、悪意のあるデータが入力されることはありません。\n\nしかし、SQLインジェクションでは、攻撃者はWebアプリケーションで使用されている SQLクエリの構造を分析し、適切なデータを入力することで、SQLクエリを実行し、データベースへのアクセスを行うことができます。たとえば、ユーザー入力されたデータをSQLクエリに代入するために、`WHERE`-clause の条件を使用する場合、攻撃者は `OR 1=1` と入力して、すべてのレコードを取得できるようになるなど、 SQLクエリを実行し、データベースへのアクセスを行うことができます。\n\n**SQLインジェクションの例**\n\n```sql\n-- 正常なクエリ\nSELECT * FROM users WHERE name = 'John';\n\n-- SQLインジェクション\nSELECT * FROM users WHERE name = 'John' OR 1=1;\n```\n\nこの例では、最初のクエリは正常に機能しますが、2番目のクエリでは、`OR 1=1` が入力され、すべてのレコードを取得するようになります。\n\n**防御対策**\n\nSQLインジェクションを防ぐには、以下のような対策を講じることができます。\n\n* Prepared Statement または Parameterized Query を使用する\n* SQLクエリの構造を分析し、適切なデータを入力するようにユーザーを教育する\n* Webアプリケーションで使用されている SQLクエリのバージョンを定期的にアップデートする\n* Webサイトのセキュリティを強化するために、Web Application Firewall (WAF) を使用する\n\nこれらの対策により、SQLインジェクション攻撃からWebアプリケーションのデータベースへのアクセスを防ぐことができます。",
+      "sources": [
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.13"
+        }
+      ],
+      "recordedAt": "2026-04-22T06:11:16.674Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Prepared Statementってなに",
+      "category": null,
+      "questionId": null,
+      "answer": "**Prepared Statementとは**\n\n Prepared Statementは、SQLクエリのパラメータを固定化し、実行時にパラメータを代入する技術です。この技術により、SQLクエリが安全に実行され、SQLインジェクション攻撃から保護できます。\n\n**Prepared Statementの原理**\n\n Prepared Statementでは、SQLクエリは最初に作成され、パラメータが固定化されます。次に、パラメータを代入して実行します。このプロセスにより、SQLクエリが実行時にパラメータが変化するのではなく、パラメータが固定化されているため、SQLインジェクション攻撃から保護できます。\n\n**Prepared Statementの利点**\n\n Prepared Statementには以下の利点があります。\n\n* **安全性**: Prepared Statementにより、SQLクエリが実行時にパラメータが固定化され、SQLインジェクション攻撃から保護できます。\n* **パフォーマンス**: Prepared Statementは、SQLクエリを実行する際にパラメータを代入する必要がないため、パフォーマンスが向上します。\n* **管理性**: Prepared Statementにより、SQLクエリの構造とパラメータが明確に定義され、管理しやすくなります。\n\n**Prepared Statementの例**\n\n```sql\n-- SQLクエリ\nSELECT * FROM users WHERE name = 'John';\n\n-- Prepared Statement\nPREPARE stmt FROM 'SELECT * FROM users WHERE name = ?';\nEXECUTE stmt USING 'John';\n```\n\nこの例では、最初のクエリは正常に機能しますが、2番目のクエリでは、`PREPARE`ステートメントと`EXECUTE`ステートメントを使用して、パラメータ `?` を固定化し、実行時にパラメータを代入することで、SQLインジェクション攻撃から保護できます。\n\n**Prepared Statementの種類**\n\n Prepared Statementには以下の種類があります。\n\n* **Dynamic SQL**: Dynamic SQLは、SQLクエリが動的に生成される場合に使用されます。\n* **Static SQL**: Static SQLは、SQLクエリが静的に定義されている場合に使用されます。\n\n**Prepared Statementを使用するためのガイドライン**\n\n Prepared Statementを使用するには、以下のガイドラインを遵守する必要があります。\n\n* **パラメータを固定化する**: Prepared Statementでは、パラメータを固定化することが重要です。\n* **SQLクエリの構造を分析する**: Prepared Statementでは、SQLクエリの構造を分析し、適切なパラメータを入力する必要があります。\n* **Webアプリケーションで使用されている SQLクエリのバージョンを定期的にアップデートする**: Prepared Statementを使用するには、Webアプリケーションで使用されている SQLクエリのバージョンを定期的にアップデートする必要があります。",
+      "sources": [
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.13"
+        }
+      ],
+      "recordedAt": "2026-04-22T06:12:11.148Z"
+    },
+    {
+      "userid": "admin",
+      "question": "sqlインジェクションてなに",
+      "category": "WEB",
+      "questionId": "web4",
+      "answer": "**SQLインジェクションとは**\n\nSQLインジェクション（SQL Injection）とは、Webアプリケーションで使用されるSQLクエリに悪意のあるデータを入力することで、プライバシーやセキュリティを侵害したり、データベースを破壊したりする技術です。\n\n**問題点**\n\n*   Webアプリケーションは、ユーザーの入力データを直接SQLクエリに代入します。\n*   これにより、悪意のあるデータが SQLクエリに含まれる可能性があります。\n*   例えば、ユーザーが入力したデータを使用して、データベース内の特定のレコードを取得したり、追加したり、削除したりする場合、SQLインジェクションが発生します。\n\n**SQLインジェクションの方法**\n\n1.  **Classic SQL Injection**: 例えば、`OR 1=1` を入力すると、データベースは `SELECT * FROM users WHERE id = 1` のクエリを実行し、すべてのレコードを取得することになります。\n2.  **Blind SQL Injection**: 例えば、`UNION SELECT * FROM users WHERE id = 1` を入力すると、データベースは `SELECT * FROM users WHERE id = 1` のクエリを実行し、結果を隠した状態で返します。\n3.  **Time-based Blind SQL Injection**: 例えば、`SLEEP(5)` を入力すると、データベースが 5 秒間待機することになります。\n4.  **Boolean-based Blind SQL Injection**: 例えば、`SELECT CASE WHEN id = 1 THEN 'yes' ELSE 'no' END FROM users` を入力すると、データベースは `id` が `1` のレコードを取得します。\n\n**防御対策**\n\n*   Prepared Statements（プリペアされたステートメント）を使用する\n*   Input Validation（入力値の検証）を実行する\n*   SQL Injection Protection Library（SQLインジェクション保護ライブラリ）を使用する\n\nこれらの方法と防御対策は、Webアプリケーションで SQLインジェクションを防ぐために使用される重要なステップです。",
+      "sources": [
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.13"
+        }
+      ],
+      "recordedAt": "2026-04-22T06:29:03.081Z"
+    },
+    {
+      "userid": "admin",
+      "question": "こんにちは",
+      "category": null,
+      "questionId": null,
+      "answer": "**CTF学習のためのヒント**\n\n1.  **問題解決の基盤**\n    *   問題を分解して、各ステップを分析する\n    *   各ステップで使用されるツールやコマンドを調べる\n2.  **データ分析**\n    *   データを正確に理解する\n    *   データからヒントを得る\n3.  **プログラミングスキル**\n    *   Various programming languages（Python、C、C++など）を学ぶ\n    *   プログラミング言語を使用して問題を解決する\n\n**ツールの紹介**\n\n*   **Nmap**: Network Mapper（ネットワークマッパー）\n*   **Burp Suite**: Web Application Security Testing Tool（ウェブアプリケーションセキュリティテストツール）\n*   **John the Ripper**: Password Cracking Tool（パスワードクラックツール）\n\n**CTFの種類**\n\n1.  **Web CTF**\n    *   Web-based challenges（ウェブベースのチャレンジ）\n2.  **Reverse Engineering CTF**\n    *   Malware analysis（マルウェア分析）や binary analysis（バイナリ分析）\n3.  **Binary Exploitation CTF**\n    *   Binary exploitation（バイナリエクスプロイト）\n\n**CTFのレベル**\n\n1.  **Beginner**\n    *   Web CTF、Reverse Engineering CTF\n2.  **Intermediate**\n    *   Binary Exploitation CTF\n3.  **Advanced**\n    *   Various topics（複数のトピック）",
+      "sources": [
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.24"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.24"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.23"
+        }
+      ],
+      "recordedAt": "2026-04-22T06:31:54.509Z"
+    }
+  ]
+}

@@ -1,0 +1,1638 @@
+{
+  "generatedAt": "2026-05-10T22:24:22.566Z",
+  "manifestPath": "data/tutorQuestions.manifest.json",
+  "labelDefinitions": [
+    {
+      "id": "osint",
+      "nameJa": "OSINT・公開情報調査",
+      "description": "公開情報・地理・固有名・特許・画像検索など"
+    },
+    {
+      "id": "crypto",
+      "nameJa": "暗号・エンコード",
+      "description": "古典暗号、Base64、パスワード解析など"
+    },
+    {
+      "id": "forensics",
+      "nameJa": "フォレンジック・ステガノ",
+      "description": "メタデータ、ダンプ、マジックナンバー、ステガノ、pcap など"
+    },
+    {
+      "id": "web",
+      "nameJa": "Web",
+      "description": "ブラウザ、HTTP、Cookie、脆弱性の概念など"
+    },
+    {
+      "id": "tools",
+      "nameJa": "ツール・CLI",
+      "description": "コマンド、exiftool、grep、Wireshark フィルタなど"
+    },
+    {
+      "id": "misc",
+      "nameJa": "雑学・ゲーム・一般",
+      "description": "マイクラ、神話、SCP、プログラミング言語トリビアなど"
+    },
+    {
+      "id": "learning_meta",
+      "nameJa": "学習・進め方・ヒント",
+      "description": "困ったときの進め方、ヒントの頼み方など"
+    },
+    {
+      "id": "misconception",
+      "nameJa": "概念の誤解・混同の整理",
+      "description": "用語の混同を解く話題（チューターが訂正しやすい）"
+    },
+    {
+      "id": "tutor_boundary",
+      "nameJa": "チューター役割外",
+      "description": "個別問題の答え直要求、世間話、フィクション確認など"
+    }
+  ],
+  "stats": {
+    "osint": 18,
+    "crypto": 16,
+    "forensics": 21,
+    "web": 13,
+    "tools": 8,
+    "misc": 11,
+    "learning_meta": 11,
+    "misconception": 7,
+    "tutor_boundary": 6
+  },
+  "byLabel": {
+    "osint": [
+      {
+        "id": "qt1-01",
+        "label": "osint",
+        "text": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 1
+      },
+      {
+        "id": "qt1-02",
+        "label": "osint",
+        "text": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 2
+      },
+      {
+        "id": "qt1-03",
+        "label": "osint",
+        "text": "EXIF情報が削除されている画像でも有効な調査方法を3つ挙げてください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 3
+      },
+      {
+        "id": "qt1-04",
+        "label": "osint",
+        "text": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 4
+      },
+      {
+        "id": "qt1-05",
+        "label": "osint",
+        "text": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 5
+      },
+      {
+        "id": "qt2-07",
+        "label": "osint",
+        "text": "公開情報ってなに",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 7
+      },
+      {
+        "id": "qt2-10",
+        "label": "osint",
+        "text": "本や論説の執筆などを行い日本の近代化、啓蒙思想の普及に貢献し、国の変革期に大きな影響を与えた人物は？",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 10
+      },
+      {
+        "id": "qt2-16",
+        "label": "osint",
+        "text": "国際公開番号ってなんですか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 16
+      },
+      {
+        "id": "qt3-04",
+        "label": "osint",
+        "text": "ホヌ柄の飛行機ってどこの航空会社？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 4
+      },
+      {
+        "id": "qt3-05",
+        "label": "osint",
+        "text": "ハワイの空港の公式WiFiの名前なに",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 5
+      },
+      {
+        "id": "qt3-11",
+        "label": "osint",
+        "text": "飛行機の便名と日付って結びつけられる？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 11
+      },
+      {
+        "id": "qt3-15",
+        "label": "osint",
+        "text": "創立100年くらいの有名な日本の私立大学は？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 15
+      },
+      {
+        "id": "qt3-16",
+        "label": "osint",
+        "text": "慶應義塾を作った人って誰",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 16
+      },
+      {
+        "id": "qt3-19",
+        "label": "osint",
+        "text": "google画像検索のやり方",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 19
+      },
+      {
+        "id": "qt3-25",
+        "label": "osint",
+        "text": "座標から事件を調べたい",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 25
+      },
+      {
+        "id": "qt3-26",
+        "label": "osint",
+        "text": "60.8841988,101.8857172 で何が起きた",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 26
+      },
+      {
+        "id": "qt3-29",
+        "label": "osint",
+        "text": "特許を調べるサイト教えて",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 29
+      },
+      {
+        "id": "qt3-30",
+        "label": "osint",
+        "text": "Google Patentsの使い方",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 30
+      }
+    ],
+    "crypto": [
+      {
+        "id": "qt1-06",
+        "label": "crypto",
+        "text": "暗号化とハッシュ化の違いを、CTFでの使い分け例つきで説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 6
+      },
+      {
+        "id": "qt1-07",
+        "label": "crypto",
+        "text": "Caesar暗号とVigenere暗号の違いを、解読の観点で比較してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 7
+      },
+      {
+        "id": "qt1-08",
+        "label": "crypto",
+        "text": "Base64は暗号ですか？誤解されやすい理由も含めて説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 8
+      },
+      {
+        "id": "qt1-09",
+        "label": "crypto",
+        "text": "RSAの公開鍵・秘密鍵の役割を、数学が苦手な人向けに説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 9
+      },
+      {
+        "id": "qt1-10",
+        "label": "crypto",
+        "text": "暗号問題で「鍵長が短い」と何が起きるか、攻撃手法とあわせて説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 10
+      },
+      {
+        "id": "qt2-01",
+        "label": "crypto",
+        "text": "rot13ってなんですか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 1
+      },
+      {
+        "id": "qt2-02",
+        "label": "crypto",
+        "text": "モールス信号ってなんですか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 2
+      },
+      {
+        "id": "qt2-09",
+        "label": "crypto",
+        "text": "末尾が「==」のエンコード方式おしえて",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 9
+      },
+      {
+        "id": "qt2-14",
+        "label": "crypto",
+        "text": "John the ripperについておしえて",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 14
+      },
+      {
+        "id": "qt3-01",
+        "label": "crypto",
+        "text": "シーザー暗号ってROT13とどう違うの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 1
+      },
+      {
+        "id": "qt3-02",
+        "label": "crypto",
+        "text": "数字をアルファベットに置き換える暗号って何ていう",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 2
+      },
+      {
+        "id": "qt3-03",
+        "label": "crypto",
+        "text": "A1Z26方式って聞いたことある？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 3
+      },
+      {
+        "id": "qt3-14",
+        "label": "crypto",
+        "text": "Base64って何バイト単位でエンコードするの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 14
+      },
+      {
+        "id": "qt3-20",
+        "label": "crypto",
+        "text": "換字式暗号を自動で解いてくれるサイトある？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 20
+      },
+      {
+        "id": "qt3-21",
+        "label": "crypto",
+        "text": "quipqiupってどう使うの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 21
+      },
+      {
+        "id": "qt3-23",
+        "label": "crypto",
+        "text": "PDFのパスワードを解析する方法",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 23
+      }
+    ],
+    "forensics": [
+      {
+        "id": "qt1-11",
+        "label": "forensics",
+        "text": "forensicsでメモリダンプを解析する目的は何ですか？代表的に抽出したい情報を挙げてください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 11
+      },
+      {
+        "id": "qt1-12",
+        "label": "forensics",
+        "text": "ディスクイメージ解析で、最初に確認すべき3項目を理由つきで説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 12
+      },
+      {
+        "id": "qt1-13",
+        "label": "forensics",
+        "text": "ステガノグラフィ疑いのある画像を調べる手順を、使用ツール例込みで示してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 13
+      },
+      {
+        "id": "qt1-14",
+        "label": "forensics",
+        "text": "ログフォレンジックでタイムラインを作るときの注意点を説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 14
+      },
+      {
+        "id": "qt1-15",
+        "label": "forensics",
+        "text": "「改ざんの可能性」を主張する際に必要な証拠の考え方を説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 15
+      },
+      {
+        "id": "qt2-05",
+        "label": "forensics",
+        "text": "プロパティってなんですか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 5
+      },
+      {
+        "id": "qt2-06",
+        "label": "forensics",
+        "text": "存在はするけど見えないファイルってなに",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 6
+      },
+      {
+        "id": "qt2-11",
+        "label": "forensics",
+        "text": "画像や音、メッセージなどの中に情報を隠す技術",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 11
+      },
+      {
+        "id": "qt2-15",
+        "label": "forensics",
+        "text": "拡張子binってなんですか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 15
+      },
+      {
+        "id": "qt2-19",
+        "label": "forensics",
+        "text": "ファイルの形式を証明する数字ってなんですか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 19
+      },
+      {
+        "id": "qt2-20",
+        "label": "forensics",
+        "text": "マジックナンバーのバイナリを変更する方法",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 20
+      },
+      {
+        "id": "qt2-22",
+        "label": "forensics",
+        "text": "Wiresharkってなんですか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 22
+      },
+      {
+        "id": "qt3-07",
+        "label": "forensics",
+        "text": "ファイルのメタ情報ってどう見るの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 7
+      },
+      {
+        "id": "qt3-08",
+        "label": "forensics",
+        "text": "メタ情報ってそもそも何？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 8
+      },
+      {
+        "id": "qt3-10",
+        "label": "forensics",
+        "text": "windowsで隠しファイルを表示する手順",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 10
+      },
+      {
+        "id": "qt3-17",
+        "label": "forensics",
+        "text": "steghideでファイルを取り出すコマンド",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 17
+      },
+      {
+        "id": "qt3-18",
+        "label": "forensics",
+        "text": "画像に音声って埋め込めるの？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 18
+      },
+      {
+        "id": "qt3-32",
+        "label": "forensics",
+        "text": "pptxってzipで開けるって本当",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 32
+      },
+      {
+        "id": "qt3-33",
+        "label": "forensics",
+        "text": "hexeditでバイナリのどこを書き換えればPNGになる",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 33
+      },
+      {
+        "id": "qt3-34",
+        "label": "forensics",
+        "text": "PNGのマジックナンバーって何",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 34
+      },
+      {
+        "id": "qt3-37",
+        "label": "forensics",
+        "text": "pcapってどうやって開くの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 37
+      }
+    ],
+    "web": [
+      {
+        "id": "qt1-16",
+        "label": "web",
+        "text": "Webカテゴリで最初に試すべき脆弱性チェック項目を優先度順に挙げてください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 16
+      },
+      {
+        "id": "qt1-17",
+        "label": "web",
+        "text": "SQL Injectionの基本原理を、危険な例と安全な対策をセットで説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 17
+      },
+      {
+        "id": "qt1-18",
+        "label": "web",
+        "text": "XSS（反射型・保存型・DOM型）の違いを簡潔に比較してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 18
+      },
+      {
+        "id": "qt1-19",
+        "label": "web",
+        "text": "SSRFが成立する条件と、実運用での防御策を説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 19
+      },
+      {
+        "id": "qt1-20",
+        "label": "web",
+        "text": "CTFのWeb問題で「ソースを見る」が有効な理由を具体例つきで説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 20
+      },
+      {
+        "id": "qt2-21",
+        "label": "web",
+        "text": "webページを詳しく調べたい",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 21
+      },
+      {
+        "id": "qt2-23",
+        "label": "web",
+        "text": "Cookieってどこにある？",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 23
+      },
+      {
+        "id": "qt2-24",
+        "label": "web",
+        "text": "ログイン画面で他のユーザーの情報を覗き見れる方法",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 24
+      },
+      {
+        "id": "qt3-35",
+        "label": "web",
+        "text": "HTMLのコメントってどこから見れる",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 35
+      },
+      {
+        "id": "qt3-36",
+        "label": "web",
+        "text": "F12を押すと何ができるの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 36
+      },
+      {
+        "id": "qt3-38",
+        "label": "web",
+        "text": "IDORって何の略",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 38
+      },
+      {
+        "id": "qt3-39",
+        "label": "web",
+        "text": "robots.txtに書かれてる場所って入っていいの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 39
+      },
+      {
+        "id": "qt3-40",
+        "label": "web",
+        "text": "URLのid=2を1に変えたら何が起きる",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 40
+      }
+    ],
+    "tools": [
+      {
+        "id": "qt2-04",
+        "label": "tools",
+        "text": "特定の文字列を抽出できるコマンド教えて",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 4
+      },
+      {
+        "id": "qt2-18",
+        "label": "tools",
+        "text": "パワーポイントって他の形式に変換できますか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 18
+      },
+      {
+        "id": "qt3-09",
+        "label": "tools",
+        "text": "exiftoolの使い方おしえて",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 9
+      },
+      {
+        "id": "qt3-24",
+        "label": "tools",
+        "text": "pdf2john.pyってどこにあるの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 24
+      },
+      {
+        "id": "qt3-28",
+        "label": "tools",
+        "text": "fileコマンドの使い方は？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 28
+      },
+      {
+        "id": "qt3-60",
+        "label": "tools",
+        "text": "wiresharkでHTTPだけ表示するフィルタは？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 60
+      },
+      {
+        "id": "qt3-61",
+        "label": "tools",
+        "text": "grepで複数キーワードを同時に検索するには",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 61
+      },
+      {
+        "id": "qt3-62",
+        "label": "tools",
+        "text": "exiftoolで特定タグだけ抜き出す方法",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 62
+      }
+    ],
+    "misc": [
+      {
+        "id": "qt2-03",
+        "label": "misc",
+        "text": "マインクラフト特有の文字ってありますか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 3
+      },
+      {
+        "id": "qt2-08",
+        "label": "misc",
+        "text": "ギリシャで元人間の神は誰？",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 8
+      },
+      {
+        "id": "qt2-12",
+        "label": "misc",
+        "text": "誰かの視線を浴び続けていなければ危険な存在おしえて",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 12
+      },
+      {
+        "id": "qt2-13",
+        "label": "misc",
+        "text": "顔を見ると殺しに来る存在おしえて",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 13
+      },
+      {
+        "id": "qt2-17",
+        "label": "misc",
+        "text": "自然言語のようなプログラミング言語ありますか",
+        "sourceFile": "QuestionToTutor2.txt",
+        "indexInSource": 17
+      },
+      {
+        "id": "qt3-06",
+        "label": "misc",
+        "text": "マイクラのエンチャントテーブルの文字って解読できる？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 6
+      },
+      {
+        "id": "qt3-12",
+        "label": "misc",
+        "text": "ギリシャ神話で医療の神って誰",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 12
+      },
+      {
+        "id": "qt3-13",
+        "label": "misc",
+        "text": "杖に蛇が巻き付いてるシンボルって何の神",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 13
+      },
+      {
+        "id": "qt3-22",
+        "label": "misc",
+        "text": "SCP財団ってなに",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 22
+      },
+      {
+        "id": "qt3-27",
+        "label": "misc",
+        "text": "ツングースカ大爆発ってなに",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 27
+      },
+      {
+        "id": "qt3-31",
+        "label": "misc",
+        "text": "シェイクスピアの戯曲みたいなプログラミング言語って実在する？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 31
+      }
+    ],
+    "learning_meta": [
+      {
+        "id": "qt1-21",
+        "label": "learning_meta",
+        "text": "「この問題は暗号かフォレンジックか判断がつかない」ときの切り分け方を説明してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 21
+      },
+      {
+        "id": "qt1-22",
+        "label": "learning_meta",
+        "text": "問題文が曖昧なとき、仮説を立てて検証する進め方を手順化してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 22
+      },
+      {
+        "id": "qt1-23",
+        "label": "learning_meta",
+        "text": "初心者がハマりやすいCTFの落とし穴を5つ挙げ、回避策も示してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 23
+      },
+      {
+        "id": "qt1-24",
+        "label": "learning_meta",
+        "text": "30分で進捗がない場合のリカバリ手順を、実行可能な形で提案してください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 24
+      },
+      {
+        "id": "qt1-25",
+        "label": "learning_meta",
+        "text": "CTF学習を継続するための1週間の練習メニューを作ってください。",
+        "sourceFile": "QuestionToTutor.txt",
+        "indexInSource": 25
+      },
+      {
+        "id": "qt3-41",
+        "label": "learning_meta",
+        "text": "よく分かんないけど、どうすればいい？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 41
+      },
+      {
+        "id": "qt3-42",
+        "label": "learning_meta",
+        "text": "ヒントだけちょっとちょうだい",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 42
+      },
+      {
+        "id": "qt3-43",
+        "label": "learning_meta",
+        "text": "何から始めたらいいか分からない",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 43
+      },
+      {
+        "id": "qt3-57",
+        "label": "learning_meta",
+        "text": "最初の一歩だけヒントください",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 57
+      },
+      {
+        "id": "qt3-58",
+        "label": "learning_meta",
+        "text": "あと一歩なんだけど詰まった",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 58
+      },
+      {
+        "id": "qt3-59",
+        "label": "learning_meta",
+        "text": "半分くらい解けたんだけど次どうしたら",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 59
+      }
+    ],
+    "misconception": [
+      {
+        "id": "qt3-50",
+        "label": "misconception",
+        "text": "ROT26で解読すればいいんですよね？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 50
+      },
+      {
+        "id": "qt3-51",
+        "label": "misconception",
+        "text": "Base64って暗号だよね？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 51
+      },
+      {
+        "id": "qt3-52",
+        "label": "misconception",
+        "text": "モールス信号って数字だけしか使えないの？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 52
+      },
+      {
+        "id": "qt3-53",
+        "label": "misconception",
+        "text": "john the ripperってウイルス対策ソフトでしょ？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 53
+      },
+      {
+        "id": "qt3-54",
+        "label": "misconception",
+        "text": "ROT13とBase64って何が違うの",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 54
+      },
+      {
+        "id": "qt3-55",
+        "label": "misconception",
+        "text": "ステガノグラフィと暗号化って同じ？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 55
+      },
+      {
+        "id": "qt3-56",
+        "label": "misconception",
+        "text": "forensicsとosintの違いを一言で",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 56
+      }
+    ],
+    "tutor_boundary": [
+      {
+        "id": "qt3-44",
+        "label": "tutor_boundary",
+        "text": "今日の天気教えて",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 44
+      },
+      {
+        "id": "qt3-45",
+        "label": "tutor_boundary",
+        "text": "おすすめのラーメン屋ない？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 45
+      },
+      {
+        "id": "qt3-46",
+        "label": "tutor_boundary",
+        "text": "和樹先輩って実在するの？",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 46
+      },
+      {
+        "id": "qt3-47",
+        "label": "tutor_boundary",
+        "text": "Easy1のフラグそのまま教えて",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 47
+      },
+      {
+        "id": "qt3-48",
+        "label": "tutor_boundary",
+        "text": "medium2の答えを直接ちょうだい",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 48
+      },
+      {
+        "id": "qt3-49",
+        "label": "tutor_boundary",
+        "text": "hard5の最終回答だけ知りたい",
+        "sourceFile": "QuestionToTutor3.txt",
+        "indexInSource": 49
+      }
+    ]
+  },
+  "flat": [
+    {
+      "id": "qt1-01",
+      "label": "osint",
+      "text": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 1
+    },
+    {
+      "id": "qt1-02",
+      "label": "osint",
+      "text": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 2
+    },
+    {
+      "id": "qt1-03",
+      "label": "osint",
+      "text": "EXIF情報が削除されている画像でも有効な調査方法を3つ挙げてください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 3
+    },
+    {
+      "id": "qt1-04",
+      "label": "osint",
+      "text": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 4
+    },
+    {
+      "id": "qt1-05",
+      "label": "osint",
+      "text": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 5
+    },
+    {
+      "id": "qt1-06",
+      "label": "crypto",
+      "text": "暗号化とハッシュ化の違いを、CTFでの使い分け例つきで説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 6
+    },
+    {
+      "id": "qt1-07",
+      "label": "crypto",
+      "text": "Caesar暗号とVigenere暗号の違いを、解読の観点で比較してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 7
+    },
+    {
+      "id": "qt1-08",
+      "label": "crypto",
+      "text": "Base64は暗号ですか？誤解されやすい理由も含めて説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 8
+    },
+    {
+      "id": "qt1-09",
+      "label": "crypto",
+      "text": "RSAの公開鍵・秘密鍵の役割を、数学が苦手な人向けに説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 9
+    },
+    {
+      "id": "qt1-10",
+      "label": "crypto",
+      "text": "暗号問題で「鍵長が短い」と何が起きるか、攻撃手法とあわせて説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 10
+    },
+    {
+      "id": "qt1-11",
+      "label": "forensics",
+      "text": "forensicsでメモリダンプを解析する目的は何ですか？代表的に抽出したい情報を挙げてください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 11
+    },
+    {
+      "id": "qt1-12",
+      "label": "forensics",
+      "text": "ディスクイメージ解析で、最初に確認すべき3項目を理由つきで説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 12
+    },
+    {
+      "id": "qt1-13",
+      "label": "forensics",
+      "text": "ステガノグラフィ疑いのある画像を調べる手順を、使用ツール例込みで示してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 13
+    },
+    {
+      "id": "qt1-14",
+      "label": "forensics",
+      "text": "ログフォレンジックでタイムラインを作るときの注意点を説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 14
+    },
+    {
+      "id": "qt1-15",
+      "label": "forensics",
+      "text": "「改ざんの可能性」を主張する際に必要な証拠の考え方を説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 15
+    },
+    {
+      "id": "qt1-16",
+      "label": "web",
+      "text": "Webカテゴリで最初に試すべき脆弱性チェック項目を優先度順に挙げてください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 16
+    },
+    {
+      "id": "qt1-17",
+      "label": "web",
+      "text": "SQL Injectionの基本原理を、危険な例と安全な対策をセットで説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 17
+    },
+    {
+      "id": "qt1-18",
+      "label": "web",
+      "text": "XSS（反射型・保存型・DOM型）の違いを簡潔に比較してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 18
+    },
+    {
+      "id": "qt1-19",
+      "label": "web",
+      "text": "SSRFが成立する条件と、実運用での防御策を説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 19
+    },
+    {
+      "id": "qt1-20",
+      "label": "web",
+      "text": "CTFのWeb問題で「ソースを見る」が有効な理由を具体例つきで説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 20
+    },
+    {
+      "id": "qt1-21",
+      "label": "learning_meta",
+      "text": "「この問題は暗号かフォレンジックか判断がつかない」ときの切り分け方を説明してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 21
+    },
+    {
+      "id": "qt1-22",
+      "label": "learning_meta",
+      "text": "問題文が曖昧なとき、仮説を立てて検証する進め方を手順化してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 22
+    },
+    {
+      "id": "qt1-23",
+      "label": "learning_meta",
+      "text": "初心者がハマりやすいCTFの落とし穴を5つ挙げ、回避策も示してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 23
+    },
+    {
+      "id": "qt1-24",
+      "label": "learning_meta",
+      "text": "30分で進捗がない場合のリカバリ手順を、実行可能な形で提案してください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 24
+    },
+    {
+      "id": "qt1-25",
+      "label": "learning_meta",
+      "text": "CTF学習を継続するための1週間の練習メニューを作ってください。",
+      "sourceFile": "QuestionToTutor.txt",
+      "indexInSource": 25
+    },
+    {
+      "id": "qt2-01",
+      "label": "crypto",
+      "text": "rot13ってなんですか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 1
+    },
+    {
+      "id": "qt2-02",
+      "label": "crypto",
+      "text": "モールス信号ってなんですか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 2
+    },
+    {
+      "id": "qt2-03",
+      "label": "misc",
+      "text": "マインクラフト特有の文字ってありますか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 3
+    },
+    {
+      "id": "qt2-04",
+      "label": "tools",
+      "text": "特定の文字列を抽出できるコマンド教えて",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 4
+    },
+    {
+      "id": "qt2-05",
+      "label": "forensics",
+      "text": "プロパティってなんですか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 5
+    },
+    {
+      "id": "qt2-06",
+      "label": "forensics",
+      "text": "存在はするけど見えないファイルってなに",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 6
+    },
+    {
+      "id": "qt2-07",
+      "label": "osint",
+      "text": "公開情報ってなに",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 7
+    },
+    {
+      "id": "qt2-08",
+      "label": "misc",
+      "text": "ギリシャで元人間の神は誰？",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 8
+    },
+    {
+      "id": "qt2-09",
+      "label": "crypto",
+      "text": "末尾が「==」のエンコード方式おしえて",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 9
+    },
+    {
+      "id": "qt2-10",
+      "label": "osint",
+      "text": "本や論説の執筆などを行い日本の近代化、啓蒙思想の普及に貢献し、国の変革期に大きな影響を与えた人物は？",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 10
+    },
+    {
+      "id": "qt2-11",
+      "label": "forensics",
+      "text": "画像や音、メッセージなどの中に情報を隠す技術",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 11
+    },
+    {
+      "id": "qt2-12",
+      "label": "misc",
+      "text": "誰かの視線を浴び続けていなければ危険な存在おしえて",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 12
+    },
+    {
+      "id": "qt2-13",
+      "label": "misc",
+      "text": "顔を見ると殺しに来る存在おしえて",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 13
+    },
+    {
+      "id": "qt2-14",
+      "label": "crypto",
+      "text": "John the ripperについておしえて",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 14
+    },
+    {
+      "id": "qt2-15",
+      "label": "forensics",
+      "text": "拡張子binってなんですか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 15
+    },
+    {
+      "id": "qt2-16",
+      "label": "osint",
+      "text": "国際公開番号ってなんですか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 16
+    },
+    {
+      "id": "qt2-17",
+      "label": "misc",
+      "text": "自然言語のようなプログラミング言語ありますか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 17
+    },
+    {
+      "id": "qt2-18",
+      "label": "tools",
+      "text": "パワーポイントって他の形式に変換できますか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 18
+    },
+    {
+      "id": "qt2-19",
+      "label": "forensics",
+      "text": "ファイルの形式を証明する数字ってなんですか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 19
+    },
+    {
+      "id": "qt2-20",
+      "label": "forensics",
+      "text": "マジックナンバーのバイナリを変更する方法",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 20
+    },
+    {
+      "id": "qt2-21",
+      "label": "web",
+      "text": "webページを詳しく調べたい",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 21
+    },
+    {
+      "id": "qt2-22",
+      "label": "forensics",
+      "text": "Wiresharkってなんですか",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 22
+    },
+    {
+      "id": "qt2-23",
+      "label": "web",
+      "text": "Cookieってどこにある？",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 23
+    },
+    {
+      "id": "qt2-24",
+      "label": "web",
+      "text": "ログイン画面で他のユーザーの情報を覗き見れる方法",
+      "sourceFile": "QuestionToTutor2.txt",
+      "indexInSource": 24
+    },
+    {
+      "id": "qt3-01",
+      "label": "crypto",
+      "text": "シーザー暗号ってROT13とどう違うの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 1
+    },
+    {
+      "id": "qt3-02",
+      "label": "crypto",
+      "text": "数字をアルファベットに置き換える暗号って何ていう",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 2
+    },
+    {
+      "id": "qt3-03",
+      "label": "crypto",
+      "text": "A1Z26方式って聞いたことある？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 3
+    },
+    {
+      "id": "qt3-04",
+      "label": "osint",
+      "text": "ホヌ柄の飛行機ってどこの航空会社？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 4
+    },
+    {
+      "id": "qt3-05",
+      "label": "osint",
+      "text": "ハワイの空港の公式WiFiの名前なに",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 5
+    },
+    {
+      "id": "qt3-06",
+      "label": "misc",
+      "text": "マイクラのエンチャントテーブルの文字って解読できる？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 6
+    },
+    {
+      "id": "qt3-07",
+      "label": "forensics",
+      "text": "ファイルのメタ情報ってどう見るの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 7
+    },
+    {
+      "id": "qt3-08",
+      "label": "forensics",
+      "text": "メタ情報ってそもそも何？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 8
+    },
+    {
+      "id": "qt3-09",
+      "label": "tools",
+      "text": "exiftoolの使い方おしえて",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 9
+    },
+    {
+      "id": "qt3-10",
+      "label": "forensics",
+      "text": "windowsで隠しファイルを表示する手順",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 10
+    },
+    {
+      "id": "qt3-11",
+      "label": "osint",
+      "text": "飛行機の便名と日付って結びつけられる？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 11
+    },
+    {
+      "id": "qt3-12",
+      "label": "misc",
+      "text": "ギリシャ神話で医療の神って誰",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 12
+    },
+    {
+      "id": "qt3-13",
+      "label": "misc",
+      "text": "杖に蛇が巻き付いてるシンボルって何の神",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 13
+    },
+    {
+      "id": "qt3-14",
+      "label": "crypto",
+      "text": "Base64って何バイト単位でエンコードするの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 14
+    },
+    {
+      "id": "qt3-15",
+      "label": "osint",
+      "text": "創立100年くらいの有名な日本の私立大学は？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 15
+    },
+    {
+      "id": "qt3-16",
+      "label": "osint",
+      "text": "慶應義塾を作った人って誰",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 16
+    },
+    {
+      "id": "qt3-17",
+      "label": "forensics",
+      "text": "steghideでファイルを取り出すコマンド",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 17
+    },
+    {
+      "id": "qt3-18",
+      "label": "forensics",
+      "text": "画像に音声って埋め込めるの？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 18
+    },
+    {
+      "id": "qt3-19",
+      "label": "osint",
+      "text": "google画像検索のやり方",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 19
+    },
+    {
+      "id": "qt3-20",
+      "label": "crypto",
+      "text": "換字式暗号を自動で解いてくれるサイトある？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 20
+    },
+    {
+      "id": "qt3-21",
+      "label": "crypto",
+      "text": "quipqiupってどう使うの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 21
+    },
+    {
+      "id": "qt3-22",
+      "label": "misc",
+      "text": "SCP財団ってなに",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 22
+    },
+    {
+      "id": "qt3-23",
+      "label": "crypto",
+      "text": "PDFのパスワードを解析する方法",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 23
+    },
+    {
+      "id": "qt3-24",
+      "label": "tools",
+      "text": "pdf2john.pyってどこにあるの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 24
+    },
+    {
+      "id": "qt3-25",
+      "label": "osint",
+      "text": "座標から事件を調べたい",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 25
+    },
+    {
+      "id": "qt3-26",
+      "label": "osint",
+      "text": "60.8841988,101.8857172 で何が起きた",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 26
+    },
+    {
+      "id": "qt3-27",
+      "label": "misc",
+      "text": "ツングースカ大爆発ってなに",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 27
+    },
+    {
+      "id": "qt3-28",
+      "label": "tools",
+      "text": "fileコマンドの使い方は？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 28
+    },
+    {
+      "id": "qt3-29",
+      "label": "osint",
+      "text": "特許を調べるサイト教えて",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 29
+    },
+    {
+      "id": "qt3-30",
+      "label": "osint",
+      "text": "Google Patentsの使い方",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 30
+    },
+    {
+      "id": "qt3-31",
+      "label": "misc",
+      "text": "シェイクスピアの戯曲みたいなプログラミング言語って実在する？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 31
+    },
+    {
+      "id": "qt3-32",
+      "label": "forensics",
+      "text": "pptxってzipで開けるって本当",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 32
+    },
+    {
+      "id": "qt3-33",
+      "label": "forensics",
+      "text": "hexeditでバイナリのどこを書き換えればPNGになる",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 33
+    },
+    {
+      "id": "qt3-34",
+      "label": "forensics",
+      "text": "PNGのマジックナンバーって何",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 34
+    },
+    {
+      "id": "qt3-35",
+      "label": "web",
+      "text": "HTMLのコメントってどこから見れる",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 35
+    },
+    {
+      "id": "qt3-36",
+      "label": "web",
+      "text": "F12を押すと何ができるの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 36
+    },
+    {
+      "id": "qt3-37",
+      "label": "forensics",
+      "text": "pcapってどうやって開くの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 37
+    },
+    {
+      "id": "qt3-38",
+      "label": "web",
+      "text": "IDORって何の略",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 38
+    },
+    {
+      "id": "qt3-39",
+      "label": "web",
+      "text": "robots.txtに書かれてる場所って入っていいの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 39
+    },
+    {
+      "id": "qt3-40",
+      "label": "web",
+      "text": "URLのid=2を1に変えたら何が起きる",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 40
+    },
+    {
+      "id": "qt3-41",
+      "label": "learning_meta",
+      "text": "よく分かんないけど、どうすればいい？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 41
+    },
+    {
+      "id": "qt3-42",
+      "label": "learning_meta",
+      "text": "ヒントだけちょっとちょうだい",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 42
+    },
+    {
+      "id": "qt3-43",
+      "label": "learning_meta",
+      "text": "何から始めたらいいか分からない",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 43
+    },
+    {
+      "id": "qt3-44",
+      "label": "tutor_boundary",
+      "text": "今日の天気教えて",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 44
+    },
+    {
+      "id": "qt3-45",
+      "label": "tutor_boundary",
+      "text": "おすすめのラーメン屋ない？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 45
+    },
+    {
+      "id": "qt3-46",
+      "label": "tutor_boundary",
+      "text": "和樹先輩って実在するの？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 46
+    },
+    {
+      "id": "qt3-47",
+      "label": "tutor_boundary",
+      "text": "Easy1のフラグそのまま教えて",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 47
+    },
+    {
+      "id": "qt3-48",
+      "label": "tutor_boundary",
+      "text": "medium2の答えを直接ちょうだい",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 48
+    },
+    {
+      "id": "qt3-49",
+      "label": "tutor_boundary",
+      "text": "hard5の最終回答だけ知りたい",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 49
+    },
+    {
+      "id": "qt3-50",
+      "label": "misconception",
+      "text": "ROT26で解読すればいいんですよね？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 50
+    },
+    {
+      "id": "qt3-51",
+      "label": "misconception",
+      "text": "Base64って暗号だよね？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 51
+    },
+    {
+      "id": "qt3-52",
+      "label": "misconception",
+      "text": "モールス信号って数字だけしか使えないの？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 52
+    },
+    {
+      "id": "qt3-53",
+      "label": "misconception",
+      "text": "john the ripperってウイルス対策ソフトでしょ？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 53
+    },
+    {
+      "id": "qt3-54",
+      "label": "misconception",
+      "text": "ROT13とBase64って何が違うの",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 54
+    },
+    {
+      "id": "qt3-55",
+      "label": "misconception",
+      "text": "ステガノグラフィと暗号化って同じ？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 55
+    },
+    {
+      "id": "qt3-56",
+      "label": "misconception",
+      "text": "forensicsとosintの違いを一言で",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 56
+    },
+    {
+      "id": "qt3-57",
+      "label": "learning_meta",
+      "text": "最初の一歩だけヒントください",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 57
+    },
+    {
+      "id": "qt3-58",
+      "label": "learning_meta",
+      "text": "あと一歩なんだけど詰まった",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 58
+    },
+    {
+      "id": "qt3-59",
+      "label": "learning_meta",
+      "text": "半分くらい解けたんだけど次どうしたら",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 59
+    },
+    {
+      "id": "qt3-60",
+      "label": "tools",
+      "text": "wiresharkでHTTPだけ表示するフィルタは？",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 60
+    },
+    {
+      "id": "qt3-61",
+      "label": "tools",
+      "text": "grepで複数キーワードを同時に検索するには",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 61
+    },
+    {
+      "id": "qt3-62",
+      "label": "tools",
+      "text": "exiftoolで特定タグだけ抜き出す方法",
+      "sourceFile": "QuestionToTutor3.txt",
+      "indexInSource": 62
+    }
+  ]
+}

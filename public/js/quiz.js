@@ -362,6 +362,19 @@ function openModal(category, qid, evt = null) {
   const modalContent = modal.querySelector(".modal-content");
 
   document.getElementById("modal-title").textContent = q.title;
+
+  const categoryIdEl = document.getElementById("modal-category-id");
+  const cid =
+    q.categoryId != null && String(q.categoryId).trim() !== ""
+      ? String(q.categoryId).trim()
+      : "";
+  if (cid) {
+    categoryIdEl.textContent = `categoryId: ${cid}`;
+    categoryIdEl.classList.remove("hidden");
+  } else {
+    categoryIdEl.textContent = "";
+    categoryIdEl.classList.add("hidden");
+  }
   
   // descとurlの表示（XSS対策: innerHTMLの代わりに安全なDOM操作を使用）
   const descElement = document.getElementById("modal-desc");

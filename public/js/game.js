@@ -178,6 +178,11 @@ async function syncGpFromSolvedProblems() {
 }
 
 function onAttack() {
+  if (isStageCleared(state.selectedStage)) {
+    pushLog("このステージは全クリア済みです。未クリアのステージを選択してください。");
+    render();
+    return;
+  }
   if (state.player.hp <= 0) {
     pushLog("あなたは戦闘不能です。次の敵へ進んで再挑戦してください。");
     render();
@@ -192,6 +197,11 @@ function onAttack() {
 }
 
 function onGuard() {
+  if (isStageCleared(state.selectedStage)) {
+    pushLog("このステージは全クリア済みです。未クリアのステージを選択してください。");
+    render();
+    return;
+  }
   if (state.player.hp <= 0 || state.enemyHp <= 0) {
     pushLog("今は防御できません。");
     render();
@@ -309,8 +319,7 @@ function upgradeStat(kind) {
   } else {
     state.player[kind] += 2;
   }
-  state.player.level += 1;
-  pushLog(`${kind} を強化。Lv ${state.player.level} になった。`);
+  pushLog(`${kind} を強化した。`);
   saveState();
   render();
 }
@@ -603,8 +612,13 @@ function signed(n) {
 }
 
 function calcProblemGp(point) {
-  if (!Number.isFinite(point) || point <= 0) return 20;
-  return Math.max(20, Math.floor(point * 0.8));
+  let normalized = Number(point);
+  if (!Number.isFinite(normalized)) {
+    const extracted = String(point ?? "").match(/-?\d+(\.\d+)?/);
+    normalized = extracted ? Number(extracted[0]) : NaN;
+  }
+  if (!Number.isFinite(normalized) || normalized <= 0) return 0;
+  return Math.floor(normalized);
 }
 
 function normalizeStageClears(input) {
@@ -627,6 +641,11 @@ function onStageSelectionClick(event) {
   const stageId = Number((selectBtn || battleBtn).dataset[selectBtn ? "selectStage" : "battleStage"]);
   if (!isStageUnlocked(stageId)) {
     pushLog(`Stage ${stageId} はロック中です。前ステージを全クリアしてください。`);
+    render();
+    return;
+  }
+  if (battleBtn && isStageCleared(stageId)) {
+    pushLog(`Stage ${stageId} は全クリア済みのため再戦できません。`);
     render();
     return;
   }
@@ -673,7 +692,7 @@ function renderStageSelection() {
         <p class="stage-count">${cleared}/${total} 体撃破</p>
         <div class="stage-card-actions">
           <button data-select-stage="${stage.id}" ${unlocked ? "" : "disabled"}>選択</button>
-          <button data-battle-stage="${stage.id}" ${unlocked ? "" : "disabled"}>このステージに挑戦</button>
+          <button data-battle-stage="${stage.id}" ${(unlocked && !clearedAll) ? "" : "disabled"}>このステージに挑戦</button>
         </div>
         ${clearedAll ? `<div class="stage-clear-aura" aria-hidden="true"></div>` : ""}
       </article>
