@@ -3,6 +3,8 @@ const { OllamaEmbeddings } = require("@langchain/ollama");
 const fs = require("fs");
 const path = require("path");
 
+const DEFAULT_OLLAMA_EMBEDDING_MODEL = "bge-m3";
+
 /**
  * 簡易テキストスプリッター（@langchain/community の ESM/dist 問題を避けるため自前実装）
  * chunkSize / chunkOverlap で RecursiveCharacterTextSplitter と同様に分割する
@@ -68,7 +70,7 @@ class VectorStoreService {
 
     try {
       const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
-      const ollamaEmbeddingModel = process.env.OLLAMA_EMBEDDING_MODEL || "nomic-embed-text";
+      const ollamaEmbeddingModel = process.env.OLLAMA_EMBEDDING_MODEL || DEFAULT_OLLAMA_EMBEDDING_MODEL;
 
       this.embeddings = new OllamaEmbeddings({
         baseUrl: ollamaBaseUrl,

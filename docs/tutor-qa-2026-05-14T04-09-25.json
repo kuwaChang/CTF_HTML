@@ -1,0 +1,186 @@
+{
+  "exportedAt": "2026-05-14T04:09:25.499Z",
+  "entryCount": 5,
+  "entries": [
+    {
+      "userid": "admin",
+      "question": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "CTFのOSINT（Open-Source Intelligence）カテゴリでは、合法的に入手可能な公開情報を収集・分析し、価値ある情報を導き出す手法が問われます。\n\n具体的には、画像や文書などの公開データから、隠された情報や重要なデータを発見する問題です。例えば、画像内に埋め込まれたメッセージや暗号文を解析したり、文書の内容を分析して特定の情報を抽出するなどが含まれます。\n\nOSINTは、フォレンジック（デジタル鑑識）と似ていますが、より広範囲にわたる公開情報を対象としています。CTFのOSINT問題では、画像や文書などのデータを分析し、隠された情報や重要なデータを発見する力が問われます。\n\n初心者向けの着眼点と段階ヒントを以下に示します。\n\n- 着眼点:\n    - 画像や文書に隠されたデータ\n    - ファイル構造や埋め込み情報\n    - 文字列や数字の置換や暗号化\n\n- 段階ヒント:\n    - 画像内文字を読み取り、団体名や地名を抽出する\n    - 地図と公式情報で現場を同定する\n    - 改修工事の終了予定日を公的情報で確認する",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.11"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-14T03:44:45.305Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINT（Open-Source Intelligence）での初動手順は以下の5ステップです。\n\n### 1. `file` → ファイルの正体確認\n\n* 使用ツール: `file`\n* 目的: ファイルの種類や属性を把握する\n\n### 2. `strings` → 文字列抽出\n\n* 使用ツール: `strings`\n* 目的: 文字列データを抽出し、有用な情報を探す\n\n### 3. `exiftool` → メタデータ確認\n\n* 使用ツール: `exiftool`\n* 目的: 写真のメタデータ（EXIF）から撮影日時や位置情報などを抽出する\n\n### 4. binwalk → 埋め込み探索\n\n* 使用ツール: `binwalk`\n* 目的: ファイルに埋め込まれたデータや隠しファイルを検出する\n\n### 5. Google Images → 画像検索\n\n* 使用ツール: Google Images\n* 目的: 抽出した文字列やメタデータから類似画像を検索し、有用な情報を探す\n\nこの初動手順で、OSINTの基本的な調査方法を実践することができます。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.21"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.19"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-14T03:48:17.186Z"
+    },
+    {
+      "userid": "admin",
+      "question": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+      "category": null,
+      "questionId": null,
+      "answer": "段階的にヒントを提供します。\n\nまずは、基本的な検索クエリから始めましょう。以下の5つの検索クエリを試してみてください。\n\n1. `username OR user` - このクエリでは、usernameとuserという単語をOR演算子で結合し、どちらかが含まれる文書を検索します。\n2. `username site:twitter` - このクエリでは、usernameを含むTwitterのサイト内を検索します。site: operatorは、指定されたサイト内を検索するための特殊な演算子です。\n3. `username intitle:\"username\"` - このクエリでは、usernameがタイトルに含まれる文書を検索します。intitle: operatorは、タイトルに含まれる単語を指定するための演算子です。\n4. `username +user` - このクエリでは、usernameとuserという単語をスペースで結合し、どちらかが含まれる文書を検索します。+ operatorは、複数の単語を結合して検索するための特殊な演算子です。\n5. `filename:username` - このクエリでは、ファイル名にusernameが含まれる文書を検索します。filename: operatorは、ファイル名に含まれる単語を指定するための特殊な演算子です。\n\nこれらの検索クエリを試してみて、調査範囲を広げることができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.03"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-14T03:50:18.280Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTで得た情報の真偽を検証する際には、以下のようなチェックポイントを確認します。\n\n・公開情報の信頼性:\n\t+ 情報源は信頼できるか？\n\t+ 情報が古くないか？\n\t+ 情報が偏っていないか？\n\n・情報の矛盾点:\n\t+ 複数の情報が矛盾していないか？\n\t+ 疑わしい情報に矛盾する根拠はあるか？\n\n・情報の裏付け:\n\t+ 他の情報で裏付けることができるか？\n\t+ 専門家や当事者による確認は取れているか？\n\n・情報の更新性:\n\t+ 情報が古くないか？新しい情報に更新されていないか？\n\nこれらのチェックポイントを念頭に置き、OSINTで得た情報の真偽を検証することで、より正確な判断を行うことができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.17"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-14T03:52:08.199Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTって何の略称？",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTは、オープン・ソース・インテリジェンスの略称です。合法的に入手可能な公開情報を収集・分析し、価値ある情報を導き出す手法を指します。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.03"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.04"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.06"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-14T03:54:02.705Z"
+    }
+  ]
+}

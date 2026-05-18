@@ -1,0 +1,366 @@
+{
+  "exportedAt": "2026-05-18T05:22:05.449Z",
+  "entryCount": 10,
+  "entries": [
+    {
+      "userid": "admin",
+      "question": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINT（オープン・ソース・インテリジェンス）カテゴリは、合法的に公開されている情報から価値ある情報を導き出す手法を問う問題が多いです。特に画像やウェブサイトなどの公開情報から必要な情報を抽出する問題がよく出題されます。\n\n### 初心者向けOSINT問題の特徴\n\n1. **画像解析**\n   - 画像内に隠されたデータ（ファイル構造、埋め込み情報）を特定します。\n   - 例えば、LSB（最下位ビット）によるステガノグラフィー（隠し文字）を探す問題があります。\n\n2. **ウェブ調査**\n   - ウェブサイトやSNSから情報を収集します。公式サイトやソーシャルメディアを活用して、特定の情報を探します。\n   - 例えば、航空会社の公式サイトからフラグを抽出する問題があります。\n\n3. **逆引き検索**\n   - Google ImagesやTinEyeなどの画像検索ツールを使って、画像内の情報を特定します。\n   - 画像内のテキストやロゴ、機体名などを特定して、関連情報を探ります。\n\n### 初心者向けのOSINT問題例\n\n#### beginner4（サブシステム D：開発者プロファイル）\n- **着眼点**: 添付画像から機体・航空会社・空港を特定し、就航する空港の公式フリーWi-Fi SSIDを探します。\n- **段階ヒント**:\n  - 画像検索で機体名や塗装の特徴を特定します。\n  - 就航空港の公式サイトや空港案内でWi-Fi情報を確認します。\n  - SSID名を正確に抜き出してフラグ形式に当てはめます。\n\n#### beginner5（サブシステム E：個人用暗号化フォルダ）\n- **着眼点**: 暗号化されたフォルダから特定の情報を探します。例えば、パスワードやファイル名など。\n- **段階ヒント**:\n  - ファイルの種類を確認し、適切なツールで解凍またはデコードします。\n  - 解析した情報をフラグ形式に変換します。\n\n### 初心者向けのOSINT手法\n\n1. **ファイルの正体確認**\n   ```sh\n   file ファイル名\n   ```\n   - ファイルの種類を確認します。例えば、`text`, `JPEG image data`, `gzip compressed data`など。\n\n2. **文字列抽出**\n   ```sh\n   strings ファイル名\n   ```\n   - ファイル内に含まれる文字列を抽出します。不自然なデータやパスワード、フラグなどが含まれている可能性があります。\n\n3. **メタデータ確認**\n   ```sh\n   exiftool ファイル名\n   ```\n   - 画像のEXIF情報（撮影日時、カメラ情報など）を確認します。\n\n4. **埋め込み探索**\n   ```sh\n   binwalk ファイル名\n   ```\n   - ファイル内に隠されたデータを探します。例えば、ZIPファイルやJPEG内の隠しメッセージなどが見つかる可能性があります。\n\n### まとめ\n\nOSINT問題は公開情報から必要な情報を抽出するための手法を問うもので、画像解析やウェブ調査が中心です。まずは基本的なツールを使ってファイルの種類や文字列を確認し、不自然なデータを探していきましょう。段階的に情報を特定し、最終的にはフラグ形式に変換します。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.11"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-14T04:10:02.881Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "画像1枚から調査を始める際のOSINT初動手順は以下の通りです：\n\n1. **ファイルの正体確認**\n   - `file` コマンドを使用して画像の形式や内容を確認します。例えば、JPEG, PNG, TIFFなどと表示されることが多いです。\n\n2. **文字列抽出**\n   - `strings` コマンドで画像から抽出できる文字列を取得します。これにより、画像内に含まれるテキスト情報（例：日付、地名、団体名）が得られます。\n\n3. **メタデータ確認**\n   - `exiftool` などのツールを使用して画像のメタデータ（例：撮影日時、GPS座標）を確認します。これらの情報は画像内に隠されている可能性があります。\n\n4. **埋め込み探索**\n   - `binwalk` や `ffuf` などのツールで画像内の隠しファイルや埋め込みコンテンツを探します。これは、Base64エンコードされたデータやZIPアーカイブなどを見つけ出すのに役立ちます。\n\n5. **画像検索と逆引き**\n   - Google Images, TinEye, etc. を利用して画像を逆引きします。類似画像を探すことで、画像の背景情報や撮影場所を特定することができます。\n\nこれらの手順は、画像から得られる情報を段階的に深く掘り下げ、より詳細な調査につなげます。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.21"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.19"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-14T04:12:50.197Z"
+    },
+    {
+      "userid": "admin",
+      "question": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+      "category": null,
+      "questionId": null,
+      "answer": "ユーザー名が唯一の情報である場合、その情報を最大限に活用して他の情報を引き出すために、以下の検索クエリを使用することができます：\n\n1. **SNSでの調査**\n   - `python sherlock username`\n   - これにより、同一IDで使用されているSNSアカウントを一覧表示します。\n\n2. **Google画像検索**\n   - `\"username\" site:twitter.com`\n   - `\"username\" site:facebook.com`\n   - `\"username\" site:instagram.com`\n\n3. **GitHubでの調査**\n   - `github username`\n   - これにより、同一IDで使用されているGitHubアカウントを確認できます。\n\n4. **ブログやウェブサイトの検索**\n   - `site:blogspot.com \"username\"`\n   - `site:wikipedia.org \"username\"`\n\n5. **LinkedInでの調査**\n   - `\"username\" site:linkedin.com`\n   - これにより、同一IDで使用されているLinkedInアカウントを確認できます。\n\nこれらの検索クエリは、ユーザー名が同一IDで使用されている可能性のあるさまざまなプラットフォームやウェブサイトを網羅的に調査します。それぞれの検索結果から共通情報や追加情報を得て、より広範な視点からのアプローチを行うことができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.03"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-14T04:14:23.214Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTで得た情報を検証する際には、以下のチェックポイントに注意することが重要です。\n\n1. **情報源の信頼性**\n   - 情報が提供されたサイトやソースは信頼できるか？\n   - そのサイトやソースが定期的に更新されているか？\n\n2. **情報の最新性**\n   - 提供された情報が最新かどうかを確認する。\n   - 過去の情報を現在の状況と照らし合わせる。\n\n3. **情報の整合性**\n   - 同じ情報を複数の異なるソースから取得して、その内容が一致しているか確認する。\n   - 一貫性のある情報かどうかを評価する。\n\n4. **情報の文脈**\n   - 提供された情報は特定の文脈や背景下で理解されるべきか？\n   - 情報が歪められていないか確認する。\n\n5. **情報の二次利用**\n   - 提供された情報が他のサイトやソースから転載されていないか確認する。\n   - 二次利用を避けるために、情報の出典を明確に示す。\n\n6. **プライバシーと法的制限**\n   - 情報の収集と使用は個人のプライバシーを侵害していないか？\n   - 法的な制限（著作権、個人情報保護法など）に違反していないか確認する。\n\n7. **技術的な検証**\n   - 画像やファイルのEXIF情報を確認して、撮影日時が一致しているか。\n   - ファイルのハッシュ値を計算して、その内容が変更されていないことを確認する。\n\n8. **地理情報の検証**\n   - 地図サービスを使用して場所の正確性を確認する。\n   - 緯度経度や地名と現実世界の景観が一致しているか確認する。\n\n9. **論理的な整合性**\n   - 提供された情報が他の既知の事実と矛盾していないか確認する。\n   - 逻辑上是否合理，是否有悖于常识或已知信息。\n\n10. **複数の視点からの検証**\n    - 不同的来源和角度的信息进行交叉验证。\n    - 多个独立来源提供的相同信息是否一致。\n\nこれらのチェックポイントを踏まえて情報を検証することで、OSINTで得た情報の正確性と信頼性を確保できます。常に批判的な思考を持つことが重要です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.17"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-14T04:15:44.054Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTって何の略称？",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTは「オープン・ソース・インテリジェンス」（Open-Source Intelligence）の略称です。これは、**合法的に入手可能な公開情報を収集し分析し、価値ある情報を導き出す手法**を指します。\n\nOSINTでは、インターネット上の情報や公開されている資料から必要な情報を抽出し、それを活用して課題を解決したり、問題を理解したりします。CTF（キャッチャー・ザ・フラグ）のコンテストでも、このOSINTスキルは非常に重要です。\n\n例えば、画像内の隠されたデータを見つけるステガノグラフィーや、風景写真から撮影地点を特定するなど、公開情報から情報を引き出すことが求められます。これらの活動はすべて、OSINTの範囲内に含まれます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.03"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.04"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.06"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-14T04:17:00.769Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINT（オシント）カテゴリの問題**\n\n**初心者向けに説明します**\n\nOSINT（オープン・ソース・インテリジェンス）は、合法的に入手可能な公開情報を収集・分析し、価値ある情報を導き出す手法です。CTF（Capture The Flag）では、OSINTカテゴリの問題は、以下のようなものがあります。\n\n### 1. **画像解析（フォレンジック系の基本）**\n\n* 画像の中に隠されたデータ\n* ファイル構造（ヘッダ・フッタ・チャンク）\n* 見た目では分からない埋め込み情報\n\n### 2. **テキスト分析**\n\n* 画像内にあるテキストを抽出する\n* テキストの内容や位置を分析する\n\n### 3. **地理情報の特定**\n\n* 画像から地理情報（地名、座標など）を特定する\n* 地理情報を使用して、場所や状況を推測する\n\n### 4. **機体・航空会社・空港の特定**\n\n* 画像から機体名や航空会社の情報を特定する\n* just航空会社の公式サイトや空港案内で情報を確認する\n\n### 5. **暗号文の解読**\n\n* 暗号文の先頭が `SYNT` など、CTF の一般的な形式は `FLAG` である場合\n* アルファベットを一定数ずらす古典暗号を疑う\n\n**段階的なヒント**\n\n1. 画像検索で機体名や塗装の特徴を特定する\n2. just航空会社の公式サイトや空港案内でWi-Fi情報を確認する\n3. SSID名を正確に抜き出してフラグ形式に当てはめる\n\n**初心者向けのアドバイス**\n\n* まず、画像検索やテキスト分析などの基本的な手法を学習する\n* 画像解析や地理情報の特定などの複雑な問題では、段階的に進む\n* OSINTカテゴリの問題は、多くの場合、画像やテキストの分析に基づいています。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.11"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-18T05:11:12.060Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINTの初動手順（画像1枚から始めて）**\n\n### ステップ 1: ファイルの正体確認\n\n*   `file` コマンドを使用してファイルの種類と属性を調べる\n*   `file -i <ファイル名>` と入力し、結果を確認する\n\n    ```bash\n$ file -i image.jpg\nimage/jpeg (JPEG image data) --width=1024'height=768'--mode=3'1:1--sRGB--exif--profile=Canon PSD\n```\n\n### ステップ 2: 文字列抽出\n\n*   `strings` コマンドを使用してファイル内で見つかる文字列を抽出する\n*   `strings <ファイル名>` と入力し、結果を確認する\n\n    ```bash\n$ strings image.jpg\nCanon PowerShot G7 X Mark II\n```\n\n### ステップ 3: メタデータの調査\n\n*   `exiftool` コマンドを使用してファイル内で見つかるメタデータを調べる\n*   `exiftool -s <ファイル名>` と入力し、結果を確認する\n\n    ```bash\n$ exiftool -s image.jpg\nExifTool Version : 10.4.0 ( https://exiftool.org )\n...\n```\n\n### ステップ 4: 埋め込み探索\n\n*   `binwalk` コマンドを使用してファイル内で見つかる埋め込みデータを探す\n*   `binwalk -e <ファイル名>` と入力し、結果を確認する\n\n    ```bash\n$ binwalk -e image.jpg\n...\n```\n\n### ステップ 5: 画像検索\n\n*   画像検索サービス（例：Google Images）を使用して画像内で見つかる特徴を探す\n*   画像のURLやファイル名を入力し、結果を確認する",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.21"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.19"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-18T05:14:15.172Z"
+    },
+    {
+      "userid": "admin",
+      "question": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**usernameのみの場合、調査範囲を広げるための検索クエリ例**\n\n以下は、`username` だけが存在する場合に使用できる検索クエリの例です。\n\n1.  **ユーザー名とIDのコンテンツ**\n    ```bash\npython sherlock username\n```\n    *   `sherlock` は Python の Sherlock というライブラリを使用します。\n2.  **SNSユーザー情報**\n    ```bash\nnamechk -u username\n```\n    *   `namechk` は SNS ユーザー情報の検索ツールです。\n3.  **GitHubユーザー情報**\n    ```bash\npython sherlock --github username\n```\n    *   `sherlock` の GitHub ユーザー情報の検索機能を使用します。\n4.  **Redditユーザー情報**\n    ```bash\npython sherlock --reddit username\n```\n    *   `sherlock` の Reddit ユーザー情報の検索機能を使用します。\n5.  **Google Images検索**\n    ```bash\ngoogle images search \"username\"\n```\n    *   `google images search` は Google Images を使用して検索できます。\n\n**注意:** これらのクエリは、ユーザー名のみが存在する場合に使用できます。ただし、他の情報も含まれている可能性があります。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.03"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-18T05:16:21.684Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINTで得た情報の真偽を検証するためのチェックポイント**\n\nOSINT（オープン・ソース・インテリジェンス）では、収集された情報は必ずしも正確であるとは限りません。情報源が信頼性に欠け、誤解や歪みが生じる可能性があります。したがって、得られた情報を検証するために重要なチェックポイントを設定することが不可欠です。\n\n**1. 利用規約と出典の確認**\n\n*   利用規約を確認し、出典を明確にすることで、情報源の信頼性を高めます。\n*   例えば、画像検索で使用したサイトやデータベースは正当なものかどうかを確認する必要があります。\n\n**2. 個人情報とプライバシー**\n\n*   個人情報が漏洩しないように注意し、プライバシーを保護するために適切な対策を講じることが重要です。\n*   例えば、画像検索で個人情報を含む画像を使用した場合、個人情報のプライバシーを考慮して、画像を削除または変更する必要があります。\n\n**3. 信頼性の低い情報源**\n\n*   信頼性が低い情報源から得た情報は検証しないことや使用しないことを避けることが重要です。\n*   例えば、不正なウェブサイトやマルワレーションサイトを利用した場合、情報の信頼性が低くなります。\n\n**4. 情報の古さと有効性**\n\n*   情報は時々古くなったり、有効性が低下したりする可能性があります。\n*   例えば、画像検索で使用した画像は時折更新されない場合もあります。\n\n**5. 検証手法の適切さ**\n\n*   検証手法の適切さを確認し、情報源の信頼性を高めます。\n*   例えば、画像検索で使用する方法やツールは適切かどうかを確認する必要があります。\n\n**6. 検証結果の分析**\n\n*   検証結果を分析して、情報の正確性と有効性を評価します。\n*   例えば、画像検索で得られた情報が正確かどうかを確認する必要があります。\n\nこれらのチェックポイントを設定し、OSINTで得た情報を検証することで、情報源の信頼性を高め、誤解や歪みを避けることができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.17"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-18T05:18:37.005Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTって何の略称？",
+      "category": null,
+      "questionId": null,
+      "answer": "**オープン・ソース・インテリジェンス（英: Open-Source Intelligence）**です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.03"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.04"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.06"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-18T05:20:25.865Z"
+    }
+  ]
+}
