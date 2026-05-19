@@ -5,8 +5,12 @@ const fs = require("fs");
 const path = require("path");
 
 const MAX_ANSWER_LENGTH = 4000;
+const DEFAULT_OLLAMA_MODEL = "qwen2.5:7b-instruct-q5_K_M";
+//hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest
+//qwen2.5:7b-instruct-q5_K_M
+//llama3.2
 
-function logTutorExchange(userid, question, category, questionId, result) {
+function logTutorExchange(userid, question, category, questionId, result, model) {
   tutorQaLog.append({
     userid,
     question,
@@ -14,7 +18,8 @@ function logTutorExchange(userid, question, category, questionId, result) {
     questionId: questionId || null,
     answer: result.answer,
     sources: result.sources || [],
-    error: result.error || undefined
+    error: result.error || undefined,
+    model: model || null
   });
 }
 
@@ -45,9 +50,14 @@ class TutorService {
     this.conversationHistory = new Map(); // userid -> history[]
   }
 
+  /** 現在使用中（または起動時に使用予定）のモデル名を返す */
+  getModelName() {
+    return process.env.OLLAMA_MODEL || DEFAULT_OLLAMA_MODEL;
+  }
+
   initialize() {
     const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
-    const ollamaModel = process.env.OLLAMA_MODEL || "llama3.2";
+    const ollamaModel = this.getModelName();
 
     try {
       this.llm = new ChatOllama({
@@ -55,6 +65,8 @@ class TutorService {
         model: ollamaModel,
         temperature: 0.2,
         numPredict: 1024,
+        numCtx: 4096,
+        numGpu: 999,
       });
       console.log(`✅ ローカルLLM（Ollama）を初期化しました: ${ollamaModel} at ${ollamaBaseUrl}`);
       return true;
@@ -126,8 +138,9 @@ class TutorService {
 
     const systemPrompt = `あなたはCTF（Capture The Flag）学習プラットフォームのAI先生です。
 学習者に対して、日本語で自然に答えてください。
-方針に従ってサポートしてください。
-
+正確的・網羅的・具体的に答えてください。
+以下の方針に従ってサポートしてください。
+<回答方針>
 1. **直接的な答えは教えない**: フラグや答えを直接教えるのではなく、ヒントや考え方を示す。絶対にフラグや答えを教えないでください。
 2. **段階的なヒント**: 学習者のレベルに合わせて、段階的にヒントを提供する。
 3. **教育的な説明**: なぜその方法が有効なのか、背景知識も含めて説明する。
@@ -173,7 +186,7 @@ ${contextText}`;
             "申し訳ございません。ローカルLLM（Ollama）に接続できませんでした。\n\n以下の手順を確認してください：\n1. Ollamaが起動しているか確認: `ollama list`\n2. 必要なモデルがダウンロードされているか確認: `ollama pull llama3.2`\n3. Ollamaのインストール: https://ollama.com/download",
           sources: []
         };
-        logTutorExchange(userid, question, category, questionId, out);
+        logTutorExchange(userid, question, category, questionId, out, this.getModelName());
         return out;
       }
     }
@@ -205,7 +218,7 @@ ${contextText}`;
         answer: answer,
         sources: sources
       };
-      logTutorExchange(userid, question, category, questionId, out);
+      logTutorExchange(userid, question, category, questionId, out, this.getModelName());
       return out;
     } catch (error) {
       console.error("❌ チューター回答生成エラー:", error);
@@ -214,7 +227,7 @@ ${contextText}`;
         sources: [],
         error: error.message
       };
-      logTutorExchange(userid, question, category, questionId, out);
+      logTutorExchange(userid, question, category, questionId, out, this.getModelName());
       return out;
     }
   }
@@ -231,7 +244,7 @@ ${contextText}`;
             "申し訳ございません。ローカルLLM（Ollama）に接続できませんでした。\n\n以下の手順を確認してください：\n1. Ollamaが起動しているか確認: `ollama list`\n2. 必要なモデルがダウンロードされているか確認: `ollama pull llama3.2`\n3. Ollamaのインストール: https://ollama.com/download",
           sources: []
         };
-        logTutorExchange(userid, question, category, questionId, out);
+        logTutorExchange(userid, question, category, questionId, out, this.getModelName());
         yield { type: "error", answer: out.answer, sources: out.sources };
         return;
       }
@@ -260,7 +273,7 @@ ${contextText}`;
       this.addToHistory(userid, "assistant", answer);
 
       const out = { answer, sources };
-      logTutorExchange(userid, question, category, questionId, out);
+      logTutorExchange(userid, question, category, questionId, out, this.getModelName());
       yield { type: "done", answer };
     } catch (error) {
       console.error("❌ チューターストリームエラー:", error);
@@ -269,7 +282,7 @@ ${contextText}`;
         sources: [],
         error: error.message
       };
-      logTutorExchange(userid, question, category, questionId, out);
+      logTutorExchange(userid, question, category, questionId, out, this.getModelName());
       yield { type: "error", answer: out.answer, sources: [], error: error.message };
     }
   }
@@ -291,7 +304,8 @@ ${contextText}`;
           `(hint) category=${category} questionId=${questionId}`,
           category,
           questionId,
-          out
+          out,
+          this.getModelName()
         );
         return out;
       }
@@ -305,7 +319,14 @@ ${contextText}`;
         sources: [],
         error: error.message
       };
-      logTutorExchange(userid, `(hint) category=${category} questionId=${questionId}`, category, questionId, out);
+      logTutorExchange(
+        userid,
+        `(hint) category=${category} questionId=${questionId}`,
+        category,
+        questionId,
+        out,
+        this.getModelName()
+      );
       return out;
     }
   }

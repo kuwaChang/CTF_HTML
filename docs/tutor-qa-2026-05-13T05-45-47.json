@@ -1,0 +1,111 @@
+{
+  "exportedAt": "2026-05-13T05:45:47.025Z",
+  "entryCount": 3,
+  "entries": [
+    {
+      "userid": "admin",
+      "question": "こんいちは",
+      "category": null,
+      "questionId": null,
+      "answer": "こんにちは！CTF学習プラットフォームのAI先生です。今日も学習者と一緒に、CTFの世界を探索していきますね。\n\nあなたはどんな問題に挑戦したいのですか？どんな分野が興味を持っているのですか？私たちは一緒に、段階的に進んでみましょう。",
+      "sources": [
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.26"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.26"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.22"
+        }
+      ],
+      "recordedAt": "2026-05-11T06:55:11.425Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTFのカテゴリーおしえて",
+      "category": null,
+      "questionId": null,
+      "answer": "CTF（Capture The Flag）には様々なカテゴリーがあります。以下は一部の例です。\n\n**1. Web CTF**\n* ウェブアプリケーションを分析し、セキュリティの弱点を探索する\n* SQLインジェクトやクロスサイトスクリッピングなどのテクニックを使って問題を解決する\n\n**2. Cryptography CTF**\n* 暗号学の基礎知識を身に付け、暗号化と復号化を実践する\n* ROT13やBase64エンコードなど、さまざまな暗号化方法を分析し、逆算する\n\n**3. Binary Exploitation CTF**\n* バイナリコードを分析し、セキュリティの弱点を探索する\n* バイナリコードに含まれるコマンドやライブラリを識別し、エクスプロイトする\n\n**4. Reverse Engineering CTF**\n* ソフトウェアまたはハードウェアを逆解析し、内部構造を理解する\n* コードやデータの分析と修正を行う\n\n**5. Network and System Security CTF**\n* ネットワークやシステムのセキュリティをテストする\n* ポートスキャンやパケット分析など、ネットワークのセキュリティを強化する\n\nこれらのカテゴリーはそれぞれ独自のコンテンツと課題を持っています。どのカテゴリーがあなたに興味があるのですか？",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "0.13"
+        }
+      ],
+      "recordedAt": "2026-05-11T06:55:29.538Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTの正式名称教えて",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINT** の正式名称は **Open-Source Intelligence** です。\n\nオープンソースインテリジェンス（Open-Source Intelligence, OSINT）は、オープンなデータや情報を使用して、対象の組織や個人に関する情報を収集するプロセスです。オープンソースインテリジェンスは、インターネット、ソーシャルメディア、データベース、ドキュメントなど、さまざまなオープンなソースから情報を収集します。\n\nOSINTは、さまざまな分野で使用されます。たとえば、CTFでは、オープンなデータや情報を使用して、対象の組織や個人に関する情報を収集することが重要です。\n\n**OSINT** を使用する際には、以下のような利点があります。\n\n* **無料または低コスト**: オープンなソースはほとんど無料かつ低コストです。\n* **迅速な収集**: オープンなソースから情報を迅速に収集できます。\n* **多様な情報源**: オープンなソースには、さまざまな情報源が含まれます。\n\nしかし、OSINTも以下のような課題があります。\n\n* **信頼性の問題**: オープンなソースは、必ずしも正確かつ信頼できるものではありません。\n* **データの質**: オープンなソースのデータの質は、さまざまです。\n* **法的問題**: OSINTを使用する際には、法的問題に注意する必要があります。\n\nOSINTを使用することで、CTFや他の分野で情報収集と分析を行うことができます。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.50"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.50"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.44"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.43"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.36"
+        }
+      ],
+      "recordedAt": "2026-05-11T06:55:59.309Z"
+    }
+  ]
+}

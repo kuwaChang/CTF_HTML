@@ -249,7 +249,7 @@ router.get("/status", requireLogin, async (req, res) => {
       knowledgeBaseCount: kbCount,
       ready: llmReady && embeddingReady && kbInitialized,
       ollamaBaseUrl: process.env.OLLAMA_BASE_URL || "http://localhost:11434",
-      ollamaModel: process.env.OLLAMA_MODEL || "llama3.2"
+      ollamaModel: tutorService.getModelName()
     });
   } catch (error) {
     res.status(500).json({

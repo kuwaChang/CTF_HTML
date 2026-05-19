@@ -11,7 +11,8 @@ function ensureDir(dir) {
 }
 
 /**
- * チューターへの質問・回答を追記（rebuild 時に docs へまとめて書き出す）
+ * チューターへの質問・回答を追記（rebuild 時に docs へまとめて書き出す）。
+ * entry に model（例: Ollama のモデル名）が含まれる場合はそのまま保存される。
  */
 function append(entry) {
   try {
