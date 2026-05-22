@@ -1,8 +1,9 @@
 const fs = require("fs");
 const path = require("path");
+const paths = require("../config/paths");
 
-const PENDING_PATH = path.join(__dirname, "../db/tutor_qa_pending.jsonl");
-const DOCS_DIR = path.join(__dirname, "../docs");
+const PENDING_PATH = path.join(paths.STORAGE, "tutor_qa_pending.jsonl");
+const DOCS_DIR = paths.DOCS;
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) {

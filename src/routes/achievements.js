@@ -3,15 +3,16 @@ const fs = require("fs");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 const router = express.Router();
+const paths = require("../config/paths");
 
-// dbフォルダが存在しない場合は作成
-const dbDir = path.join(__dirname, "../db");
+// storageフォルダが存在しない場合は作成
+const dbDir = paths.STORAGE;
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
 
-const dbPath = path.join(__dirname, "../db/users.db");
-const achievementsPath = path.join(__dirname, "../data/achievements.json");
+const dbPath = path.join(paths.STORAGE, "users.db");
+const achievementsPath = path.join(paths.CONFIG, "achievements.json");
 
 // データベース接続
 const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
@@ -150,7 +151,7 @@ async function checkAchievements(userid, eventType, eventData) {
           // カテゴリー別の問題数（categoryIdでカウント）
           if (eventData.solved && eventData.category === achievement.condition.category) {
             // 問題データを読み込んで、categoryIdが一致する問題を探す
-            const quizData = JSON.parse(fs.readFileSync(path.join(__dirname, "../data/quizData.json"), "utf-8"));
+            const quizData = JSON.parse(fs.readFileSync(path.join(paths.CONFIG, "quizData.json"), "utf-8"));
             const targetCategoryId = achievement.condition.category;
             
             // 解いた問題リストを取得
@@ -373,7 +374,7 @@ router.get("/list", requireLogin, async (req, res) => {
     });
 
     // 問題データを読み込む（進捗再計算用）
-    const quizData = JSON.parse(fs.readFileSync(path.join(__dirname, "../data/quizData.json"), "utf-8"));
+    const quizData = JSON.parse(fs.readFileSync(path.join(paths.CONFIG, "quizData.json"), "utf-8"));
     
     // 解いた問題リストを取得
     const solvedRows = await dbAll(

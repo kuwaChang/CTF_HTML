@@ -80,20 +80,20 @@ npm install
 
 | パス | 説明 |
 |------|------|
-| `db/` | メインDB・セッション用 |
-| `db/users.db` | ユーザー・スコア・実績など（CREATE TABLE は server.js で実行） |
-| `db/sessions.sqlite` | セッションストア（connect-sqlite3 が使用） |
-| `db/chroma/` | ChromaDB の永続化用（Chroma を `--path` で使う場合） |
+| `storage/` | メインDB・セッション用 |
+| `storage/users.db` | ユーザー・スコア・実績など（CREATE TABLE は src/server.js で実行） |
+| `storage/sessions.sqlite` | セッションストア（connect-sqlite3 が使用） |
+| `storage/chroma/` | ChromaDB の永続化用（Chroma を `--path` で使う場合） |
 | `public/icons/` | ユーザーアイコン保存先 |
-| `public/files/` | ファイルアップロード・SQL練習用DB配置先 |
-| `public/files/user_database.db` | SQLインジェクション練習用（CREATE TABLE は server.js で実行） |
+| `public/uploads/` | ファイルアップロード・CTF配布ファイル（URLは `/files/`） |
+| `public/uploads/user_database.db` | SQLインジェクション練習用（CREATE TABLE は src/server.js で実行） |
 
 初回起動時にテーブルが存在しなければ作成され、既存の DB にはマイグレーション（カラム追加など）が行われます。
 
 ### 3.3 メインサーバーの起動
 
 ```powershell
-node server.js
+node src/server.js
 ```
 
 - デフォルトで **ポート 3333** でリッスンします。  
@@ -145,7 +145,7 @@ pip install chromadb
 # 永続化用ディレクトリを指定して起動（プロジェクトの db/chroma を使う場合）
 cd c:\Users\kokoh\CTF\CTF_HTML
 mkdir db\chroma 2>nul
-chroma run --path ./db/chroma
+chroma run --path ./storage/chroma
 ```
 
 - デフォルトで `http://localhost:8000` で待ち受けます。  
@@ -177,7 +177,7 @@ chroma run --path ./db/chroma
 $env:SESSION_SECRET = "あなたの長いランダム文字列"
 $env:SERVER_HOST = "192.168.1.100"
 $env:OLLAMA_BASE_URL = "http://localhost:11434"
-node server.js
+node src/server.js
 ```
 
 本番では `.env` と `dotenv` を使うか、OS の環境変数に設定することを推奨します。
@@ -188,17 +188,17 @@ node server.js
 
 メインサーバーとは別に、次のサブサーバーがあります。
 
-### 6.1 攻撃者サーバー（attack_server）
+### 6.1 攻撃者サーバー（labs/attack-server）
 
 XSS で盗んだ Cookie を受け取る攻撃者用サーバーです。メインサーバー起動時に **自動で起動**されるため、通常は手動起動は不要です。  
 手動で動かす場合:
 
 ```powershell
-cd c:\Users\kokoh\CTF\CTF_HTML\attack_server
+cd c:\Users\kokoh\CTF\CTF_HTML\labs\attack-server
 npm install
 npm start
 # または
-node server.js
+node src/server.js
 ```
 
 ### 6.2 XSS 脆弱ショップ（xss）
@@ -254,7 +254,7 @@ EADDRINUSE: ポート 3333 は既に使用されています。
 
 ### ChromaDB に接続できない
 
-- `chroma run --path ./db/chroma` が起動しているか確認。  
+- `chroma run --path ./storage/chroma` が起動しているか確認。  
 - 別ホスト/ポートの場合は `CHROMA_URL` を設定。  
 - Chroma が無くてもサーバーは起動し、チューターは Ollama のみで動作します。
 
@@ -266,9 +266,9 @@ EADDRINUSE: ポート 3333 は既に使用されています。
 |------|----------|
 | Node 確認 | `node -v` / `npm -v` |
 | 依存インストール | `npm install` |
-| メインサーバー起動 | `node server.js` |
+| メインサーバー起動 | `node src/server.js` |
 | （任意）Ollama モデル | `ollama pull llama3.2` / `ollama pull nomic-embed-text` |
-| （任意）Chroma 起動 | `chroma run --path ./db/chroma` |
-| （任意）環境変数 | `$env:SESSION_SECRET = "…"; node server.js` |
+| （任意）Chroma 起動 | `chroma run --path ./storage/chroma` |
+| （任意）環境変数 | `$env:SESSION_SECRET = "…"; node src/server.js` |
 
 以上で、このサーバーを構築・起動するための環境構築手順は一通りです。

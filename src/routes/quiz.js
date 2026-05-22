@@ -5,14 +5,15 @@ const os = require("os");
 const crypto = require("crypto");
 const sqlite3 = require("sqlite3").verbose();
 const router = express.Router();
+const paths = require("../config/paths");
 
-// dbフォルダが存在しない場合は作成
-const dbDir = path.join(__dirname, "../db");
+// storageフォルダが存在しない場合は作成
+const dbDir = paths.STORAGE;
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
 
-const dbPath = path.join(__dirname, "../db/users.db");
+const dbPath = path.join(paths.STORAGE, "users.db");
 //console.log("[quiz.js] データベースパス:", dbPath);
 //console.log("[quiz.js] ファイル存在確認:", fs.existsSync(dbPath));
 //console.log("[quiz.js] ディレクトリ存在確認:", fs.existsSync(path.dirname(dbPath)));
@@ -43,7 +44,7 @@ db.on('error', (err) => {
     console.error("   スタックトレース:", err.stack);
   }
 });
-const quizPath = path.join(__dirname, "../data/quizData.json");
+const quizPath = path.join(paths.CONFIG, "quizData.json");
 
 // サーバーのIPアドレスを取得する関数
 function getServerHost() {
@@ -360,7 +361,7 @@ router.get("/hintOpened/:category/:qid", requireLogin, (req, res) => {
 // ファイルダウンロード用エンドポイント
 router.get("/file/:category/:filename", requireLogin, (req, res) => {
   const { category, filename } = req.params;
-  const filesDir = path.join(__dirname, "../public/files");
+  const filesDir = paths.UPLOADS;
   
   // セキュリティ: ファイル名のサニタイゼーション
   const sanitizeFilename = (name) => {

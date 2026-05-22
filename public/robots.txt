@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /public/
+Allow: /content/
+Disallow: /flags/
+Disallow: /flag-hidden

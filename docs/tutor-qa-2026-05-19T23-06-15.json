@@ -1,0 +1,2958 @@
+{
+  "exportedAt": "2026-05-19T23:06:15.444Z",
+  "entryCount": 82,
+  "entries": [
+    {
+      "userid": "admin",
+      "question": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "CTFのOSINTカテゴリでは、合法的に入手可能な公開情報を収集・分析し、価値ある情報を導き出す手法が問われます。具体的には、画像や文書などから隠された情報を探したり、公開されている情報を組み合わせて新しい情報を得る問題です。\n\n例えば、画像内にフラグが埋め込まれている場合、OSINTではその画像を分析してフラグを発見することが問われます。同じく、文書やWebページから特定の情報を抽出する問題もOSINTに分類されます。\n\nOSINTは、CTFの基本的な手法であり、初心者が学ぶべき重要なスキルです。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.11"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-18T05:22:51.806Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINT（Open-Source Intelligence）での初動手順は以下の5ステップです。\n\n### 1. `file` → ファイルの正体確認\n\n* 使用ツール: `file`\n* 目的: ファイルの種類や性質を把握する\n\n### 2. `strings` → 文字列抽出\n\n* 使用ツール: `strings`\n* 目的: 文字列データを抽出し、有用な情報を探す\n\n### 3. `exiftool` → メタデータ確認\n\n* 使用ツール: `exiftool`\n* 目的: 写真のメタデータ（EXIF）を抽出して、撮影日時やカメラ情報などを確認する\n\n### 4. `binwalk` → 埋め込み探索\n\n* 使用ツール: `binwalk`\n* 目的: ファイルに埋め込まれたデータや隠しファイルを検出する\n\n### 5. Google Images（画像検索）→ イメージの逆引き検索\n\n* 使用ツール: Google Images\n* 目的: 抽出した画像をGoogle Imagesで検索し、類似写真や同便情報を集める\n\nこの初動手順は、OSINT調査の基本的な流れを示しています。画像1枚から調査を始めるときには、この5ステップを実行して有用な情報を抽出することが重要です。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.21"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.19"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-18T05:24:58.474Z"
+    },
+    {
+      "userid": "admin",
+      "question": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+      "category": null,
+      "questionId": null,
+      "answer": "usernameがわかっている場合の調査範囲を広げるための具体的な検索クエリ例を5つ提供します。\n\n1. `site:twitter.com @username` - Twitterアカウントのプロフィールやツイートを確認する。\n2. `site:instagram.com @username` - Instagramアカウントの投稿やストーリーを確認する。\n3. `site:facebook.com @username` - Facebookアカウントの投稿や友達リストを確認する。\n4. `inurl:github.com @username` - GitHubアカウントのリポジトリやコミット履歴を確認する。\n5. `site:reddit.com u/username` - Redditアカウントの投稿やコメントを確認する。\n\nこれらの検索クエリは、指定されたサイトやサービスに絞って調査を行うことができます。ただし、調査範囲を広げるためには、より包括的な検索クエリを使用する必要があります。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.03"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-18T05:26:33.809Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTで得た情報の真偽を検証する際には、以下のようなチェックポイントを確認します。\n\n・一次ソースの確認：OSINTで得た情報は、信頼性が高くない場合があります。一次ソースに当たって、情報の正確さを確認してください。\n・複数の情報源の照合：異なる情報源から同じ情報を得ることができれば、その情報の信憑性が高まります。\n・日付や時間の検証：OSINTで得た情報に含まれる日付や時間は、正しいかどうかを確認してください。特に、古い情報や未公開の情報には注意が必要です。\n・画像や動画の解析：OSINTで得た画像や動画は、解像度やフレームレートなどを確認し、信頼性の低いものは除外します。\n・専門家の意見の照会：OSINTで得た情報が、特定の分野に精通した専門家から見て正しいかどうかを照会してください。\n\nこれらのチェックポイントを確認することで、OSINTで得た情報の真偽を検証し、信頼性の高い情報を抽出することができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.17"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-18T05:28:38.238Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTって何の略称？",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTは、オープン・ソース・インテリジェンスの略称です。合法的に入手可能な公開情報を収集・分析し、価値ある情報を導き出す手法を指します。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.03"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.04"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.06"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-18T05:30:20.601Z"
+    },
+    {
+      "userid": "admin",
+      "question": "CTFのOSINTカテゴリは何を問う問題ですか？初心者向けに説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINT（オープン・ソース・インテリジェンス）カテゴリの問題は、合法的に公開されている情報から価値ある情報を導き出すことを目的としています。これらの問題は主にインターネットや公開データベース、画像、文書などから必要な情報を抽出し、フラグや解答を導き出すことを要求します。初心者向けに説明すると以下のようになります：\n\n1. **合法的な情報源の利用**:\n   - ウェブサイト、ソーシャルメディア、ニュース記事、公開データベースなどを活用する。\n\n2. **画像解析**:\n   - 画像内の隠されたデータや埋め込み情報を探す。\n   - ファイル構造（ヘッダ・フッタ）を確認し、見えていない情報を探る。\n\n3. **テキスト抽出**:\n   - `strings`コマンドを使ってファイルから文字列を抽出する。\n   - 画像やPDFなどの非テキストデータから隠されたテキストを探す。\n\n4. **メタデータの確認**:\n   - `exiftool`などで画像や音声ファイルのメタデータ（撮影日時、作者情報など）を確認する。\n\n5. **埋め込み探索**:\n   - `binwalk`を使ってファイル内に隠されたデータを探す。\n\n6. **逆引き検索**:\n   - 画像や特定のテキストをGoogle Imagesなどで検索し、関連情報を得る。\n   - TinEyeなどの逆引きツールを使用して画像の元の場所を確認する。\n\n7. **仮説と検証**:\n   - 「Base64っぽい」→ デコード\n   - 「zipっぽい」→ 解凍\n\n8. **具体的な問題例**:\n   - **画像解析（フォレンジック系の基本）**: 画像内にフラグが埋め込まれているか、LSB（最下位ビット）によるステガノグラフィを探る。\n   - **工事現場の特定**: 画像内のテキストから工事現場を特定し、その場所に関する情報を集める。\n\nこれらの手法を使いながら、問題に取り組むことでOSINTの基本的な理解とスキルを身につけることができます。最初は難しく感じるかもしれませんが、地道な練習を重ねることで徐々に得意になるでしょう。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.30"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.11"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-18T05:32:14.181Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像1枚から調査を始めるとき、OSINTの初動手順を5ステップで示してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "画像1枚から調査を始める際のOSINT初動手順は以下の通りです：\n\n1. **ファイルの正体確認**\n   - `file` コマンドを使用して画像の形式や内容を確認します。例えば、JPEG, PNG, TIFFなどと表示されます。\n\n2. **文字列抽出**\n   - `strings` コマンドで画像から含まれる文字列（メタデータや隠しメッセージ）を抽出します。これにより、画像に埋め込まれた情報を見つけることができます。\n\n3. **メタデータ確認**\n   - `exiftool` などのツールを使用して画像のEXIF情報を確認します。日付、場所、カメラ情報など重要なメタデータが含まれている場合があります。\n\n4. **画像検索と逆引き検索**\n   - Google ImagesやTinEyeを使って画像を逆引き検索し、類似画像や元画像を見つけています。これにより、画像の撮影場所や背景情報を特定することができます。\n\n5. **埋め込み探索**\n   - `binwalk` や `steghide` などのツールを使用して画像に隠されたデータ（隠しメッセージや他のファイル）を検出します。これは特にJPEGやPNGなどのフォーマットで有効です。\n\nこれらの手順は、画像から得られる情報を段階的に深堀していくための基本的なフレームワークです。それぞれのステップが重要であり、必要な情報が見つかるまで繰り返し実行することが推奨されます。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.27"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.21"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.19"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-18T05:35:04.911Z"
+    },
+    {
+      "userid": "admin",
+      "question": "usernameしかないとき、調査範囲を広げるための具体的な検索クエリ例を5つください。",
+      "category": null,
+      "questionId": null,
+      "answer": "ユーザー名が唯一の情報である場合、そのユーザー名からさらに情報を引き出すために以下の検索クエリを使用して調査範囲を広げることができます。\n\n1. **SNSでの活動確認**\n   ```bash\n   python sherlock username\n   ```\n   - このコマンドは、ユーザーが利用しているさまざまなSNSアカウントを列挙します。これにより、同じIDを使用している可能性のある他のプラットフォームを特定できます。\n\n2. **Google検索**\n   ```text\n   \"username\" site:twitter.com OR site:facebook.com OR site:linkedin.com\n   ```\n   - このクエリは、指定されたユーザー名がTwitter、Facebook、LinkedInなどのSNSで使用されている可能性を探します。`site:`オプションを使用して特定のサイトに絞り込むことができます。\n\n3. **GitHub検索**\n   ```text\n   username site:github.com\n   ```\n   - このクエリは、ユーザー名がGitHubで使用されている可能性を調査します。GitHubは開発者にとって重要な情報源であり、同様のIDを使用している可能性があります。\n\n4. **ブログやウェブサイトでの活動**\n   ```text\n   username site:blogspot.com OR site:wikipedia.org\n   ```\n   - このクエリは、ユーザー名がブログやWikipediaなどのウェブサイトで使用されている可能性を探します。これらのプラットフォームも同様のIDを使用している可能性があります。\n\n5. **画像検索と位置特定**\n   ```text\n   username site:google.com/imghp OR site:tineye.com\n   ```\n   - このクエリは、ユーザー名が画像に含まれている可能性を探します。Google ImagesやTinEyeなどの画像検索エンジンを使用して、画像から同様のIDを使用している他のアカウントを特定できます。\n\nこれらの検索クエリは、ユーザー名から得られる情報をさらに拡張し、そのユーザーが利用する他のプラットフォームや活動範囲を調査するために役立ちます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.03"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-18T05:36:47.396Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の真偽を検証するためのチェックポイントを説明してください。",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTで得た情報を検証する際には、以下のチェックポイントに注意することが重要です。\n\n1. **情報源の信頼性**\n   - 情報が提供されたサイトやソースは信頼できるか？\n   - ソースが有名人や専門家から得られた情報であるか確認する。\n   - 略称や通称を使用している場合は、正式な名前を確認する。\n\n2. **情報の更新日**\n   - 情報が最新かどうか確認する。\n   - 過去の情報を現在の状況に適用しようとすると誤った結論につながる可能性がある。\n\n3. **情報の矛盾**\n   - 同じ情報を複数の信頼できるソースから取得し、矛盾がないか確認する。\n   - 矛盾があれば、情報源を再評価する。\n\n4. **情報の文脈**\n   - 情報が提供された文脈や背景を理解する。\n   - 一部だけ引用して全体の意味を歪めないか確認する。\n\n5. **二次利用の可能性**\n   - 情報が他の場所で再配布される可能性があるか確認する。\n   - 再配布は情報の正確性を損なう可能性がある。\n\n6. **プライバシーと法的制限**\n   - 公開情報でも個人情報を特定しないように注意する。\n   - 法的な制限（プライバシーポリシー、著作権等）に違反していないか確認する。\n\n7. **情報の信憑性**\n   - 情報が事実に基づいているかどうか確認する。\n   - 事実を確認するために、第三者からの証拠やデータを検討する。\n\n8. **情報の有効期限**\n   - 情報が特定の状況や時間枠に限定されているか確認する。\n   - 長期的な視点から情報を評価する。\n\n9. **情報の整合性**\n   - 他の関連情報と整合しているかどうか確認する。\n   - 矛盾がないことを確認し、不整合な情報は信頼できない可能性がある。\n\n10. **情報の再現性**\n    - 情報が再現可能かどうか確認する。\n    - 同じ方法で情報を得られるか試す。\n\nこれらのチェックポイントを踏まえて、OSINTで得た情報を慎重に検証することで、より正確な結論を得ることができます。また、情報の信頼性を高めるためには、複数の異なるソースから情報を収集し、その整合性を確認することが有効です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.22"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.17"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-18T05:39:34.813Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTって何の略称？",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTは「オープン・ソース・インテリジェンス」（Open-Source Intelligence）の略称です。これは、**合法的に入手可能な公開情報を収集し、分析して価値ある情報を導き出す手法**を指します。\n\nOSINTの主な特徴は以下の通りです：\n\n1. **公開情報の利用**: 公開されている情報源からデータを集めます。\n2. **多様な情報源**: Webサイト、ソーシャルメディア、ニュース記事、写真など、様々な公開情報源を利用します。\n3. **分析と解釈**: 收集した情報を分析し、有用なインテリジェンス（情報）に変換します。\n\nOSINTはCTF（キャッチャー・ザ・フラグ）などのハッキングコンテストでも頻繁に使用されます。公開された画像や文書から秘密の情報を探したり、特定の場所を特定したりする問題がよくあります。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.32"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.03"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.04"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.06"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-18T05:42:15.700Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ホヌ柄の飛行機ってどこの航空会社？",
+      "category": null,
+      "questionId": null,
+      "answer": "**フラグを出さないように...**\n\nあなたが尋ねているのは、ホヌ柄という飛行機の航空会社かどうですか。\n\nまずは、画像検索で「ホヌ柄」や「ホヌハレ」などのキーワードを入れてみましょう。機体名や塗装の特徴を探します。\n\n次に、 justaircraft.net など、飛行機データベースサイトを利用して、ホヌハレの詳細情報を調べることができます。\n\nただし、航空会社の公式サイトや空港案内で、フリーウイフIWi-Fi SSIDが公開されているかどうかを確認することも重要です。SSID名を正確に抜き出してフラグ形式に当てはめる必要があります。\n\n**ヒント**\n\n* justaircraft.net を利用する\n* 画像検索で機体名や塗装の特徴を探す\n* justaircraft.net のデータベースからホヌハレの詳細情報を調べる",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.32"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "-0.41"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.47"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.48"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.48"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T19:57:33.160Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ハワイの空港の公式WiFiの名前なに",
+      "category": null,
+      "questionId": null,
+      "answer": "ハワイの空港の公式Wi-Fiの名前は、次のようになっています。\n\n* **Hawaii Airports Wi-Fi**: この名前の空港では、すべてのターミナルで無料のWi-Fiサービスが提供されています。\n* **Honolulu International Airport (HNL) Wi-Fi**: これは、ハワイ州の主要な空港であるホノルル国際空港（Honolulu International Airport）でのみ利用できます。\n* **Kona International Airport at Kona (KOA) Wi-Fi**: これは、コナ国際空港（Kona International Airport at Kona）で利用できます。\n\nただし、各空港の公式Wi-Fi名前は異なる場合があります。さらに、空港によっては、Wi-Fiサービスが提供されていない空港もあります。\n\nここで、段階的なヒントを提供します。\n\n1.  画像検索で「ハワイ空港」や「公式Wi-Fi」と入力してみましょう。\n2.  その結果から、空港の名前と公式Wi-Fi名前がわかりますか？\n3.  次に、空港の公式ウェブサイトを確認して、Wi-Fi名前を確認します。\n\nこれらのステップを実行すると、ハワイの空港の公式Wi-Fi名前を簡単に調べることができます。",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.01"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.26"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.26"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.27"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.28"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T19:59:25.956Z"
+    },
+    {
+      "userid": "admin",
+      "question": "空港のWiFiのSSIDって簡単にわかる？",
+      "category": null,
+      "questionId": null,
+      "answer": "空港のWiFiのSSIDは、通常、空港の名前や airport code の略称を使用します。\n\nたとえば、東京空港の WiFi SSID は「Tokyo_Airport_WiFi」かもしれません。ただし、これは事実上の例であり、実際のSSIDは異なる可能性があります。\n\n空港の公式サイトや情報ポータルサイトなどをチェックすることで、正しいSSIDを確認できます。また、空港内で提供されているWiFiの設定ガイドブックやマニュアルにもSSIDが記載されています。\n\nまた、OSINT を使用して、空港の公式サイトや社交媒体アカウントから WiFi SSID の情報を収集することも可能です。ただし、これは基本的なステップであり、SSID が正確に取得できるようにするには、より詳細な調査が必要になる可能性があります。\n\n**ヒント:** 空港の公式サイトや情報ポータルサイトをチェックして、正しいSSIDを確認します。",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.04"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.06"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.06"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.07"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:01:08.994Z"
+    },
+    {
+      "userid": "admin",
+      "question": "飛行機の便名と日付って結びつけられる？",
+      "category": null,
+      "questionId": null,
+      "answer": "飛行機の便名と日付を結びつける方法は複数ありますが、以下のような手法があります。\n\n1.  **画像検索**: 便名や機体の特徴を検索して類似写真を見つけます。特に、便名や機体の塗装が明確な写真が見つかるかどうかを確認します。\n2.  **航空会社の公式サイト**: 便名と日付を確認するために航空会社の公式サイトや空港案内を参照します。\n3.  **機体のデータベース**: 便名と日付を検索して、機体のデータベースに記載されている情報を確認します。\n\nこれらの手法を組み合わせて、飛行機の便名と日付を結びつけることができます。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.13"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.15"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.16"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.16"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:02:24.101Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ギリシャ神話で医療の神って誰",
+      "category": null,
+      "questionId": null,
+      "answer": "ギリシャ神話では、医療の神として知られるのはアスケロポス（Asclepius）です。\n\nアスケロポスは、ヘレニズム期には神とみなされていたが、古代ギリシャ神話では、神族の一員ではなくて、神の息子であると考えられます。彼は、医療や治療を専門にし、病気や怪我から人々を救うために知られるようになりました。\n\nアスケロポスの象徴としては、サナタリウム（Sanatorium）や、白いドラゴンが使われることがあります。彼の神格は、ヘレニズム期には広く受け入れられ、医療の分野で影響を与えました。\n\nアスケロポスの名前は、医学や治療に関連する言葉から来ています。例えば、アスケロポス病（Ascleporosis）というのは、慢性皮膚炎の一種です。\n\nアスケロポスは、ギリシャ神話の重要なキャラクターであり、医療や治療を専門にし、人々を救うために知られるようになりました。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.24"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.31"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "-0.51"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.52"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:03:39.675Z"
+    },
+    {
+      "userid": "admin",
+      "question": "杖に蛇が巻き付いてるシンボルって何の神",
+      "category": null,
+      "questionId": null,
+      "answer": "杖に蛇が巻き付けられているシンボルは、古代ギリシャとローマの神話でよく見られるものです。\n\nこのシンボルは、ヘラクレス（Heracles）やアポロン（Apollon）、またはゼウス（Zeus）の神に結びついています。特に、アポロンの神として知られている場合、蛇が杖に巻き付けられているシンボルは「ラピス」と呼ばれます。\n\nラピスは、アポロンの神の杖に蛇が巻き付けられているものです。このシンボルは、アポロンの神力と神聖性を表します。ヘラクレスも、このシンボルを身につけていることがあり、神の権威を示すために使用しました。\n\nこのシンボルは、CTF の問題でよく使われる手掛かりです。問題では「杖に巻き付く蛇」「没薬」「元は人間」が強い手掛かりとして言及されています。このシンボルは、古代ギリシャとローマの神話から来ており、CTF の問題でよく使われる特徴です。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.17"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.37"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.37"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.40"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:05:11.252Z"
+    },
+    {
+      "userid": "admin",
+      "question": "創立100年くらいの有名な日本の私立大学は？",
+      "category": null,
+      "questionId": null,
+      "answer": "**創立100年以上の有名な日本の私立大学を紹介します。**\n\n1.  **明治大学（1887年）**：日本最古の私立大学の一つ。創立100年以上の歴史にわたって、教育と研究を推進してきました。\n2.  **成城大学（1918年）**：東京の私立大学で、創立100年以上の歴史を持っています。教育や研究が充実している大学です。\n3.  **関西大学（1897年）**：大阪の私立大学で、創立100年以上の歴史にわたって、教育と研究を推進してきました。\n\nこれらの大学は、創立100年以上の歴史を持つ日本の有名な私立大学です。 **これらの情報を使用して、問題解決に役立ててください。**",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.30"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.38"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.50"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.52"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:06:12.851Z"
+    },
+    {
+      "userid": "admin",
+      "question": "慶應義塾を作った人って誰",
+      "category": null,
+      "questionId": null,
+      "answer": "慶應義塾は、1877年（明治10年）に創立された日本の私立大学です。創立者として最も有名な人物は、**菅生正行**氏です。\n\n菅生正行は、1864年（明治元年）に生まれた日本人で、慶應義塾の創立者です。彼は、英語と法学を学び、1870年代後半に日本に帰国し、教育や社会 Reform に関心を持つようになりました。\n\n菅生正行は、1877年、東京の神田川（現在の神田川通り）で「慶應義塾」を創立しました。創立の目的は、日本人を西洋の教育に導くことであり、英語と法学を中心とする教育を提供することを目指しました。\n\n菅生正行は、慶應義塾を通じて、日本の教育や社会 Reform に大きな影響を与えました。彼は、教育が個人と社会の発展にとって非常に重要であると信じていました。\n\nちなみに、庆應義塾大学（東京)は、菅生正行の遺産として創立された大学です。",
+      "sources": [
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.39"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.45"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.49"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.51"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:07:17.813Z"
+    },
+    {
+      "userid": "admin",
+      "question": "google画像検索のやり方",
+      "category": null,
+      "questionId": null,
+      "answer": "**Google Images検索の基本的な方法**\n\nGoogle Images検索は、画像を検索して見つけるための強力なツールです。以下は、Google Images検索の基本的な方法を紹介します。\n\n### 1. 画像アップロード\n\nまず、画像をアップロードする必要があります。画像をアップロードするには、次の方法を使用できます。\n\n*   Google Imagesの公式ウェブサイトにアクセスし、「Upload an image」をクリックします。\n*   画像ファイルを選択してアップロードします。\n*   画像がアップロードされると、検索バーに「Upload an image」を入力して検索を開始できます。\n\n### 2. 画像検索\n\n次に、画像を検索する必要があります。次の方法を使用できます。\n\n*   検索バーに「画像名」として画像ファイル名を入力します。\n*   「検索」ボタンをクリックすると、画像が表示されます。\n*   画像が見つかったら、「詳細」をクリックして詳細を見ることができます。\n\n### 3. 類似画像の検索\n\n次に、類似画像の検索を行う必要があります。次の方法を使用できます。\n\n*   検索バーに「類似」としてキーワードを入力します。\n*   「検索」ボタンをクリックすると、類似する画像が表示されます。\n\n### 4. 最も古い投稿の検索\n\n次に、最も古い投稿の検索を行う必要があります。次の方法を使用できます。\n\n*   検索バーに「古い」としてキーワードを入力します。\n*   「検索」ボタンをクリックすると、最も古い投稿が表示されます。\n\n### 5. 別角度の画像の検索\n\n次に、別角度の画像の検索を行う必要があります。次の方法を使用できます。\n\n*   検索バーに「別角度」としてキーワードを入力します。\n*   「検索」ボタンをクリックすると、別角度の画像が表示されます。\n\n### 6. 写っている要素の特定\n\n次に、写っている要素の特定を行う必要があります。次の方法を使用できます。\n\n*   検索バーに「文字」としてキーワードを入力します。\n*   「検索」ボタンをクリックすると、文字が表示されます。\n\n### 7. ページの位置特定\n\n次に、ページの位置特定を行う必要があります。次の方法を使用できます。\n\n*   検索バーに「場所」としてキーワードを入力します。\n*   「検索」ボタンをクリックすると、場所が表示されます。\n\n### 8. ステガノグラフィ調査\n\n最後に、ステガノグラフィ調査を行う必要があります。次の方法を使用できます。\n\n*   検索バーに「ステガノグラフィ」としてキーワードを入力します。\n*   「検索」ボタンをクリックすると、ステガノグラフィが表示されます。\n\n### 9. メタデータ\n\n最後に、メタデータを調べる必要があります。次の方法を使用できます。\n\n*   検索バーに「メタデータ」としてキーワードを入力します。\n*   「検索」ボタンをクリックすると、メタデータが表示されます。\n\n### 10. ファイル解析\n\n最後に、ファイル解析を行う必要があります。次の方法を使用できます。\n\n*   検索バーに「ファイル解析」としてキーワードを入力します。\n*   「検索」ボタンをクリックすると、ファイル解析が表示されます。\n\nこれらのステップを実行することで、Google Images検索で画像を探すことができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.08"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.06"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.06"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.05"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:08:17.451Z"
+    },
+    {
+      "userid": "admin",
+      "question": "座標から事件を調べたい",
+      "category": null,
+      "questionId": null,
+      "answer": "座標から事件を調べるという目標は、地理情報システム（GIS）とオープンシティーインテリジェンス（OSINT）の力で、座標が示す場所の歴史的出来事や現象を特定することです。ここでは、座標から事件を調べるための段階的なヒントを提供します。\n\n### 1. 座標起点の場所と歴史的出来事を特定する\n\n座標が示す場所はどのような地理的位置であるかを理解するために、まず地図アプリやGISツールを使用して、座標に基づいて場所を特定します。次に、この場所における歴史的出来事や現象を調べる必要があります。\n\n### 2. 事件名から初期調査者の人物特定へつなげる\n\n座標が示す場所の歴史的出来事は、初期調査者によって記録されていることが多く、初期調査者の名前や職業を特定することで、より詳細な情報を得ることができます。事件名から初期調査者の人物特定を通じて、事件に関わった主要人物や団体についても知ることができます。\n\n### 3. 指定どおり母国語表記で名前を確認する\n\n初期調査者が使用した言語は、現代の言語に変換されることが多いため、特定の単語や名前を母 country語表記で確認する必要があります。これにより、より正確な情報を得ることができます。\n\n### 4. 公的情報と学術研究を活用する\n\n地理情報システムやオープンシティーインテリジェンスを活用して、座標が示す場所の歴史的出来事や現象についてさらに調べることができます。公的情報や学術研究を活用すると、より詳細な情報を得ることができます。\n\n### 5. 検索ツールとデータソースを使用する\n\n検索ツールやデータソースを使用して、座標が示す場所の歴史的出来事や現象について調べることができます。各ツールやデータソースには、その特徴や制限があるため、適切なツールとデータソースを選択する必要があります。\n\n### 6. 検索結果を分析および評価する\n\n検索結果を分析および評価することで、より正確な情報を得ることができます。各検索結果の信頼性や関連性を評価し、最も適切な情報を選択する必要があります。\n\nこれらのステップを通じて、座標から事件を調べることができます。地理情報システムとオープンシティーインテリジェンスを活用して、座標が示す場所の歴史的出来事や現象についてより詳細な情報を得ることができます。",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.18"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.08"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.07"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.04"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:09:54.910Z"
+    },
+    {
+      "userid": "admin",
+      "question": "60.8841988,101.8857172 で何が起きた",
+      "category": null,
+      "questionId": null,
+      "answer": "**地理情報解析**\n\n60.8841988, 101.8857172 は、中国の重慶市に位置する場所です。\n\n**CTF のヒントとしての意味**\n\nこの地理情報は、CTF の問題やコンテストで使用される可能性があります。たとえば、問題では \"中国の地理情報\" が提示され、参加者がその場所を特定するように求められます。あるいは、問題では \"重慶市の地理情報\" が提示され、参加者がその場所から一定距離にあり、特定の条件を満たす場所を見つけるように求められます。\n\n**CTF のトレーニングとしての意味**\n\nこの地理情報は、CTF のトレーニングとしても使用できます。参加者が地理情報を分析し、特定の場所を特定する能力を練習することができます。また、参加者が地理情報を使用して問題を解決する能力を評価することもできます。\n\n**次のステップ**\n\nこの地理情報に基づいて、CTF の問題やコンテストで使用される可能性がある方法やツールを探します。たとえば、Google マップや Google Earth を使用して場所を特定する方法、または地理情報を分析するためのツールやソフトウェアを探します。\n\n**重要なポイント**\n\n*   地理情報はCTFの問題やコンテストで使用される可能性があります。\n*   参加者が地理情報を分析し、特定の場所を特定する能力を練習することができます。\n*   参加者が地理情報を使用して問題を解決する能力を評価することもできます。",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.13"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.14"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.17"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.19"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.20"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:11:59.829Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ツングースカ大爆発ってなに",
+      "category": null,
+      "questionId": null,
+      "answer": "**ツングースカ大爆発（Tunguska Event）とは**\n\n1995年7月9日にシベリア地方のツングースカ川流域で起こった、世界で2番目に大きい大気現象です。\n\n** details **\n\n*   1908年にロシアのツングースカ川流域で起こった大爆発は、世界で1番目に大きい大気現象です。\n*   1995年7月9日、同じ地域で再び大爆発が起こりました。\n*   この大爆発は、約10メートル高く flames が上昇しました。 \n*   この大爆発は、約1,000 km²の範囲に広がっています。\n\n**原因について**\n\n*   1995年7月9日、大爆発の原因は、木材や石を運ぶ飛行機が事故で燃え、空気中のガスが増加したと考えられています。\n*   この大爆発は、地球の表面に大きな衝撃を与え、地震や火山噴出などの影響を受けました。\n\n**影響について**\n\n*   この大爆発は、広範囲にわたって音波が放出され、約1,000 kmの距離まで聞こえたと言われています。\n*   大爆発の後、地面は約10 cm高くなり、周辺の木々も倒れました。\n\n**参考資料**\n\n*   [ツングースカ大爆発](https://ja.wikipedia.org/wiki/%E6%9D%91%E8%A1%97%E3%82%81%E5%B7%9C%E5%A4%96%E3%83%81%E3%82%94)\n*   [1995年ツングースカ大爆発](https://www.japantoday.jp/news/1995-07-10/tunguska-event)",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.43"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:13:26.311Z"
+    },
+    {
+      "userid": "admin",
+      "question": "特許を調べるサイト教えて",
+      "category": null,
+      "questionId": null,
+      "answer": "特許を調べるための有用なサイトを紹介します。\n\n### 1. Google Patents\n\n*   [https://patents.google.com/](https://patents.google.com/)\n*   特許出願日と企業条件を使用して検索することができます。\n*   図面一致で該当特許を特定することもできます。\n\n### 2. World Intellectual Property Organization (WIPO) Patent Database\n\n*   [https://www.wipo.int/patents/en/](https://www.wipo.int/patents/en/)\n*   国際特許情報を提供します。\n*   特許出願日と企業条件を使用して検索することができます。\n\n### 3. USPTO (United States Patent and Trademark Office) Patent Full-Text and Image Database\n\n*   [https://patft.uspto.gov/](https://patft.uspto.gov/)\n*   米国特許情報を提供します。\n*   特許出願日と企業条件を使用して検索することができます。\n\n### 4. EPO (European Patent Office) Patent Full-Text and Image Database\n\n*   [https://www.epo.org/searching-for-patents.html](https://www.epo.org/searching-for-patents.html)\n*   ヨーロッパ特許情報を提供します。\n*   特許出願日と企業条件を使用して検索することができます。\n\n### 5. PatentScope\n\n*   [https://patentscope.wipo.int/](https://patentscope.wipo.int/)\n*   国際特許情報を提供します。\n*   特許出願日と企業条件を使用して検索することができます。\n\nこれらのサイトは、特許の出願日や企業の条件を使用して特定の特許を探すのに役立ちます。",
+      "sources": [
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.07"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.01"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.01"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.01"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:15:35.720Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Google Patentsの使い方",
+      "category": null,
+      "questionId": null,
+      "answer": "**Google Patentsで探す方法**\n\nGoogle Patentsは、世界中の特許情報を一元化したプラットフォームです。特に、出願日と企業条件を使って検索することで、候補を絞ることができます。\n\n**段階的なヒント**\n\n1. **出願日を検索する**\n\t* Google Patentsの検索バーに「出願日」と入力します。\n\t* 「出願日」は、特許の発明日や出願日です。\n2. **企業条件を追加する**\n\t* 企業名や業種などの条件を追加して絞り込むことができます。\n3. **特定の特許を探す**\n\t* Google Patentsで検索した結果から、特定の特許を探します。\n\n**ヒント**\n\n* Google Patentsは、特に「出願日」と「企業名」を使用して検索することで、候補を絞ることができます。\n* また、「発明日」や「出願番号」などの条件も使用できます。\n\n**教育的な説明**\n\nGoogle Patentsは、特許情報を一元化したプラットフォームです。特に、出願日と企業条件を使って検索することで、候補を絞ることができます。これにより、特許の候補を絞り込むためのヒントが得られます。\n\n**励まし**\n\nGoogle Patentsで探す方法を学ぶことは、特許情報を探す際に役立つでしょう。出願日と企業条件を使って検索することで、候補を絞ることができます。これにより、特許の候補を絞り込むためのヒントが得られます。\n\n**ツールの紹介**\n\n* Google Patents\n* exiftool",
+      "sources": [
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.03"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "-0.08"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:17:14.408Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像から場所を特定するために、最初に確認すべき情報は？",
+      "category": null,
+      "questionId": null,
+      "answer": "**画像から場所を特定するには、まずは以下の情報を確認する必要があります。**\n\n・ **ナンバープレート（車両番号板）**：ナンバープレートは、画像検索で重要なヒントとなります。ナンバープレートが見つかったら、その地域に位置する可能性が高くなります。\n\n・ **電柱や信号の位置**：電柱や信号は、特定の地域を表すものです。電柱や信号の位置と方向から、画像が撮影された場所を推測できます。\n\n・ **建物や道路の配置**：建物や道路の配置も、画像検索で重要なヒントとなります。建物や道路の配置によって、画像が撮影された場所は特定できる場合があります。\n\n・ **景観の類型（都市部 vs. countryside）**：景観の類型を確認することで、画像が撮影された場所の地域を絞ることができます。\n\nこれらの情報を確認することで、画像から場所を特定し、次に座標を取得して最終的に位置を決定できます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.13"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:19:15.200Z"
+    },
+    {
+      "userid": "admin",
+      "question": "SNSアカウント同士の関連性を調べる一般的な方法は？",
+      "category": null,
+      "questionId": null,
+      "answer": "SNSアカウント同士の関連性を調べる一般的な方法には、以下のようなものがあります。\n\n1.  **IDOR（参照制御不備）**: IDORとは、ユーザーが他ユーザーの情報を参照できるようにする制御を弱めたことです。SNSアカウント同士の関連性を調べるために、IDORを利用して、同じユーザーが複数のアカウントを持っているかを確認できます。\n2.  **パラメータ変更**: パラメータを変更することで、参照可能な範囲を変えることができます。SNSアカウント同士の関連性を調べるために、パラメータを変更して参照可能な範囲を変えます。\n3.  **画像検索**: 画像をアップロードして検索することで、同じユーザーが使用した画像を特定できます。SNSアカウント同士の関連性を調べるために、画像検索を利用します。\n4.  **ドメイン調査（WHOIS/DNS）**: ドメインの新旧や登録者情報などを調べることで、同じユーザーが使用したドメインを特定できます。SNSアカウント同士の関連性を調べるために、ドメイン調査を利用します。\n5.  **ユーザ名調査**: ユーザー名を検索することで、同じユーザーが使用したユーザー名を特定できます。SNSアカウント同士の関連性を調べるために、ユーザ名調査を利用します。\n\nこれらの方法はそれぞれ異なる目的で使われることがありますが、すべてSNSアカウント同士の関連性を調べるために使用できます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.01"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.02"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.02"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.03"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:22:33.621Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ドメインの登録情報を確認するにはどんな手法がある？",
+      "category": null,
+      "questionId": null,
+      "answer": "**ドメインの登録情報を確認するための手法**\n\nドメインの登録情報を確認することで、ドメインの所有者や管理者の情報がわかります。これは、ドメインの安全性と信頼性を評価する上で重要なステップです。\n\n### 1. WHOIS検索\n\nWHOIS (Whois Look-up) は、ドメインの登録情報を取得するために使用されるプロトコルです。WHOIS 検索では、ドメインの所有者、管理者、技術担当者の情報が提供されます。\n\n**使用ツール:** `whois` コマンドまたは WHOIS 検索サービス\n\n**手順:**\n\n1. `whois example.com` (例: `example.com` を検索)\n2. 登録者情報、作成日、ネームサーバなどの情報が表示されます。\n\n### 2. DNSリバインディング\n\nDNS リバインディングは、ドメインの IP アドレスを取得するために使用される技術です。DNS リバインディングでは、ドメインの IP アドレスがわかります。\n\n**使用ツール:** `dig` コマンドまたは DNS リバインディング サービス\n\n**手順:**\n\n1. `dig +short example.com` (例: `example.com` を検索)\n2. ドメインの IP アドレスが表示されます。\n\n### 3. DNSリバインディング対策\n\nDNS リバインディング対策では、ドメインの IP アドレスを取得するために使用される技術を防ぐことができます。DNS リバインディング対策には、IP 固定、DNS 再解決禁止、プロトコル制限などが含まれます。\n\n**手順:**\n\n1. `dig +short -x example.com` (例: `example.com` を検索)\n2. ドメインの IP アドレスが表示されます。\n\n### 4. ドメインの新旧を判断する\n\nドメインの新旧を判断することで、ドメインの安全性と信頼性を評価できます。ドメインの新旧は、ドメインの所有者や管理者の情報がわかります。\n\n**手順:**\n\n1. WHOIS 検索または DNS リバインディングを使用して、ドメインの登録情報を取得します。\n2. 登録者情報、作成日、ネームサーバなどの情報を確認します。\n3. ドメインの新旧を判断するために、ドメインの IP アドレスやドメインの構成を分析します。\n\n### 5. ドメインのセキュリティを評価する\n\nドメインのセキュリティを評価することで、ドメインの安全性と信頼性を高めることができます。ドメインのセキュリティを評価するには、WHOIS 検索、DNS リバインディング、DNS リバインディング対策などを使用します。\n\n**手順:**\n\n1. WHOIS 検索または DNS リバインディングを使用して、ドメインの登録情報を取得します。\n2. 登録者情報、作成日、ネームサーバなどの情報を確認します。\n3. ドメインのセキュリティを評価するために、ドメインの IP アドレスやドメインの構成を分析します。\n\nこれらの手法を使用して、ドメインの登録情報を確認し、ドメインの安全性と信頼性を評価できます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.09"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:23:48.289Z"
+    },
+    {
+      "userid": "admin",
+      "question": "EXIF情報から取得できる代表的なデータは？",
+      "category": null,
+      "questionId": null,
+      "answer": "**EXIF情報から取得できる代表的なデータは、以下のものです。**\n\n・ **GPS位置情報（緯度・経度）**: 画像を撮った場所や時間を特定できます。\n・ ** 撮影日時**: 画像が撮られた時間や日付を確認できます。\n・ **カメラ機種（iPhone・Canonなど）**: カメラの種類やモデルを特定できます。\n・ ** 撮影設定（ISO・シャッター速度など）**: 画像を撮った設定を確認できます。\n\nこれらのデータは、画像ファイルに埋め込まれているメタデータ（付加情報）のことです。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.04"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:28:09.158Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Wayback Machineはどんな用途で使われる？",
+      "category": null,
+      "questionId": null,
+      "answer": "**ウェイバックマシーン（Wayback Machine）とは**\n\nウェイバックマシーンは、インターネットアーカイブの重要なツールです。ウェイバックマシーンは、インターネット上のウェブサイトやファイルを時系列に保存し、過去のデータが再生可能になるようにします。\n\n**使い方**\n\nウェイバックマシーンは、次のような用途で使われることがあります。\n\n1.  **ウェブサイトの歴史を調べる**: ウェブサイトの過去のバージョンや変更履歴を確認するために使用できます。\n2.  **ファイルの保存**: ファイルを時系列に保存し、過去のデータが再生可能になるようにします。\n3.  **インターネットのアーカイブ**: インターネット上のウェブサイトやファイルを時系列に保存し、過去のデータが再生可能になるようにします。\n4.  **研究と学術的目的**: ウェブサイトやファイルの歴史を調べたり、分析したりするために使用できます。\n5.  **法的および検察目的**: ウェブサイトやファイルの歴史を調べたり、分析したりするために使用できます。\n\n**利点**\n\nウェイバックマシーンにはいくつかの利点があります。\n\n1.  **過去のデータが再生可能**: ウェブサイトやファイルの過去のバージョンを確認できるため、過去のデータが再生可能になる。\n2.  **保存されたデータの検索**: ウェブサイトやファイルの歴史を調べたり、分析したりするために使用できます。\n3.  **法的および検察目的**: ウェブサイトやファイルの歴史を調べたり、分析したりするために使用できます。\n\n**注意点**\n\nウェイバックマシーンにはいくつかの注意点があります。\n\n1.  **データの保存期間**: ウェブサイトやファイルが保存される期間は限られているため、保存されたデータを検索する際に注意が必要です。\n2.  **データの正確性**: ウェブサイトやファイルの歴史が正確に表示されない可能性があるため、データを検索する際に注意が必要です。\n\nウェイバックマシーンは、インターネット上のウェブサイトやファイルを時系列に保存し、過去のデータが再生可能になるようにする重要なツールです。ウェイバックマシーンを使用することで、過去のデータを調べたり、分析したりすることができます。また、法的および検察目的で使用できるため、ウェイバックマシーンは重要なツールとなります。",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.07"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.16"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.18"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.19"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.19"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:30:34.165Z"
+    },
+    {
+      "userid": "admin",
+      "question": "GitHubの公開リポジトリから秘密情報を探す時の観点は？",
+      "category": null,
+      "questionId": null,
+      "answer": "**GitHubの公開リポジトリから秘密情報を探すための重要な観点**\n\nGitHubの公開リポジトリには、開発者がプロジェクトに関する情報やコードを共有するためにアップロードしたファイルが含まれています。秘密情報を探している場合、以下のような観点に注意することが重要です。\n\n**1. どのファイルが公開されているのか**\n\nGitHubでは、各リポジトリには、`.gitignore`ファイルや`.gitattributes`ファイルなどの特殊ファイルが含まれています。これらのファイルは、開発者がアップロードしたファイルを無視するように設定している可能性があります。秘密情報を探している場合、これらのファイルを調べることが重要です。\n\n**2. どのコードが公開されているのか**\n\nGitHubでは、各リポジトリにはコードが含まれています。これらのコードから秘密情報が隠されていて、探すことができます。秘密情報を探している場合、コードを分析するために使用できるツールやスクリプトを調べることが重要です。\n\n**3. どのファイルが削除されているのか**\n\nGitHubでは、開発者はリポジトリ内のファイルを削除または編集できます。秘密情報を探している場合、これらのファイルを調べることが重要です。\n\n**4. どのリポジトリが公開されているのか**\n\nGitHubでは、各ユーザーには自分のリポジトリが存在します。これらのリポジトリから秘密情報が隠されていて、探すことができます。秘密情報を探している場合、各リポジトリを調べることが重要です。\n\n**ツールとスクリプト**\n\nGitHubの公開リポジトリから秘密情報を探すには、以下のようなツールやスクリプトを使用することができます。\n\n*   `git ls-files`: リポジトリ内のファイルをリストします。\n*   `git show`: リポジトリ内のファイルを表示します。\n*   `git blame`: ファイルの変更履歴を表示します。\n*   `git log`: ファイルの変更履歴を表示します。\n*   `grep`: ファイル内で特定の文字列を探します。\n\n**重要な考慮事項**\n\nGitHubの公開リポジトリから秘密情報を探す際、以下のような考慮事項に注意することが重要です。\n\n*   公開リポジトリは、開発者がアップロードしたファイルがすべて公開されていることを意味します。秘密情報が存在する可能性は低いですが、完全に排除することはできません。\n*   GitHubの公開リポジトリから秘密情報を探すと、開発者のプライバシーを侵害する可能性があります。秘密情報を探している場合、開発者の同意を得ることが重要です。\n\n**段階的なアプローチ**\n\nGitHubの公開リポジトリから秘密情報を探すには、以下のような段階的なアプローチを使用することができます。\n\n1.  `git ls-files` を使用して、リポジトリ内のファイルをリストします。\n2.  リポジトリ内のファイルを分析し、秘密情報が存在する可能性があるファイルを特定します。\n3.  `git show` を使用して、秘密情報が存在する可能性があるファイルを表示します。\n4.  ファイルの変更履歴を調べるために `git blame` と `git log` を使用します。\n5.  `grep` を使用して、ファイル内で特定の文字列を探します。\n\n**重要なヒント**\n\nGitHubの公開リポジトリから秘密情報を探す際に以下のようなヒントに注意することが重要です。\n\n*   公開リポジトリは、開発者がアップロードしたファイルがすべて公開されていることを意味します。\n*   GitHubの公開リポジトリから秘密情報を探すと、開発者のプライバシーを侵害する可能性があります。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.04"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.02"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:35:26.321Z"
+    },
+    {
+      "userid": "admin",
+      "question": "電話番号から得られるOSINT情報には何がある？",
+      "category": null,
+      "questionId": null,
+      "answer": "**電話番号から得られるOSINT情報**\n\n電話番号から得られるOSINT情報は、以下の点が含まれます。\n\n・ **電話会社や携帯電話のメーカーを特定する**\n\n  - 電話番号の先頭に付いた「0」や「2」などの数字を分析して、電話会社や携帯電話のメーカーを特定できます。\n  - 例えば、電話番号が「0123-4567」で始まる場合、その電話番号は日本電atelの電話番号であると推測できます。\n\n・ **電話番号から電話機のモデルや年号を推測する**\n\n  - 電話番号の最後尾に付いた数字を分析して、電話機のモデルや年号を推測できます。\n  - 例えば、電話番号が「0123-4567-8901」で終わる場合、その電話番号は1990年代後半から2000年代初頭の日本製携帯電話であると推測できます。\n\n・ **電話番号から電話機の使用状況を推測する**\n\n  - 電話番号の長さや構造を分析して、電話機の使用状況を推測できます。\n  - 例えば、電話番号が短い場合、その電話機は新しいかつ高性能の携帯電話であると推測できます。\n\n・ **電話番号から電話機の位置を推測する**\n\n  - 電話番号の先頭に付いた「0」や「2」などの数字を分析して、電話機の位置を推測できます。\n  - 例えば、電話番号が「0123-4567」で始まる場合、その電話番号は日本国内外のどちらでも使用できる電話番号であると推測できます。\n\n・ **電話番号から電話機のユーザー情報を推測する**\n\n  - 電話番号の構造や内容を分析して、電話機のユーザー情報を推測できます。\n  - 例えば、電話番号が「0123-4567-8901」で終わる場合、その電話番号は男性の電話番号であると推測できます。\n\nこれらの点から、電話番号から得られるOSINT情報は、電話会社や携帯電話のメーカー、電話機のモデルや年号、使用状況、位置、ユーザー情報などを特定するのに役立ちます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.09"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:44:27.918Z"
+    },
+    {
+      "userid": "admin",
+      "question": "DNSレコードを調査すると何がわかる？",
+      "category": null,
+      "questionId": null,
+      "answer": "**DNSレコードを調査することで、次のような情報がわかります。**\n\n### 1. ドメイン名とIPアドレス\n\n*   DNSレコードを調べると、ドメイン名とその対応するIPアドレスがわかります。\n*   これにより、ドメインの存在とそのIPアドレスがわかります。\n\n### 2. ドメイン名のオーナーシップ情報\n\n*   DNSレコードを調べると、ドメイン名のオーナーシップ情報がわかります。\n*   これにより、ドメインの所有者や管理者の情報がわかります。\n\n### 3. ドメイン名のメールサーバーとDNSサーバーのIPアドレス\n\n*   DNSレコードを調べると、ドメイン名のメールサーバーとDNSサーバーのIPアドレスがわかります。\n*   これにより、メールサーバーとDNSサーバーの存在とそのIPアドレスがわかります。\n\n### 4. ドメイン名のMXレコード\n\n*   DNSレコードを調べると、ドメイン名のMXレコードがわかります。\n*   MXレコードはメールサーバーの情報を示します。ドメイン名のメールサーバーがどのサーバーにメールを受け取っているかを知るのに役立ちます。\n\n### 5. ドメイン名のNSレコード\n\n*   DNSレコードを調べると、ドメイン名のNSレコードがわかります。\n*   NSレコードはDNSサーバーの情報を示します。ドメイン名のDNSサーバーがどのサーバーに問い合わせているかを知るのに役立ちます。\n\n### 6. ドメイン名のSOAレコード\n\n*   DNSレコードを調べると、ドメイン名のSOAレコードがわかります。\n*   SOAレコードはDNSサーバーの情報を示します。ドメイン名のDNSサーバーがどのサーバーに問い合わせているかを知るのに役立ちます。\n\n### 7. ドメイン名のTXTレコード\n\n*   DNSレコードを調べると、ドメイン名のTXTレコードがわかります。\n*   TXTレコードはドメイン名のオーナーシップ情報やセキュリティ設定などの情報を示します。\n\n### 8. ドメイン名のSPFレコード\n\n*   DNSレコードを調べると、ドメイン名のSPFレコードがわかります。\n*   SPFレコードはドメイン名のセキュリティ設定を示します。ドメイン名がどのIPアドレスから受け取ることが許可されているかを知るのに役立ちます。\n\n### 9. ドメイン名のDMARCレコード\n\n*   DNSレコードを調べると、ドメイン名のDMARCレコードがわかります。\n*   DMARCレコードはドメイン名のセキュリティ設定を示します。ドメイン名がどのIPアドレスから受け取ることが許可されているかを知るのに役立ちます。\n\n### 10. ドメイン名のCAAレコード\n\n*   DNSレコードを調べると、ドメイン名のCAAレコードがわかります。\n*   CAAレコードはドメイン名のセキュリティ設定を示します。ドメイン名がどのIPアドレスから受け取ることが許可されているかを知るのに役立ちます。\n\n### 11. ドメイン名のAレコード\n\n*   DNSレコードを調べると、ドメイン名のAレコードがわかります。\n*   Aレコードはドメイン名のIPアドレスを示します。ドメイン名の存在とそのIPアドレスがわかります。\n\n### 12. ドメイン名のAAAAレコード\n\n*   DNSレコードを調べると、ドメイン名のAAAAレコードがわかります。\n*   AAAAレコードはドメイン名のIPv6アドレスを示します。ドメイン名の存在とそのIPv6アドレスがわかります。\n\n### 13. ドメイン名のPTRレコード\n\n*   DNSレコードを調べると、ドメイン名のPTRレコードがわかります。\n*   PTRレコードはドメイン名のオーナーシップ情報やメールサーバーなどを示します。ドメイン名の存在とそのオ",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.05"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.04"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.03"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:45:59.689Z"
+    },
+    {
+      "userid": "admin",
+      "question": "リバースイメージサーチの代表的な使い方を教えて。",
+      "category": null,
+      "questionId": null,
+      "answer": "**リバースイメージサーチの基本**\n\nリバースイメージサーチは、画像を検索して類似した画像や同一の画像を見つけるために使用される技術です。この方法では、画像を検索する際に、以下のステップを実行します。\n\n1.  **画像の準備**: 画像を適切な形式で保存し、必要なサイズと解像度にします。\n2.  **画像検索ツールの選択**: Google ImagesやTinEyeなどの画像検索ツールを使用します。各ツールには独自の機能と制限がありますが、基本的な検索はどちらも実行できます。\n3.  **画像検索**: 画像を検索し、類似した画像や同一の画像を見つけます。\n\n**リバースイメージサーチの代表的な使い方**\n\n以下のようなシナリオでは、リバースイメージサーチが有効な方法です。\n\n*   **画像の出典を特定する**: 画像がどこで撮られたかを知りたい場合、リバースイメージサーチを使用できます。\n*   **類似した画像を見つける**: 画像がどのような特徴を持っているかを知りたい場合、リバースイメージサーチを使用できます。\n*   **画像の元になる人物や場所を特定する**: 画像が誰やどこで撮られたかを知りたい場合、リバースイメージサーチを使用できます。\n\n**リバースイメージサーチの注意点**\n\n以下のような注意点があります。\n\n*   **画像の質度**: 画像の質度が低いと、検索結果が不正確になる可能性があります。\n*   **類似度の設定**: 類似度の設定を適切に調整する必要があります。過度に高く設定すると、多くの不正確な結果が得られる可能性があります。\n*   **画像のサイズと解像度**: 画像のサイズと解像度が適切に設定されていないと、検索結果が不正確になる可能性があります。\n\n**リバースイメージサーチのツール**\n\n以下のようなツールを使用できます。\n\n*   Google Images\n*   TinEye\n*   Yandex Images\n\n各ツールには独自の機能と制限がありますが、基本的な検索はどちらも実行できます。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.07"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:47:08.177Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の信頼性を検証する方法は？",
+      "category": null,
+      "questionId": null,
+      "answer": "**OSINTで得た情報の信頼性を検証する方法は、以下のようなものがあります。**\n\n### 1. **出典の検証**\n\n*   OSINTで得た情報がどの情報源から来ているのかを確認します。\n*   公式ウェブサイトやニュース記事など、信頼できる情報源からの情報を優先します。\n\n### 2. **情報のバリデーション**\n\n*   得られた情報を他の情報源で検証することで、情報の正確性と一致性を確認します。\n*   同じ情報が異なる情報源から得られる場合、どちらが正しいかを判断する必要があります。\n\n### 3. **情報の背景理解**\n\n*   OSINTで得た情報は、単に事実データだけではなく、背景と関係を理解することも重要です。\n*   情報がどのように取得されたのか、そしてその情報がどのように使用されるのかを考慮する必要があります。\n\n### 4. **情報の検証ツール**\n\n*   OSINTで得た情報を検証するために利用できるツールやソフトウェアもあります。\n*   例えば、画像分析ツールやテキスト検索ツールなどが利用できます。\n\n### 5. **専門知識の活用**\n\n*   OSINTで得た情報は、専門知識と経験を活かしてより正確な情報に変換することができます。\n*   情報分析やデータ解析などの専門知識を活かすことで、OSINTで得た情報をより信頼性の高いものに変換できます。\n\n### 6. **情報の検証プロセス**\n\n*   OSINTで得た情報を検証するプロセスは、定期的なチェックや更新が必要です。\n*   情報が変わったり、新しい情報が得られた場合、再検証を行う必要があります。\n\n### 7. **情報の分類とラベル付け**\n\n*   OSINTで得た情報を、適切な分類とラベル付けを行うことで、情報の信頼性を高めることができます。\n*   情報がどのようなタイプの情報であるか、どのような用途で使用されるかを理解することで、情報の信頼性を高めることができます。\n\n### 8. **情報の検証とバリデーション**\n\n*   OSINTで得た情報は、検証とバリデーションが必要です。\n*   情報が正確か、完全か、最新かを確認することで、情報の信頼性を高めることができます。\n\n### 9. **情報の検証と検問**\n\n*   OSINTで得た情報は、検証と検問が必要です。\n*   情報がどのような質問に答えるか、どのような状況で使用されるかを理解することで、情報の信頼性を高めることができます。\n\n### 10. **情報の検証と分析**\n\n*   OSINTで得た情報は、検証と分析が必要です。\n*   情報がどのように分析できるか、どのような洞察が得られるかを理解することで、情報の信頼性を高めることができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.18"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.13"
+        }
+      ],
+      "model": "llama3.2",
+      "recordedAt": "2026-05-19T20:48:47.926Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ホヌ柄の飛行機ってどこの航空会社？",
+      "category": null,
+      "questionId": null,
+      "answer": "段階ヒントを提供します。\n\n着眼点は、添付画像から機体・航空会社・空港を特定するOSINT問題です。まずは、画像検索で機体名や塗装の特徴を特定してみましょう。",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.32"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "-0.41"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.47"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.48"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.48"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:21:52.566Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ハワイの空港の公式WiFiの名前なに",
+      "category": null,
+      "questionId": null,
+      "answer": "Aloha!\n\n段階的なヒントを提供します。\n\n1. 添付画像から機体・航空会社・空港を特定するOSINT問題です。\n2. 問われているのは「定期便が就航する空港の公式フリーWi-Fi SSID」です。\n3. 画像検索で機体名や塗装の特徴を特定し、就航空港の公式サイトや空港案内でWi-Fi情報を確認します。\n\nSSID名を正確に抜き出してフラグ形式に当てはめることが重要です。",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.01"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.26"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.26"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.27"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.28"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:24:10.323Z"
+    },
+    {
+      "userid": "admin",
+      "question": "空港のWiFiのSSIDって簡単にわかる？",
+      "category": null,
+      "questionId": null,
+      "answer": "空港のWi-FiのSSIDは、公式サイトや空港案内で確認することができます。空港の公式サイトには、Wi-Fiの情報が掲載されている場合があります。また、空港案内では、Wi-FiのSSIDやパスワードが記載された看板や表示があることもあります。\n\nただし、SSIDは簡単にわかるというわけではなく、空港の公式サイトや空港案内を探す必要があります。OSINT（オープンソース・インテリジェンス）として、合法的に入手可能な公開情報を収集・分析することが重要です。\n\nまた、SSIDは空港によって異なるため、特定の空港のSSIDを知るには、その空港の公式サイトや空港案内を確認する必要があります。",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.04"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.06"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.06"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.07"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:27:29.361Z"
+    },
+    {
+      "userid": "admin",
+      "question": "飛行機の便名と日付って結びつけられる？",
+      "category": null,
+      "questionId": null,
+      "answer": "面白い着眼点ですね！飛行機の便名と日付を結びつける方法はあります。例えば、航空会社や空港の公式サイトに掲載されているフライトスケジュールや運航状況を調べることで、特定の便がいつ運航しているかを知ることができます。\n\nまた、画像検索で類似写真や同便情報を集めることでも、日付候補を絞ることが可能です。例えば、機体の塗装や座席配置などから、特定の便がいつ頃運航していたかを推測することができます。\n\nさらに、出発地や到着地の天気やイベント情報と照らし合わせることで、日付を絞り込むことも可能です。例えば、特定の空港で花火大会やイベントが開催された日は、便名と日付を結びつけることができます。\n\nこれらの方法を組み合わせて、飛行機の便名と日付を結びつけましょう！",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.13"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.15"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.16"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.16"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:29:08.963Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ギリシャ神話で医療の神って誰",
+      "category": null,
+      "questionId": null,
+      "answer": "ギリシャ神話に登場する医療の神は、**アスクレピオス（Asclepius）です。彼はパーンとアポロンの息子で、医術と薬草を司る神として知られています。\n\nアスクレピオスは、医療や治癒の象徴として描かれ、杖に巻き付く蛇が特徴的です。彼の杖には、治療や回復の力が宿ると信じられていました。\n\nこの神話を基に、医学のシンボルやマークなどにも使用されています。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.24"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.31"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "-0.51"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.52"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:30:46.108Z"
+    },
+    {
+      "userid": "admin",
+      "question": "杖に蛇が巻き付いてるシンボルって何の神",
+      "category": null,
+      "questionId": null,
+      "answer": "面白い問題ですね！着眼点を提供します。\n\n・地理情報（アテネ、バスターミナル、遺跡）と神話を結ぶ問題であること。\n・「杖に巻き付く蛇」「没薬」「元は人間」が強い手掛かりであること。\n\n段階ヒントとしては：\n- 地名と移動条件から候補遺跡を洗い出す。\n- 遺跡の由来や祭神を調べる。\n- 神名をカタカナで確認し、指定形式で入力する。\n\nこの問題は、ギリシア神話に登場する神を特定する必要があります。杖に蛇が巻き付いているシンボルは、有名な神の属性です。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.17"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.37"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.37"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.40"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:31:36.691Z"
+    },
+    {
+      "userid": "admin",
+      "question": "創立100年くらいの有名な日本の私立大学は？",
+      "category": null,
+      "questionId": null,
+      "answer": "段階ヒントを提供します。\n\nまず、創立100年の日本の私立大学を調べる必要があります。有名な私立大学をいくつか挙げてみましょう。\n\n・早稲田大学：1882年創立\n・慶應義塾大学：1858年創立（ただし、現在の大学制度に基づく創立は1873年）\n・明治大学：1881年創立\n\nこの中で、創立100年の私立大学は早稲田大学です。ただし、近代化や啓蒙思想との関係を考慮する必要があります。\n\n次のステップとしては、早稲田大学と近代化、啓蒙思想の組み合わせで調べることができます。例えば、「早稲田大学 近代化」や「早稲田大学 啓蒙思想」というキーワードで検索してみてください。\n\nヒントは以上です。次のステップに進むか、再度考えてみてください。",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.30"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.38"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.50"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.52"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:32:40.743Z"
+    },
+    {
+      "userid": "admin",
+      "question": "慶應義塾を作った人って誰",
+      "category": null,
+      "questionId": null,
+      "answer": "段階的なヒントを提供します。\n\nまず、慶應義塾の創立者は明治時代に活躍した人物です。母国語表記で名前を確認する必要があります。\n\n次に、慶應義塾の創立者が関わった出来事や思想を調べることが重要です。例えば、「近代化」や「啓蒙思想」などが関係しています。\n\nこれらのキーワードを組み合わせて検索クエリを作成し、候補を絞り込むと良いでしょう。",
+      "sources": [
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.39"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.45"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.49"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.51"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:33:40.327Z"
+    },
+    {
+      "userid": "admin",
+      "question": "google画像検索のやり方",
+      "category": null,
+      "questionId": null,
+      "answer": "Google Imagesで画像を検索する方法は、以下の通りです。\n\n1. Google Imagesにアクセスします。\n2. 検索窓にキーワードを入力し、Enterキーを押すか、虫眼鏡アイコンをクリックして検索を開始します。\n3. 「画像」タブをクリックすることで、画像のみの結果が表示されます。\n\nまた、Google Imagesには以下のような便利な機能があります。\n\n- 完全一致と類似画像を確認: 検索結果に完全一致した画像や類似した画像が表示されます。\n- 最も古い投稿（初出）を探す: 「View all results」ボタンをクリックすることで、検索結果の詳細な情報が表示されます。最も古い投稿日時順に並べることができます。\n\nGoogle Imagesは、画像の検索や特定に非常に有効なツールです。是非活用してみてください！",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.08"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.06"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.06"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.05"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:34:36.005Z"
+    },
+    {
+      "userid": "admin",
+      "question": "座標から事件を調べたい",
+      "category": null,
+      "questionId": null,
+      "answer": "CTF学習プラットフォームのAI先生です。\n\n座標から事件を特定する問題ですね。着眼点は、風景画像から場所特定し、最終的に座標を答える問題と同様に、地名特定と座標変換の2段階で考えることです。\n\nまず、座標が示す場所と歴史的事件を特定する必要があります。参考資料1の「風景画像から場所特定し、最終的に座標を答える問題」に記載されている手順を応用できます。具体的には、以下の手順で進めることができます。\n\n・画像検索で撮影地点候補を集める\n・候補地点の景観一致を確認する\n・一致地点の緯度経度を取得して形式を整える\n\nこの手順を座標から事件特定に応用するには、以下のように考えることができます。\n\n・画像検索で撮影地点候補を集める：座標が示す場所と関連する歴史的事件の候補を洗い出す\n・候補地点の景観一致を確認する：候補事件の内容や特徴を調べ、座標が示す場所との関係性を確認する\n・一致地点の緯度経度を取得して形式を整える：特定した事件の詳細な情報を抽出する\n\nこのように、地名特定と座標変換の2段階で考えることで、座標から事件を特定することができます。",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.18"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.08"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.07"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.04"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:35:50.093Z"
+    },
+    {
+      "userid": "admin",
+      "question": "60.8841988,101.8857172 で何が起きた",
+      "category": null,
+      "questionId": null,
+      "answer": "新しい座標の値ですね！これは、地理的な位置を示す座標情報です。緯度と経度の組み合わせで表されます。\n\nこの座標から推測できることは、特定の場所が関係している可能性があります。例えば、Google Mapsや地図サービスにこの座標を入力すると、該当する地点を表示してくれます。\n\nヒントは、この座標が何らかの重要な位置を示唆しています。考えてみてください！",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.13"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.14"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.17"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.19"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.20"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:37:30.790Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ツングースカ大爆発ってなに",
+      "category": null,
+      "questionId": null,
+      "answer": "面白い話題ですね！ツングースカ大爆発は、1908年6月30日（ロシア時間）にシベリアのトゥンガースカ山脈で起きた未確認の大爆発です。爆発音や光が数百キロ離れた場所でも観測されました。\n\n当時、世界中で大爆発の原因を特定することができませんでした。現在では、多くの研究者が異なる理論を提唱していますが、未だに正確な原因はわかっていません。\n\nこの事件は、未解決の謎として歴史に残り続けています。CTFや暗号解読にも通じる「未知の情報」に対する興味や挑戦心をくすぐられますね！",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.43"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:39:15.215Z"
+    },
+    {
+      "userid": "admin",
+      "question": "特許を調べるサイト教えて",
+      "category": null,
+      "questionId": null,
+      "answer": "特許を調べるサイトはいくつかありますが、代表的なものをいくつか紹介します。\n\n1. **Google Patents**: Googleが提供する特許検索エンジンです。世界中の特許情報を網羅的に収集し、検索可能な状態に整理しています。\n2. **J-PlatPat**: 特許庁が運営する特許情報プラットフォームです。日本の特許、実用新案、意匠、商標に関する情報を提供しています。\n3. **Espacenet**: 欧州特許庁が提供する特許検索エンジンです。世界中の特許情報を収集し、検索可能な状態に整理しています。\n\nこれらのサイトは、特許番号や出願日などで特許を絞り込むことができます。特許調査には非常に有用なツールですので、ぜひ活用してみてください！",
+      "sources": [
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.07"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.01"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.01"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.01"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:44:00.685Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Google Patentsの使い方",
+      "category": null,
+      "questionId": null,
+      "answer": "CTF学習プラットフォームのAI先生です。\n\nGoogle Patentsは、特許情報を検索することができるツールです。特に、出願日や企業条件で候補を絞ることができます。以下は、Google Patentsの使い方の手順です。\n\n・段階ヒント:\n    - まず、出願日と企業条件を使って検索する\n    - 図面一致で該当特許を特定する\n    - 国際公開番号の形式（例: `WO...`）で回答する\n\nGoogle Patentsは、特許情報を検索することができるツールです。特に、出願日や企業条件で候補を絞ることができます。\n\n・使用方法:\n    1. Google Patentsにアクセスする\n    2. 検索バーにキーワードを入力し、Enterキーを押す\n    3. 「出願日」や「企業名」を指定して検索結果を絞り込む\n\nGoogle Patentsは、特許情報を検索することができるツールです。特に、出願日や企業条件で候補を絞ることができます。\n\n・Tips:\n    - 出願日や企業条件で候補を絞ることで、効率的に特許情報を探すことができます。\n    - 図面一致で該当特許を特定することで、より正確な結果が得られます。",
+      "sources": [
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.03"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "-0.08"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:45:39.104Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像から場所を特定するために、最初に確認すべき情報は？",
+      "category": null,
+      "questionId": null,
+      "answer": "画像から場所を特定する際の初手として重要なことは、言語やナンバープレート、電柱や信号などのヒントを抽出することです。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.13"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:47:50.042Z"
+    },
+    {
+      "userid": "admin",
+      "question": "SNSアカウント同士の関連性を調べる一般的な方法は？",
+      "category": null,
+      "questionId": null,
+      "answer": "SNSアカウント同士の関連性を調べる一般的な方法として、以下が挙げられます。\n\n・IDの使い回しを探す: 同一IDが使用されている場合、関連性が高いと考えられます。\n・投稿内容や時間帯を比較する: 投稿内容や投稿時間帯に共通点がある場合、関連性が高くなる可能性があります。\n・共通の情報を抽出する: 地域、趣味、職業など、共通の情報が見つかれば、関連性が高くなります。\n\nこれらの方法で調べることで、SNSアカウント同士の関連性を推測することができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.01"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.02"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.02"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.03"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:48:50.911Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ドメインの登録情報を確認するにはどんな手法がある？",
+      "category": null,
+      "questionId": null,
+      "answer": "ドメインの登録情報を確認する方法は、WHOISやDNSを使用した調査が有効です。\n\n### 使用ツール\n\n* `whois`\n* `nslookup`\n* `dig`\n\n### 手順\n\n1. WHOISでドメインの登録情報を取得します。\n```bash\nwhois example.com\n```\n2. 登録者情報、作成日、ネームサーバーなどを確認します。\n\n### 追加調査\n\n1. NSlookupやdigコマンドを使用して、ドメインのネームサーバーを確認します。\n```bash\nnslookup example.com\ndig example.com\n```\n2. ドメインの新旧は信頼性判断の材料になります。同一IP上の他サイトも確認することが重要です。\n\n### ポイント\n\n* ドメインの登録情報は、WHOISやDNSを使用して調査する。\n* 登録者情報、作成日、ネームサーバーなどを確認する。\n* 同一IP上の他サイトも確認し、ドメインの新旧を判断する。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.09"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:49:42.397Z"
+    },
+    {
+      "userid": "admin",
+      "question": "EXIF情報から取得できる代表的なデータは？",
+      "category": null,
+      "questionId": null,
+      "answer": "EXIF情報から取得できる代表的なデータには、以下のものがあります。\n\n・GPS位置情報（緯度・経度）\n・撮影日時\n・カメラ機種（iPhone・Canonなど）\n・撮影設定（ISO・シャッター速度など）\n・編集ソフト（Photoshopなど）\n\nこれらの情報は、画像ファイルに埋め込まれているメタデータ（付加情報）で、ExifToolなどのツールを使用して確認することができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.04"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:53:43.694Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Wayback Machineはどんな用途で使われる？",
+      "category": null,
+      "questionId": null,
+      "answer": "Wayback Machineは、インターネットアーカイブが提供するサービスで、過去のウェブページを閲覧やダウンロードできるツールです。以下のような用途で使われます。\n\n・過去のWebサイトの復元: Wayback Machineには、1996年から現在までのWebページの履歴が保存されています。過去に存在したWebサイトを復元することができます。\n・研究や調査: 学術研究やマーケティング調査などで、過去のWebページの内容や構造を分析する必要がある場合に使われます。\n・懐古やエンターテインメント: Wayback Machineは、過去のWebページを閲覧できるため、懐かしいサイトを再訪したり、新たな発見をしたりすることができます。\n\nWayback Machineは、主に以下のような場面で活用されます。\n\n・Web開発やデザインの参考にするために過去のWebサイトを研究する\n・過去の事件や出来事に関する情報を調べるため、当時のWebページを閲覧する\n・懐かしいサイトを再訪したり、新たな発見をしたりするためのエンターテインメントとして使う",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.07"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.16"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.18"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.19"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.19"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:54:28.234Z"
+    },
+    {
+      "userid": "admin",
+      "question": "GitHubの公開リポジトリから秘密情報を探す時の観点は？",
+      "category": null,
+      "questionId": null,
+      "answer": "GitHubの公開リポジトリから秘密情報を探す時には、以下のような観点で調査することが有効です。\n\n・コードの内容やコメントに機密情報が含まれていないか？\n・commit historyやauthor情報から特定の個人や組織が関与していないか？\n・issueやpull requestの内容に重要な情報が含まれていないか？\n・依存しているライブラリやフレームワークに問題はないか？\n\nまた、GitHubには多くの公開リポジトリがありますが、以下のような注意点もあります。\n\n・機密情報は基本的に存在しないと考える\n・存在するとしても、簡単にアクセスできる場所には置かない\n・もし見つけたとしても、安易に拡散や共有をしない\n\nGitHubの公開リポジトリから秘密情報を探す時は、OSINT（Open-Source Intelligence）的な手法で調査することが重要です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.04"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.02"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:56:09.816Z"
+    },
+    {
+      "userid": "admin",
+      "question": "電話番号から得られるOSINT情報には何がある？",
+      "category": null,
+      "questionId": null,
+      "answer": "段階的なヒントを提供します。\n\nOSINTで電話番号から得られる情報の着眼点は以下です。\n\n・ 電話帳や名簿に掲載されているかどうかを調べる。\n・ 公開された情報やデータベースにアクセスする。\n\n具体的には、以下のような情報が得られます。\n\n- 名前や住所などの個人情報\n- 職業や所属先の情報\n- 電話番号の種類（固定電話、携帯電話、IP電話など）\n- 使用している通信キャリアや回線の種類\n\nただし、電話番号から直接フラグを得ることは困難です。OSINTで重要なのは、公開された情報やデータベースにアクセスすることです。\n\n・ 電話帳や名簿に掲載されているかどうかを調べる。\n・ 公開された情報やデータベースにアクセスする。\n\n電話番号から得られるOSINT情報は、名前や住所などの個人情報や職業や所属先の情報などです。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.09"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:57:12.181Z"
+    },
+    {
+      "userid": "admin",
+      "question": "DNSレコードを調査すると何がわかる？",
+      "category": null,
+      "questionId": null,
+      "answer": "段階的なヒントを提供します。\n\nDNSレコードを調査することで、以下のような情報が得られます。\n\n・ドメインの所有者や管理者に関する情報（WHOIS情報）\n・ドメインの作成日や更新日など、ドメインの歴史的な情報\n・ネームサーバ（NS）やMXレコードなどの設定情報\n\nこれらの情報は、ドメインの信頼性や安全性を判断する材料になります。例えば、古いドメインで所有者情報が不明な場合、信頼性に疑問符がつきます。\n\nDNSレコード調査は、Webアプリケーションのセキュリティ診断や、ドメインの評価などで有効です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.05"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.04"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.03"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:58:24.313Z"
+    },
+    {
+      "userid": "admin",
+      "question": "リバースイメージサーチの代表的な使い方を教えて。",
+      "category": null,
+      "questionId": null,
+      "answer": "リバースイメージサーチは、画像検索エンジンで類似画像を探す手法です。以下に代表的な使い方を示します。\n\n1. Google Imagesでリバースイメージサーチを行う方法:\n- Google Imagesを開きます。\n- 上部の検索バーに、調べたい画像のURLやパスワードを入力し、「Enter」キーを押します。\n- 「類似の画像」をクリックします。\n- 類似画像が表示されます。\n\n2. TinEyeでリバースイメージサーチを行う方法:\n- TinEyeを開きます。\n- 上部の検索バーに、調べたい画像のURLやパスワードを入力し、「Search」ボタンをクリックします。\n- 「Similar Images」をクリックします。\n- 類似画像が表示されます。\n\n3. Yandex Imagesでリバースイメージサーチを行う方法:\n- Yandex Imagesを開きます。\n- 上部の検索バーに、調べたい画像のURLやパスワードを入力し、「Enter」キーを押します。\n- 「類似の画像」をクリックします。\n- 類似画像が表示されます。\n\nリバースイメージサーチは、画像の特徴を抽出して検索するため、同一の画像や類似した画像を探すことができます。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.07"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T21:59:38.976Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の信頼性を検証する方法は？",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINTで得た情報の信頼性を検証する方法として、以下の手順が有効です。\n\n・公開情報の出所を明確にする：情報源が不明や信頼性に欠ける場合、信頼性は低下します。可能な限り、情報源を特定し、信頼できる機関や個人から得た情報であることを確認してください。\n\n・情報の日付と内容の整合性をチェックする：古い情報が新しい情報に影響を与える場合があります。情報の日付と内容の整合性を確認し、矛盾や不一致がある場合は信頼性を疑ってください。\n\n・多角的な視点で分析する：OSINTでは、特定の視点やバイアスがかかることがあります。異なる視点や情報源から分析し、客観的に判断してください。\n\n・情報の更新頻度と新しさを確認する：古い情報は信頼性が低下します。可能な限り、新しい情報を探し、更新頻度が高く信頼できる情報源を優先してください。\n\n・専門家や有識者に相談する：OSINTの結果が不明確や信頼性に欠ける場合、専門家や有識者に相談し、客観的な視点から分析と判断を仰いでください。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.18"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.13"
+        }
+      ],
+      "model": "hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest",
+      "recordedAt": "2026-05-19T22:01:08.295Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ホヌ柄の飛行機ってどこの航空会社？",
+      "category": null,
+      "questionId": null,
+      "answer": "ホヌ（ハワイのイノシシ）柄の飛行機は、** Hawaiian Airlines（ハワイアンエアラインズ）** が使用しています。特に、ハワイアンエアラインズの一部のボーイング717型機にはホヌ柄の塗装が施されています。\n\nこの問題では、画像から特定した情報を元にフラグを作成する必要があります。以下に段階的なヒントを提供します：\n\n1. **画像検索**:\n   - 画像検索エンジン（Google Imagesなど）で「ホヌ柄飛行機」や「Hawaiian Airlines aircraft」を検索し、特定の機体や航空会社を確認します。\n\n2. **機体情報の特定**:\n   - 検索結果から、特定の機体や航空会社を特定します。この場合、ホヌ柄が特徴的なハワイアンエアラインズの飛行機であることが分かります。\n\n3. **空港の特定**:\n   - ハワイアンエアラインズは主にハワイの主要な空港で就航しています。具体的には、ホノルル国際空港（HNL）やカウアイ島のラニカイ・バレー国際空港（LIC）などがあります。\n\n4. **公式Wi-Fi SSIDの確認**:\n   - 就航空港の公式サイトや空港案内を参照し、その空港で提供されている公式フリーWi-Fi SSIDを確認します。例えば、ホノルル国際空港では「HNL FREE Wi-Fi」などが提供されています。\n\n5. **フラグ形式への変換**:\n   - 確認したSSID名をフラグ形式に当てはめます。通常、フラグの形式は `FLAG{SSID}` のような形になります。\n     - 例: `FLAG{HNL FREE Wi-Fi}`\n\nこれらの手順を踏んで、フラグを作成してください。もし途中で難しさを感じたら、再度画像検索や空港の公式サイトを確認してみてください。頑張ってください！",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.32"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "-0.41"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.47"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.48"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.48"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:03:10.883Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ハワイの空港の公式WiFiの名前なに",
+      "category": null,
+      "questionId": null,
+      "answer": "ハワイの空港で提供されている公式のフリーWi-Fi SSIDを特定するためには、以下のステップを試してみてください。\n\n1. **機体や航空会社の情報を確認**:\n   - 画像から機体や塗装の特徴を特定します。\n   - その情報を使って、就航している航空会社や機体の型を調べます。\n\n2. **就航空港の公式サイトや空港案内を参照**:\n   - 評価された航空会社の公式サイトやハワイの主要な空港（例えばHNL:ホノルル国際空港）の公式ウェブサイトを訪問します。\n   - 空港のWi-Fi情報ページを探し、SSID名を確認します。\n\n3. **SSID名をフラグ形式に合わせる**:\n   - 見つけたSSID名をフラグ形式（例: `FLAG{SSID_NAME}`）に変換します。\n\nこれらのステップで、ハワイの空港の公式フリーWi-Fi SSIDを特定することができます。例えば、ホノルル国際空港の公式WiFi SSIDは`HNL-Free-WiFi`という名前である可能性があります。具体的なSSID名を見つけるために、上記の手順に従って情報を調査してください。\n\n頑張ってください！何か不明な点があれば質問してください。",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.01"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.26"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.26"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.27"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.28"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:04:38.422Z"
+    },
+    {
+      "userid": "admin",
+      "question": "空港のWiFiのSSIDって簡単にわかる？",
+      "category": null,
+      "questionId": null,
+      "answer": "空港の公式フリーWi-Fi SSIDを特定する際は、以下の手順に沿って進めてみてください。\n\n1. **画像から機体情報を特定する**:\n   - 画像検索で機体名や塗装の特徴を特定します。\n   - 機体の型や航空会社、就航先の空港を確認します。\n\n2. **就航空港の公式サイトや空港案内を参照する**:\n   - 特定した航空会社の公式サイトや、その航空会社が運行する空港の公式サイトにアクセスします。\n   - 空港の公式ウェブサイトでは、Wi-Fiサービスに関する情報が掲載されていることが多いです。\n\n3. **Wi-Fi情報を確認する**:\n   - 空港の公式サイトや案内板で、提供されるフリーWi-FiのSSID名を確認します。\n   - 通常、空港のWi-Fiは「AIRPORT-NAME-Free」や「FLYING-AIRLINE-Free」といった形式で名付けられます。\n\n4. **フラグ形式に当てはめる**:\n   - 確認したSSID名を `FLAG{}` の形式に変換します。\n   - 例えば、SSIDが `AIRPORT-JFK-Free` であれば、フラグは `FLAG{AIRPORT-JFK-Free}` になります。\n\nこれらの手順を踏むことで、空港の公式フリーWi-Fi SSIDを特定することができます。頑張ってください！",
+      "sources": [
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.28"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.04"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.06"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.06"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.07"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:05:57.877Z"
+    },
+    {
+      "userid": "admin",
+      "question": "飛行機の便名と日付って結びつけられる？",
+      "category": null,
+      "questionId": null,
+      "answer": "はい、便名と日付は関連性があります。航空会社では、特定の便には固定された運航日が設定されています。そのため、便名からその便の通常の運航日を推測することができます。\n\n### 以下に具体的な手順を示します：\n\n1. **画像内の便名を確認する**:\n   - 画像内で便名（例：ANA123）を見つけます。\n   - この便名を使って、該当する航空会社の公式サイトや運航スケジュールを検索します。\n\n2. **通常の運航日を特定する**:\n   - 航空会社の公式サイトで、該当便の運航スケジュールを確認します。\n   - 例えば、ANA123便が週に何曜日に運航されているかを調べます。\n\n3. **撮影日を推測する**:\n   - 画像内の時刻情報（例：写真に表示されている時刻）と、通常の運航スケジュールを比較します。\n   - 例えば、便が14:00に発着している場合、撮影時間も近い時間帯である可能性が高いです。\n\n4. **フラグ形式に整形する**:\n   - 推測した日付を `FLAG{年/月/日}` の形式で整形します。\n   - 例：`FLAG{2023/10/05}`\n\n### 補足情報\n- **航空会社の公式サイトや運航スケジュール**:\n  - 航空会社の公式ウェブサイト（ANA、JALなど）で運航スケジュールを確認できます。\n  - 一部の航空会社では、アプリやモバイルサイトでも運航スケジュールが見られます。\n\n- **時刻情報**:\n  - 画像内の時刻情報を確認し、その時間帯に該当する運航日を特定します。\n  - 例えば、便が14:00発着している場合、撮影時間も近い時間帯である可能性が高いです。\n\n- **フラグ形式**:\n  - 推測した日付を `FLAG{年/月/日}` の形式で整形します。年は4桁、月と日は2桁で表記します。\n\n### ヒント\n- 航空会社の公式サイトや運航スケジュールを確認することで、便名から通常の運航日を特定できます。\n- 撮影時間と運航スケジュールを比較し、最適な日付を推測します。\n\n頑張ってみてください！何か不明な点があれば質問してください。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.13"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.15"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.16"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.16"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:09:56.682Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ギリシャ神話で医療の神って誰",
+      "category": null,
+      "questionId": null,
+      "answer": "ギリシャ神話では、医療や薬草に関する神は**アセレトロス（Asclepius）**と呼ばれます。彼は病気を治し、健康を回復させるために人々に薬草を教えました。\n\n### ヒントの提供\n\n- **アセレトロス**はギリシャ語で「治療者」という意味があります。\n- 彼は医療や薬草に関する神であるため、遺跡や伝説に関連する問題では重要な役割を果たします。\n- アセレトロスの象徴的な特徴として、**杖に巻き付く蛇**が挙げられます。これは彼のシンボルとして広く知られています。\n\n### 次のステップ\n\n1. **アセレトロスに関連する遺跡や神殿を調べる**：ギリシャやローマの遺跡で、医療や薬草に関する記述を探します。\n2. **杖に巻き付く蛇**と**没薬（Myrrh）**という薬草について調べる**：これらの要素はアセレトロスに関連しています。\n3. **カタカナで神名を確認する**：問題文やヒントから、アセレトロスのカタカナ表記を探します。\n\n### 励まし\n\nギリシャ神話は豊富な情報源です。アセレトロスに関する知識を深めていきましょう。遺跡や伝説に興味があるなら、その方向から探してみてください。あなたの努力が報われますよ！",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.24"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.31"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "-0.51"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.52"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:12:23.318Z"
+    },
+    {
+      "userid": "admin",
+      "question": "杖に蛇が巻き付いてるシンボルって何の神",
+      "category": null,
+      "questionId": null,
+      "answer": "杖に蛇が巻き付けられているシンボルは、ギリシャ神話や古代エジプト神話など、様々な文化で重要な意味を持つものです。ここでは、アテネの遺跡に関連する問題を考えると、最も関連性が高いのは**アポロン**や**アスクラピオン**（Asclepius）のシンボルです。\n\n1. **アポロン**: アポロンは医療と薬草の神として知られています。彼の象徴には杖に蛇が巻き付けられているものがあります。この杖を「クレタの杖」と呼び、現代では医師の団体や病院でよく見られるシンボルです。\n\n2. **アスクラピオン**: アスクラピオンは古代ギリシャの医療神として知られています。彼の象徴も杖に蛇が巻き付けられたものですが、彼の杖は「ヒポクラテスの杖」と呼ばれています。この杖は現代でも医師の団体や病院で使用されることがあります。\n\nアテネの遺跡を調査する際には、これらの神々に関連した情報を探し、遺跡の由来や祭神について調べることが重要です。例えば、アポロンやアスクラピオンが祀られている可能性のある遺跡は何か、その遺跡の特徴や歴史を調べてみましょう。\n\nまた、問題文中で**「没薬」**という言葉も重要なヒントとなります。「没薬」という言葉は古代ギリシャ医学において重要な役割を果たした植物の一種です。医療に関連する遺跡を探している場合、この情報も役立つでしょう。\n\nこれらの情報を基に、アテネの遺跡や祭神について詳しく調べてみてください。遺跡の由来や祭神を調べる際は、カタカナで神名を確認し、指定形式で入力することが求められている可能性があります。",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.17"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.37"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.37"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.40"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:13:29.318Z"
+    },
+    {
+      "userid": "admin",
+      "question": "創立100年くらいの有名な日本の私立大学は？",
+      "category": null,
+      "questionId": null,
+      "answer": "- **「創立100年の有名な日本の私立大学」を特定するためには、以下のような手順で進めることができます。**\n\n  - 大学の歴史や沿革に関する情報を検索します。\n  - 「創立100年」「私立大学」「近代化」「啓蒙思想」というキーワードを使って、関連性のある大学を絞り込みます。\n  - 各候補の詳細な情報（設立年、教育理念、歴史的背景等）を確認し、一致するものを特定します。\n\n- **具体的な手順は以下の通りです。**\n\n  - **1. 大学の公式ウェブサイトや史料から創立年を確認します。**\n    - 特に「沿革」や「歴史」セクションをチェックしましょう。\n  \n  - **2. 「近代化」「啓蒙思想」というキーワードで大学の教育理念や特色を探します。**\n    - 大学の公式文書やパンフレット、報告書などから情報を得ることができます。\n\n  - **3. 各候補の歴史的背景を調査し、創立100年かつ私立であることを確認します。**\n    - 日本の高等教育に関する資料や歴史書籍も参考にすると良いでしょう。\n\n- **これらの手順を踏むことで、特定の大学を見つけることができます。**\n\n  - 調査が難航する場合は、他の学術図書館やオンラインで公開されている大学史料も活用してみてください。\n  \n  - 確実に一致する候補を見つけられなかった場合でも、異なる視点から再検討してみましょう。",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.30"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.38"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.50"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.52"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:14:55.865Z"
+    },
+    {
+      "userid": "admin",
+      "question": "慶應義塾を作った人って誰",
+      "category": null,
+      "questionId": null,
+      "answer": "慶應義塾の創立者について考えていきましょう。まず、以下の手順で進めてみます：\n\n1. **歴史的なキーワードを整理する**：\n   - 慶應義塾は1858年に創立されました。\n   - 「近代化」や「啓蒙思想」というキーワードが重要です。\n\n2. **検索クエリを組む**：\n   - 「慶應義塾 創立者 現代 日本」\n   - 「慶應義塾 初代学監 1858年」\n\n3. **一致する候補を比較する**：\n   - 検索結果から、江戸時代末期の教育家や政治家が現れる可能性があります。\n\n4. **一次資料で裏取りする**：\n   - 「H」の頭文字から考えると、創立者の名前は「福澤谕吉（ふくざわ ゆきち）」であることが分かります。\n\nこれらの手順を踏んでいくことで、慶應義塾の創立者である「福澤谕吉」について理解できるでしょう。次に、具体的な情報を探してみましょう。\n- **福澤谕吉**は1835年に生まれ、1901年に亡くなりました。\n- 彼は日本の近代教育の父と呼ばれています。\n\nこのように段階的に考えていき、最終的には「福澤谕吉」が慶應義塾の創立者であることが分かります。次回は具体的な情報や資料を確認してみましょう！",
+      "sources": [
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.39"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.45"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.49"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.51"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.53"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:16:13.495Z"
+    },
+    {
+      "userid": "admin",
+      "question": "google画像検索のやり方",
+      "category": null,
+      "questionId": null,
+      "answer": "Google画像検索を効果的に使うことで、フラグや情報を探し出すことができます。以下に具体的な手順とポイントを説明します。\n\n### 手順\n\n1. **画像をアップロードして検索**\n   - Google画像検索ページ（https://www.google.com/imghp）に移動する。\n   - 検索窓の下にある「画像をアップロード」ボタンをクリックし、探している画像を選択する。\n\n2. **完全一致と類似画像を確認**\n   - Googleはアップロードした画像から類似画像を探し出し、結果ページに表示します。\n   - これらの画像の中から、最も新しいまたは初出の画像を見つけることが重要です。\n\n3. **最も古い投稿（初出）を探す**\n   - 類似画像の中で最も古い投稿を見つけ、その元の投稿を追跡する。\n   - これは通常、画像が最初に公開された場所や投稿者から得られます。\n\n4. **別角度の画像を収集する**\n   - 同じ被写体や場所から別の角度で撮影された画像を探し出す。\n   - これにより、より詳細な情報や新たなヒントを得ることができます。\n\n5. **写っている要素（建物・看板など）を特定する**\n   - 画像に写っている建物、看板、標識などの特定の要素を確認し、それらから地理的な情報を得る。\n   - 特定の建物や場所は、GPS情報や地図データを使ってさらに詳細な位置情報を特定することができます。\n\n### ポイント\n\n- **GoogleだけでなくYandexも使う**\n  - Yandex画像検索（https://yandex.com/images）は特に建物や人物に強いので、複数の検索エンジンを使用することでより広範な結果を得ることができます。\n  \n- **「最初にどこで出たか」を重視する**\n  - 画像が最初に公開された場所や投稿者から得られる情報は非常に重要です。これがフラグの位置や背景情報を特定する手がかりとなることがあります。\n\n### 実践例\n\n1. **画像をアップロードして検索**\n   ```bash\n   https://www.google.com/imghp\n   ```\n\n2. **完全一致と類似画像を確認**\n   - アップロードした画像から類似画像が表示されます。\n   \n3. **最も古い投稿（初出）を探す**\n   - 類似画像の中で最も新しいものを見つけて、その元の投稿ページに移動します。\n\n4. **別角度の画像を収集する**\n   - 同じ被写体や場所から別の角度で撮影された画像を探し出す。\n   \n5. **写っている要素（建物・看板など）を特定する**\n   - 画像に写っている要素を確認し、それらから地理的な情報を得る。\n\n### まとめ\n\nGoogle画像検索はフラグや情報を探し出すための強力なツールです。複数の検索エンジンを使用することでより広範な結果を得ることができます。また、「最初にどこで出たか」を重視することで、フラグの位置や背景情報を特定することができます。これらの手順とポイントを活用して、画像から得られる情報を探し出してみてください。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.38"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.08"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.06"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.06"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.05"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:17:32.456Z"
+    },
+    {
+      "userid": "admin",
+      "question": "座標から事件を調べたい",
+      "category": null,
+      "questionId": null,
+      "answer": "座標から事件を探る問題は興味深いですね。まずは具体的な手順とヒントを提供しましょう。\n\n1. **座標の確認**:\n   - 座標が与えられていることを確認してください。\n   - 例えば、緯度経度（35.6895, 139.6935）のような形式で与えられることが多いです。\n\n2. **地図サービスの利用**:\n   - Google MapsやOpenStreetMapなどの地図サービスを使って座標を表示します。\n   - 地図上でピンポイントで場所を特定しましょう。\n\n3. **歴史的事件の調査**:\n   - 特定された場所と周辺地域について、歴史的な出来事や災害を調べます。\n   - 例えば、地震、洪水、火災など、過去に起きた重要な事件を検索します。\n\n4. **初期調査者の特定**:\n   - 起こった事件の初期調査者や関係者が誰だったかを特定します。\n   - 学術論文や歴史書籍などで調べることができます。\n\n5. **母国語表記での確認**:\n   - 与えられた名前がどの言語で表記されているか確認します。\n   - 母国語の表記で再度名前を検索することで、より正確な情報を得られます。\n\n6. **詳細情報の収集**:\n   - 調査した事件や人物について、より詳細な情報を収集します。\n   - 例えば、事件の日付、原因、影響などです。\n\nこれらの手順を踏んでみましょう。まずは具体的な座標から始めてみてください。もし具体的な座標がわからない場合は、一般的な地域（例：東京、大阪）から始めることもできます。その上で、歴史的な出来事を調査していきましょう。頑張ってください！",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.18"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.08"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.07"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "0.04"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:19:32.463Z"
+    },
+    {
+      "userid": "admin",
+      "question": "60.8841988,101.8857172 で何が起きた",
+      "category": null,
+      "questionId": null,
+      "answer": "この座標は中国の北京市中心部を指しています。CTF問題では、地理的な場所からヒントを得ることがよくあります。以下にいくつかのステップとヒントを提供します：\n\n1. **地図上で位置を確認する**:\n   - この座標は北京市中心部を示しています。Googleマップや他の地図サービスでこの座標を検索してみてください。\n\n2. **地理的な情報から推測する**:\n   - 北京市には有名な観光スポットや歴史的建造物があります。これらの場所に近づいてみましょう。\n\n3. **周辺の特徴的な建物や構造物を探す**:\n   - この座標は北京市中心部の重要な場所に近い可能性があります。周囲の建物や構造物を注意深く観察してみてください。\n\n4. **歴史的・文化的な情報を利用する**:\n   - 北京には多くの歴史的な建造物や文化施設があります。これらの情報を参考にして、場所と関連する何かを探しましょう。\n\n5. **地理情報サービスの利用**:\n   - 地理情報サービスを利用して、この座標周辺の重要な場所をリストアップしてみましょう。\n\n6. **CTF特有のヒントを探す**:\n   - CTFではしばしば、問題解決に必要な情報を隠しに隠しで提供することがあります。地理的な位置から得られる情報を使って、他の隠された情報を探しましょう。\n\nこれらのステップを踏んでみてください。地理的な場所からヒントを得ることはCTFの重要な要素の一つです。頑張ってください！",
+      "sources": [
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.13"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.14"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.17"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.19"
+        },
+        {
+          "category": "sad_server",
+          "source": "sad_server.md",
+          "relevance": "-0.20"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:20:38.870Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ツングースカ大爆発ってなに",
+      "category": null,
+      "questionId": null,
+      "answer": "ツングースカ大爆発は、1908年6月30日にロシア北部のシベリア地方で起きた未確認の天体衝突事件です。この事件は以下のような特徴があります：\n\n- **日付と場所**: 1908年6月30日、ロシアの西シベリア州のツングースカ川流域。\n- **現象**: 突然、爆音が聞こえ、光り物が落下し、広大な森林を破壊しました。当時の目撃者によると、光り物は巨大な火球として見え、その後爆発したと報告されています。\n- **被害**: 大きな爆発により、約2,000平方キロメートルの広大な森林が破壊されました。当時、この地域には人口が少なかったため、直接的な犠牲者は確認されていません。\n- **原因**: 爆発の原因については諸説ありますが、主に以下の2つの説があります：\n  - **天体衝突説**: 小惑星や彗星が大気中で爆発したとされる。これは現在最も有力な説です。\n  - **自然現象説**: 地震や地熱爆発、雷などによる説もあります。\n\nこの事件は、未確認の天体衝突の可能性を示す重要な例として知られており、科学者たちにとっても興味深い研究対象となっています。",
+      "sources": [
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "-0.43"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "-0.43"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:42:14.134Z"
+    },
+    {
+      "userid": "admin",
+      "question": "特許を調べるサイト教えて",
+      "category": null,
+      "questionId": null,
+      "answer": "特許情報を調査するためには、以下のようなサイトが役立ちます。それぞれの特徴と使い方について説明します。\n\n1. **Google Patents**\n   - **特徴**: 全世界の特許情報にアクセスできる無料サービスです。\n   - **使い方**: 特定の企業名や出願日、国際公開番号（例: WOxxxxxx）を検索キーワードとして入力することで、関連する特許情報を取得できます。\n\n2. **JPO (日本特許庁)**\n   - **特徴**: 日本の特許情報にアクセスできる公式サイトです。\n   - **使い方**: 特許出願番号や公開番号を検索キーワードとして入力することで、詳細な特許情報を取得できます。\n\n3. **WIPO (世界知的財産機関)**\n   - **特徴**: 全世界的に特許情報にアクセスできる公式サイトです。\n   - **使い方**: 国際公開番号（例: WOxxxxxx）を検索キーワードとして入力することで、詳細な特許情報を取得できます。\n\n4. **Espacenet**\n   - **特徴**: 欧州特許庁が運営する特許情報ベースです。\n   - **使い方**: 特定の出願番号や公開番号を検索キーワードとして入力することで、詳細な特許情報を取得できます。\n\nこれらのサイトは、特許の出願日、企業名、国際公開番号などの条件で絞り込み検索を行うことができます。特に **Google Patents** は使いやすく、多くの特許情報にアクセスできるため、初回の調査ではこちらから始めるのがおすすめです。\n\nこれらのサイトを活用することで、特定の企業や技術分野に関する特許情報を効率的に取得することができます。",
+      "sources": [
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "0.07"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.01"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.01"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.01"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:43:03.449Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Google Patentsの使い方",
+      "category": null,
+      "questionId": null,
+      "answer": "Google Patentsを使って特許情報を検索する際には、以下の手順とポイントに注意すると良いでしょう。\n\n1. **出願日と企業条件で絞り込む**\n   - 特定の年月日の出願日を指定して検索します。\n   - また、特定の企業や個人の特許だけを見たい場合は、著者名も指定できます。\n\n2. **図面一致で該当特許を特定する**\n   - 特許申請には図面が添付されることが多く、その図面と一致する画像を探すことで該当する特許を見つけられます。\n   - 例えば、特定の機械部品や装置の図面に一致するものが見つかった場合、それを元に特許番号を特定します。\n\n3. **国際公開番号の形式**\n   - 特許は国際的に申請されることが多く、その場合は国際公開番号（例: `WO...`）が付与されます。\n   - この形式で回答する際には、該当する特許の国際公開番号を記載します。\n\n4. **具体的な検索方法**\n   - Google Patentsにアクセスし、「出願日」や「著者名」などのフィルターを使用して絞り込みます。\n   - 検索結果から図面と一致する特許を見つけて、その国際公開番号を記録します。\n\n5. **例題**\n   - 例えば、「出願日: 2018年」かつ「著者名: XYZ Corp.」で検索し、図面に一致するものを特定します。\n   - 特許の詳細ページから国際公開番号を確認し、それを回答として提出します。\n\nこれらの手順とポイントを踏まえて、Google Patentsを使って効果的に特許情報を検索しましょう。具体的な問題やフラグが見つからない場合は、段階的なヒントや追加の情報が必要な場合もありますので、その際は適切なアドバイスを求めましょう。",
+      "sources": [
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.03"
+        },
+        {
+          "category": "crypto",
+          "source": "crypto.md",
+          "relevance": "-0.05"
+        },
+        {
+          "category": "meta",
+          "source": "meta.md",
+          "relevance": "-0.08"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:43:58.228Z"
+    },
+    {
+      "userid": "admin",
+      "question": "画像から場所を特定するために、最初に確認すべき情報は？",
+      "category": null,
+      "questionId": null,
+      "answer": "画像から場所を特定する際に最初に確認すべき情報は以下の通りです：\n\n1. **建物や構造物**: 有名な建物や特徴的な構造物は場所を特定するのに役立ちます。例えば、有名な教会や橋など。\n2. **看板や標識**: 看板に書かれている文字や標識の内容は地域情報を提供します。\n3. **ナンバープレート**: 車両のナンバープレートから地域を特定できます。\n4. **電柱や信号機**: これらの位置や配置は地域の特徴を示すことがあります。\n5. **影の向き**: 影が南側にあるか北側にあるかによって方角を推測できます。これは特に日中の画像で有効です。\n\nこれらの情報は、画像検索や地図サービスを使って場所特定に役立ちます。例えば、Google ImagesやTinEyeを使用して画像を検索し、類似画像を見つけてその出典を追跡します。また、Yandex Imagesも利用すると、特に建物や人物の特徴が強い画像で有効です。\n\nこれらのヒントから始めて、徐々に具体的な場所を特定していくことが重要です。最初は広い範囲から絞り込んでいくことで、最終的に正確な位置情報を得ることができます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.29"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.23"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.16"
+        },
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "0.13"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:44:53.549Z"
+    },
+    {
+      "userid": "admin",
+      "question": "SNSアカウント同士の関連性を調べる一般的な方法は？",
+      "category": null,
+      "questionId": null,
+      "answer": "SNSアカウント同士の関連性を調べるためには、いくつかの手順とツールを使用します。以下に具体的な方法を説明します。\n\n1. **同一IDの確認**\n   - 同じユーザー名やメールアドレスが使われているか確認する。\n   - これは直接的な関連性を示す可能性が高い。\n\n2. **SNS間での相互作用の確認**\n   - フォロー/フォロワー一覧を比較する。\n   - コメントや共有した投稿を確認する。\n\n3. **IPアドレスの一致**\n   - 一部のSNSでは、ユーザーが同じIPアドレスからアクセスしている可能性がある。\n   - IPアドレスのログを取得して分析する（ただしプライバシー上の問題に注意）。\n\n4. **デバイス情報の比較**\n   - デバイス名やOS情報を確認する。\n   - これは同一デバイスからのアクセスである可能性が高い。\n\n5. **位置情報の一致**\n   - 地理的位置情報を確認し、同一地域からログインしているかをチェックする。\n   - Google MapsやGoogle Street Viewを使用して場所を特定する。\n\n6. **EXIF情報の解析**\n   - 画像投稿のEXIF情報を分析し、撮影地や撮影日時を確認する。\n   - ExifToolなどのツールを使用する。\n\n7. **公開プロフィール情報の比較**\n   - 生年月日、住所、趣味など、公開されているプロフィール情報を比較する。\n\n8. **共通のグループやコミュニティの確認**\n   - 同じグループやコミュニティに参加しているかを確認する。\n   - これは関連性が高い可能性がある。\n\n9. **投稿パターンの分析**\n   - 投稿頻度や時間帯を比較する。\n   - これは行動模式が似ていることを示す可能性がある。\n\n10. **名前とユーザー名の一致**\n    - 名前やニックネーム、ユーザー名が一致しているか確認する。\n    - これは直接的な関連性を示す可能性が高い。\n\nこれらの方法を組み合わせて使用することで、SNSアカウント同士の関連性をより正確に把握することができます。ただし、プライバシー保護と法的制限に注意し、適切な手段で調査を行うことが重要です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.01"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.02"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "-0.02"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "-0.03"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:45:49.362Z"
+    },
+    {
+      "userid": "admin",
+      "question": "ドメインの登録情報を確認するにはどんな手法がある？",
+      "category": null,
+      "questionId": null,
+      "answer": "ドメインの登録情報（WHOIS情報）を確認することは、CTFやセキュリティ調査において重要な手順です。以下に具体的な方法と使用ツールを紹介します。\n\n1. **WHOIS情報の確認**\n   - `whois` コマンドを使用して基本的な情報を取得できます。\n     ```bash\n     whois example.com\n     ```\n   - 登録者情報、作成日、ネームサーバなどの詳細が得られます。\n\n2. **追加調査**\n   - ネームサーバを確認するために `nslookup` や `dig` コマンドを使用します。\n     ```bash\n     nslookup example.com\n     dig example.com\n     ```\n\n3. **信頼性の判断**\n   - ドメインが新しく作成された場合、信頼性に疑問が生じる可能性があります。逆に古いドメインは信頼性が高いと判断できます。\n   - 同一IPアドレス上にある他のサイトも調査することで、ドメインの関連性を確認できます。\n\n4. **追跡情報の確認**\n   - `robots.txt` ファイルやリンクされていないパスも確認します。これらは攻撃者が利用できる可能性のある経路を示すことがあります。\n     ```bash\n     curl http://example.com/robots.txt\n     ```\n\nこれらの手法を通じて、ドメインの背景情報を深く理解し、より安全な判断を行うことができます。また、調査結果から得られた情報は、他のセキュリティチェック（認証・認可、パラメータ改ざんなど）に活用することも可能です。\n\n頑張ってください！何か具体的な疑問があれば、遠慮なく質問してください。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.09"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:47:18.074Z"
+    },
+    {
+      "userid": "admin",
+      "question": "EXIF情報から取得できる代表的なデータは？",
+      "category": null,
+      "questionId": null,
+      "answer": "EXIF情報には様々な種類のメタデータが含まれています。以下に、代表的なデータをいくつか紹介します。\n\n1. **撮影日時**  \n   - 画像が撮影された正確な日時情報を含みます。\n   - ファイル名やSNS投稿時に使用される情報と一致する可能性があります。\n\n2. **GPS位置情報（緯度・経度）**  \n   - 撮影地点の具体的な座標を示します。\n   - 地図上で撮影場所を特定するのに有用です。\n\n3. **カメラ機種**  \n   - 使用されたデバイスやカメラの情報を含みます（例：iPhone, Canonなど）。\n   - 画像の信頼性を確認したり、作成者の情報を探るのに役立ちます。\n\n4. **撮影設定**  \n   - ISO感度、シャッター速度、露出補正などの詳細な撮影条件が記録されています。\n   - 撮影時の環境や状況を推測する手がかりになります。\n\n5. **編集ソフト**  \n   - 画像が編集された場合に使用したソフトウェアの情報が含まれます（例：Photoshop）。\n   - 編集履歴から画像が改ざんされている可能性を探るのに有用です。\n\nこれらのデータを確認することで、画像の信頼性や撮影場所などを推測することができます。ただし、SNSなどでEXIF情報を削除されることが多いので、その点に注意が必要です。\n\n```bash\nexiftool image.jpg\n```\n\nこのコマンドを使用してEXIF情報を確認できます。具体的な出力は画像によって異なるため、実際のデータを確認しながら理解を深めてください。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.42"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.15"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.10"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.04"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:50:05.723Z"
+    },
+    {
+      "userid": "admin",
+      "question": "Wayback Machineはどんな用途で使われる？",
+      "category": null,
+      "questionId": null,
+      "answer": "Wayback Machineは、ウェブアーカイブの重要なツールとして利用されます。以下にその主な用途と活用方法を説明します：\n\n- **過去のウェブページの保存**: Wayback Machineは、インターネットアーカイブによってウェブページが定期的にキャプチャされ、アーカイブされています。これにより、現在のウェブページとは異なる内容や構造の古いバージョンを確認できます。\n\n- **ドメイン名の歴史調査**: ドメイン名の所有者が変更された場合や、過去に存在したサイトを探している場合などに役立ちます。\n\n- **リンクの有効性確認**: あるページが削除されたり、移動したりした場合、Wayback Machineでそのページの古いバージョンを参照できます。これにより、リンク切れを防ぐことができます。\n\n- **コンテンツの保存**: ウェブサイトが閉鎖された後に重要な情報やデータを保存することができます。\n\n- **SEO分析**: ページの歴史を追跡することで、ウェブサイトの変更履歴や更新頻度を把握し、SEO戦略に活用できます。\n\n- **法的調査**: 法的な問題が発生した場合、過去のウェブページの内容を確認することができます。これにより、証拠として使用できます。\n\nWayback Machineは、これらの用途だけでなく、CTF（Capture The Flag）などのセキュリティチャレンジでも活用されることがあります。例えば、古いバージョンのウェブサイトから漏洩した情報を探したり、過去のデータから攻撃を検出したりする際に役立つ可能性があります。\n\n利用する際は、適切な目的で使用し、プライバシーと著作権を尊重することが重要です。",
+      "sources": [
+        {
+          "category": "medium1",
+          "source": "medium1.md",
+          "relevance": "-0.07"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.16"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "-0.18"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "-0.19"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "-0.19"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:51:03.112Z"
+    },
+    {
+      "userid": "admin",
+      "question": "GitHubの公開リポジトリから秘密情報を探す時の観点は？",
+      "category": null,
+      "questionId": null,
+      "answer": "GitHubの公開リポジトリから秘密情報を探す際には、以下の観点に注意することが重要です：\n\n1. **環境変数や設定ファイル**:\n   - `.env` ファイルや `config.json`, `settings.yaml` などの設定ファイルを確認する。\n   - 環境変数は通常 `.env` 形式で管理されるため、リポジトリ内に `.env.example` や `.sample` ファイルがある場合もチェック。\n\n2. **コミット履歴**:\n   - `git log` コマンドを使って過去のコミットを確認し、秘密情報を含む可能性のあるコミットを見つける。\n   - 特定のファイル名やパスワード、APIキーなどを含むコミットを探す。\n\n3. **README.md などのドキュメンテーション**:\n   - リポジトリの README.md, CONTRIBUTING.md, LICENSE などに秘密情報が含まれている可能性がある。\n\n4. **コード内のコメント**:\n   - コメント内にパスワードやAPIキーなどが記載されている場合もある。\n   - `//` または `/* */` 形式で書かれたコメントを確認する。\n\n5. **依存ライブラリのパッケージリスト**:\n   - `package.json`, `requirements.txt`, `Gemfile` などのファイルに秘密情報が含まれている可能性がある。\n   - 特定のライブラリやバージョンに注意して、その内容を確認する。\n\n6. **Gitignore ファイル**:\n   - `.gitignore` 内に除外されるファイルやディレクトリが記載されている場合、これらの場所にも秘密情報が隠されている可能性がある。\n   - 例えば、`.env`, `config/*`, `secrets/*` などが除外されると考えられる。\n\n7. **暗号化されたデータ**:\n   - データベースのバックアップファイルや暗号化されたファイルも確認する。\n   - 暗号化されたデータは通常 `.zip`, `.tar.gz`, `.sql` 形式で保存されることが多い。\n\n8. **CI/CD パイプライン**:\n   - GitHub Actions, Jenkins, Travis CI などの CI/CD パイプラインの設定ファイルも確認する。\n   - 特に `secrets` セクションや環境変数が含まれている可能性がある。\n\n9. **秘密情報の検索**:\n   - `git grep` コマンドを使って特定の文字列（例: `password`, `api_key`）を含むファイルを探す。\n   - 例えば、`git grep -i \"password\" .` で全リポジトリ内の大文字小文字を区別せずに「password」を含むファイルを探せる。\n\n10. **セキュリティスキャン結果**:\n    - GitHub のセキュリティスキャン機能を使って脆弱性や秘密情報を検出する。\n    - Snyk, Dependabot などのツールも利用できる。\n\nこれらの観点を踏まえて、GitHubの公開リポジトリから秘密情報を探す際には慎重に操作し、適切な方法で情報を収集することが重要です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.11"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.04"
+        },
+        {
+          "category": "hard1",
+          "source": "hard1.md",
+          "relevance": "0.03"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.02"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:52:03.528Z"
+    },
+    {
+      "userid": "admin",
+      "question": "電話番号から得られるOSINT情報には何がある？",
+      "category": null,
+      "questionId": null,
+      "answer": "電話番号から得られるOSINT情報は多岐にわたります。以下に重要なポイントをまとめます：\n\n1. **住所の特定**:\n   - 一部の電話会社では、電話番号から登録されている住所情報を取得できます。\n   - この情報は、個人の位置や居住地を推測するのに有用です。\n\n2. **名前と関連情報の検索**:\n   - オンラインで公開されているデータベースを使用して、電話番号から名前や他の個人情報を探ることができます。\n   - ただし、プライバシー保護の観点からは注意が必要です。\n\n3. **企業情報の取得**:\n   - 事業用の電話番号の場合、所属する企業や部署、役職などの情報を得られます。\n   - これはビジネス分析やコンタクトリスト作成に有用です。\n\n4. **地域情報**:\n   - 電話番号から登録されている地域コードを特定し、その地域の特性や文化について調査できます。\n\n5. **電話会社の情報を得る**:\n   - 電話番号から所属する電話会社やサービスプランなどの情報を取得できます。\n   - これは通信サービスに関する情報収集に役立ちます。\n\n6. **匿名性とプライバシーへの配慮**:\n   - プライバシー保護の観点からは、電話番号を直接的に個人に結びつけることは避けるべきです。\n   - オンラインで公開されている情報を基に推測する方法もありますが、その際は適切なプライバシーポリシーに従うことが重要です。\n\nこれらの情報は、OSINT（オープンソースインテリジェンス）の手法を用いて得られます。ただし、個人情報の取り扱いには十分注意し、法的・倫理的な制約を遵守することが求められます。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.33"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.12"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.09"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:52:55.363Z"
+    },
+    {
+      "userid": "admin",
+      "question": "DNSレコードを調査すると何がわかる？",
+      "category": null,
+      "questionId": null,
+      "answer": "DNSレコードを調査することで、以下の情報を得ることができます：\n\n1. **ドメインのネームサーバー**:\n   - ドメインがどのネームサーバーに指向しているかを確認できます。これは、ドメインの管理とホスティングに関する重要な情報です。\n\n2. **IPアドレス**:\n   - DNSレコードからドメイン名に対応するIPアドレスを取得できます。これにより、Webサイトやメールサーバーがどこにあるのかを特定できます。\n\n3. **メールサーバー（MXレコード）**:\n   - メール送受信に使用されるメールサーバーの情報を得ることができます。これは、メールの転送ルートを確認するのに役立ちます。\n\n4. **DNSプロトコルの種類**:\n   - A, AAAA, CNAME, MX, NS, TXTなどの異なるDNSレコードタイプが存在します。それぞれのレコードは特定の目的を持ち、ドメインの機能や設定に関する情報を提供します。\n\n5. **ドメインの所有者情報**:\n   - WHOIS情報からドメインの登録者や管理者の連絡先情報を確認できます。これは、ドメインの管理責任者が誰であるかを知るのに役立ちます。\n\n6. **DNSレコードの更新日時**:\n   - DNSレコードが最後に更新された日時を確認できます。これにより、ドメインの設定変更のタイミングを把握することができます。\n\nこれらの情報は、CTF比赛中でのドメイン調査やサーバーの脆弱性探索において重要な役割を果たします。例えば、IPアドレスから同一ネットワーク上の他のサーバーを探したり、メールサーバーの情報を得てフィッシング攻撃の可能性を探ったりできます。\n\n### 調査方法\n\n```bash\n# WHOIS情報取得\nwhois example.com\n\n# DNSレコード取得\nnslookup example.com\ndig example.com ANY\n```\n\nこれらのコマンドを使用して、DNSレコードを詳細に調査することができます。また、`dig` コマンドはより詳細な情報を提供するため、複数のレコードタイプ（A, AAAA, MX, NS, TXTなど）を一度に取得できます。\n\n### 例\n\n```bash\n# AレコードとMXレコードを取得\nnslookup example.com\ndig example.com A\ndig example.com MX\n\n# WHOIS情報からドメイン所有者情報を確認\nwhois example.com\n```\n\nこれらの手順を踏むことで、DNSレコードの詳細な情報を得ることができます。これにより、より深い調査が可能になります。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.25"
+        },
+        {
+          "category": "web",
+          "source": "web.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.05"
+        },
+        {
+          "category": "forensics",
+          "source": "forensics.md",
+          "relevance": "0.04"
+        },
+        {
+          "category": "hard2",
+          "source": "hard2.md",
+          "relevance": "0.03"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:54:22.771Z"
+    },
+    {
+      "userid": "admin",
+      "question": "リバースイメージサーチの代表的な使い方を教えて。",
+      "category": null,
+      "questionId": null,
+      "answer": "リバースイメージサーチ（逆引き画像検索）は、特定の画像から情報を引き出すための強力な手法です。以下にその代表的な使い方と手順を説明します。\n\n### 1. 使用ツールの紹介\n- **Google Images**: 最も一般的で広く利用されている逆引き画像検索サービス。\n- **TinEye**: 画像のURLから類似画像や元画像を探し出すことができる。\n- **Yandex Images**: 特に建物や人物に強い。\n\n### 2. 手順\n\n#### 2.1 画像をアップロードして検索\n- まず、疑問のある画像をアップロードします。Google ImagesやTinEyeのウェブサイトにアクセスし、「Upload Image」ボタンをクリックして画像を選択します。\n\n#### 2.2 完全一致と類似画像を確認\n- アップロードした画像から完全一致する画像や類似画像が表示されます。これらの画像は元画像である可能性が高いです。\n\n#### 2.3 最も古い投稿（初出）を探す\n- クラスプルームの画像から、最も古い投稿を見つけます。これは通常、最初に公開された画像を示します。\n\n#### 2.4 別角度の画像を収集する\n- 同じ場所や被写体から異なる角度で撮影された画像も収集します。これにより、より詳細な情報が得られます。\n\n### 3. 特定の要素を特定する\n- **建物**: 建築様式や特徴的なデザイン。\n- **看板**: 電話番号や名前などの情報を提供。\n- **言語**: 被写体や標識の言語から地域を推測します。\n\n### 4. 地理情報（ジオロケーション）の特定\n#### 使用ツール\n- **Google Maps**: 地図上の位置を特定します。\n- **Google Street View**: 街角や建物の詳細な画像を確認できます。\n\n#### 手順\n\n1. **画像からヒント抽出**:\n   - 言語、ナンバープレート、電柱、信号機などから地域情報を推測します。\n\n2. **地域を仮決めする**:\n   - 抽出された情報に基づいて地域を仮決めします。\n\n3. **Mapsで候補を探す**:\n   - Google Mapsを使って候補の場所を探します。\n\n4. **Street Viewで一致確認する**:\n   - 街角や建物の詳細な画像と一致する場所を見つけています。\n\n5. **建物配置・道路・影を照合する**:\n   - 建物の配置、道路の形状、影の向きなどからさらに精度を高めます。\n\n### 5. メタデータ解析（EXIF）\n#### 使用ツール\n- **ExifTool**: EXIF情報を抽出します。\n\n#### 手順\n\n1. **基本コマンド**:\n   ```bash\n   exiftool image.jpg\n   ```\n\n2. **確認項目**:\n   - GPS情報: 地理的位置を特定します。\n   - 撮影日時: 画像の撮影日時を確認します。\n   - カメラ機種: 使用されたカメラ情報を確認します。\n   - 編集履歴: 画像が編集された痕跡を検出します。\n\n3. **応用コマンド**:\n   ```bash\n   exiftool -gps* image.png\n   ```\n\n### 6. ファイルの分析\n#### 使用ツール\n- **strings**: 文字列抽出。\n- **binwalk**: 埋め込みファイル検出。\n- **stegsolve**: ステガノグラフィ解析。\n- **zsteg**: PNG/BMPのステガノグラフィ検出。\n\n#### 手順\n\n1. **文字列抽出**:\n   ```bash\n   strings image.jpg\n   ```\n\n2. **埋め込みファイル検出**:\n   ```bash\n   binwalk -e image.jpg\n   ```\n\n3. **ステガノグラフィ解析**:\n   ```bash\n   stegsolve -i image.jpg\n   zsteg -i image.png\n   ```\n\n### まとめ\nリバースイメージサーチは、特定の画像から情報を引き出すための強力な手法です。画像の逆引き検索、地理情報の特定、メタデータ解析、ファイル分析などを行い、より詳細な情報を得ることができます。これらの手順を踏むことで、画像から隠された情報を効果的に",
+      "sources": [
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.14"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.13"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.09"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.07"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:56:11.506Z"
+    },
+    {
+      "userid": "admin",
+      "question": "OSINTで得た情報の信頼性を検証する方法は？",
+      "category": null,
+      "questionId": null,
+      "answer": "OSINT（オープン・ソース・インテリジェンス）で得た情報を検証する際には、以下の手順に従うと良いでしょう。\n\n1. **情報源の確認**:\n   - 信頼できる情報源から情報を取得しているか確認する。\n   - 公式ウェブサイトや認定されたメディアからの情報を使うことが推奨される。\n\n2. **複数のソースでの一致確認**:\n   - 同じ情報を異なる信頼性のあるソースから確認し、一致を検証する。\n   - 例えば、公式報告書と独立したニュース記事が同じ情報を提供しているか確認する。\n\n3. **タイムスタンプと更新日時**:\n   - 情報の取得日時や最終更新日時を確認し、情報が最新であることを確認する。\n   - 長期間更新されていない情報は信頼性に疑問が生じる可能性がある。\n\n4. **文脈の理解**:\n   - 提供された情報を具体的な状況や背景知識と照らし合わせて理解する。\n   - 例えば、特定の地名や組織名についての詳細を調べることで情報の正確性を確認できる。\n\n5. **矛盾の検出**:\n   - 同じ事象に対する異なる説明が存在する場合は、それぞれの説明を比較し、矛盾がないか確認する。\n   - 矛盾がある場合、情報源や提供された情報を慎重に評価する必要がある。\n\n6. **専門家の意見**:\n   - 信頼できる専門家または関連分野の知識を持つ人々から意見を求めることで、情報の正確性を検証する。\n   - 特定のトピックについて詳しい人からのアドバイスは非常に役立つ。\n\n7. **法的・規制的な考慮**:\n   - 提供された情報がプライバシー法や著作権法に違反していないか確認する。\n   - また、情報の使用目的が適切であることを確認することも重要だ。\n\nこれらの手順を踏むことで、OSINTで得た情報をより信頼性のあるものとして活用することができます。常に批判的思考を持ち、情報源と内容を慎重に評価することが大切です。",
+      "sources": [
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.36"
+        },
+        {
+          "category": "osint",
+          "source": "osint.md",
+          "relevance": "0.31"
+        },
+        {
+          "category": "easy2",
+          "source": "easy2.md",
+          "relevance": "0.18"
+        },
+        {
+          "category": "easy1",
+          "source": "easy1.md",
+          "relevance": "0.17"
+        },
+        {
+          "category": "medium2",
+          "source": "medium2.md",
+          "relevance": "0.13"
+        }
+      ],
+      "model": "qwen2.5:7b-instruct-q5_K_M",
+      "recordedAt": "2026-05-19T22:57:02.506Z"
+    }
+  ]
+}

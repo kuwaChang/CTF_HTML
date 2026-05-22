@@ -16,16 +16,17 @@ function sanitizeFilename(filename) {
     .substring(0, 255); // ファイル名長制限
 }
 
-const quizPath = path.join(__dirname, "../data/quizData.json");
-const uploadDir = path.join(__dirname, "../public/files");
+const paths = require("../config/paths");
+const quizPath = path.join(paths.CONFIG, "quizData.json");
+const uploadDir = paths.UPLOADS;
 
-// dbフォルダが存在しない場合は作成
-const dbDir = path.join(__dirname, "../db");
+// storageフォルダが存在しない場合は作成
+const dbDir = paths.STORAGE;
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
 
-const dbPath = path.join(__dirname, "../db/users.db");
+const dbPath = path.join(paths.STORAGE, "users.db");
 //console.log("[admin.js] データベースパス:", dbPath);
 //console.log("[admin.js] ファイル存在確認:", fs.existsSync(dbPath));
 //console.log("[admin.js] ディレクトリ存在確認:", fs.existsSync(path.dirname(dbPath)));
@@ -139,12 +140,12 @@ function requireAdmin(req, res, next) {
 
 // 管理者用ページ表示
 router.get("/", requireAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, "../private/admin.html"));
+  res.sendFile(path.join(paths.VIEWS, "admin", "admin.html"));
 });
 
 // 管理者ページ用のCSSファイル提供
 router.get("/style.css", requireAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, "../private/style.css"));
+  res.sendFile(path.join(paths.VIEWS, "admin", "style.css"));
 });
 
 // 管理者用API：全問題データ取得

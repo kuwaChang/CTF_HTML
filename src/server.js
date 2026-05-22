@@ -7,6 +7,7 @@ const cors = require("cors");
 const fs = require("fs");
 const os = require("os");
 const { Server } = require("socket.io");
+const paths = require("./config/paths");
 const { router: sadRouter, setSocketIO } = require("./server-sad");
 const crypto = require("crypto");
 const multer = require("multer");
@@ -113,13 +114,13 @@ const app = express();
 app.set('trust proxy', true);
 
 // dbフォルダが存在しない場合は作成
-const dbDir = path.join(__dirname, "db");
+const dbDir = paths.STORAGE;
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
 
 // ユーザーアイコン用のディレクトリを作成
-const iconsDir = path.join(__dirname, "public", "icons");
+const iconsDir = path.join(paths.PUBLIC, "icons");
 if (!fs.existsSync(iconsDir)) {
   fs.mkdirSync(iconsDir, { recursive: true });
 }
@@ -166,8 +167,8 @@ const iconUpload = multer({
   }
 });
 
-const dbPath = path.join(__dirname, "db", "users.db");
-const sessionsDbPath = path.join(__dirname, "db", "sessions.sqlite");
+const dbPath = path.join(paths.STORAGE, "users.db");
+const sessionsDbPath = path.join(paths.STORAGE, "sessions.sqlite");
 //console.log("[server.js] データベースパス:", dbPath);
 //console.log("[server.js] ファイル存在確認:", fs.existsSync(dbPath));
 //console.log("[server.js] sessions.sqliteパス:", sessionsDbPath);
@@ -190,7 +191,7 @@ db.on('error', (err) => {
   }
 });
 // SQLインジェクション練習用データベース（別ファイル）
-const sqlDbPath = path.join(__dirname, "public", "files", "user_database.db");
+const sqlDbPath = path.join(paths.UPLOADS, "user_database.db");
 const sqlDb = new sqlite3.Database(sqlDbPath);
 const http = require("http");
 const net = require("net");
@@ -266,9 +267,9 @@ async function startIndividualShoppingServer(sessionId) {
     console.log(`🛒 セッション ${sessionId} 用のショッピングサーバーをポート ${port} で起動中...`);
 
     // 環境変数でポートを指定してショッピングサーバーを起動
-    const xssServerPath = path.join(__dirname, 'xss', 'server.js');
+    const xssServerPath = path.join(paths.LABS, 'xss', 'server.js');
     const childProcess = spawn('node', [xssServerPath], {
-      cwd: path.join(__dirname, 'xss'),
+      cwd: path.join(paths.LABS, 'xss'),
       stdio: 'pipe', // 'inherit'から'pipe'に変更して出力を制御
       shell: true,
       env: {
@@ -400,7 +401,9 @@ app.use(checkLanAccess);
 // セキュリティ: レート制限を適用
 app.use(rateLimit);
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(paths.PUBLIC));
+app.use("/files", express.static(paths.UPLOADS));
+app.use("/html", express.static(path.join(paths.VIEWS, "pages")));
 
 // セキュリティ: CORS設定の改善（LAN内のみ許可）
 app.use(cors(
@@ -520,27 +523,27 @@ app.use((req, res, next) => {
 
 // ルーティング設定
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+  res.sendFile(path.join(paths.VIEWS, "pages", "index.html"));
 });
 
 // index.htmlへの直接アクセスも許可
 app.get("/index.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+  res.sendFile(path.join(paths.VIEWS, "pages", "index.html"));
 });
 
 // マイページ
 app.get("/mypage", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "mypage.html"));
+  res.sendFile(path.join(paths.VIEWS, "pages", "mypage.html"));
 });
 
 // 新規登録フォーム
 app.get("/register_form.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "register_form.html"));
+  res.sendFile(path.join(paths.VIEWS, "pages", "register_form.html"));
 });
 
 // AIチューター
 app.get("/tutor", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "tutor.html"));
+  res.sendFile(path.join(paths.VIEWS, "pages", "tutor.html"));
 });
 
 // ============================================
@@ -549,12 +552,12 @@ app.get("/tutor", (req, res) => {
 
 // SQLインジェクション練習用ページ
 app.get(["/sql", "/sql_index", "/sqli"], (_req, res) => {
-	res.sendFile(path.join(__dirname, "public", "html", "sql_index.html"));
+	res.sendFile(path.join(paths.VIEWS, "pages", "sql_index.html"));
 });
 
 // XSS練習用ページ
 app.get(["/xss", "/xss_index"], (_req, res) => {
-	res.sendFile(path.join(__dirname, "public", "html", "xss_index.html"));
+	res.sendFile(path.join(paths.VIEWS, "pages", "xss_index.html"));
 });
 
 // XSS攻撃成功ページ（リダイレクト先）
@@ -694,7 +697,7 @@ app.get("/xss/attack-success", (_req, res) => {
 
 // 隠しフラグページ（広告ページから発見できる）
 app.get("/flag-hidden", (_req, res) => {
-	res.sendFile(path.join(__dirname, "public", "html", "flag-hidden.html"));
+	res.sendFile(path.join(paths.VIEWS, "pages", "flag-hidden.html"));
 });
 
 // ============================================
@@ -1123,9 +1126,9 @@ app.get("/path-traversal/download", (req, res) => {
   
   // ❌ 脆弱性: パスのサニタイズを行わない
   // ❌ 脆弱性: パストラバーサルチェックを行わない
-  const fullPath = path.join(__dirname, "public", "files", filePath);
+  const fullPath = path.join(paths.UPLOADS, filePath);
   const resolvedPath = path.resolve(fullPath);
-  const projectRoot = path.resolve(__dirname);
+  const projectRoot = path.resolve(paths.ROOT);
   
   // セキュリティ: 機密ファイルへのアクセスをブロック（練習用の制限）
   const blockedFiles = [
@@ -1136,10 +1139,12 @@ app.get("/path-traversal/download", (req, res) => {
     '.env',
     'sessions.sqlite',
     'server-sad.js',
-    'routes',
+    'src',
     'node_modules',
-    'data',
-    'private'
+    'config',
+    'content',
+    'storage',
+    'views'
   ];
   
   // ブロックされたファイル名が含まれているかチェック
@@ -1193,7 +1198,7 @@ app.get("/path-traversal/download", (req, res) => {
 
 // パストラバーサル練習用ページ
 app.get(["/path-traversal", "/path-traversal_index", "/pt"], (_req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "path-traversal_index.html"));
+  res.sendFile(path.join(paths.VIEWS, "pages", "path-traversal_index.html"));
 });
 
 // セキュリティ: ファイル名とカテゴリ名のサニタイゼーション関数
@@ -1225,7 +1230,7 @@ app.get("/files/:category/:filename", (req, res) => {
   }
   
   // セキュリティ: 許可されたディレクトリ内のファイルのみアクセス可能
-  const filesDir = path.join(__dirname, "public", "files");
+  const filesDir = paths.UPLOADS;
   const categoryDir = path.join(filesDir, sanitizedCategory);
   const filePath = path.join(categoryDir, sanitizedFilename);
   
@@ -1327,7 +1332,7 @@ app.get("/api/quizData", (req, res) => {
     return res.status(401).json({ error: "ログインが必要です" });
   }
   
-  const filePath = path.join(__dirname, "data/quizData.json");
+  const filePath = path.join(paths.CONFIG, "quizData.json");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.error("JSON読み込みエラー:", err);
@@ -1536,7 +1541,7 @@ app.post("/api/upload-icon", iconUpload.single('icon'), (req, res) => {
       console.error("アイコン取得エラー:", err);
     } else if (row && row.icon_path) {
       // 旧アイコンが存在する場合は削除
-      const oldIconPath = path.join(__dirname, "public", row.icon_path);
+      const oldIconPath = path.join(paths.PUBLIC, row.icon_path);
       if (fs.existsSync(oldIconPath)) {
         fs.unlink(oldIconPath, (unlinkErr) => {
           if (unlinkErr) {
@@ -1722,9 +1727,9 @@ app.post("/api/execute-code", (req, res) => {
   }
 
   // 一時ディレクトリの作成
-  const tempDir = path.join(__dirname, 'temp', `code_${Date.now()}_${crypto.randomBytes(8).toString('hex')}`);
-  if (!fs.existsSync(path.join(__dirname, 'temp'))) {
-    fs.mkdirSync(path.join(__dirname, 'temp'), { recursive: true });
+  const tempDir = path.join(paths.TEMP, `code_${Date.now()}_${crypto.randomBytes(8).toString('hex')}`);
+  if (!fs.existsSync(paths.TEMP)) {
+    fs.mkdirSync(paths.TEMP, { recursive: true });
   }
   fs.mkdirSync(tempDir, { recursive: true });
 
@@ -2030,8 +2035,8 @@ function getLocalIPAddresses() {
 // spawnは既に13行目でインポート済み
 // 攻撃者サーバーを起動（個別インスタンスではなく、単一インスタンス）
 // XSSショッピングサーバーと攻撃者サーバーを起動
-const xssServerPath = path.join(__dirname, 'xss', 'server.js');
-const attackServerPath = path.join(__dirname, 'attack_server', 'server.js');
+const xssServerPath = path.join(paths.LABS, 'xss', 'server.js');
+const attackServerPath = path.join(paths.LABS, 'attack-server', 'server.js');
 
 let attackServerProcess = null;
 
@@ -2039,7 +2044,7 @@ function startAttackServer() {
   console.log('🎯 攻撃者サーバーを起動中...');
   
   attackServerProcess = spawn('node', [attackServerPath], {
-    cwd: path.join(__dirname, 'attack_server'),
+    cwd: path.join(paths.LABS, 'attack-server'),
     stdio: 'inherit',
     shell: true
   });

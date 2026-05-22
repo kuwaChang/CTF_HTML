@@ -142,7 +142,7 @@ vite.config.ts.timestamp-*
 temp/
 
 # ChromaDBデータベース
-db/chroma/
+storage/chroma/
 
 # チューターQ&A（rebuildまでの未書き出しキュー）
-db/tutor_qa_pending.jsonl
+storage/tutor_qa_pending.jsonl

@@ -4,14 +4,15 @@ const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 const fs = require("fs");
 const router = express.Router();
+const paths = require("../config/paths");
 
-// dbフォルダが存在しない場合は作成
-const dbDir = path.join(__dirname, "../db");
+// storageフォルダが存在しない場合は作成
+const dbDir = paths.STORAGE;
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
 
-const dbPath = path.join(__dirname, "../db/users.db");
+const dbPath = path.join(paths.STORAGE, "users.db");
 //console.log("[auth.js] データベースパス:", dbPath);
 //console.log("[auth.js] ファイル存在確認:", fs.existsSync(dbPath));
 //console.log("[auth.js] ディレクトリ存在確認:", fs.existsSync(path.dirname(dbPath)));

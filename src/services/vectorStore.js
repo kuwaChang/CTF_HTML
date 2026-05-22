@@ -28,14 +28,16 @@ function splitTextIntoChunks(text, chunkSize = 1000, chunkOverlap = 100) {
   return chunks;
 }
 
+const paths = require("../config/paths");
+
 // ChromaDBのデータ保存用ディレクトリ（Chromaサーバーを --path で起動する場合に使用）
-const chromaDir = path.join(__dirname, "../db/chroma");
+const chromaDir = path.join(paths.STORAGE, "chroma");
 if (!fs.existsSync(chromaDir)) {
   fs.mkdirSync(chromaDir, { recursive: true });
 }
 
 // ChromaDBのJSクライアントは path に「HTTPのURL」を指定する必要があります。
-// ローカルで永続化する場合は別ターミナルで: chroma run --path ./db/chroma
+// ローカルで永続化する場合は別ターミナルで: chroma run --path ./storage/chroma
 const CHROMA_URL = process.env.CHROMA_URL || "http://localhost:8000";
 
 class VectorStoreService {
@@ -89,7 +91,7 @@ class VectorStoreService {
       } catch (error) {
         console.error("❌ ChromaDBコレクション作成エラー:", error);
         this.connectionFailed = true;
-        console.warn("💡 Chroma未使用: チューターはLLMのみで動作します。知識ベースを使う場合は chroma run --path ./db/chroma でサーバーを起動してください。");
+        console.warn("💡 Chroma未使用: チューターはLLMのみで動作します。知識ベースを使う場合は chroma run --path ./storage/chroma でサーバーを起動してください。");
         throw error;
       }
 
@@ -110,7 +112,7 @@ class VectorStoreService {
       throw new Error("ローカル埋め込みモデル（Ollama）の初期化に失敗しました。Ollamaが起動しているか確認してください。\n\n解決方法:\n1. Ollamaが起動しているか確認: `ollama list`\n2. 埋め込みモデルをダウンロード: `ollama pull nomic-embed-text`\n3. Ollamaのインストール: https://ollama.com/download");
     }
 
-    const knowledgeDir = path.join(__dirname, "../data/knowledge");
+    const knowledgeDir = path.join(paths.CONTENT, "knowledge");
     const files = fs.readdirSync(knowledgeDir).filter(f => f.endsWith(".md"));
 
     // 既存のデータを確認

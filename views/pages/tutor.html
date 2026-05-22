@@ -165,6 +165,31 @@
     .message .message-body li {
       margin: 0.15em 0;
     }
+    .message .message-body .table-wrap {
+      overflow-x: auto;
+      margin: 0.5em 0 0.75em;
+      max-width: 100%;
+    }
+    .message .message-body table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95em;
+    }
+    .message .message-body th,
+    .message .message-body td {
+      padding: 8px 12px;
+      border: 1px solid #555;
+      text-align: left;
+      vertical-align: top;
+    }
+    .message .message-body th {
+      background-color: #2a4a7a;
+      color: #e8f0ff;
+      font-weight: 600;
+    }
+    .message .message-body tbody tr:nth-child(even) td {
+      background-color: #353535;
+    }
     .message .sources {
       margin-top: 10px;
       padding-top: 10px;
@@ -614,6 +639,40 @@
         .replace(/`([^`]+)`/g, '<code>$1</code>');
     }
 
+    function parseTableCells(line) {
+      const trimmed = line.trim();
+      if (!trimmed.includes('|')) return null;
+      let parts = trimmed.split('|').map((c) => c.trim());
+      if (trimmed.startsWith('|')) parts.shift();
+      if (trimmed.endsWith('|')) parts.pop();
+      return parts.length > 0 ? parts : null;
+    }
+
+    function isTableSeparatorLine(line) {
+      const trimmed = line.trim();
+      if (!trimmed.includes('-')) return false;
+      const cells = parseTableCells(line);
+      if (!cells || cells.length === 0) return false;
+      return cells.every((cell) => /^:?-+:?:?$/.test(cell));
+    }
+
+    function isTableDataRow(line) {
+      const cells = parseTableCells(line);
+      return cells != null && cells.length >= 2;
+    }
+
+    function renderMarkdownTable(headerCells, bodyRows) {
+      const thead = '<thead><tr>' +
+        headerCells.map((c) => `<th>${formatInlineMarkdown(c)}</th>`).join('') +
+        '</tr></thead>';
+      const tbody = bodyRows.length
+        ? '<tbody>' + bodyRows.map((row) =>
+            '<tr>' + row.map((c) => `<td>${formatInlineMarkdown(c)}</td>`).join('') + '</tr>'
+          ).join('') + '</tbody>'
+        : '';
+      return `<div class="table-wrap"><table>${thead}${tbody}</table></div>`;
+    }
+
     function formatAnswerText(content) {
       const escaped = escapeHtml(content || '');
       const codePlaceholders = [];
@@ -637,7 +696,26 @@
         }
       };
 
-      for (const line of lines) {
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        if (
+          isTableDataRow(line) &&
+          i + 1 < lines.length &&
+          isTableSeparatorLine(lines[i + 1])
+        ) {
+          closeListIfNeeded();
+          const headerCells = parseTableCells(line);
+          i++;
+          const bodyRows = [];
+          while (i + 1 < lines.length && isTableDataRow(lines[i + 1]) && !isTableSeparatorLine(lines[i + 1])) {
+            i++;
+            bodyRows.push(parseTableCells(lines[i]));
+          }
+          htmlParts.push(renderMarkdownTable(headerCells, bodyRows));
+          continue;
+        }
+
         const heading = line.match(/^###\s+(.+)$/);
         const bullet = line.match(/^(?:-|\*)\s+(.+)$/);
 

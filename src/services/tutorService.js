@@ -4,11 +4,12 @@ const tutorQaLog = require("./tutorQaLog");
 const fs = require("fs");
 const path = require("path");
 
-const MAX_ANSWER_LENGTH = 4000;
+const MAX_ANSWER_LENGTH = 6000;
 const DEFAULT_OLLAMA_MODEL = "qwen2.5:7b-instruct-q5_K_M";
+//llama3.2
 //hf.co/elyza/Llama-3-ELYZA-JP-8B-GGUF:latest
 //qwen2.5:7b-instruct-q5_K_M
-//llama3.2
+
 
 function logTutorExchange(userid, question, category, questionId, result, model) {
   tutorQaLog.append({
@@ -114,7 +115,7 @@ class TutorService {
     if (category && questionId) {
       try {
         const quizData = JSON.parse(
-          fs.readFileSync(path.join(__dirname, "../data/quizData.json"), "utf-8")
+          fs.readFileSync(path.join(require("../config/paths").CONFIG, "quizData.json"), "utf-8")
         );
         const problem = quizData[category]?.[questionId];
         if (problem) {
@@ -290,7 +291,7 @@ ${contextText}`;
   async getHint(userid, category, questionId) {
     try {
       const quizData = JSON.parse(
-        fs.readFileSync(path.join(__dirname, "../data/quizData.json"), "utf-8")
+        fs.readFileSync(path.join(require("../config/paths").CONFIG, "quizData.json"), "utf-8")
       );
       const problem = quizData[category]?.[questionId];
 

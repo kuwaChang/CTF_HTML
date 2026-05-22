@@ -50,7 +50,8 @@ function setSocketIO(io) {
 }
 
 // 外部 JSON からシナリオ定義を読み込み
-const scenariosPath = path.join(__dirname, "data", "scenarios.json");
+const paths = require("./config/paths");
+const scenariosPath = path.join(paths.CONFIG, "scenarios.json");
 function getScenarios() {
   try {
     const raw = fs.readFileSync(scenariosPath, "utf8");

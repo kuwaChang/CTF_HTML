@@ -16,7 +16,8 @@ const path = require("path");
 const fs = require("fs");
 
 // データベースパス
-const dbPath = path.join(__dirname, "../db/users.db");
+const paths = require("../src/config/paths");
+const dbPath = path.join(paths.STORAGE, "users.db");
 
 // コマンドライン引数の解析
 const args = process.argv.slice(2);
